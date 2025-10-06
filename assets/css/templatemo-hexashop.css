@@ -30,6 +30,20 @@ Table of contents
 */
 @import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900");
 @import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@font-face {
+  font-family: 'GulfsDisplay';
+  src: url('../fonts/GulfsDisplay-Normal.woff2') format('woff2'),
+       url('../fonts/GulfsDisplay-Normal.ttf') format('truetype');
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Pincoya';
+  src: url('../fonts/LNTH-Pincoya-Black.ttf') format('truetype');
+  font-style: normal;
+  font-display: swap;
+}
+
 /* 
 ---------------------------------------------
 02. reset
@@ -1614,6 +1628,27 @@ Products Page
 }
 
 /*  Simple Filter Styles - Accordion Style */
+
+#products .section-title {
+  font-family: 'GulfsDisplay', sans-serif;
+  font-size: 48px;
+  color: #972227; 
+  -webkit-text-stroke: 1px rgb(211, 211, 211);
+  display: flex;
+  align-items: center;
+  margin-top: -15px;
+}
+
+#products .section-title::before {
+  content: '';
+  display: inline-block;
+  width: 22px;  
+  height: auto;
+  background-color: #F4A261; 
+  margin-right: 12px; 
+  padding-top: 35px;
+}
+
 .simple-filter-container {
   display: flex;
   flex-direction: column;
@@ -1638,7 +1673,7 @@ Products Page
 .filter-dropdown-btn {
   width: 100%;
   padding: 16px 20px;
-  background: #ebcfb9;
+  background: url('../images/material.png') no-repeat center center;
   border: none;
   display: flex;
   justify-content: space-between;
@@ -1649,14 +1684,6 @@ Products Page
   font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
-}
-
-.filter-dropdown-btn:hover {
-  background: #f9fafb;
-}
-
-.filter-dropdown-btn.active {
-  background: #f9fafb;
 }
 
 .filter-dropdown-btn .filter-label {
@@ -2207,6 +2234,8 @@ Products Page
 
 #products .item {
   margin-bottom: 30px;
+  margin-left: -30px;
+  margin-right: 30px;
 }
 
 #products .item .thumb img {
