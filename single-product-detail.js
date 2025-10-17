@@ -49,12 +49,64 @@ function renderProductDetails(product) {
   
   if (galleryThumbs) {
     galleryThumbs.innerHTML = galleryImages.map((imageSrc, index) => `
-      <button class="thumb ${index === 0 ? 'is-active' : ''}" type="button" data-image="${imageSrc}">
+      <button class="thumb ${index === 0 ? 'is-active' : ''}" type="button" data-image="${imageSrc}" data-index="${index}">
         <img src="${imageSrc}" alt="Ảnh sản phẩm ${index + 1}">
       </button>
     `).join('');
+  }
+  
+  // Xóa tất cả event listeners cũ bằng cách clone và replace các nút điều hướng
+  const prevBtn = document.querySelector('.gallery-nav--prev');
+  const nextBtn = document.querySelector('.gallery-nav--next');
+  
+  if (prevBtn) {
+    const newPrevBtn = prevBtn.cloneNode(true);
+    prevBtn.parentNode.replaceChild(newPrevBtn, prevBtn);
     
-    // Thêm sự kiện click cho thumbnails
+    newPrevBtn.addEventListener('click', function() {
+      const currentIndex = parseInt(mainImage.getAttribute('data-current-index') || '0');
+      const newIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
+      
+      mainImage.src = galleryImages[newIndex];
+      mainImage.setAttribute('data-current-index', newIndex);
+      
+      // Cập nhật active thumbnail
+      const thumbButtons = galleryThumbs.querySelectorAll('.thumb');
+      thumbButtons.forEach((b, i) => {
+        if (i === newIndex) {
+          b.classList.add('is-active');
+        } else {
+          b.classList.remove('is-active');
+        }
+      });
+    });
+  }
+  
+  if (nextBtn) {
+    const newNextBtn = nextBtn.cloneNode(true);
+    nextBtn.parentNode.replaceChild(newNextBtn, nextBtn);
+    
+    newNextBtn.addEventListener('click', function() {
+      const currentIndex = parseInt(mainImage.getAttribute('data-current-index') || '0');
+      const newIndex = (currentIndex + 1) % galleryImages.length;
+      
+      mainImage.src = galleryImages[newIndex];
+      mainImage.setAttribute('data-current-index', newIndex);
+      
+      // Cập nhật active thumbnail
+      const thumbButtons = galleryThumbs.querySelectorAll('.thumb');
+      thumbButtons.forEach((b, i) => {
+        if (i === newIndex) {
+          b.classList.add('is-active');
+        } else {
+          b.classList.remove('is-active');
+        }
+      });
+    });
+  }
+  
+  // Thêm event listeners cho thumbnails sau khi đã tạo xong
+  setTimeout(() => {
     const thumbButtons = galleryThumbs.querySelectorAll('.thumb');
     thumbButtons.forEach((btn, index) => {
       btn.addEventListener('click', function() {
@@ -65,45 +117,16 @@ function renderProductDetails(product) {
         }
         
         // Cập nhật trạng thái active
-        thumbButtons.forEach(b => b.classList.remove('is-active'));
-        this.classList.add('is-active');
+        thumbButtons.forEach((b, i) => {
+          if (i === index) {
+            b.classList.add('is-active');
+          } else {
+            b.classList.remove('is-active');
+          }
+        });
       });
     });
-  }
-  
-  // Cập nhật nút prev/next để hoạt động với gallery mới
-  const prevBtn = document.querySelector('.gallery-nav--prev');
-  const nextBtn = document.querySelector('.gallery-nav--next');
-  
-  if (prevBtn) {
-    prevBtn.addEventListener('click', function() {
-      const currentIndex = parseInt(mainImage.getAttribute('data-current-index') || '0');
-      const newIndex = currentIndex === 0 ? galleryImages.length - 1 : currentIndex - 1;
-      
-      mainImage.src = galleryImages[newIndex];
-      mainImage.setAttribute('data-current-index', newIndex);
-      
-      // Cập nhật active thumbnail
-      const thumbButtons = galleryThumbs.querySelectorAll('.thumb');
-      thumbButtons.forEach(b => b.classList.remove('is-active'));
-      thumbButtons[newIndex].classList.add('is-active');
-    });
-  }
-  
-  if (nextBtn) {
-    nextBtn.addEventListener('click', function() {
-      const currentIndex = parseInt(mainImage.getAttribute('data-current-index') || '0');
-      const newIndex = (currentIndex + 1) % galleryImages.length;
-      
-      mainImage.src = galleryImages[newIndex];
-      mainImage.setAttribute('data-current-index', newIndex);
-      
-      // Cập nhật active thumbnail
-      const thumbButtons = galleryThumbs.querySelectorAll('.thumb');
-      thumbButtons.forEach(b => b.classList.remove('is-active'));
-      thumbButtons[newIndex].classList.add('is-active');
-    });
-  }
+  }, 100);
   
   // 3. Cập nhật Product Info
   const subtitle = document.querySelector('.product-info .subtitle');
@@ -126,7 +149,7 @@ function renderProductDetails(product) {
   }
   
   // 4. Cập nhật Description
-  const descriptionElement = document.querySelector('.product-meta p');
+  const descriptionElement = document.querySelector('pre');
   if (descriptionElement) {
     // Loại bỏ HTML tags từ description
     const tempDiv = document.createElement('div');

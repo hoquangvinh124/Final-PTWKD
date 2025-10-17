@@ -327,6 +327,7 @@ main.product-page {
 .gallery-thumbs {
     display: flex;
     gap: clamp(12px, 1.6vw, 20px);
+    justify-content: center;
 }
 
 .gallery-thumbs .thumb {
@@ -335,8 +336,8 @@ main.product-page {
     padding: clamp(6px, 1.4vw, 12px);
     cursor: pointer;
     transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    min-width: 96px;
     box-shadow: 0 18px 28px rgba(8, 0, 0, 0.38);
+    max-width: 44%;
 }
 
 .gallery-thumbs .thumb.is-active,
@@ -476,7 +477,7 @@ i.shopping-bag-icon {
     margin-block-start: 20px;
 }
 
-.product-meta p {
+.product-meta pre {
     font-weight: 400; 
     font-family: 'Courier Prime', monospace; 
     line-height: 27.1px;
