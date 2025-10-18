@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
     category = 'Camera';
     subcategory = 'Polaroid';
   } else if (pageName.includes('accessory')) {
-    category = 'Audio';
+    category = 'Accessory';
     if (pageName.includes('cassette-player')) {
       subcategory = 'CassettePlayer';
     } else if (pageName.includes('ipod')) {
