@@ -298,7 +298,7 @@
     "name": "Guster - On Ice: Live From Portland Maine CD & DVD",
     "description": "<p>Guster - On Ice: Live From Portland Maine CD & DVD<br/>295.000₫</p>",
     "category": "Audio",
-    "subcategory": "Vinyl",
+    "subcategory": "CD",
     "tags": [],
     "price": "295.000₫",
     "stock_quantity": 100,
@@ -307,8 +307,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/23.png",
-    "image_back": "assets/images/Audio/Vinyl/24.png",
+    "image_front": "assets/images/Audio/CD/23.png",
+    "image_back": "assets/images/Audio/CD/24.png",
     "album_info": null,
     "reviews": [
       {
@@ -691,7 +691,7 @@
     "name": "Fabiana Palladino – Fabiana Palladino LP Vinyl Record",
     "description": "<p>Fabiana Palladino – Fabiana Palladino LP Vinyl Record<br/>563.000₫</p>",
     "category": "Audio",
-    "subcategory": "VHS",
+    "subcategory": "Vinyl",
     "tags": [],
     "price": "563.000₫",
     "stock_quantity": 100,
@@ -700,8 +700,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/23.png",
-    "image_back": "assets/images/VHS/24.png",
+    "image_front": "assets/images/Audio/Vinyl/23.png",
+    "image_back": "assets/images/Audio/Vinyl/24.png",
     "album_info": null,
     "reviews": [
       {
@@ -714,9 +714,9 @@
   },
   {
     "name": "Lot of 5 Miscellaneous Pre-Recorded VHS Tapes",
-    "description": "<p>Lot of 5 Miscellaneous Pre-Recorded VHS Tapes<br/>268.000₫<br/>This lot includes 5 pre-recorded VHS tapes of various brands and lengths, with potential recordings of television broadcasts, movies or home recordings — or they may be blank. Since they are untested, their contents remain a mystery, making them a great find for anyone looking to digitize lost footage from the VHS era, or anyone who just needs tapes to use as blanks for personal projects.<br/>Additional Information:<br/>Includes 5 pre-recorded VHS tapes<br/>Various brands (TDK, Scotch, Kodak, Memorex, etc.)<br/>Various recording lengths (T-120, T-160, etc.)<br/>Untested – may contain recorded content or be blank<br/>Perfect for archiving, collecting or re-recording<br/>Sold as-is. No guarantees on playback quality or recorded content.<br/>Please note that the product photos are intended to show an example of what you may receive. The tapes you receive will be similar but will vary in brands, content and label markings.<br/>Title:<br/>Year:<br/>Format: VHS<br/>Run Time:<br/>Rating:<br/>Condition: Preowned<br/>Genre:</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "description": "<p>Lot of 5 Miscellaneous Pre-Recorded VHS Tapes<br/>268.000₫<br/>This lot includes 5 pre-recorded VHS tapes of various brands and lengths, with potential recordings of television broadcasts, movies or home recordings — or they may be blank. Since they are untested, their contents remain a mystery, making them a great find for anyone looking to digitize lost footage from the VHS era, or anyone who just needs tapes to use as blanks for personal projects.<br/>Additional Information:<br/>Includes 5 pre-recorded VHS tapes<br/>Various brands (TDK, Scotch, Kodak, Memorex, etc.)<br/>Various recording lengths (T-120, T-160, etc.)<br/>Untested – may contain recorded content or be blank<br/>Perfect for archiving, collecting or re-recording<br/>Sold as-is. No guarantees on playback quality or recorded content.<br/>Please note that the product photos are intended to show an example of what you may receive. The tapes you receive will be similar but will vary in brands, content and label markings.<br/>Title:<br/>Year:<br/>Format: VHS<br/>Run Time:<br/>Rating:PG<br/>Condition: Preowned<br/>Genre:</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "268.000₫",
     "stock_quantity": 100,
@@ -743,8 +743,8 @@
   {
     "name": "Transparent Hot Pink Blank T-130 VHS Tape",
     "description": "<p>Transparent Hot Pink Blank T-130 VHS Tape<br/>402.000₫<br/>These VHS tapes feature newly manufactured outer shells and offer 130 minutes of blank, recordable tape for your analog recording needs. Each tape comes with a sticker sheet that can be used to identify the content of your recorded media.<br/>These beautiful tapes come from our friends at VHS is LIFE, procurers of many exciting options for blank VHS tapes, and the official inventor of the Mold Cleaner.</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "402.000₫",
     "stock_quantity": 100,
@@ -768,8 +768,8 @@
   {
     "name": "E.T. the Extra-Terrestrial VHS Tape",
     "description": "<p>E.T. the Extra-Terrestrial VHS Tape<br/>(1)<br/>268.000₫<br/>E.T. the Extra-Terrestrial (1982) is a sci-fi family film directed by Steven Spielberg and starring Henry Thomas, Drew Barrymore and Dee Wallace. The film follows a young boy who befriends a stranded alien and helps it return home while evading government agents. Known for its emotional storytelling, iconic imagery and John Williams' memorable score, this film remains a beloved classic for audiences of all ages.<br/>Title: E.T. the Extra-Terrestrial<br/>Year: 1982<br/>Format: VHS<br/>Run Time: 115 min<br/>Rating: PG<br/>Condition: Preowned<br/>Genre:<br/>Adventure<br/>Family<br/>Sci-Fi</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "268.000₫",
     "stock_quantity": 100,
@@ -795,9 +795,9 @@
   },
   {
     "name": "Orange Glow-In-The-Dark Blank T-130 VHS Tape",
-    "description": "<p>Orange Glow-In-The-Dark Blank T-130 VHS Tape<br/>(2)<br/>402.000₫<br/>These VHS tapes feature newly manufactured outer shells and offer 130 minutes of blank, recordable tape for your analog recording needs. Each tape comes with a sticker sheet that can be used to identify the content of your recorded media.<br/>These beautiful tapes come from our friends at VHS is LIFE, procurers of many exciting options for blank VHS tapes, and the official inventor of the Mold Cleaner.</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "description": "<p>Orange Glow-In-The-Dark Blank T-130 VHS Tape<br/>(2)<br/>402.000₫<br/>These VHS tapes feature newly manufactured outer shells and offer 130 minutes of blank, recordable tape for your analog recording needs. Each tape comes with a sticker sheet that can be used to identify the content of your recorded media.<br/>These beautiful tapes come from our friends at VHS is LIFE, procurers of many exciting options for blank VHS tapes,...",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "402.000₫",
     "stock_quantity": 100,
@@ -813,16 +813,16 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.203924Z"
+        "date": "2025-10-17T06:56:54.203920Z"
       }
     ],
     "id": "28"
   },
   {
     "name": "Independence Day VHS Tape",
-    "description": "<p>Independence Day VHS Tape<br/>268.000₫<br/>Independence Day (1996) is a sci-fi action film directed by Roland Emmerich and starring Will Smith, Jeff Goldblum and Bill Pullman. The film follows a group of survivors as they band together to fight off an alien invasion on July 4th. Known for its spectacular special effects, thrilling action and iconic speeches, this film became a cultural phenomenon and a defining blockbuster of the 1990s.<br/>Title: Independence Day<br/>Year: 1996<br/>Format: VHS<br/>Run Time: 145 min<br/>Rating: PG-13<br/>Condition: Preowned<br/>Genre:<br/>Action<br/>Adventure<br/>Sci-Fi</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "description": "<p>Independence Day VHS Tape<br/>(1)<br/>268.000₫<br/>Independence Day (1996) is a sci-fi action film directed by Roland Emmerich and starring Will Smith, Bill Pullman and Jeff Goldblum. The film follows a diverse group of survivors as they band together to fight off an alien invasion on July 4th. Known for its spectacular special effects, thrilling action and iconic speeches, this film became a cultural phenomenon and a defining blockbuster of the 1990s.<br/>Title: Independence Day<br/>Year: 1996<br/>Format: VHS<br/>Run Time: 145 min<br/>Rating: PG-13<br/>Condition: Preowned<br/>Genre:<br/>Action<br/>Adventure<br/>Sci-Fi</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "268.000₫",
     "stock_quantity": 100,
@@ -849,8 +849,8 @@
   {
     "name": "Titanic VHS Tape",
     "description": "<p>Titanic VHS Tape<br/>(1)<br/>134.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "134.000₫",
     "stock_quantity": 100,
@@ -874,8 +874,8 @@
   {
     "name": "The Santa Clause VHS Tape",
     "description": "<p>The Santa Clause VHS Tape<br/>(1)<br/>215.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "215.000₫",
     "stock_quantity": 100,
@@ -891,18 +891,18 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.203992Z"
+        "date": "2025-10-17T06:56:54.203991Z"
       }
     ],
     "id": "31"
   },
   {
-    "name": "Transparent Clear Blank T-130 VHS Tape",
-    "description": "<p>Transparent Clear Blank T-130 VHS Tape<br/>(2)<br/>402.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "name": "A Bug's Life VHS Tape",
+    "description": "<p>A Bug's Life VHS Tape<br/>(1)<br/>322.000₫</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
-    "price": "402.000₫",
+    "price": "322.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -916,16 +916,16 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.204008Z"
+        "date": "2025-10-17T06:56:54.204006Z"
       }
     ],
     "id": "32"
   },
   {
-    "name": "Indiana Jones and the Last Crusade VHS Tape",
-    "description": "<p>Indiana Jones and the Last Crusade VHS Tape<br/>268.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "name": "Forrest Gump VHS Tape",
+    "description": "<p>Forrest Gump VHS Tape<br/>268.000₫</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "268.000₫",
     "stock_quantity": 100,
@@ -941,18 +941,18 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.204023Z"
+        "date": "2025-10-17T06:56:54.204021Z"
       }
     ],
     "id": "33"
   },
   {
-    "name": "The Lion King VHS Tape",
-    "description": "<p>The Lion King VHS Tape<br/>(1)<br/>268.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "name": "Pulp Fiction VHS Tape",
+    "description": "<p>Pulp Fiction VHS Tape<br/>322.000₫</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
-    "price": "268.000₫",
+    "price": "322.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -966,7 +966,7 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.204039Z"
+        "date": "2025-10-17T06:56:54.204037Z"
       }
     ],
     "id": "34"
@@ -974,8 +974,8 @@
   {
     "name": "Men in Black VHS Tape",
     "description": "<p>Men in Black VHS Tape<br/>268.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "268.000₫",
     "stock_quantity": 100,
@@ -999,8 +999,8 @@
   {
     "name": "Top Gun VHS Tape",
     "description": "<p>Top Gun VHS Tape<br/>322.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "322.000₫",
     "stock_quantity": 100,
@@ -1024,8 +1024,8 @@
   {
     "name": "Sleepless In Seattle VHS Tape",
     "description": "<p>Sleepless In Seattle VHS Tape<br/>215.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "215.000₫",
     "stock_quantity": 100,
@@ -1047,12 +1047,12 @@
     "id": "37"
   },
   {
-    "name": "Disney's Pocahontas VHS Tape",
-    "description": "<p>Disney's Pocahontas VHS Tape<br/>215.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "name": "The Lion King VHS Tape",
+    "description": "<p>The Lion King VHS Tape<br/>268.000₫</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
-    "price": "215.000₫",
+    "price": "268.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -1072,12 +1072,12 @@
     "id": "38"
   },
   {
-    "name": "Ghost VHS Tape",
-    "description": "<p>Ghost VHS Tape<br/>215.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "name": "The Matrix VHS Tape",
+    "description": "<p>The Matrix VHS Tape<br/>322.000₫</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
-    "price": "215.000₫",
+    "price": "322.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -1091,18 +1091,18 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.204103Z"
+        "date": "2025-10-17T06:56:54.204104Z"
       }
     ],
     "id": "39"
   },
   {
-    "name": "Batman Forever VHS Tape",
-    "description": "<p>Batman Forever VHS Tape<br/>215.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "name": "The Big Lebowski VHS Tape",
+    "description": "<p>The Big Lebowski VHS Tape<br/>322.000₫</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
-    "price": "215.000₫",
+    "price": "322.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -1116,18 +1116,18 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.204116Z"
+        "date": "2025-10-17T06:56:54.204118Z"
       }
     ],
     "id": "40"
   },
   {
-    "name": "Liar Liar VHS Tape",
-    "description": "<p>Liar Liar VHS Tape<br/>268.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "name": "Apollo 13 VHS Tape",
+    "description": "<p>Apollo 13 VHS Tape<br/>215.000₫</p>",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
-    "price": "268.000₫",
+    "price": "215.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -1141,7 +1141,7 @@
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.204129Z"
+        "date": "2025-10-17T06:56:54.204132Z"
       }
     ],
     "id": "41"
@@ -1149,8 +1149,8 @@
   {
     "name": "Toy Story 2 VHS Tape",
     "description": "<p>Toy Story 2 VHS Tape<br/>322.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "322.000₫",
     "stock_quantity": 100,
@@ -1174,8 +1174,8 @@
   {
     "name": "Dr. Seuss' How The Grinch Stole Christmas! VHS Tape",
     "description": "<p>Dr. Seuss' How The Grinch Stole Christmas! VHS Tape<br/>322.000₫</p>",
-    "category": "Audio",
-    "subcategory": "VHS",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "322.000₫",
     "stock_quantity": 100,
@@ -1199,8 +1199,8 @@
   {
     "name": "Beauty and the Beast VHS Tape",
     "description": "<p>Beauty and the Beast VHS Tape<br/>215.000₫</p>",
-    "category": "Audio",
-    "subcategory": "Cassette",
+    "category": "VHS",
+    "subcategory": "",
     "tags": [],
     "price": "215.000₫",
     "stock_quantity": 100,
@@ -1209,14 +1209,14 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/39.png",
-    "image_back": "assets/images/Cassette Tape/40.png",
+    "image_front": "assets/images/VHS/39.png",
+    "image_back": "assets/images/VHS/40.png",
     "album_info": null,
     "reviews": [
       {
         "user_id": "USER_sample",
         "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.204197Z"
+        "date": "2025-10-17T06:56:54.204199Z"
       }
     ],
     "id": "44"
@@ -1806,8 +1806,8 @@
   {
     "name": "Descendents - Milo Goes To College Cassette Tape",
     "description": "<p>Descendents - Milo Goes To College Cassette Tape<br/>322.000₫</p>",
-    "category": "Camera",
-    "subcategory": "Polaroid",
+    "category": "Audio",
+    "subcategory": "Cassette",
     "tags": [],
     "price": "322.000₫",
     "stock_quantity": 100,
@@ -1816,8 +1816,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/39.png",
-    "image_back": "assets/images/Pola Camera/40.png",
+    "image_front": "assets/images/Cassette Tape/39.png",
+    "image_back": "assets/images/Cassette Tape/40.png",
     "album_info": null,
     "reviews": [
       {
@@ -2502,31 +2502,6 @@
       }
     ],
     "id": "91"
-  },
-  {
-    "name": "OldieZone  CP-81 Portable Cassette Player",
-    "description": "<p>OldieZone  CP-81 Portable Cassette Player<br/>(143)<br/>2.651.000₫<br/>1,2,3,4,5,6<br/>Apple iPod Shuffle (2nd Generation) 1GB MP3 Player<br/>(6)<br/>2.116.000₫<br/>First introduced in 2001, the iPod is the quintessential MP3 player, and this 2nd generation Shuffle (2006) is the perfect blend of new millennium design with modern features in a tiny package.<br/>These iPods have been updated with an all-new battery for a like-new experience! For instructions on how to add music to your iPod, check out our tutorial .<br/>Note: iPod Shuffles no longer sync with computers running macOS 15.0 - 15.3 software. Users will need to update to 15.4 or later to re-enable functionality.<br/>This is a genuine piece of vintage retro tech - refurbished and restored by OldieZone . Our process includes:<br/>Disassembling the iPod to its base components<br/>Verifying the fit and functionality of each component<br/>Retaining original components whenever reasonably possible<br/>Repairing and replacing components whenever necessary<br/>Upgrading the iPod with a new battery<br/>Cleaning and polishing all internal and external components<br/>Kitting each iPod with an original deadstock Apple sync cable and headphones<br/>What is vintage refurbished?<br/>Every vintage item we restore has a story, and we take great care to preserve its authenticity. Our trained technicians carefully inspect, clean and service each piece, retaining original components whenever possible. When necessary, we incorporate high-quality replacement parts to ensure reliability and longevity. The result is a thoughtfully restored vintage item that’s fully functional and ready for a second life.<br/>Please note vintage items will show signs of previous use. While we carefully restore each piece to ensure full functionality, cosmetic wear and slight variations from the product photos should be expected<br/>Warranty:<br/>7,8,9,10<br/>Apple iPod Mini (1st Generation) MP3 Player<br/>(5)<br/>6.025.000₫<br/>First introduced in 2001, the iPod is the quintessential MP3 player, and this iPod Mini (2004) is the perfect blend of new millennium design with modern features.<br/>These iPods have been updated with an all-new battery and 128GB of flash storage so you’ll have plenty of space for all your favorite albums in a faster, sturdier package. For instructions on how to add music to your iPod, check out our tutorial .<br/>Note: iPod Minis no longer mount or sync with computers running the macOS 15.4 software update.<br/>This is a genuine piece of vintage retro tech - refurbished and restored by OldieZone . Our process includes:<br/>Disassembling the iPod to its base components<br/>Verifying the fit and functionality of each component<br/>Retaining original components whenever reasonably possible<br/>Repairing and replacing components whenever necessary<br/>Upgrading the iPod to 128GB of flash storage and a new battery<br/>Cleaning and polishing all internal and external components<br/>Kitting each iPod with an original deadstock Apple sync cable and headphones<br/>Please note that iPod Minis are not compatible with Windows computers and can only be hooked up to an Apple computer.<br/>What is vintage refurbished?<br/>Every vintage item we restore has a story, and we take great care to preserve its authenticity. Our trained technicians carefully inspect, clean and service each piece, retaining original components whenever possible. When necessary, we incorporate high-quality replacement parts to ensure reliability and longevity. The result is a thoughtfully restored vintage item that’s fully functional and ready for a second life.<br/>Please note vintage items will show signs of previous use. While we carefully restore each piece to ensure full functionality, cosmetic wear and slight variations from the product photos should be expected.<br/>Warranty:<br/>y.<br/>11,12,13,14<br/>Apple iPod Shuffle (2nd Generation) 2GB MP3 Player<br/>(1)<br/>2.116.000₫<br/>First introduced in 2001, the iPod is the quintessential MP3 player, and this 2nd generation Shuffle (2006) is the perfect blend of new millennium design with modern features in a tiny package.<br/>These iPods have been updated with an all-new battery for a like-new experience! For instructions on how to add music to your iPod, check out our tutorial .<br/>Note: iPod Shuffles no longer sync with computers running macOS 15.0 - 15.3 software. Users will need to update to 15.4 or later to re-enable functionality.<br/>This is a genuine piece of vintage retro tech - refurbished and restored by OldieZone . Our process includes:<br/>Disassembling the iPod to its base components<br/>Verifying the fit and functionality of each component<br/>Retaining original components whenever reasonably possible<br/>Repairing and replacing components whenever necessary<br/>Upgrading the iPod with a new battery<br/>Cleaning and polishing all internal and external components<br/>Kitting each iPod with an original deadstock Apple sync cable and headphones<br/>What is vintage refurbished?<br/>Every vintage item we restore has a story, and we take great care to preserve its authenticity. Our trained technicians carefully inspect, clean and service each piece, retaining original components whenever possible. When necessary, we incorporate high-quality replacement parts to ensure reliability and longevity. The result is a thoughtfully restored vintage item that’s fully functional and ready for a second life.<br/>Please note vintage items will show signs of previous use. While we carefully restore each piece to ensure full functionality, cosmetic wear and slight variations from the product photos should be expected.<br/>Warranty:<br/>15,16,17<br/>Apple iPod Nano (2nd Generation) 4GB MP3 Player - Random Engraving</p>",
-    "category": "Audio",
-    "subcategory": "CDPlayer",
-    "tags": [],
-    "price": "2.651.000₫",
-    "stock_quantity": 100,
-    "is_available": true,
-    "brand": {
-      "id": null,
-      "name": null
-    },
-    "image_front": "assets/images/Accessories/CD Player/15.png",
-    "image_back": "assets/images/Accessories/CD Player/16.png",
-    "album_info": null,
-    "reviews": [
-      {
-        "user_id": "USER_sample",
-        "comment": "Sample review.",
-        "date": "2025-10-17T06:56:54.206090Z"
-      }
-    ],
-    "id": "92"
   },
   {
     "name": "Aiwa XP-V323YL Transparent Blue Portable CD Player",

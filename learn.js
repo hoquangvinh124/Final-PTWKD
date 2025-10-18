@@ -48,19 +48,70 @@ function createProductCard(product) {
   return productHTML;
 }
 
+// Hàm lọc sản phẩm theo category và subcategory
+function filterProducts(products, category, subcategory = null) {
+  return products.filter(product => {
+    const matchCategory = !category || product.category === category;
+    const matchSubcategory = !subcategory || product.subcategory === subcategory;
+    return matchCategory && matchSubcategory;
+  });
+}
+
 // Load và hiển thị danh sách sản phẩm khi trang load
-async function loadProduct() {
+async function loadProduct(category = null, subcategory = null) {
   const products = await getProductData();
   if (products && products.length > 0) {
+    // Lọc sản phẩm theo category và subcategory
+    const filteredProducts = filterProducts(products, category, subcategory);
+    
     const container = document.querySelector('.col-xl-8 .row.gx-5');
     if (container) {
-      // Tạo HTML cho tất cả sản phẩm
-      const productsHTML = products.map(product => createProductCard(product)).join('');
-      // Thêm tất cả sản phẩm vào đầu danh sách
+      // Tạo HTML cho sản phẩm đã lọc
+      const productsHTML = filteredProducts.map(product => createProductCard(product)).join('');
+      // Thêm sản phẩm vào đầu danh sách
       container.insertAdjacentHTML('afterbegin', productsHTML);
+      
+      // Log để debug
+      console.log(`Loaded ${filteredProducts.length} products for category: ${category || 'All'}, subcategory: ${subcategory || 'All'}`);
     }
   }
 }
 
 // Chạy khi DOM đã sẵn sàng
-document.addEventListener('DOMContentLoaded', loadProduct);    
+document.addEventListener('DOMContentLoaded', function() {
+  // Lấy thông tin category và subcategory từ data attribute của body hoặc từ tên file
+  const pageName = window.location.pathname.split('/').pop().replace('.html', '');
+  
+  let category = null;
+  let subcategory = null;
+  
+  // Xác định category và subcategory dựa trên tên trang
+  if (pageName.includes('audio')) {
+    category = 'Audio';
+    if (pageName.includes('cd') && !pageName.includes('player')) {
+      subcategory = 'CD';
+    } else if (pageName.includes('vinyl')) {
+      subcategory = 'Vinyl';
+    }
+  } else if (pageName.includes('cassette-tape')) {
+    category = 'Audio';
+    subcategory = 'Cassette';
+  } else if (pageName.includes('camera')) {
+    category = 'Camera';
+    subcategory = 'Polaroid';
+  } else if (pageName.includes('accessory')) {
+    category = 'Audio';
+    if (pageName.includes('cassette-player')) {
+      subcategory = 'CassettePlayer';
+    } else if (pageName.includes('ipod')) {
+      subcategory = 'IPod';
+    } else if (pageName.includes('cd-player')) {
+      subcategory = 'CDPlayer';
+    }
+  } else if (pageName.includes('vhs')) {
+    category = 'VHS';
+  }
+  
+  // Load sản phẩm với filter tương ứng
+  loadProduct(category, subcategory);
+});    
