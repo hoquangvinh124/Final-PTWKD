@@ -140,10 +140,10 @@ function renderProductDetails(product) {
   
   if (stockTag) {
     if (product.is_available) {
-      stockTag.textContent = 'Còn hàng';
+      stockTag.textContent = 'In Stock';
       stockTag.className = 'tag in-stock';
     } else {
-      stockTag.textContent = 'Hết hàng';
+      stockTag.textContent = 'Out of Stock';
       stockTag.className = 'tag out-of-stock';
     }
   }
