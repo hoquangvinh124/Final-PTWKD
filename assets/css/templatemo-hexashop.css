@@ -1591,7 +1591,7 @@ header {
    14. FOOTER
 ============================================================= */
 footer {
-  margin-top: var(--spacing-xl);
+  margin-top: 100px;
   padding: var(--spacing-xl) 0 var(--spacing-l);
   background-color: var(--text-dark);
 }
