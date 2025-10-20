@@ -12,8 +12,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/1.png",
-    "image_back": "assets/images/Audio/CD/2.png",
+    "image_front": "assets/images/Audio/CD/1.jpg",
+    "image_back": "assets/images/Audio/CD/2.jpg",
     "album_info": {
       "tracklist": [
         "My Old Man\n2 This Old Dog\n3 Baby You're Out\n4 For The First Time\n5 One Another\n6 Still Beating\n7 Sister\n8 Dreams From Yesterday\n9 A Wolf Who Wears Sheeps Clothes\n10 One More Love Song\n11 On The Level\n12 Moonlight On The River\n13 Watching Him Fade Away"
@@ -41,8 +41,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/3.png",
-    "image_back": "assets/images/Audio/CD/4.png",
+    "image_front": "assets/images/Audio/CD/3.jpg",
+    "image_back": "assets/images/Audio/CD/4.jpg",
     "album_info": {
       "tracklist": [
         "My Old Man\n2 This Old Dog\n3 Baby You're Out\n4 For The First Time\n5 One Another\n6 Still Beating\n7 Sister\n8 Dreams From Yesterday\n9 A Wolf Who Wears Sheeps Clothes\n10 One More Love Song\n11 On The Level\n12 Moonlight On The River\n13 Watching Him Fade Away"
@@ -70,8 +70,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/5.png",
-    "image_back": "assets/images/Audio/CD/6.png",
+    "image_front": "assets/images/Audio/CD/5.jpg",
+    "image_back": "assets/images/Audio/CD/6.jpg",
     "album_info": {
       "tracklist": [
         "Salad Days\n2 Blue Boy\n3 Brother\n4 Let Her Go\n5 Goodbye Weekend\n6 Let My Baby Stay\n7 Passing Out Pieces\n8 Treat Her Better\n9 Chamber Of Reflection\n10 Go Easy\n11 Jonny's Odyssey"
@@ -99,8 +99,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/7.png",
-    "image_back": "assets/images/Audio/CD/8.png",
+    "image_front": "assets/images/Audio/CD/7.jpg",
+    "image_back": "assets/images/Audio/CD/8.jpg",
     "album_info": {
       "tracklist": [
         "A Spindle, A Darkness, A Fever, And A Necklace\n2 A Scale, A Mirror, And These Indifferent Clocks\n3 The Calendar Hung Itself\n4 Something Vague\n5 The Movement Of A Hand\n6 Arienette\n7 When The Curious Girl Realizes She Is Under Glass\n8 Haligh, Haligh, A Lie, Haligh\n9 The Center Of The World\n10 Sunrise, Sunset\n11 An Attempt To Tip The Scales\n12 A Song To Pass The Time"
@@ -128,8 +128,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/9.png",
-    "image_back": "assets/images/Audio/CD/10.png",
+    "image_front": "assets/images/Audio/CD/9.jpg",
+    "image_back": "assets/images/Audio/CD/10.jpg",
     "album_info": {
       "tracklist": [
         "Doris\n2 B-Side\n3 Chocolate Hills\n4 Father Father\n5 Mariella"
@@ -157,8 +157,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/11.png",
-    "image_back": "assets/images/Audio/CD/12.png",
+    "image_front": "assets/images/Audio/CD/11.jpg",
+    "image_back": "assets/images/Audio/CD/12.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -182,8 +182,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/13.png",
-    "image_back": "assets/images/Audio/CD/14.png",
+    "image_front": "assets/images/Audio/CD/13.jpg",
+    "image_back": "assets/images/Audio/CD/14.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -207,8 +207,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/15.png",
-    "image_back": "assets/images/Audio/CD/16.png",
+    "image_front": "assets/images/Audio/CD/15.jpg",
+    "image_back": "assets/images/Audio/CD/16.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -232,8 +232,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/17.png",
-    "image_back": "assets/images/Audio/CD/18.png",
+    "image_front": "assets/images/Audio/CD/17.jpg",
+    "image_back": "assets/images/Audio/CD/18.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -257,8 +257,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/19.png",
-    "image_back": "assets/images/Audio/CD/20.png",
+    "image_front": "assets/images/Audio/CD/19.jpg",
+    "image_back": "assets/images/Audio/CD/20.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -282,8 +282,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/21.png",
-    "image_back": "assets/images/Audio/CD/22.png",
+    "image_front": "assets/images/Audio/CD/21.jpg",
+    "image_back": "assets/images/Audio/CD/22.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -307,8 +307,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/CD/23.png",
-    "image_back": "assets/images/Audio/CD/24.png",
+    "image_front": "assets/images/Audio/CD/23.jpg",
+    "image_back": "assets/images/Audio/CD/24.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -332,8 +332,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/1.png",
-    "image_back": "assets/images/Audio/Vinyl/2.png",
+    "image_front": "assets/images/Audio/Vinyl/1.jpg",
+    "image_back": "assets/images/Audio/Vinyl/2.jpg",
     "album_info": {
       "artist": "Japanese Breakfast",
       "album": "For Melancholy Brunettes (& sad women)",
@@ -374,8 +374,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/3.png",
-    "image_back": "assets/images/Audio/Vinyl/4.png",
+    "image_front": "assets/images/Audio/Vinyl/3.jpg",
+    "image_back": "assets/images/Audio/Vinyl/4.jpg",
     "album_info": {
       "artist": "The Head And The Heart",
       "album": "Aperture",
@@ -418,8 +418,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/5.png",
-    "image_back": "assets/images/Audio/Vinyl/6.png",
+    "image_front": "assets/images/Audio/Vinyl/5.jpg",
+    "image_back": "assets/images/Audio/Vinyl/6.jpg",
     "album_info": {
       "artist": "Father John Misty",
       "album": "Mahashmashana",
@@ -470,8 +470,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/7.png",
-    "image_back": "assets/images/Audio/Vinyl/8.png",
+    "image_front": "assets/images/Audio/Vinyl/7.jpg",
+    "image_back": "assets/images/Audio/Vinyl/8.jpg",
     "album_info": {
       "artist": "Lorde",
       "album": "Virgin",
@@ -500,8 +500,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/9.png",
-    "image_back": "assets/images/Audio/Vinyl/10.png",
+    "image_front": "assets/images/Audio/Vinyl/9.jpg",
+    "image_back": "assets/images/Audio/Vinyl/10.jpg",
     "album_info": {
       "artist": "Suki Waterhouse",
       "album": "Memoir of a Sparklemuffin",
@@ -550,8 +550,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/11.png",
-    "image_back": "assets/images/Audio/Vinyl/12.png",
+    "image_front": "assets/images/Audio/Vinyl/11.jpg",
+    "image_back": "assets/images/Audio/Vinyl/12.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -575,8 +575,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/13.png",
-    "image_back": "assets/images/Audio/Vinyl/14.png",
+    "image_front": "assets/images/Audio/Vinyl/13.jpg",
+    "image_back": "assets/images/Audio/Vinyl/14.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -600,8 +600,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/15.png",
-    "image_back": "assets/images/Audio/Vinyl/16.png",
+    "image_front": "assets/images/Audio/Vinyl/15.jpg",
+    "image_back": "assets/images/Audio/Vinyl/16.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -625,8 +625,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/17.png",
-    "image_back": "assets/images/Audio/Vinyl/18.png",
+    "image_front": "assets/images/Audio/Vinyl/17.jpg",
+    "image_back": "assets/images/Audio/Vinyl/18.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -650,8 +650,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/19.png",
-    "image_back": "assets/images/Audio/Vinyl/20.png",
+    "image_front": "assets/images/Audio/Vinyl/19.jpg",
+    "image_back": "assets/images/Audio/Vinyl/20.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -675,8 +675,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/21.png",
-    "image_back": "assets/images/Audio/Vinyl/22.png",
+    "image_front": "assets/images/Audio/Vinyl/21.jpg",
+    "image_back": "assets/images/Audio/Vinyl/22.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -700,8 +700,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Audio/Vinyl/23.png",
-    "image_back": "assets/images/Audio/Vinyl/24.png",
+    "image_front": "assets/images/Audio/Vinyl/23.jpg",
+    "image_back": "assets/images/Audio/Vinyl/24.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -725,8 +725,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/1.png",
-    "image_back": "assets/images/VHS/2.png",
+    "image_front": "assets/images/VHS/1.jpg",
+    "image_back": "assets/images/VHS/2.jpg",
     "album_info": {
       "year": "",
       "condition": "Preowned"
@@ -753,8 +753,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/3.png",
-    "image_back": "assets/images/VHS/4.png",
+    "image_front": "assets/images/VHS/3.jpg",
+    "image_back": "assets/images/VHS/4.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -778,8 +778,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/5.png",
-    "image_back": "assets/images/VHS/6.png",
+    "image_front": "assets/images/VHS/5.jpg",
+    "image_back": "assets/images/VHS/6.jpg",
     "album_info": {
       "year": "1982",
       "condition": "Preowned"
@@ -806,8 +806,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/7.png",
-    "image_back": "assets/images/VHS/8.png",
+    "image_front": "assets/images/VHS/7.jpg",
+    "image_back": "assets/images/VHS/8.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -831,8 +831,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/9.png",
-    "image_back": "assets/images/VHS/10.png",
+    "image_front": "assets/images/VHS/9.jpg",
+    "image_back": "assets/images/VHS/10.jpg",
     "album_info": {
       "year": "1996",
       "condition": "Preowned"
@@ -859,8 +859,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/11.png",
-    "image_back": "assets/images/VHS/12.png",
+    "image_front": "assets/images/VHS/11.jpg",
+    "image_back": "assets/images/VHS/12.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -884,8 +884,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/13.png",
-    "image_back": "assets/images/VHS/14.png",
+    "image_front": "assets/images/VHS/13.jpg",
+    "image_back": "assets/images/VHS/14.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -909,8 +909,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/15.png",
-    "image_back": "assets/images/VHS/16.png",
+    "image_front": "assets/images/VHS/15.jpg",
+    "image_back": "assets/images/VHS/16.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -934,8 +934,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/17.png",
-    "image_back": "assets/images/VHS/18.png",
+    "image_front": "assets/images/VHS/17.jpg",
+    "image_back": "assets/images/VHS/18.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -959,8 +959,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/19.png",
-    "image_back": "assets/images/VHS/20.png",
+    "image_front": "assets/images/VHS/19.jpg",
+    "image_back": "assets/images/VHS/20.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -984,8 +984,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/21.png",
-    "image_back": "assets/images/VHS/22.png",
+    "image_front": "assets/images/VHS/21.jpg",
+    "image_back": "assets/images/VHS/22.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1009,8 +1009,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/23.png",
-    "image_back": "assets/images/VHS/24.png",
+    "image_front": "assets/images/VHS/23.jpg",
+    "image_back": "assets/images/VHS/24.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1034,8 +1034,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/25.png",
-    "image_back": "assets/images/VHS/26.png",
+    "image_front": "assets/images/VHS/25.jpg",
+    "image_back": "assets/images/VHS/26.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1059,8 +1059,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/27.png",
-    "image_back": "assets/images/VHS/28.png",
+    "image_front": "assets/images/VHS/27.jpg",
+    "image_back": "assets/images/VHS/28.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1084,8 +1084,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/29.png",
-    "image_back": "assets/images/VHS/30.png",
+    "image_front": "assets/images/VHS/29.jpg",
+    "image_back": "assets/images/VHS/30.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1109,8 +1109,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/31.png",
-    "image_back": "assets/images/VHS/32.png",
+    "image_front": "assets/images/VHS/31.jpg",
+    "image_back": "assets/images/VHS/32.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1134,8 +1134,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/33.png",
-    "image_back": "assets/images/VHS/34.png",
+    "image_front": "assets/images/VHS/33.jpg",
+    "image_back": "assets/images/VHS/34.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1159,8 +1159,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/35.png",
-    "image_back": "assets/images/VHS/36.png",
+    "image_front": "assets/images/VHS/35.jpg",
+    "image_back": "assets/images/VHS/36.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1184,8 +1184,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/37.png",
-    "image_back": "assets/images/VHS/38.png",
+    "image_front": "assets/images/VHS/37.jpg",
+    "image_back": "assets/images/VHS/38.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1209,8 +1209,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/VHS/39.png",
-    "image_back": "assets/images/VHS/40.png",
+    "image_front": "assets/images/VHS/39.jpg",
+    "image_back": "assets/images/VHS/40.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1234,8 +1234,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/1.png",
-    "image_back": "assets/images/Cassette Tape/2.png",
+    "image_front": "assets/images/Cassette Tape/1.jpg",
+    "image_back": "assets/images/Cassette Tape/2.jpg",
     "album_info": {
       "artist": "Chappell Roan",
       "album": "The Rise & Fall Of A Midwest Princess",
@@ -1280,8 +1280,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/3.png",
-    "image_back": "assets/images/Cassette Tape/4.png",
+    "image_front": "assets/images/Cassette Tape/3.jpg",
+    "image_back": "assets/images/Cassette Tape/4.jpg",
     "album_info": {
       "artist": "George Michael",
       "album": "Faith",
@@ -1323,8 +1323,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/5.png",
-    "image_back": "assets/images/Cassette Tape/6.png",
+    "image_front": "assets/images/Cassette Tape/5.jpg",
+    "image_back": "assets/images/Cassette Tape/6.jpg",
     "album_info": {
       "artist": "The Cure",
       "album": "Disintegration",
@@ -1367,8 +1367,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/7.png",
-    "image_back": "assets/images/Cassette Tape/8.png",
+    "image_front": "assets/images/Cassette Tape/7.jpg",
+    "image_back": "assets/images/Cassette Tape/8.jpg",
     "album_info": {
       "artist": "Alan Menken, Howard Ashman",
       "album": "Beauty And The Beast (Original Motion Picture Soundtrack)",
@@ -1414,8 +1414,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/9.png",
-    "image_back": "assets/images/Cassette Tape/10.png",
+    "image_front": "assets/images/Cassette Tape/9.jpg",
+    "image_back": "assets/images/Cassette Tape/10.jpg",
     "album_info": {
       "artist": "Alan Menken, Howard Ashman",
       "album": "The Little Mermaid (Original Motion Picture Soundtrack)",
@@ -1466,8 +1466,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/11.png",
-    "image_back": "assets/images/Cassette Tape/12.png",
+    "image_front": "assets/images/Cassette Tape/11.jpg",
+    "image_back": "assets/images/Cassette Tape/12.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1491,8 +1491,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/13.png",
-    "image_back": "assets/images/Cassette Tape/14.png",
+    "image_front": "assets/images/Cassette Tape/13.jpg",
+    "image_back": "assets/images/Cassette Tape/14.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1516,8 +1516,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/15.png",
-    "image_back": "assets/images/Cassette Tape/16.png",
+    "image_front": "assets/images/Cassette Tape/15.jpg",
+    "image_back": "assets/images/Cassette Tape/16.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1541,8 +1541,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/17.png",
-    "image_back": "assets/images/Cassette Tape/18.png",
+    "image_front": "assets/images/Cassette Tape/17.jpg",
+    "image_back": "assets/images/Cassette Tape/18.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1566,8 +1566,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/19.png",
-    "image_back": "assets/images/Cassette Tape/20.png",
+    "image_front": "assets/images/Cassette Tape/19.jpg",
+    "image_back": "assets/images/Cassette Tape/20.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1591,8 +1591,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/21.png",
-    "image_back": "assets/images/Cassette Tape/22.png",
+    "image_front": "assets/images/Cassette Tape/21.jpg",
+    "image_back": "assets/images/Cassette Tape/22.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1616,8 +1616,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/23.png",
-    "image_back": "assets/images/Cassette Tape/24.png",
+    "image_front": "assets/images/Cassette Tape/23.jpg",
+    "image_back": "assets/images/Cassette Tape/24.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1641,8 +1641,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/25.png",
-    "image_back": "assets/images/Cassette Tape/26.png",
+    "image_front": "assets/images/Cassette Tape/25.jpg",
+    "image_back": "assets/images/Cassette Tape/26.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1666,8 +1666,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/27.png",
-    "image_back": "assets/images/Cassette Tape/28.png",
+    "image_front": "assets/images/Cassette Tape/27.jpg",
+    "image_back": "assets/images/Cassette Tape/28.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1691,8 +1691,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/29.png",
-    "image_back": "assets/images/Cassette Tape/30.png",
+    "image_front": "assets/images/Cassette Tape/29.jpg",
+    "image_back": "assets/images/Cassette Tape/30.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1716,8 +1716,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/31.png",
-    "image_back": "assets/images/Cassette Tape/32.png",
+    "image_front": "assets/images/Cassette Tape/31.jpg",
+    "image_back": "assets/images/Cassette Tape/32.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1741,8 +1741,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/33.png",
-    "image_back": "assets/images/Cassette Tape/34.png",
+    "image_front": "assets/images/Cassette Tape/33.jpg",
+    "image_back": "assets/images/Cassette Tape/34.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1766,8 +1766,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/35.png",
-    "image_back": "assets/images/Cassette Tape/36.png",
+    "image_front": "assets/images/Cassette Tape/35.jpg",
+    "image_back": "assets/images/Cassette Tape/36.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1791,8 +1791,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/37.png",
-    "image_back": "assets/images/Cassette Tape/38.png",
+    "image_front": "assets/images/Cassette Tape/37.jpg",
+    "image_back": "assets/images/Cassette Tape/38.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1816,8 +1816,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Cassette Tape/39.png",
-    "image_back": "assets/images/Cassette Tape/40.png",
+    "image_front": "assets/images/Cassette Tape/39.jpg",
+    "image_back": "assets/images/Cassette Tape/40.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1841,8 +1841,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/1.png",
-    "image_back": "assets/images/Pola Camera/2.png",
+    "image_front": "assets/images/Pola Camera/1.jpg",
+    "image_back": "assets/images/Pola Camera/2.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1866,8 +1866,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/3.png",
-    "image_back": "assets/images/Pola Camera/4.png",
+    "image_front": "assets/images/Pola Camera/3.jpg",
+    "image_back": "assets/images/Pola Camera/4.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1891,8 +1891,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/5.png",
-    "image_back": "assets/images/Pola Camera/6.png",
+    "image_front": "assets/images/Pola Camera/5.jpg",
+    "image_back": "assets/images/Pola Camera/6.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1916,8 +1916,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/7.png",
-    "image_back": "assets/images/Pola Camera/8.png",
+    "image_front": "assets/images/Pola Camera/7.jpg",
+    "image_back": "assets/images/Pola Camera/8.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1941,8 +1941,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/9.png",
-    "image_back": "assets/images/Pola Camera/10.png",
+    "image_front": "assets/images/Pola Camera/9.jpg",
+    "image_back": "assets/images/Pola Camera/10.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1966,8 +1966,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/11.png",
-    "image_back": "assets/images/Pola Camera/12.png",
+    "image_front": "assets/images/Pola Camera/11.jpg",
+    "image_back": "assets/images/Pola Camera/12.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -1991,8 +1991,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/13.png",
-    "image_back": "assets/images/Pola Camera/14.png",
+    "image_front": "assets/images/Pola Camera/13.jpg",
+    "image_back": "assets/images/Pola Camera/14.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2016,8 +2016,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/15.png",
-    "image_back": "assets/images/Pola Camera/16.png",
+    "image_front": "assets/images/Pola Camera/15.jpg",
+    "image_back": "assets/images/Pola Camera/16.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2041,8 +2041,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/17.png",
-    "image_back": "assets/images/Pola Camera/18.png",
+    "image_front": "assets/images/Pola Camera/17.jpg",
+    "image_back": "assets/images/Pola Camera/18.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2066,8 +2066,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/19.png",
-    "image_back": "assets/images/Pola Camera/20.png",
+    "image_front": "assets/images/Pola Camera/19.jpg",
+    "image_back": "assets/images/Pola Camera/20.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2091,8 +2091,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/21.png",
-    "image_back": "assets/images/Pola Camera/22.png",
+    "image_front": "assets/images/Pola Camera/21.jpg",
+    "image_back": "assets/images/Pola Camera/22.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2116,8 +2116,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/23.png",
-    "image_back": "assets/images/Pola Camera/24.png",
+    "image_front": "assets/images/Pola Camera/23.jpg",
+    "image_back": "assets/images/Pola Camera/24.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2141,8 +2141,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/25.png",
-    "image_back": "assets/images/Pola Camera/26.png",
+    "image_front": "assets/images/Pola Camera/25.jpg",
+    "image_back": "assets/images/Pola Camera/26.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2166,8 +2166,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/27.png",
-    "image_back": "assets/images/Pola Camera/28.png",
+    "image_front": "assets/images/Pola Camera/27.jpg",
+    "image_back": "assets/images/Pola Camera/28.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2191,8 +2191,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/29.png",
-    "image_back": "assets/images/Pola Camera/30.png",
+    "image_front": "assets/images/Pola Camera/29.jpg",
+    "image_back": "assets/images/Pola Camera/30.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2216,8 +2216,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/31.png",
-    "image_back": "assets/images/Pola Camera/32.png",
+    "image_front": "assets/images/Pola Camera/31.jpg",
+    "image_back": "assets/images/Pola Camera/32.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2241,8 +2241,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/33.png",
-    "image_back": "assets/images/Pola Camera/34.png",
+    "image_front": "assets/images/Pola Camera/33.jpg",
+    "image_back": "assets/images/Pola Camera/34.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2266,8 +2266,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/35.png",
-    "image_back": "assets/images/Pola Camera/36.png",
+    "image_front": "assets/images/Pola Camera/35.jpg",
+    "image_back": "assets/images/Pola Camera/36.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2291,8 +2291,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/37.png",
-    "image_back": "assets/images/Pola Camera/38.png",
+    "image_front": "assets/images/Pola Camera/37.jpg",
+    "image_back": "assets/images/Pola Camera/38.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2316,8 +2316,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Pola Camera/39.png",
-    "image_back": "assets/images/Pola Camera/40.png",
+    "image_front": "assets/images/Pola Camera/39.jpg",
+    "image_back": "assets/images/Pola Camera/40.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2341,8 +2341,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/1.png",
-    "image_back": "assets/images/Accessories/Cassette Player/2.png",
+    "image_front": "assets/images/Accessories/Cassette Player/1.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/2.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2366,8 +2366,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/3.png",
-    "image_back": "assets/images/Accessories/Cassette Player/4.png",
+    "image_front": "assets/images/Accessories/Cassette Player/3.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/4.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2391,8 +2391,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/5.png",
-    "image_back": "assets/images/Accessories/Cassette Player/6.png",
+    "image_front": "assets/images/Accessories/Cassette Player/5.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/6.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2416,8 +2416,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/7.png",
-    "image_back": "assets/images/Accessories/Cassette Player/8.png",
+    "image_front": "assets/images/Accessories/Cassette Player/7.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/8.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2441,8 +2441,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/9.png",
-    "image_back": "assets/images/Accessories/Cassette Player/10.png",
+    "image_front": "assets/images/Accessories/Cassette Player/9.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/10.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2466,8 +2466,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/11.png",
-    "image_back": "assets/images/Accessories/Cassette Player/12.png",
+    "image_front": "assets/images/Accessories/Cassette Player/11.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/12.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2491,8 +2491,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/13.png",
-    "image_back": "assets/images/Accessories/Cassette Player/14.png",
+    "image_front": "assets/images/Accessories/Cassette Player/13.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/14.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2516,8 +2516,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/Cassette Player/15.png",
-    "image_back": "assets/images/Accessories/Cassette Player/16.png",
+    "image_front": "assets/images/Accessories/Cassette Player/15.jpg",
+    "image_back": "assets/images/Accessories/Cassette Player/16.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2541,8 +2541,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/1.png",
-    "image_back": "assets/images/Accessories/CD Player/2.png",
+    "image_front": "assets/images/Accessories/CD Player/1.jpg",
+    "image_back": "assets/images/Accessories/CD Player/2.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2566,8 +2566,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/3.png",
-    "image_back": "assets/images/Accessories/CD Player/4.png",
+    "image_front": "assets/images/Accessories/CD Player/3.jpg",
+    "image_back": "assets/images/Accessories/CD Player/4.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2591,8 +2591,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/5.png",
-    "image_back": "assets/images/Accessories/CD Player/6.png",
+    "image_front": "assets/images/Accessories/CD Player/5.jpg",
+    "image_back": "assets/images/Accessories/CD Player/6.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2616,8 +2616,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/7.png",
-    "image_back": "assets/images/Accessories/CD Player/8.png",
+    "image_front": "assets/images/Accessories/CD Player/7.jpg",
+    "image_back": "assets/images/Accessories/CD Player/8.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2641,8 +2641,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/9.png",
-    "image_back": "assets/images/Accessories/CD Player/10.png",
+    "image_front": "assets/images/Accessories/CD Player/9.jpg",
+    "image_back": "assets/images/Accessories/CD Player/10.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2666,8 +2666,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/11.png",
-    "image_back": "assets/images/Accessories/CD Player/12.png",
+    "image_front": "assets/images/Accessories/CD Player/11.jpg",
+    "image_back": "assets/images/Accessories/CD Player/12.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2691,8 +2691,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/13.png",
-    "image_back": "assets/images/Accessories/CD Player/14.png",
+    "image_front": "assets/images/Accessories/CD Player/13.jpg",
+    "image_back": "assets/images/Accessories/CD Player/14.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2716,8 +2716,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/CD Player/15.png",
-    "image_back": "assets/images/Accessories/CD Player/16.png",
+    "image_front": "assets/images/Accessories/CD Player/15.jpg",
+    "image_back": "assets/images/Accessories/CD Player/16.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2741,8 +2741,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/2.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/2.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2766,8 +2766,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/3.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/3.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2791,8 +2791,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/4.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/4.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2816,8 +2816,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/5.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/5.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2841,8 +2841,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/6.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/6.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2866,8 +2866,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/7.png",
-    "image_back": "assets/images/Accessories/IPod/7.png",
+    "image_front": "assets/images/Accessories/IPod/7.jpg",
+    "image_back": "assets/images/Accessories/IPod/7.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2891,8 +2891,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/8.png",
-    "image_back": "assets/images/Accessories/IPod/8.png",
+    "image_front": "assets/images/Accessories/IPod/8.jpg",
+    "image_back": "assets/images/Accessories/IPod/8.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2916,8 +2916,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/9.png",
-    "image_back": "assets/images/Accessories/IPod/9.png",
+    "image_front": "assets/images/Accessories/IPod/9.jpg",
+    "image_back": "assets/images/Accessories/IPod/9.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2941,8 +2941,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/10.png",
-    "image_back": "assets/images/Accessories/IPod/10.png",
+    "image_front": "assets/images/Accessories/IPod/10.jpg",
+    "image_back": "assets/images/Accessories/IPod/10.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2966,8 +2966,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/11.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/11.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -2991,8 +2991,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/12.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/12.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -3016,8 +3016,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/13.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/13.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -3041,8 +3041,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/14.png",
-    "image_back": "assets/images/Accessories/IPod/1.png",
+    "image_front": "assets/images/Accessories/IPod/14.jpg",
+    "image_back": "assets/images/Accessories/IPod/1.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -3066,8 +3066,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/15.png",
-    "image_back": "assets/images/Accessories/IPod/15.png",
+    "image_front": "assets/images/Accessories/IPod/15.jpg",
+    "image_back": "assets/images/Accessories/IPod/15.jpg",
     "album_info": null,
     "reviews": [
       {
@@ -3091,8 +3091,8 @@
       "id": null,
       "name": null
     },
-    "image_front": "assets/images/Accessories/IPod/16.png",
-    "image_back": "assets/images/Accessories/IPod/16.png",
+    "image_front": "assets/images/Accessories/IPod/16.jpg",
+    "image_back": "assets/images/Accessories/IPod/16.jpg",
     "album_info": null,
     "reviews": [
       {
