@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Profile</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="assets/css/user-profile.css" rel="stylesheet">
+</head>
+<body>
+  <header class="topbar py-3">
+    <div class="container-fluid d-flex flex-column align-items-center">
+      <img class="brand mb-2" src="assets/images/logodaxoaphong2.png" alt="OLDIE ZONE logo">
+      <nav class="navlinks d-flex flex-wrap" aria-label="Top navigation">
+        <a href="#overview">Audio</a>
+        <a href="#songs">VHS</a>
+        <a href="#">Cassette Tape</a>
+        <a href="#">Pola Camera</a>
+        <a href="#">Accessories</a>
+        <a href="#videos">Cinema Room</a>
+        <a href="#">Community</a>
+        <a href="#albums">Thread</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="profile-main">
+    <section class="artist-hero" id="overview">
+      <button class="spotify-btn" type="button" id="spotifyToggle" aria-label="Mở mini Spotify">
+        <img src="assets/images/spotifyicon.png" alt="" aria-hidden="true">
+      </button>
+      <button class="hero-next-btn" type="button" id="heroFlipToggle" aria-label="Lật mặt sau">
+        <img src="assets/images/nextpageicon.png" alt="" aria-hidden="true">
+      </button>
+      <div class="spotify-panel" id="spotifyPanel" aria-hidden="true">
+        <iframe
+          id="spotifyPlayer"
+          src="https://open.spotify.com/embed/playlist/6XVB6xOrESMAEucInnMB8x?utm_source=generator"
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"></iframe>
+        <div class="spotify-tracks">
+          <h3>Chọn playlist</h3>
+          <button class="spotify-track-btn active" type="button"
+            data-src="https://open.spotify.com/embed/playlist/6XVB6xOrESMAEucInnMB8x?utm_source=generator">
+            Playlist chính
+          </button>
+          <button class="spotify-track-btn" type="button"
+            data-src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0XUsuxWHRQd?utm_source=generator">
+            Jazz focus
+          </button>
+          <button class="spotify-track-btn" type="button"
+            data-src="https://open.spotify.com/embed/playlist/37i9dQZF1DWYa6Zq7iv77m?utm_source=generator">
+            Chill vibes
+          </button>
+        </div>
+      </div>
+      <div class="hero-flip">
+        <div class="hero-card" id="heroCard">
+          <div class="hero-face hero-front">
+            <div class="hero-container" id="heroFront">
+              <div class="hero-portrait">
+                <img src="../Final-PTWKD/assets/images/Tranduythanhanhdaidien.jpg" alt="Huỳnh Quốc Long portrait">
+              </div>
+              <div class="hero-details">
+                <p class="text-uppercase text-white-50 mb-1 fw-semibold">Jazz Trumpeter</p>
+                <h1><span data-field-display="firstName">None</span> <span data-field-display="lastName">Quốc Long</span></h1>
+                <div class="hero-meta">
+                  <span data-field-display="city">Hồ Chí Minh</span>
+                  <span data-field-display="birthdate">09/05/2001</span>
+                  <span data-field-display="age">23 tuổi</span>
+                  <span data-field-display="gender">Man</span>
+                </div>
+                <div class="hero-actions">
+                  <button class="hero-btn primary" id="heroEditBtn">Edit profile</button>
+                </div>
+                <div class="hero-tabs">
+                  <button class="active" data-view="overview">Overview</button>
+                  <button data-view="videos">Videos</button>
+                  <button data-view="shows">Shows</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-face hero-back" id="heroBack">
+            <div class="passport-logo" aria-hidden="true">LDIEZONE</div>
+            <div class="passport-photo">
+              <img src="../Final-PTWKD/assets/images/Tranduythanhanhdaidien.jpg" alt="Passport portrait">
+            </div>
+            <div class="passport-info d-flex flex-column">
+              <div class="passport-field">
+                <label>First Name</label>
+                <span data-field-display="firstName">User</span>
+              </div>
+              <div class="passport-field">
+                <label>Last Name</label>
+                <span data-field-display="lastName">Name</span>
+              </div>
+              <div class="passport-field">
+                <label>City</label>
+                <span data-field-display="city">City</span>
+              </div>
+              <div class="passport-field">
+                <label>Birthdate</label>
+                <span data-field-display="birthdate">09/05/2001</span>
+              </div>
+              <div class="passport-field">
+                <label>Age</label>
+                <span data-field-display="age">23 tuổi</span>
+              </div>
+              <div class="passport-field">
+                <label>Gender</label>
+                <span data-field-display="gender">Man</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="overview-grid" id="songs">
+      <article class="glass-card">
+        <div class="d-flex justify-content-between align-items-start mb-2">
+          <h2 class="mb-0">Biography</h2>
+          <button class="btn btn-sm bio-edit-btn d-flex align-items-center gap-1" id="bioEditToggle" type="button">
+            <img src="assets/images/editicon.png" alt="" width="16" height="16">
+            <span>Edit</span>
+          </button>
+        </div>
+        <div id="biographyView">
+          <p>
+          Quoc Long was born into a Lebanese family of intellectuals and artists. He is the son of trumpeter Nassim Maalouf
+          and pianist Nada Maalouf. Nephew of writer Amin Maalouf and grandson of journalist, poet and musicologist Rushdi Maalouf.
+          He is noted for playing Arabic maqams with quarter tones on the trumpet, a technique pioneered by his father.
+        </p>
+        <p class="mt-3">
+          Maalouf earned international recognition after winning prizes in major classical trumpet competitions, and was
+          nominated for numerous jazz awards across Europe.
+        </p>
+        </div>
+        <div id="biographyEdit" class="d-none">
+          <textarea class="form-control bg-transparent text-light border-light" rows="5" id="biographyInput"></textarea>
+          <div class="mt-2 d-flex gap-2">
+            <button class="btn btn-sm hero-btn primary" id="bioSaveBtn" type="button">Save</button>
+            <button class="btn btn-sm btn-outline-secondary text-light border-light" id="bioCancelBtn" type="button">Cancel</button>
+          </div>
+        </div>
+      </article>
+      <article class="glass-card featured-panel" id="featuredPanel">
+        <div class="featured-header">
+          <h2 class="mb-0" id="featuredPanelTitle">Featured songs</h2>
+          <span id="featuredPanelAction">Shuffle</span>
+        </div>
+        <div id="featuredSongs">
+          <div class="featured-list">
+            <div class="song-row">
+              <div>01</div>
+              <div>
+                <div class="song-title">Beirut</div>
+                <div class="song-meta">Red &amp; Black Light · 11:09</div>
+              </div>
+              <div class="song-plays">4,252,471</div>
+              <div class="song-actions">▶︎ ⟳</div>
+            </div>
+            <div class="song-row">
+              <div>02</div>
+              <div>
+                <div class="song-title">Maeva</div>
+                <div class="song-meta">Wonderland · 6:49</div>
+              </div>
+              <div class="song-plays">2,066,753</div>
+              <div class="song-actions">▶︎ ⟳</div>
+            </div>
+            <div class="song-row">
+              <div>03</div>
+              <div>
+                <div class="song-title">Red &amp; Light</div>
+                <div class="song-meta">Red &amp; Black Light · 11:03</div>
+              </div>
+              <div class="song-plays">1,693,371</div>
+              <div class="song-actions">▶︎ ⟳</div>
+            </div>
+            <div class="song-row">
+              <div>04</div>
+              <div>
+                <div class="song-title">True Sorry</div>
+                <div class="song-meta">Illusions · 4:53</div>
+              </div>
+              <div class="song-plays">5,318,012</div>
+              <div class="song-actions">▶︎ ⟳</div>
+            </div>
+            <div class="song-row">
+              <div>05</div>
+              <div>
+                <div class="song-title">Nomade Slang</div>
+                <div class="song-meta">Illusions · 6:06</div>
+              </div>
+              <div class="song-plays">1,689,358</div>
+              <div class="song-actions">▶︎ ⟳</div>
+            </div>
+            <div class="song-row">
+              <div>06</div>
+              <div>
+                <div class="song-title">Naga</div>
+                <div class="song-meta">Diachronism · 5:57</div>
+              </div>
+              <div class="song-plays">364,306</div>
+              <div class="song-actions">▶︎ ⟳</div>
+            </div>
+          </div>
+        </div>
+        <div id="editProfilePanel">
+          <form id="editProfileForm" class="edit-form-grid">
+            <div class="edit-form-columns">
+              <div class="edit-field-group">
+                <label for="editFirstName">First name</label>
+                <input id="editFirstName" type="text" data-field-input="firstName" placeholder="Nhập first name">
+              </div>
+              <div class="edit-field-group">
+                <label for="editLastName">Last name</label>
+                <input id="editLastName" type="text" data-field-input="lastName" placeholder="Nhập last name">
+              </div>
+              <div class="edit-field-group">
+                <label for="editAge">Age</label>
+                <input id="editAge" type="number" min="0" data-field-input="age" placeholder="Tuổi">
+              </div>
+              <div class="edit-field-group">
+                <label for="editCity">City</label>
+                <input id="editCity" type="text" data-field-input="city" placeholder="Thành phố">
+              </div>
+              <div class="edit-field-group">
+                <label for="editBirthdate">Birthdate</label>
+                <input id="editBirthdate" type="date" data-field-input="birthdate">
+              </div>
+              <div class="edit-field-group">
+                <label for="editGender">Gender</label>
+                <select id="editGender" data-field-input="gender">
+                  <option value="Man">Man</option>
+                  <option value="Woman">Woman</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="avatar-uploader">
+              <label class="avatar-drop" for="editAvatar">
+                <img id="editAvatarPreview" alt="Avatar preview">
+                <span class="avatar-add-label">Add image</span>
+              </label>
+              <input id="editAvatar" type="file" accept="image/*" hidden>
+            </div>
+            <button class="hero-btn primary align-self-start" id="editProfileSaveBtn" type="button">Save profile</button>
+          </form>
+        </div>
+      </article>
+    </section>
+
+    <section class="albums" id="albums">
+      <h2>Albums</h2>
+      <div class="albums-grid">
+        <div class="album-card">
+          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=500&q=80" alt="Dalida album">
+          <span>Dalida</span>
+        </div>
+        <div class="album-card">
+          <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=500&q=80" alt="10 ans de live album">
+          <span>10 Ans De Live</span>
+        </div>
+        <div class="album-card">
+          <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=crop&w=500&q=80" alt="Kalthoum album">
+          <span>Kalthoum</span>
+        </div>
+        <div class="album-card">
+          <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=500&q=80" alt="Illusions album">
+          <span>Illusions</span>
+        </div>
+        <div class="album-card">
+          <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=500&q=80" alt="Au pays d'Alice album">
+          <span>Au Pays d'Alice</span>
+        </div>
+        <div class="album-card">
+          <img src="https://images.unsplash.com/photo-1470229538611-16ba8c7ffbd7?auto=format&fit=crop&w=500&q=80" alt="Diachronism album">
+          <span>Diachronism</span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="assets/js/user-profile.js"></script>
+</body>
+</html>
