@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro Movie Room</title>
+  <link rel="stylesheet" href="room.css">
+</head>
+<body>
+  <div class="cinema-frame">
+    <img src="images/rapphim.png" alt="Cinema Background" class="cinema-bg">
+
+    <div class="video-frame">
+      <video id="movie" controls>
+        <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+      </video>
+      <button id="chatToggle" class="chat-toggle">💬</button>
+    </div>
+  </div>
+
+  <div class="chat-box hidden" id="chatBox">
+    <div class="chat-header">Chat Room</div>
+    <div class="chat-messages" id="chatMessages">
+      <p><strong>Linh:</strong>hehe được coi free</p>
+      <p><strong>Hy:</strong>ủng hộ sóp đi cả nhà</p>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <script src="room.js"></script>
+</body>
+</html>
