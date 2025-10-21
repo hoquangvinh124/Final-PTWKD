@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LDie Zone Checkout</title>
+    <link rel="stylesheet" href="checkout_ver1.css">
+    <link rel="stylesheet" href="header-footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!--Header/Navbar-->
+            <header>
+                <nav class="navbar section-content">
+                    <div class="header-top">
+                        <a href="#" class="nav-logo">
+                        <img src="../images/shopname.jpg" width="150px" height="60px">
+                        </a>
+                        <div class="header-icons">
+                            <a href="#"><button class="user-icon"></button></a>
+                            <a href="#"><button class="search-icon"></button></a>
+                            <button class="cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartModal" title="Shopping Cart">
+                                <span class="sr-only">Mở giỏ hàng</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M6 6h15l-1.5 9h-12L5 2H2" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <circle cx="9" cy="21" r="1.8" fill="#111"/><circle cx="18" cy="21" r="1.8" fill="#111"/>
+                                </svg>
+                                <span class="badge" id="cartBadge"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <ul class="nav-menu">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">AUDIO</a>
+                            <ul class="submenu">
+                                <li><a href="#" class="submenu-link">CD</a></li>
+                                <li><a href="#" class="submenu-link">VINYL</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link">VHS</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">CaSSETTE TAPE</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">POLA CAMERA</a></li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">ACCESSORIES</a>
+                            <ul class="submenu">
+                                <li><a href="#" class="submenu-link">CASSETTE PLAYER</a></li>
+                                <li><a href="#" class="submenu-link">IPOD</a></li>
+                                <li><a href="#" class="submenu-link">CD PLAYER</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a href="#" class="nav-link">POLA CAMERA</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">CINE ROOM</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">THREAD</a></li>
+                    </ul>
+                </nav>
+            </header> 
+
+        <main class="checkout-layout">
+            <section class="checkout-panel">
+                <h2 class="panel-title">Checkout</h2>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Customer Info</h3>
+                    <form class="customer-form">
+                        <label>
+                            <span>Họ và tên</span>
+                            <input type="text" placeholder="Nguyễn Văn A">
+                        </label>
+                        <label>
+                            <span>Số điện thoại</span>
+                            <input type="tel" placeholder="0123 456 789">
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input type="email" placeholder="email@example.com">
+                        </label>
+                        <label class="full">
+                            <span>Địa chỉ</span>
+                            <input type="text" placeholder="123 Đường ABC, Quận 1, TP.HCM">
+                        </label>
+                        <label>
+                            <span>Thành phố</span>
+                            <input type="text" placeholder="TP. Hồ Chí Minh">
+                        </label>
+                        <label>
+                            <span>Quận/Huyện</span>
+                            <input type="text" placeholder="Quận 1">
+                        </label>
+                    </form>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Shipping Method</h3>
+                    <div class="choice-group" id="shipping-options">
+                        <label class="radio-card">
+                            <input type="radio" name="shipping" value="33000" checked>
+                            <span>
+                                <strong>Standard Shipping</strong>
+                                <small>3 - 5 ngày | 33.000 VND</small>
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="shipping" value="66000">
+                            <span>
+                                <strong>Express Shipping</strong>
+                                <small>1 - 2 ngày | 66.000 VND</small>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3 class="subsection-title">Payment</h3>
+                    <div class="choice-group" id="payment-options">
+                        <label class="radio-card">
+                            <input type="radio" name="payment" value="cod" checked>
+                            <span>
+                                <strong>Cash on Delivery (COD)</strong>
+                                <small>Thanh toán khi nhận hàng</small>
+                            </span>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="payment" value="qr">
+                            <span>
+                                <strong>Chuyển khoản QR</strong>
+                                <small>Quét mã QR bên dưới</small>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="qr-box">
+                    <div class="qr-code"></div>
+                    <p>Quét mã để thanh toán nhanh</p>
+                </div>
+            </section>
+
+            <aside class="summary-panel">
+                <h2 class="panel-title">Order Summary</h2>
+
+                <ul class="order-items">
+                    <li class="order-item" data-price="200000">
+                        <img src="../images/damn.jpg" alt="Mac DeMarco album">
+                        <div class="item-info">
+                            <h4>Mac DeMarco - Salad Days CD</h4>
+                            <p>200.000 VND</p>
+                            <button type="button" class="remove-item">Remove</button>
+                        </div>
+                        <span class="line-total">200.000 VND</span>
+                    </li>
+
+                    <li class="order-item" data-price="200000">
+                        <img src="../images/flower_boy.avif" alt="Tyler album">
+                        <div class="item-info">
+                            <h4>Tyler, The Creator - Flower Boy CD</h4>
+                            <p>200.000 VND</p>
+                            <button type="button" class="remove-item">Remove</button>
+                        </div>
+                        <span class="line-total">200.000 VND</span>
+                    </li>
+                    <div class="quantity"></div>
+                </ul>
+
+                <form class="discount-form">
+                    <input type="text" id="discount-code" placeholder="Discount code or Gift card">
+                    <button type="submit">Apply</button>
+                </form>
+                <p class="discount-hint">*Sử dụng mã <strong>LDIEZONE10</strong> để giảm 10%</p>
+
+                <div class="totals">
+                    <div>
+                        <span>Tổng tiền hàng</span>
+                        <span id="subtotal">400.000 VND</span>
+                    </div>
+                    <div>
+                        <span>Phí vận chuyển</span>
+                        <span id="shipping-fee">33.000 VND</span>
+                    </div>
+                    <div>
+                        <span>Giảm giá</span>
+                        <span id="discount-amount">0 VND</span>
+                    </div>
+                    <div class="grand-total">
+                        <span>Tổng cộng</span>
+                        <span id="grand-total">433.000 VND</span>
+                    </div>
+                </div>
+
+                <button class="pay-button" type="button">Pay Now</button>
+            </aside>
+        </main>
+
+        <footer class="site-footer">
+            <p>Copyright ©2025 · Designed by NDH</p>
+        </footer>
+    </div>
+
+    <script src="checkout.js"></script>
+</body>
+</html>
