@@ -8,42 +8,42 @@ const movies =
 [
   {
     "title": "BATMAN FOREVER",
-    "poster": "images/film VHS/BatmanForever.png",
+    "poster": "assets/images/film VHS/BatmanForever.png",
     "year": 1995,
     "director": "Joel Schumacher",
     "description": "Batman faces Two-Face and The Riddler as they threaten Gotham City with chaos and riddles."
   },
   {
     "title": "TOY STORY 2",
-    "poster": "images/film VHS/toystory.png",
+    "poster": "assets/images/film VHS/toystory.png",
     "year": 1999,
     "director": "John Lasseter",
     "description": "When Woody is stolen by a toy collector, Buzz and his friends embark on a daring rescue mission."
   },
   {
     "title": "LIAR LIAR",
-    "poster": "images/film VHS/Liar-Liar.png",
+    "poster": "assets/images/film VHS/Liar-Liar.png",
     "year": 1997,
     "director": "Tom Shadyac",
     "description": "A fast-talking lawyer is magically forced to tell the truth for 24 hours after his son's birthday wish."
   },
   {
     "title": "TITANIC",
-    "poster": "images/film VHS/Titanic.png",
+    "poster": "assets/images/film VHS/Titanic.png",
     "year": 1997,
     "director": "James Cameron",
     "description": "A poor artist and a wealthy young woman fall in love aboard the ill-fated RMS Titanic."
   },
   {
     "title": "MEN IN BLACK",
-    "poster": "images/film VHS/MIB.png",
+    "poster": "assets/images/film VHS/MIB.png",
     "year": 1997,
     "director": "Barry Sonnenfeld",
     "description": "Two secret agents protect Earth from extraterrestrial threats while keeping aliens hidden from the public."
   },
   {
     "title": "THE LION KING",
-    "poster": "images/film VHS/lionking.png",
+    "poster": "assets/images/film VHS/lionking.png",
     "year": 1994,
     "director": "Roger Allers & Rob Minkoff",
     "description": "A young lion prince flees his kingdom after tragedy, only to return and reclaim his rightful place as king."
