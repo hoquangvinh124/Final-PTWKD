@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LDIE Zone Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="market_place.css" rel="stylesheet">
+</head>
+<body>
+  <header class="market-header">
+    <div class="market-container header-inner">
+      <div class="header-top">
+        <a class="header-logo" href="#">
+          <img src="assets/images/logodaxoaphong2.png" alt="LDIE Zone logo">
+        </a>
+        <form class="header-search" role="search" aria-label="Tìm kiếm sản phẩm">
+          <label class="visually-hidden" for="headerSearchInput">Tìm kiếm sản phẩm</label>
+          <input id="headerSearchInput" type="search" placeholder="Tìm cassette, vinyl, phụ kiện..." autocomplete="off">
+          <button type="submit" aria-label="Tìm kiếm">🔎</button>
+        </form>
+      </div>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="#collections" class="active">Audio <span>▼</span></a>
+        <a href="#collections">VHS <span>▼</span></a>
+        <a href="#collections">Cassette Tape <span>▼</span></a>
+        <a href="#collections">Pola Camera <span>▼</span></a>
+        <a href="#collections">Accessories <span>▼</span></a>
+        <a href="#collections">Cinema Room <span>▼</span></a>
+        <a href="#collections">Community <span>▼</span></a>
+        <a href="#collections">Thread <span>▼</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="market-section" id="collections">
+      <div class="market-container">
+        <header class="section-heading">
+          <span class="section-tag">Danh mục nổi bật</span>
+          <h2>Bộ Sưu Tập Được Săn Lùng</h2>
+          <p>Đưa bạn trở về kỷ nguyên vàng của âm thanh với những thiết bị đã được phục chế và kiểm âm kỹ lưỡng.</p>
+        </header>
+        <div class="catalog-layout">
+          <aside class="catalog-filter" aria-label="Bộ lọc sản phẩm">
+            <h3>Bộ lọc</h3>
+            <div class="filter-section">
+              <h4>Danh mục</h4>
+              <ul>
+                <li><button type="button" class="active" data-filter-type="category" data-filter-value="Tất cả">Tất cả</button></li>
+                <li><button type="button" data-filter-type="category" data-filter-value="Audio">Audio</button></li>
+                <li><button type="button" data-filter-type="category" data-filter-value="Cassette Tape">Cassette Tape</button></li>
+                <li><button type="button" data-filter-type="category" data-filter-value="Accessories">Accessories</button></li>
+                <li><button type="button" data-filter-type="category" data-filter-value="Pola Camera">Pola Camera</button></li>
+                <li><button type="button" data-filter-type="category" data-filter-value="VHS">VHS</button></li>
+              </ul>
+            </div>
+            <div class="filter-section">
+              <h4>Mức giá</h4>
+              <ul>
+                <li><button type="button" class="active" data-filter-type="price" data-filter-value="all">Tất cả</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="under-500">Dưới 500K</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="500-1000">500K - 1 Triệu</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="1000-3000">1 - 3 Triệu</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="above-3000">Trên 3 Triệu</button></li>
+              </ul>
+            </div>
+            <div class="filter-section">
+              <h4>Định dạng</h4>
+              <ul>
+                <li><button type="button" class="active" data-filter-type="format" data-filter-value="all">Tất cả</button></li>
+                <li><button type="button" data-filter-type="format" data-filter-value="CD">CD</button></li>
+                <li><button type="button" data-filter-type="format" data-filter-value="Cassette">Cassette</button></li>
+                <li><button type="button" data-filter-type="format" data-filter-value="Vinyl">Vinyl</button></li>
+                <li><button type="button" data-filter-type="format" data-filter-value="Thiết bị">Thiết bị</button></li>
+              </ul>
+            </div>
+          </aside>
+          <div class="card-grid" id="productGrid"></div>
+        </div>
+        <nav class="products-pagination" aria-label="Phân trang sản phẩm">
+          <button class="page-btn prev" type="button" aria-label="Trang trước" data-action="prev">‹</button>
+          <a class="page-number active" href="#" data-page="1">1</a>
+          <a class="page-number" href="#" data-page="2">2</a>
+          <a class="page-number" href="#" data-page="3">3</a>
+          <button class="page-btn next" type="button" aria-label="Trang sau" data-action="next">›</button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="market-section testimonials" id="testimonials">
+      <div class="market-container">
+        <header class="section-heading">
+          <span class="section-tag">Đánh giá cộng đồng</span>
+          <h2>Người Yêu Nhạc Nói Gì?</h2>
+        </header>
+        <div class="testimonial-grid">
+          <article class="testimonial-card">
+            <div class="avatar">
+              <img src="assets/images/instagram-01.jpg" alt="Khách hàng Sơn">
+            </div>
+            <h3>Trung Sơn</h3>
+            <p>"Turntable nhận được còn đẹp hơn ảnh, kỹ thuật viên đến cân chỉnh tận nhà và dạy cách bảo quản chi tiết."</p>
+            <span class="rating">★★★★★</span>
+          </article>
+          <article class="testimonial-card">
+            <div class="avatar">
+              <img src="assets/images/instagram-03.jpg" alt="Khách hàng Linh">
+            </div>
+            <h3>Ngọc Linh</h3>
+            <p>"Bộ cassette city pop nghe rất đã, booklet dịch chuẩn và đóng gói cực kỳ đỉnh, giao hàng đúng hẹn."</p>
+            <span class="rating">★★★★★</span>
+          </article>
+          <article class="testimonial-card">
+            <div class="avatar">
+              <img src="assets/images/instagram-05.jpg" alt="Khách hàng Hải">
+            </div>
+            <h3>Quốc Hải</h3>
+            <p>"Lần đầu mua thiết bị retro mà cảm giác an tâm, đội ngũ LDIE Zone tư vấn nhiệt tình và hậu mãi nhanh."</p>
+            <span class="rating">★★★★☆</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="market-section faq" id="faq">
+      <div class="market-container">
+        <header class="section-heading">
+          <span class="section-tag">FAQ</span>
+          <h2>Câu Hỏi Thường Gặp</h2>
+        </header>
+        <div class="faq-list">
+          <details>
+            <summary>Thiết bị có được bảo hành không?</summary>
+            <p>Mỗi sản phẩm đều đi kèm bảo hành tối thiểu 06 tháng, riêng máy đã phục chế và turntable được bảo hành 12 tháng.</p>
+          </details>
+          <details>
+            <summary>Tôi có thể kiểm tra hàng trước khi thanh toán?</summary>
+            <p>Bạn có thể hẹn xem trực tiếp tại showroom hoặc yêu cầu video call test máy. Khi giao tận nơi, chúng tôi sẽ setup để bạn kiểm tra lần cuối.</p>
+          </details>
+          <details>
+            <summary>LDIE Zone hỗ trợ vận chuyển ra sao?</summary>
+            <p>Đơn nội thành được giao trong ngày bằng xe chuyên dụng. Đơn tỉnh được đóng gói hai lớp, chèn xốp chống sốc và bảo hiểm 100% giá trị.</p>
+          </details>
+          <details>
+            <summary>Có chính sách đổi trả không?</summary>
+            <p>Nếu sản phẩm phát sinh lỗi kỹ thuật trong vòng 07 ngày, LDIE Zone sẽ đổi thiết bị khác tương đương hoặc hoàn tiền đầy đủ.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="product-detail-modal" id="productDetail" aria-hidden="true">
+    <div class="product-detail-backdrop" data-detail-close></div>
+    <div class="product-detail-content" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <button class="product-detail-close" type="button" data-detail-close aria-label="Đóng">&times;</button>
+      <div class="product-detail-gallery">
+        <img id="detailImage" alt="Chi tiết sản phẩm">
+      </div>
+      <div class="product-detail-info">
+        <header>
+          <h2 id="detailTitle"></h2>
+          <div class="product-detail-meta">
+            <span id="detailPrice"></span>
+            <span id="detailLocation"></span>
+          </div>
+        </header>
+        <section class="product-detail-summary">
+          <div>
+            <span class="label">Tình trạng</span>
+            <span id="detailCondition"></span>
+          </div>
+          <div>
+            <span class="label">Thương hiệu</span>
+            <span id="detailBrand"></span>
+          </div>
+          <div>
+            <span class="label">Định dạng</span>
+            <span id="detailFormat"></span>
+          </div>
+        </section>
+        <section class="product-detail-description">
+          <h3>Mô tả</h3>
+          <p id="detailDescription"></p>
+          <ul id="detailFeatures"></ul>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <footer class="market-footer">
+    <div class="market-container footer-grid">
+      <div>
+        <img class="footer-logo" src="assets/images/logodaxoaphong2.png" alt="LDIE Zone Market logo nhỏ">
+        <p>LDIE Zone Market - điểm đến của những người yêu âm thanh analog và phong cách retro đích thực.</p>
+      </div>
+      <div>
+        <h3>Kết nối</h3>
+        <ul class="footer-links">
+          <li><a href="#collections">Sản phẩm</a></li>
+          <li><a href="#collections">Catalog</a></li>
+          <li><a href="#testimonials">Cộng đồng</a></li>
+          <li><a href="#faq">Hỗ trợ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Nhận bản tin</h3>
+        <form class="footer-form" id="newsletterForm">
+          <label for="footerEmail" class="visually-hidden">Email</label>
+          <input id="footerEmail" type="email" placeholder="Email của bạn">
+          <button type="submit">Đăng ký</button>
+        </form>
+      </div>
+    </div>
+    <p class="footer-copy">© 2024 LDIE Zone. All rights reserved.</p>
+  </footer>
+  <script src="market_place.js"></script>
+</body>
+</html>

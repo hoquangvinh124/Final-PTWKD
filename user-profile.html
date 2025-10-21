@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Profile</title>
+<title>Profile</title> 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,7 +11,16 @@
 </head>
 <body>
   <header class="topbar py-3">
-    <div class="container-fluid d-flex flex-column align-items-center">
+    <div class="container-fluid d-flex flex-column align-item            <div class="ticket-detail-layout">
+              <div class="ticket-detail-visual">
+                <img id="ticketDetailPoster" alt="Selected screening artwork">
+              </div>
+              <div class="ticket-detail-main">
+                <div class="ticket-detail-header">
+                  <h3 class="ticket-detail-title" id="ticketDetailTitle"></h3>
+                  <span class="ticket-showtime-detail" id="ticketDetailShowtime"></span>
+                </div>
+                <dl class="ticket-detail-list">
       <img class="brand mb-2" src="assets/images/logodaxoaphong2.png" alt="OLDIE ZONE logo">
       <nav class="navlinks d-flex flex-wrap" aria-label="Top navigation">
         <a href="#overview">Audio</a>
@@ -28,10 +37,10 @@
 
   <main class="profile-main">
     <section class="artist-hero" id="overview">
-      <button class="spotify-btn" type="button" id="spotifyToggle" aria-label="Mở mini Spotify">
+      <button class="spotify-btn" type="button" id="spotifyToggle" aria-label="Open mini Spotify">
         <img src="assets/images/spotifyicon.png" alt="" aria-hidden="true">
       </button>
-      <button class="hero-next-btn" type="button" id="heroFlipToggle" aria-label="Lật mặt sau">
+      <button class="hero-next-btn" type="button" id="heroFlipToggle" aria-label="Flip to back">
         <img src="assets/images/nextpageicon.png" alt="" aria-hidden="true">
       </button>
       <div class="spotify-panel" id="spotifyPanel" aria-hidden="true">
@@ -41,10 +50,10 @@
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy"></iframe>
         <div class="spotify-tracks">
-          <h3>Chọn playlist</h3>
+          <h3>Select playlist</h3>
           <button class="spotify-track-btn active" type="button"
             data-src="https://open.spotify.com/embed/playlist/6XVB6xOrESMAEucInnMB8x?utm_source=generator">
-            Playlist chính
+            Main playlist
           </button>
           <button class="spotify-track-btn" type="button"
             data-src="https://open.spotify.com/embed/playlist/37i9dQZF1DX0XUsuxWHRQd?utm_source=generator">
@@ -61,15 +70,15 @@
           <div class="hero-face hero-front">
             <div class="hero-container" id="heroFront">
               <div class="hero-portrait">
-                <img src="../Final-PTWKD/assets/images/Tranduythanhanhdaidien.jpg" alt="Huỳnh Quốc Long portrait">
+                <img src="../Final-PTWKD/assets/images/Tranduythanhanhdaidien.jpg" alt="Huynh Quoc Long portrait">
               </div>
               <div class="hero-details">
                 <p class="text-uppercase text-white-50 mb-1 fw-semibold">Jazz Trumpeter</p>
-                <h1><span data-field-display="firstName">None</span> <span data-field-display="lastName">Quốc Long</span></h1>
+                <h1><span data-field-display="firstName">Long</span> <span data-field-display="lastName">Huynh</span></h1>
                 <div class="hero-meta">
-                  <span data-field-display="city">Hồ Chí Minh</span>
+                  <span data-field-display="city">Ho Chi Minh City</span>
                   <span data-field-display="birthdate">09/05/2001</span>
-                  <span data-field-display="age">23 tuổi</span>
+                  <span data-field-display="age">23 years old</span>
                   <span data-field-display="gender">Man</span>
                 </div>
                 <div class="hero-actions">
@@ -91,15 +100,15 @@
             <div class="passport-info d-flex flex-column">
               <div class="passport-field">
                 <label>First Name</label>
-                <span data-field-display="firstName">User</span>
+                <span data-field-display="firstName">Long</span>
               </div>
               <div class="passport-field">
                 <label>Last Name</label>
-                <span data-field-display="lastName">Name</span>
+                <span data-field-display="lastName">Huynh</span>
               </div>
               <div class="passport-field">
                 <label>City</label>
-                <span data-field-display="city">City</span>
+                <span data-field-display="city">Ho Chi Minh City</span>
               </div>
               <div class="passport-field">
                 <label>Birthdate</label>
@@ -107,7 +116,7 @@
               </div>
               <div class="passport-field">
                 <label>Age</label>
-                <span data-field-display="age">23 tuổi</span>
+                <span data-field-display="age">23 years old</span>
               </div>
               <div class="passport-field">
                 <label>Gender</label>
@@ -119,94 +128,103 @@
       </div>
     </section>
 
-    <section class="overview-grid" id="songs">
-      <article class="glass-card">
-        <div class="d-flex justify-content-between align-items-start mb-2">
-          <h2 class="mb-0">Biography</h2>
-          <button class="btn btn-sm bio-edit-btn d-flex align-items-center gap-1" id="bioEditToggle" type="button">
-            <img src="assets/images/editicon.png" alt="" width="16" height="16">
-            <span>Edit</span>
-          </button>
-        </div>
-        <div id="biographyView">
-          <p>
-          Quoc Long was born into a Lebanese family of intellectuals and artists. He is the son of trumpeter Nassim Maalouf
-          and pianist Nada Maalouf. Nephew of writer Amin Maalouf and grandson of journalist, poet and musicologist Rushdi Maalouf.
-          He is noted for playing Arabic maqams with quarter tones on the trumpet, a technique pioneered by his father.
-        </p>
-        <p class="mt-3">
-          Maalouf earned international recognition after winning prizes in major classical trumpet competitions, and was
-          nominated for numerous jazz awards across Europe.
-        </p>
-        </div>
-        <div id="biographyEdit" class="d-none">
-          <textarea class="form-control bg-transparent text-light border-light" rows="5" id="biographyInput"></textarea>
-          <div class="mt-2 d-flex gap-2">
-            <button class="btn btn-sm hero-btn primary" id="bioSaveBtn" type="button">Save</button>
-            <button class="btn btn-sm btn-outline-secondary text-light border-light" id="bioCancelBtn" type="button">Cancel</button>
+    <section class="wishlist-section" id="songs">
+      <article class="glass-card wishlist-panel">
+        <div class="wishlist-header">
+          <div>
+            <h2 id="featuredPanelTitle">Wishlist</h2>
+            <p class="wishlist-subtitle" id="featuredPanelAction">Shows you&rsquo;ve hearted for a future retro screening.</p>
           </div>
         </div>
-      </article>
-      <article class="glass-card featured-panel" id="featuredPanel">
-        <div class="featured-header">
-          <h2 class="mb-0" id="featuredPanelTitle">Featured songs</h2>
-          <span id="featuredPanelAction">Shuffle</span>
-        </div>
-        <div id="featuredSongs">
-          <div class="featured-list">
-            <div class="song-row">
-              <div>01</div>
-              <div>
-                <div class="song-title">Beirut</div>
-                <div class="song-meta">Red &amp; Black Light · 11:09</div>
+        <div class="wishlist-grid">
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/Titanic.png" alt="Titanic VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Titanic</h3>
+                <span class="wishlist-like">&hearts;</span>
               </div>
-              <div class="song-plays">4,252,471</div>
-              <div class="song-actions">▶︎ ⟳</div>
+              <span class="wishlist-note">Saved July 12 · Romance epic</span>
             </div>
-            <div class="song-row">
-              <div>02</div>
-              <div>
-                <div class="song-title">Maeva</div>
-                <div class="song-meta">Wonderland · 6:49</div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/toprun.png" alt="Top Gun VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Top Gun</h3>
+                <span class="wishlist-like">&hearts;</span>
               </div>
-              <div class="song-plays">2,066,753</div>
-              <div class="song-actions">▶︎ ⟳</div>
+              <span class="wishlist-note">Saved July 18 · Need for speed night</span>
             </div>
-            <div class="song-row">
-              <div>03</div>
-              <div>
-                <div class="song-title">Red &amp; Light</div>
-                <div class="song-meta">Red &amp; Black Light · 11:03</div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/sleepless.png" alt="Sleepless in Seattle VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Sleepless in Seattle</h3>
+                <span class="wishlist-like">&hearts;</span>
               </div>
-              <div class="song-plays">1,693,371</div>
-              <div class="song-actions">▶︎ ⟳</div>
+              <span class="wishlist-note">Saved July 24 · Cozy date idea</span>
             </div>
-            <div class="song-row">
-              <div>04</div>
-              <div>
-                <div class="song-title">True Sorry</div>
-                <div class="song-meta">Illusions · 4:53</div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/beauty&amp;beast.png" alt="Beauty and the Beast VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Beauty &amp; The Beast</h3>
+                <span class="wishlist-like">&hearts;</span>
               </div>
-              <div class="song-plays">5,318,012</div>
-              <div class="song-actions">▶︎ ⟳</div>
+              <span class="wishlist-note">Saved July 28 · Family favourite</span>
             </div>
-            <div class="song-row">
-              <div>05</div>
-              <div>
-                <div class="song-title">Nomade Slang</div>
-                <div class="song-meta">Illusions · 6:06</div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/MIB.png" alt="Men in Black VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Men in Black</h3>
+                <span class="wishlist-like">&hearts;</span>
               </div>
-              <div class="song-plays">1,689,358</div>
-              <div class="song-actions">▶︎ ⟳</div>
+              <span class="wishlist-note">Saved August 01 · Sci-fi marathon</span>
             </div>
-            <div class="song-row">
-              <div>06</div>
-              <div>
-                <div class="song-title">Naga</div>
-                <div class="song-meta">Diachronism · 5:57</div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/toystory.png" alt="Toy Story VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Toy Story 2</h3>
+                <span class="wishlist-like">&hearts;</span>
               </div>
-              <div class="song-plays">364,306</div>
-              <div class="song-actions">▶︎ ⟳</div>
+              <span class="wishlist-note">Saved August 04 · Pixar nostalgia</span>
+            </div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/Indiana.png" alt="Jurassic Park VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Jurassic Park</h3>
+                <span class="wishlist-like">&hearts;</span>
+              </div>
+              <span class="wishlist-note">Saved August 12 · Creature feature</span>
+            </div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/Pocahontas.png" alt="Pocahontas VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>Pocahontas</h3>
+                <span class="wishlist-like">&hearts;</span>
+              </div>
+              <span class="wishlist-note">Saved August 18 · Classic sing-along</span>
+            </div>
+          </div>
+          <div class="wishlist-card">
+            <img src="assets/images/film VHS/ET.png" alt="E.T. VHS cover">
+            <div class="wishlist-card-body">
+              <div class="wishlist-card-header">
+                <h3>E.T. The Extra-Terrestrial</h3>
+                <span class="wishlist-like">&hearts;</span>
+              </div>
+              <span class="wishlist-note">Saved August 22 · Homecoming night</span>
             </div>
           </div>
         </div>
@@ -215,19 +233,19 @@
             <div class="edit-form-columns">
               <div class="edit-field-group">
                 <label for="editFirstName">First name</label>
-                <input id="editFirstName" type="text" data-field-input="firstName" placeholder="Nhập first name">
+                <input id="editFirstName" type="text" data-field-input="firstName" placeholder="Enter first name">
               </div>
               <div class="edit-field-group">
                 <label for="editLastName">Last name</label>
-                <input id="editLastName" type="text" data-field-input="lastName" placeholder="Nhập last name">
+                <input id="editLastName" type="text" data-field-input="lastName" placeholder="Enter last name">
               </div>
               <div class="edit-field-group">
                 <label for="editAge">Age</label>
-                <input id="editAge" type="number" min="0" data-field-input="age" placeholder="Tuổi">
+                <input id="editAge" type="number" min="0" data-field-input="age" placeholder="Age">
               </div>
               <div class="edit-field-group">
                 <label for="editCity">City</label>
-                <input id="editCity" type="text" data-field-input="city" placeholder="Thành phố">
+                <input id="editCity" type="text" data-field-input="city" placeholder="City">
               </div>
               <div class="edit-field-group">
                 <label for="editBirthdate">Birthdate</label>
@@ -255,32 +273,266 @@
       </article>
     </section>
 
-    <section class="albums" id="albums">
-      <h2>Albums</h2>
-      <div class="albums-grid">
-        <div class="album-card">
-          <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=500&q=80" alt="Dalida album">
-          <span>Dalida</span>
+    <section class="retro-tickets" id="retroTickets">
+      <h2>Retro Cine Reservations</h2>
+      <div class="section-toolbar">
+        <div class="filter-group" data-filter="tickets" aria-label="Reservation filter">
+          <button type="button" class="filter-button is-active" data-filter-value="all">All Showtimes</button>
+          <button type="button" class="filter-button" data-filter-value="morning">Morning (6:00 - 12:00)</button>
+          <button type="button" class="filter-button" data-filter-value="afternoon">Afternoon (12:00 - 18:00)</button>
+          <button type="button" class="filter-button" data-filter-value="evening">Evening (18:00 - 22:00)</button>
+          <button type="button" class="filter-button" data-filter-value="latenight">Late Night (22:00 - 2:00)</button>
         </div>
-        <div class="album-card">
-          <img src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=500&q=80" alt="10 ans de live album">
-          <span>10 Ans De Live</span>
+      </div>
+      <div class="tickets-grid">
+        <div
+          class="ticket-card"
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          id="ticket-card-1"
+          data-title="Back to the Future (1985)"
+          data-showtime="evening"
+          data-poster="assets/images/film VHS/toprun.png"
+          data-date="July 12, 2024 · 20:00"
+          data-time="20:00"
+          data-code="Booking #RC-482"
+          data-room="Retro Cine Hall A"
+          data-seats="B12 · B13"
+          data-description="Screening with pre-show trivia. Please arrive 30 minutes early for check-in.">
+          <div class="ticket-media">
+            <img src="assets/images/film VHS/toprun.png" alt="Back to the Future poster">
+            <span class="ticket-media-time">July 12, 2024 · 20:00</span>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-body-header">
+              <h3 class="ticket-title">Back to the Future (1985)</h3>
+              <span class="ticket-code">Booking #RC-482</span>
+            </div>
+            <p class="ticket-room">Retro Cine Hall A</p>
+            <p class="ticket-seats">Seats: B12 · B13</p>
+            <span class="ticket-showtime">Evening Show · 20:00</span>
+          </div>
         </div>
-        <div class="album-card">
-          <img src="https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=crop&w=500&q=80" alt="Kalthoum album">
-          <span>Kalthoum</span>
+        <div
+          class="ticket-card"
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          id="ticket-card-2"
+          data-title="Cinema Paradiso (1988)"
+          data-showtime="evening"
+          data-poster="assets/images/film VHS/sleepless.png"
+          data-date="July 19, 2024 · 21:30"
+          data-time="21:30"
+          data-code="Booking #RC-519"
+          data-room="Retro Cine Hall B"
+          data-seats="C05 · C06 · C07"
+          data-description="Includes dessert tasting and a post-show director interview livestream.">
+          <div class="ticket-media">
+            <img src="assets/images/film VHS/sleepless.png" alt="Cinema Paradiso poster">
+            <span class="ticket-media-time">July 19, 2024 · 21:30</span>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-body-header">
+              <h3 class="ticket-title">Cinema Paradiso (1988)</h3>
+              <span class="ticket-code">Booking #RC-519</span>
+            </div>
+            <p class="ticket-room">Retro Cine Hall B</p>
+            <p class="ticket-seats">Seats: C05 · C06 · C07</p>
+            <span class="ticket-showtime">Evening Show · 21:30</span>
+          </div>
         </div>
-        <div class="album-card">
-          <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=500&q=80" alt="Illusions album">
-          <span>Illusions</span>
+        <div
+          class="ticket-card"
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          id="ticket-card-3"
+          data-title="Metropolis (1927)"
+          data-showtime="evening"
+          data-poster="assets/images/film VHS/Indiana.png"
+          data-date="July 28, 2024 · 19:00"
+          data-time="19:00"
+          data-code="Booking #RC-544"
+          data-room="Retro Cine Hall C"
+          data-seats="A01 · A02"
+          data-description="Silent film with live synth score. Dress code: retro-futurism encouraged.">
+          <div class="ticket-media">
+            <img src="assets/images/film VHS/Indiana.png" alt="Metropolis poster">
+            <span class="ticket-media-time">July 28, 2024 · 19:00</span>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-body-header">
+              <h3 class="ticket-title">Metropolis (1927)</h3>
+              <span class="ticket-code">Booking #RC-544</span>
+            </div>
+            <p class="ticket-room">Retro Cine Hall C</p>
+            <p class="ticket-seats">Seats: A01 · A02</p>
+            <span class="ticket-showtime">Evening Show · 19:00</span>
+          </div>
         </div>
-        <div class="album-card">
-          <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=500&q=80" alt="Au pays d'Alice album">
-          <span>Au Pays d'Alice</span>
+        <div
+          class="ticket-card"
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          id="ticket-card-4"
+          data-title="Blade Runner (1982)"
+          data-showtime="latenight"
+          data-poster="assets/images/film VHS/MIB.png"
+          data-date="August 03, 2024 · 22:15"
+          data-time="22:15"
+          data-code="Booking #RC-558"
+          data-room="Retro Cine Hall A"
+          data-seats="D02 · D03"
+          data-description="Late-night neon marathon · Includes synthwave DJ warm-up.">
+          <div class="ticket-media">
+            <img src="assets/images/film VHS/MIB.png" alt="Blade Runner poster">
+            <span class="ticket-media-time">August 03, 2024 · 22:15</span>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-body-header">
+              <h3 class="ticket-title">Blade Runner (1982)</h3>
+              <span class="ticket-code">Booking #RC-558</span>
+            </div>
+            <p class="ticket-room">Retro Cine Hall A</p>
+            <p class="ticket-seats">Seats: D02 · D03</p>
+            <span class="ticket-showtime">Late Night Show · 22:15</span>
+          </div>
         </div>
-        <div class="album-card">
-          <img src="https://images.unsplash.com/photo-1470229538611-16ba8c7ffbd7?auto=format&fit=crop&w=500&q=80" alt="Diachronism album">
-          <span>Diachronism</span>
+        <div
+          class="ticket-card"
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          id="ticket-card-5"
+          data-title="Singin' in the Rain (1952)"
+          data-showtime="evening"
+          data-poster="assets/images/film VHS/beauty&amp;beast.png"
+          data-date="August 10, 2024 · 18:45"
+          data-time="18:45"
+          data-code="Booking #RC-603"
+          data-room="Retro Cine Hall B"
+          data-seats="VIP Row · Seats 1-4"
+          data-description="Charity sing-along night · Includes complimentary ponchos and photo booth.">
+          <div class="ticket-media">
+            <img src="assets/images/film VHS/beauty&amp;beast.png" alt="Singin' in the Rain poster">
+            <span class="ticket-media-time">August 10, 2024 · 18:45</span>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-body-header">
+              <h3 class="ticket-title">Singin' in the Rain (1952)</h3>
+              <span class="ticket-code">Booking #RC-603</span>
+            </div>
+            <p class="ticket-room">Retro Cine Hall B</p>
+            <p class="ticket-seats">Seats: VIP Row · Seats 1-4</p>
+            <span class="ticket-showtime">Evening Show · 18:45</span>
+          </div>
+        </div>
+        <div
+          class="ticket-card"
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          id="ticket-card-6"
+          data-title="The Breakfast Club (1985)"
+          data-showtime="morning"
+          data-poster="assets/images/film VHS/toystory.png"
+          data-date="August 15, 2024 · 10:30"
+          data-time="10:30"
+          data-code="Booking #RC-621"
+          data-room="Retro Cine Hall A"
+          data-seats="E08 · E09"
+          data-description="Morning classic screening with complimentary coffee and donuts.">
+          <div class="ticket-media">
+            <img src="assets/images/film VHS/toystory.png" alt="The Breakfast Club poster">
+            <span class="ticket-media-time">August 15, 2024 · 10:30</span>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-body-header">
+              <h3 class="ticket-title">The Breakfast Club (1985)</h3>
+              <span class="ticket-code">Booking #RC-621</span>
+            </div>
+            <p class="ticket-room">Retro Cine Hall A</p>
+            <p class="ticket-seats">Seats: E08 · E09</p>
+            <span class="ticket-showtime">Morning Show · 10:30</span>
+          </div>
+        </div>
+        <div
+          class="ticket-card"
+          role="button"
+          tabindex="0"
+          aria-pressed="false"
+          id="ticket-card-7"
+          data-title="Ferris Bueller's Day Off (1986)"
+          data-showtime="afternoon"
+          data-poster="assets/images/film VHS/Pocahontas.png"
+          data-date="August 20, 2024 · 14:00"
+          data-time="14:00"
+          data-code="Booking #RC-642"
+          data-room="Retro Cine Hall B"
+          data-seats="F10 · F11 · F12"
+          data-description="Afternoon matinee with nostalgic 80s snacks and refreshments.">
+          <div class="ticket-media">
+            <img src="assets/images/film VHS/Pocahontas.png" alt="Ferris Bueller's Day Off poster">
+            <span class="ticket-media-time">August 20, 2024 · 14:00</span>
+          </div>
+          <div class="ticket-body">
+            <div class="ticket-body-header">
+              <h3 class="ticket-title">Ferris Bueller's Day Off (1986)</h3>
+              <span class="ticket-code">Booking #RC-642</span>
+            </div>
+            <p class="ticket-room">Retro Cine Hall B</p>
+            <p class="ticket-seats">Seats: F10 · F11 · F12</p>
+            <span class="ticket-showtime">Afternoon Show · 14:00</span>
+          </div>
+        </div>
+      </div>
+      <div class="ticket-detail is-empty" id="ticketDetail" aria-live="polite">
+        <div class="ticket-detail-empty" id="ticketDetailEmpty">
+          Select a ticket to view reservation details.
+        </div>
+        <div class="ticket-detail-content d-none" id="ticketDetailContent">
+          <div class="ticket-detail-layout">
+            <div class="ticket-detail-visual">
+              <img id="ticketDetailPoster" alt="Selected screening artwork">
+            </div>
+            <div class="ticket-detail-main">
+              <div class="ticket-detail-header">
+                <h3 class="ticket-detail-title" id="ticketDetailTitle"></h3>
+                <span class="ticket-status" id="ticketDetailStatus"></span>
+              </div>
+              <dl class="ticket-detail-list">
+                <div class="ticket-detail-item">
+                  <dt>Date &amp; time</dt>
+                  <dd id="ticketDetailDate"></dd>
+                </div>
+                <div class="ticket-detail-item">
+                  <dt>Reservation code</dt>
+                  <dd id="ticketDetailCode"></dd>
+                </div>
+                <div class="ticket-detail-item">
+                  <dt>Screening room</dt>
+                  <dd id="ticketDetailRoom"></dd>
+                </div>
+                <div class="ticket-detail-item">
+                  <dt>Seats</dt>
+                  <dd id="ticketDetailSeats"></dd>
+                </div>
+              </dl>
+              <p class="ticket-detail-notes" id="ticketDetailNotes"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-nav-bar">
+        <div class="step-nav" data-nav="tickets" aria-label="Reservation navigation">
+          <button type="button" class="step-button step-button--control" data-action="prev" aria-label="Previous items">‹</button>
+          <button type="button" class="step-button" data-index-slot="0"></button>
+          <button type="button" class="step-button" data-index-slot="1"></button>
+          <button type="button" class="step-button" data-index-slot="2"></button>
+          <button type="button" class="step-button step-button--control" data-action="next" aria-label="Next items">›</button>
         </div>
       </div>
     </section>
