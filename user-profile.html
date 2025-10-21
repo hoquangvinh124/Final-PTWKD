@@ -11,26 +11,41 @@
 </head>
 <body>
   <header class="topbar py-3">
-    <div class="container-fluid d-flex flex-column align-item            <div class="ticket-detail-layout">
-              <div class="ticket-detail-visual">
-                <img id="ticketDetailPoster" alt="Selected screening artwork">
-              </div>
-              <div class="ticket-detail-main">
-                <div class="ticket-detail-header">
-                  <h3 class="ticket-detail-title" id="ticketDetailTitle"></h3>
-                  <span class="ticket-showtime-detail" id="ticketDetailShowtime"></span>
-                </div>
-                <dl class="ticket-detail-list">
-      <img class="brand mb-2" src="assets/images/logodaxoaphong2.png" alt="OLDIE ZONE logo">
-      <nav class="navlinks d-flex flex-wrap" aria-label="Top navigation">
-        <a href="#overview">Audio</a>
+    <div class="container-fluid">
+      <div class="header-top d-flex justify-content-between align-items-center mb-3">
+        <div class="header-left"></div>
+        <img class="brand" src="assets/images/logodaxoaphong2.png" alt="OLDIE ZONE logo">
+        <div class="header-right d-flex gap-3">
+          <button class="header-icon-btn" aria-label="Search">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+          <button class="header-icon-btn" aria-label="User profile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </button>
+          <button class="header-icon-btn header-cart-btn" aria-label="Shopping cart">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-badge">1</span>
+          </button>
+        </div>
+      </div>
+      <nav class="navlinks d-flex flex-wrap justify-content-center" aria-label="Top navigation">
+        <a href="#overview">AUDIO</a>
         <a href="#songs">VHS</a>
-        <a href="#">Cassette Tape</a>
-        <a href="#">Pola Camera</a>
-        <a href="#">Accessories</a>
-        <a href="#videos">Cinema Room</a>
-        <a href="#">Community</a>
-        <a href="#albums">Thread</a>
+        <a href="#">CASSETTE TAPE</a>
+        <a href="#">POLA CAMERA</a>
+        <a href="#">ACCESSORIES</a>
+        <a href="#videos">CINE ROOM</a>
+        <a href="#albums">THREAD</a>
       </nav>
     </div>
   </header>
@@ -78,7 +93,7 @@
                 <div class="hero-meta">
                   <span data-field-display="city">Ho Chi Minh City</span>
                   <span data-field-display="birthdate">09/05/2001</span>
-                  <span data-field-display="age">23 years old</span>
+                  <span data-field-display="country">Vietnam</span>
                   <span data-field-display="gender">Man</span>
                 </div>
                 <div class="hero-actions">
@@ -86,7 +101,7 @@
                 </div>
                 <div class="hero-tabs">
                   <button class="active" data-view="overview">Overview</button>
-                  <button data-view="videos">Videos</button>
+                  <button data-view="shipping">Shipping Address</button>
                   <button data-view="shows">Shows</button>
                 </div>
               </div>
@@ -115,8 +130,8 @@
                 <span data-field-display="birthdate">09/05/2001</span>
               </div>
               <div class="passport-field">
-                <label>Age</label>
-                <span data-field-display="age">23 years old</span>
+                <label>Country</label>
+                <span data-field-display="country">Vietnam</span>
               </div>
               <div class="passport-field">
                 <label>Gender</label>
@@ -228,6 +243,15 @@
             </div>
           </div>
         </div>
+        <div class="step-nav-bar">
+          <div class="step-nav" data-nav="wishlist" aria-label="Wishlist navigation">
+            <button type="button" class="step-button step-button--control" data-action="prev" aria-label="Previous items">‹</button>
+            <button type="button" class="step-button" data-index-slot="0"></button>
+            <button type="button" class="step-button" data-index-slot="1"></button>
+            <button type="button" class="step-button" data-index-slot="2"></button>
+            <button type="button" class="step-button step-button--control" data-action="next" aria-label="Next items">›</button>
+          </div>
+        </div>
         <div id="editProfilePanel">
           <form id="editProfileForm" class="edit-form-grid">
             <div class="edit-form-columns">
@@ -240,8 +264,8 @@
                 <input id="editLastName" type="text" data-field-input="lastName" placeholder="Enter last name">
               </div>
               <div class="edit-field-group">
-                <label for="editAge">Age</label>
-                <input id="editAge" type="number" min="0" data-field-input="age" placeholder="Age">
+                <label for="editCountry">Country</label>
+                <input id="editCountry" type="text" data-field-input="country" placeholder="Enter country">
               </div>
               <div class="edit-field-group">
                 <label for="editCity">City</label>
@@ -269,6 +293,120 @@
             </div>
             <button class="hero-btn primary align-self-start" id="editProfileSaveBtn" type="button">Save profile</button>
           </form>
+        </div>
+        <div id="shippingAddressPanel">
+          <form id="shippingAddressForm" class="shipping-form-modern">
+            <h3 class="shipping-form-title">Update Address Information</h3>
+            <p class="shipping-form-subtitle">Use the information below when billing</p>
+            
+            <div class="shipping-form-grid">
+              <div class="shipping-row-2">
+                <div class="shipping-field-group">
+                  <label for="shippingFullName">Full Name</label>
+                  <input id="shippingFullName" type="text" data-field-input="shippingFullName" placeholder="Huynh Quoc Long">
+                </div>
+                <div class="shipping-field-group">
+                  <label for="shippingPhone">Phone Number</label>
+                  <input id="shippingPhone" type="tel" data-field-input="shippingPhone" placeholder="(+84) 787 567 381">
+                </div>
+              </div>
+              
+              <div class="shipping-field-group">
+                <label for="shippingCity">City / Province / District</label>
+                <select id="shippingCity" data-field-input="shippingCity">
+                  <option value="">Select Province/City</option>
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                  <option value="Đà Nẵng">Đà Nẵng</option>
+                  <option value="Hải Phòng">Hải Phòng</option>
+                  <option value="Cần Thơ">Cần Thơ</option>
+                  <option value="Hà Giang">Hà Giang</option>
+                  <option value="Cao Bằng">Cao Bằng</option>
+                  <option value="Lào Cai">Lào Cai</option>
+                  <option value="Bắc Kạn">Bắc Kạn</option>
+                  <option value="Lạng Sơn">Lạng Sơn</option>
+                  <option value="Tuyên Quang">Tuyên Quang</option>
+                  <option value="Thái Nguyên">Thái Nguyên</option>
+                  <option value="Phú Thọ">Phú Thọ</option>
+                  <option value="Yên Bái">Yên Bái</option>
+                  <option value="Bắc Giang">Bắc Giang</option>
+                  <option value="Quảng Ninh">Quảng Ninh</option>
+                  <option value="Hòa Bình">Hòa Bình</option>
+                  <option value="Sơn La">Sơn La</option>
+                  <option value="Điện Biên">Điện Biên</option>
+                  <option value="Lai Châu">Lai Châu</option>
+                  <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                  <option value="Bắc Ninh">Bắc Ninh</option>
+                  <option value="Hải Dương">Hải Dương</option>
+                  <option value="Hưng Yên">Hưng Yên</option>
+                  <option value="Hà Nam">Hà Nam</option>
+                  <option value="Nam Định">Nam Định</option>
+                  <option value="Ninh Bình">Ninh Bình</option>
+                  <option value="Thanh Hóa">Thanh Hóa</option>
+                  <option value="Nghệ An">Nghệ An</option>
+                  <option value="Hà Tĩnh">Hà Tĩnh</option>
+                  <option value="Quảng Bình">Quảng Bình</option>
+                  <option value="Quảng Trị">Quảng Trị</option>
+                  <option value="Thừa Thiên - Huế">Thừa Thiên - Huế</option>
+                  <option value="Quảng Nam">Quảng Nam</option>
+                  <option value="Quảng Ngãi">Quảng Ngãi</option>
+                  <option value="Bình Định">Bình Định</option>
+                  <option value="Phú Yên">Phú Yên</option>
+                  <option value="Khánh Hòa">Khánh Hòa</option>
+                  <option value="Ninh Thuận">Ninh Thuận</option>
+                </select>
+              </div>
+              
+              <div class="shipping-field-group">
+                <label for="shippingStreet">Street Address</label>
+                <input id="shippingStreet" type="text" data-field-input="shippingStreet" placeholder="Ký túc xá Khu B - Đại học Quốc gia TP.HCM, Tô Vĩnh Diện">
+              </div>
+              
+              <div class="shipping-type-group">
+                <label class="shipping-type-label">Address Type:</label>
+                <div class="shipping-type-options">
+                  <label class="shipping-type-radio">
+                    <input type="radio" name="addressType" value="home" checked>
+                    <span>Home</span>
+                  </label>
+                  <label class="shipping-type-radio">
+                    <input type="radio" name="addressType" value="office">
+                    <span>Office</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="shipping-actions">
+              <button class="hero-btn secondary" id="shippingClearBtn" type="button">Cancel</button>
+              <button class="hero-btn primary" id="shippingSaveBtn" type="button">Save</button>
+            </div>
+          </form>
+          <div id="shippingAddressSaved" class="shipping-saved-display d-none">
+            <h3 class="shipping-form-title">Saved Shipping Address</h3>
+            <p class="shipping-form-subtitle">Your default shipping information</p>
+            <div class="shipping-info-card">
+              <div class="shipping-info-grid">
+                <div class="shipping-info-item">
+                  <span class="shipping-label">Full Name</span>
+                  <span class="shipping-value" id="displayShippingFullName">--</span>
+                </div>
+                <div class="shipping-info-item">
+                  <span class="shipping-label">Phone Number</span>
+                  <span class="shipping-value" id="displayShippingPhone">--</span>
+                </div>
+              </div>
+              <div class="shipping-info-item">
+                <span class="shipping-label">City / Province / District</span>
+                <span class="shipping-value" id="displayShippingCity">--</span>
+              </div>
+              <div class="shipping-info-item">
+                <span class="shipping-label">Street Address</span>
+                <span class="shipping-value" id="displayShippingStreet">--</span>
+              </div>
+            </div>
+            <button class="hero-btn primary mt-3" id="shippingEditBtn" type="button">Edit Address</button>
+          </div>
         </div>
       </article>
     </section>

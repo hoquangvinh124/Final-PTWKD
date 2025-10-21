@@ -278,7 +278,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
     lastName:'Huynh',
     city:'Ho Chi Minh City',
     birthdate:'2001-05-09',
-    age:'23',
+    country:'Vietnam',
     gender:'Man',
     avatar: initialAvatar
   };
@@ -303,10 +303,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
     if(field === 'birthdate'){
       return formatDate(value);
     }
-    if(field === 'age'){
-      return `${value} years old`;
-    }
-    if(field === 'firstName' || field === 'lastName' || field === 'city'){
+    if(field === 'firstName' || field === 'lastName' || field === 'city' || field === 'country'){
       return value;
     }
     if(field === 'gender'){
@@ -382,6 +379,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
 
   const setEditMode = (enable, opts = {}) => {
     profileMain.classList.toggle('edit-mode', enable);
+    profileMain.classList.remove('shipping-mode');
     heroCard.classList.toggle('is-flipped', enable);
     featuredTitle.textContent = enable ? 'Edit profile' : 'Wishlist';
     featuredAction.textContent = enable ? 'Autosave' : 'Updated';
@@ -452,9 +450,14 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
         setEditMode(true);
       }else if(view === 'overview'){
         setEditMode(false);
+      }else if(view === 'shipping'){
+        setEditMode(false, {skipTabUpdate:true});
+        setTabActive(view);
+        profileMain.classList.add('shipping-mode');
       }else{
         setEditMode(false, {skipTabUpdate:true});
         setTabActive(view);
+        profileMain.classList.remove('shipping-mode');
       }
     });
   });
@@ -470,7 +473,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
         lastName: profileData.lastName || '',
         city: profileData.city || '',
         birthdate: profileData.birthdate || '',
-        age: profileData.age || '',
+        country: profileData.country || '',
         gender: profileData.gender || '',
         avatar: profileData.avatar || ''
       };
@@ -525,6 +528,120 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
   });
   updateDisplays();
   setEditMode(false);
+})();
+
+// Shipping Address Management
+(function(){
+  const shippingForm = document.getElementById('shippingAddressForm');
+  const shippingSaveBtn = document.getElementById('shippingSaveBtn');
+  const shippingClearBtn = document.getElementById('shippingClearBtn');
+  const shippingEditBtn = document.getElementById('shippingEditBtn');
+  const shippingSavedDisplay = document.getElementById('shippingAddressSaved');
+  
+  if(!shippingForm || !shippingSaveBtn) return;
+
+  const shippingData = {
+    shippingFullName: '',
+    shippingPhone: '',
+    shippingCity: '',
+    shippingStreet: ''
+  };
+
+  const loadShippingData = () => {
+    try {
+      const saved = localStorage.getItem('shippingAddress');
+      if(saved){
+        const data = JSON.parse(saved);
+        Object.assign(shippingData, data);
+        updateShippingDisplay();
+        return true;
+      }
+    } catch(e) {}
+    return false;
+  };
+
+  const saveShippingData = () => {
+    try {
+      localStorage.setItem('shippingAddress', JSON.stringify(shippingData));
+      return true;
+    } catch(e) {
+      return false;
+    }
+  };
+
+  const updateShippingDisplay = () => {
+    const hasData = Object.values(shippingData).some(v => v);
+    
+    if(hasData){
+      shippingForm.classList.add('d-none');
+      shippingSavedDisplay.classList.remove('d-none');
+      
+      document.getElementById('displayShippingFullName').textContent = shippingData.shippingFullName || '--';
+      document.getElementById('displayShippingPhone').textContent = shippingData.shippingPhone || '--';
+      document.getElementById('displayShippingCity').textContent = shippingData.shippingCity || '--';
+      document.getElementById('displayShippingStreet').textContent = shippingData.shippingStreet || '--';
+    } else {
+      shippingForm.classList.remove('d-none');
+      shippingSavedDisplay.classList.add('d-none');
+    }
+
+    const inputs = shippingForm.querySelectorAll('[data-field-input]');
+    inputs.forEach(input => {
+      const field = input.getAttribute('data-field-input');
+      if(shippingData[field] !== undefined){
+        input.value = shippingData[field];
+      }
+    });
+  };
+
+  const inputs = shippingForm.querySelectorAll('[data-field-input]');
+  inputs.forEach(input => {
+    const field = input.getAttribute('data-field-input');
+    input.addEventListener('input', () => {
+      shippingData[field] = input.value.trim();
+    });
+  });
+
+  if(shippingSaveBtn){
+    shippingSaveBtn.addEventListener('click', () => {
+      inputs.forEach(input => {
+        const field = input.getAttribute('data-field-input');
+        shippingData[field] = input.value.trim();
+      });
+      
+      if(saveShippingData()){
+        updateShippingDisplay();
+        document.dispatchEvent(new CustomEvent('shipping:saved', {
+          detail: shippingData
+        }));
+      }
+    });
+  }
+
+  if(shippingClearBtn){
+    shippingClearBtn.addEventListener('click', () => {
+      Object.keys(shippingData).forEach(key => {
+        shippingData[key] = '';
+      });
+      inputs.forEach(input => {
+        input.value = '';
+      });
+    });
+  }
+
+  if(shippingEditBtn){
+    shippingEditBtn.addEventListener('click', () => {
+      shippingForm.classList.remove('d-none');
+      shippingSavedDisplay.classList.add('d-none');
+    });
+  }
+
+  loadShippingData();
+  updateShippingDisplay();
+
+  window.getShippingAddress = () => {
+    return {...shippingData};
+  };
 })();
 
 (function(){
@@ -743,4 +860,29 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
   clearDetail();
 })();
 
-// Wishlist section - no interactive details needed
+// Wishlist section - pagination only
+(function(){
+  const grid = document.querySelector('.wishlist-grid');
+  const cards = grid ? Array.from(grid.querySelectorAll('.wishlist-card')) : [];
+  const nav = document.querySelector('[data-nav="wishlist"]');
+
+  if(!grid || !cards.length || !nav) return;
+
+  const applyPageItems = (pageItems) => {
+    const pageSet = new Set(pageItems);
+    cards.forEach(card => {
+      const visible = pageSet.has(card);
+      card.classList.toggle('is-hidden', !visible);
+      card.setAttribute('aria-hidden', visible ? 'false' : 'true');
+    });
+  };
+
+  const paginator = createPaginator(nav, {
+    perPage: 8,
+    onPageChange: ({ items }) => {
+      applyPageItems(items);
+    }
+  });
+
+  paginator?.setItems(cards);
+})();
