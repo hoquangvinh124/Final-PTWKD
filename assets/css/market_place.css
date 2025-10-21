@@ -17,7 +17,7 @@ body{
   font-family:"Barlow",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   background:
     linear-gradient(rgba(0, 0, 0, 0.823),rgba(0, 0, 0, 0.789)),
-    url("assets/images/anhnenhuong.jpg") center/cover fixed;
+    url("../images/bg.jpg") center/cover fixed;
   color:var(--text);
   min-height:100vh;
 }
