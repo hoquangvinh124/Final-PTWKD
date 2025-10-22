@@ -491,6 +491,44 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
     });
   }
 
+  const editClearBtn = document.getElementById('editProfileClearBtn');
+  if(editClearBtn){
+    editClearBtn.addEventListener('click', () => {
+      // Clear all profile data
+      profileData.firstName = '';
+      profileData.lastName = '';
+      profileData.city = '';
+      profileData.birthdate = '';
+      profileData.country = '';
+      profileData.gender = 'Man';
+      profileData.avatar = initialAvatar;
+      
+      // Clear all input fields
+      inputs.forEach(input => {
+        const field = input.getAttribute('data-field-input');
+        if(field === 'gender'){
+          input.value = 'Man';
+        } else if(input.type === 'date'){
+          input.value = '';
+        } else {
+          input.value = '';
+        }
+      });
+      
+      // Clear avatar upload
+      if(avatarImage){
+        avatarImage.value = '';
+      }
+      
+      // Update displays
+      updateDisplays();
+      syncHeight();
+      
+      // Dispatch clear event
+      document.dispatchEvent(new CustomEvent('profile:clear'));
+    });
+  }
+
   if(flipToggle){
     flipToggle.addEventListener('click', (event) => {
       event.stopPropagation();
@@ -695,6 +733,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
   const roomEl = document.getElementById('ticketDetailRoom');
   const seatsEl = document.getElementById('ticketDetailSeats');
   const notesEl = document.getElementById('ticketDetailNotes');
+  const summaryEl = document.getElementById('ticketDetailSummary');
   const nav = document.querySelector('[data-nav="tickets"]');
   const filterGroup = document.querySelector('[data-filter="tickets"]');
 
@@ -734,10 +773,13 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
       showtimeEl.textContent = '';
     }
     dateEl.textContent = '';
-    codeEl.textContent = '';
+    if(codeEl) codeEl.textContent = '';
     roomEl.textContent = '';
-    seatsEl.textContent = '';
-    notesEl.textContent = '';
+    if(seatsEl) seatsEl.textContent = '';
+    if(notesEl) notesEl.textContent = '';
+    if(summaryEl){
+      summaryEl.textContent = '';
+    }
     setEmptyState(message);
     const posterEl = document.getElementById('ticketDetailPoster');
     if(posterEl){
@@ -786,12 +828,19 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
     }
 
     dateEl.textContent = getContent(card, 'date', '.ticket-media-time');
-    codeEl.textContent = getContent(card, 'code', '.ticket-code');
+    if(codeEl) codeEl.textContent = getContent(card, 'code', '.ticket-code');
     roomEl.textContent = getContent(card, 'room', '.ticket-room');
-    seatsEl.textContent = getContent(card, 'seats', '.ticket-seats');
+    if(seatsEl) seatsEl.textContent = getContent(card, 'seats', '.ticket-seats');
 
-    const notes = card.dataset.description || '';
-    notesEl.textContent = notes || 'No additional notes.';
+    const description = card.dataset.description || '';
+    if(summaryEl){
+      summaryEl.textContent = description || 'No summary available.';
+    }
+
+    if(notesEl){
+      const notes = card.dataset.description || '';
+      notesEl.textContent = notes || 'No additional notes.';
+    }
 
     detail.scrollIntoView({behavior:'smooth', block:'nearest'});
   };
