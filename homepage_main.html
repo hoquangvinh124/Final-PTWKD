@@ -55,16 +55,17 @@
                         <a href="#" class="nav-logo">
                         <img src="assets/images/shopname.jpg" width="150px" height="60px">
                         </a>
-                        <div class="header-icons">
-                            <a href="#"><button class="user-icon"></button></a>
-                            <a href="#"><button class="search-icon"></button></a>
-                            <button class="cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartModal" title="Shopping Cart">
+                        <div class="header-icons" role="group" aria-label="Lối tắt điều hướng">
+                            <button type="button" class="header-icon search-btn" aria-label="Tìm kiếm" title="Tìm kiếm">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartModal" title="Giỏ hàng">
                                 <span class="sr-only">Mở giỏ hàng</span>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M6 6h15l-1.5 9h-12L5 2H2" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <circle cx="9" cy="21" r="1.8" fill="#111"/><circle cx="18" cy="21" r="1.8" fill="#111"/>
-                                </svg>
+                                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
                                 <span class="badge" id="cartBadge"></span>
+                            </button>
+                            <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                                <i class="fa-regular fa-user" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
@@ -90,14 +91,9 @@
                         <li class="nav-item"><a href="#" class="nav-link">POLA CAMERA</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">CINE ROOM</a></li>
                         <li class="nav-item"><a href="#" class="nav-link">THREAD</a></li>
-                        
-                        
-                        <a href="#"><i class="user-icon"></i></a>
-                        <a href="#"><i class="search-icon"></i></a>
-                        <a href="#"><i class="cart-icon"></i></a>
                     </ul>
                 </nav>
-            </header> 
+            </header>
 
             <main>
                 <main>
@@ -834,7 +830,7 @@ function removeItem(id) {
 const loadingLinks = [
     ...$$('.nav-menu > li > a.nav-link'),
     ...$$('.nav-menu .submenu-link'),
-    ...$$('.header-icons a'),
+    ...$$('.header-icons .header-icon'),
     ...$$('.footerNav a'),
     ...$$('.socialIcons a'),
     $('.story .text-link')
