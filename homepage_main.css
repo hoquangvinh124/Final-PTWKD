@@ -682,15 +682,13 @@ i.shopping-bag-icon {
 /*shopping cart*/
 .cart-btn{
   position: relative;
+  border: none;
+  background: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  border:1px solid #e5e7eb;
-  background:#fff;
-  cursor:pointer
+  padding: 0;
+  cursor: pointer;
 }
 .badge{
   position:absolute;

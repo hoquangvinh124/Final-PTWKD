@@ -31,20 +31,18 @@ const fmt = new Intl.NumberFormat('vi-VN', {
 const state = { items: [] };
 
 function openModal() {
-  if (els.tab && els.tab.classList.contains('open')) closeTab();
+  if (els.tab && els.tab.classList.contains('open')) closeTab({ focus: 'none' });
   els.overlay.classList.add('show');
   els.modal.classList.add('show');
-  els.btn.setAttribute('aria-expanded', 'true');
   if (els.tabToggle) els.tabToggle.setAttribute('disabled', 'true');
-  setTimeout(() => els.close.focus(), 0);
+  if (els.close) setTimeout(() => els.close.focus(), 0);
 }
 
 function closeModal() {
   els.overlay.classList.remove('show');
   els.modal.classList.remove('show');
-  els.btn.setAttribute('aria-expanded', 'false');
   if (els.tabToggle) els.tabToggle.removeAttribute('disabled');
-  els.btn.focus();
+  if (els.btn) els.btn.focus();
 }
 
 function updateBadge() {
@@ -141,7 +139,16 @@ els.grid.addEventListener('click', (event) => {
   });
 });
 
-els.btn.addEventListener('click', openModal);
+els.btn.addEventListener('click', (event) => {
+  event.preventDefault();
+  if (els.tab) {
+    const isOpen = els.tab.classList.contains('open');
+    if (isOpen) closeTab({ focus: 'button' });
+    else openTab();
+    return;
+  }
+  openModal();
+});
 els.overlay.addEventListener('click', closeModal);
 els.close.addEventListener('click', closeModal);
 els.cont.addEventListener('click', (event) => {
@@ -187,16 +194,21 @@ function openTab() {
     els.tabPanel.hidden = false;
     setTimeout(() => els.tabPanel.focus(), 0);
   }
+  if (els.btn) els.btn.setAttribute('aria-expanded', 'true');
   if (els.tabToggle) els.tabToggle.setAttribute('aria-expanded', 'true');
 }
 
-function closeTab() {
+function closeTab(options = {}) {
   if (!els.tab) return;
   els.tab.classList.remove('open');
   if (els.tabPanel) els.tabPanel.hidden = true;
-  if (els.tabToggle) {
-    els.tabToggle.setAttribute('aria-expanded', 'false');
+  if (els.btn) els.btn.setAttribute('aria-expanded', 'false');
+  if (els.tabToggle) els.tabToggle.setAttribute('aria-expanded', 'false');
+  const focusTarget = options.focus || 'toggle';
+  if (focusTarget === 'toggle' && els.tabToggle) {
     els.tabToggle.focus();
+  } else if (focusTarget === 'button' && els.btn) {
+    els.btn.focus();
   }
 }
 
