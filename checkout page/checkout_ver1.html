@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <div class="page-wrapper">
@@ -19,16 +20,17 @@
                         <a href="#" class="nav-logo">
                         <img src="../images/shopname.jpg" width="150px" height="60px">
                         </a>
-                        <div class="header-icons">
-                            <a href="#"><button class="user-icon"></button></a>
-                            <a href="#"><button class="search-icon"></button></a>
-                            <button class="cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartModal" title="Shopping Cart">
+                        <div class="header-icons" role="group" aria-label="Lối tắt điều hướng">
+                            <button type="button" class="header-icon search-btn" aria-label="Tìm kiếm" title="Tìm kiếm">
+                                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartModal" title="Giỏ hàng">
                                 <span class="sr-only">Mở giỏ hàng</span>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                    <path d="M6 6h15l-1.5 9h-12L5 2H2" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <circle cx="9" cy="21" r="1.8" fill="#111"/><circle cx="18" cy="21" r="1.8" fill="#111"/>
-                                </svg>
+                                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
                                 <span class="badge" id="cartBadge"></span>
+                            </button>
+                            <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                                <i class="fa-regular fa-user" aria-hidden="true"></i>
                             </button>
                         </div>
                     </div>
