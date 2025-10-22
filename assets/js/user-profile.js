@@ -687,6 +687,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
   const detail = document.getElementById('ticketDetail');
   const emptyState = document.getElementById('ticketDetailEmpty');
   const content = document.getElementById('ticketDetailContent');
+  const closeBtn = document.getElementById('ticketDetailClose');
   const titleEl = document.getElementById('ticketDetailTitle');
   const statusEl = document.getElementById('ticketDetailStatus');
   const dateEl = document.getElementById('ticketDetailDate');
@@ -794,6 +795,14 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
 
     detail.scrollIntoView({behavior:'smooth', block:'nearest'});
   };
+
+  if(closeBtn){
+    closeBtn.addEventListener('click', () => {
+      clearActiveState();
+      setEmptyState();
+      activeCard = null;
+    });
+  }
 
   cards.forEach(card => {
     card.addEventListener('click', () => {
