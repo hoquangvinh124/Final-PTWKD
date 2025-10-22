@@ -723,12 +723,18 @@ a{text-decoration:none;color:inherit}
 }
 .profile-main.edit-mode .hero-tabs button[data-view="edit"]{color:#fff;}
 .edit-form-columns{
-  display:flex;
-  flex-wrap:wrap;
-  gap:16px 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
 }
+
+.edit-form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .edit-field-group{
-  flex:1 1 23px;
   display:flex;
   flex-direction:column;
   gap:6px;
@@ -1444,6 +1450,7 @@ a{text-decoration:none;color:inherit}
   .passport-field span::after{display:none;}
   .wishlist-grid{grid-template-columns:repeat(2,1fr);}
   .wishlist-card img{height:200px;}
+  .edit-form-columns{grid-template-columns:1fr;}
   .shipping-row-2{grid-template-columns:1fr;}
   .shipping-info-grid{grid-template-columns:1fr;}
   .shipping-actions{flex-direction:column-reverse;}
