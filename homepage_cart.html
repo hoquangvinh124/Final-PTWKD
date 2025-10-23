@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Retro Queue – Cửa hàng retro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7Z6O0wKG0yY6F12sJ0Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="homepage_cart.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a class="logo" href="#" aria-label="Retro Queue homepage">Retro Queue</a>
+            <nav class="main-nav" aria-label="Danh mục chính">
+                <a href="#" class="nav-link">Vinyl</a>
+                <a href="#" class="nav-link">Cassette</a>
+                <a href="#" class="nav-link">VHS</a>
+                <a href="#" class="nav-link">Phụ kiện</a>
+            </nav>
+            <div class="header-actions">
+                <button class="icon-btn" type="button" aria-label="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <div class="cart-wrapper">
+                    <button class="icon-btn cart-toggle" type="button" aria-expanded="false" aria-controls="cartDropdown">
+                        <span class="sr-only">Mở giỏ hàng</span>
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                    <div class="cart-dropdown" id="cartDropdown" role="dialog" aria-modal="false" aria-labelledby="cartHeading" tabindex="-1">
+                        <div class="cart-heading" id="cartHeading">Giỏ hàng</div>
+                        <div class="cart-items" id="cartItems" aria-live="polite">
+                            <p class="empty" id="cartEmpty">Chưa có sản phẩm nào.</p>
+                        </div>
+                        <div class="cart-summary">
+                            <div class="summary-line">
+                                <span>Tạm tính</span>
+                                <span id="cartTotal">0₫</span>
+                            </div>
+                            <div class="cart-buttons">
+                                <button class="btn secondary" type="button" id="continueBtn">Tiếp tục mua sắm</button>
+                                <button class="btn primary" type="button" id="checkoutBtn">Thanh toán</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <p class="eyebrow">Âm thanh cổ điển</p>
+                <h1>Săn lùng kho báu retro của bạn</h1>
+                <p class="lead">Chọn những chiếc máy nghe nhạc, băng cassette và đĩa vinyl hiếm gặp được đội ngũ Retro Queue tuyển chọn thủ công.</p>
+                <a href="#products" class="btn primary">Khám phá ngay</a>
+            </div>
+        </section>
+
+        <section class="product-section" id="products" aria-labelledby="productHeading">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <p class="eyebrow">Danh mục nổi bật</p>
+                        <h2 id="productHeading">Best sellers</h2>
+                    </div>
+                    <p class="section-subtitle">Click biểu tượng giỏ hàng để thêm sản phẩm của bạn.</p>
+                </div>
+                <div class="product-grid">
+                    <article class="product-card" data-id="vinyl-aurora" data-name="Vinyl Aurora Nights" data-price="890000" data-img="assets/images/Audio/Vinyl/13.jpg">
+                        <figure class="product-media">
+                            <img src="assets/images/Audio/Vinyl/13.jpg" alt="Vinyl Aurora Nights">
+                            <button class="product-add" type="button" aria-label="Thêm Vinyl Aurora Nights vào giỏ"><i class="fa-solid fa-cart-plus"></i></button>
+                        </figure>
+                        <h3 class="product-title">Vinyl Aurora Nights</h3>
+                        <p class="product-price">890.000₫</p>
+                    </article>
+                    <article class="product-card" data-id="cassette-midnight" data-name="Cassette Midnight Wave" data-price="320000" data-img="assets/images/Cassette%20Tape/17.jpg">
+                        <figure class="product-media">
+                            <img src="assets/images/Cassette%20Tape/17.jpg" alt="Cassette Midnight Wave">
+                            <button class="product-add" type="button" aria-label="Thêm Cassette Midnight Wave vào giỏ"><i class="fa-solid fa-cart-plus"></i></button>
+                        </figure>
+                        <h3 class="product-title">Cassette Midnight Wave</h3>
+                        <p class="product-price">320.000₫</p>
+                    </article>
+                    <article class="product-card" data-id="pola-sunlight" data-name="Pola Camera Sunlight" data-price="2150000" data-img="assets/images/Pola%20Camera/11.jpg">
+                        <figure class="product-media">
+                            <img src="assets/images/Pola%20Camera/11.jpg" alt="Pola Camera Sunlight">
+                            <button class="product-add" type="button" aria-label="Thêm Pola Camera Sunlight vào giỏ"><i class="fa-solid fa-cart-plus"></i></button>
+                        </figure>
+                        <h3 class="product-title">Pola Camera Sunlight</h3>
+                        <p class="product-price">2.150.000₫</p>
+                    </article>
+                    <article class="product-card" data-id="ipod-classic" data-name="iPod Classic Revival" data-price="1780000" data-img="assets/images/Accessories/IPod/8.jpg">
+                        <figure class="product-media">
+                            <img src="assets/images/Accessories/IPod/8.jpg" alt="iPod Classic Revival">
+                            <button class="product-add" type="button" aria-label="Thêm iPod Classic Revival vào giỏ"><i class="fa-solid fa-cart-plus"></i></button>
+                        </figure>
+                        <h3 class="product-title">iPod Classic Revival</h3>
+                        <p class="product-price">1.780.000₫</p>
+                    </article>
+                    <article class="product-card" data-id="vhs-legend" data-name="VHS Legend of 90s" data-price="450000" data-img="assets/images/VHS/39.jpg">
+                        <figure class="product-media">
+                            <img src="assets/images/VHS/39.jpg" alt="VHS Legend of 90s">
+                            <button class="product-add" type="button" aria-label="Thêm VHS Legend of 90s vào giỏ"><i class="fa-solid fa-cart-plus"></i></button>
+                        </figure>
+                        <h3 class="product-title">VHS Legend of 90s</h3>
+                        <p class="product-price">450.000₫</p>
+                    </article>
+                    <article class="product-card" data-id="cd-player" data-name="CD Player Wave" data-price="1250000" data-img="assets/images/Accessories/CD%20Player/13.jpg">
+                        <figure class="product-media">
+                            <img src="assets/images/Accessories/CD%20Player/13.jpg" alt="CD Player Wave">
+                            <button class="product-add" type="button" aria-label="Thêm CD Player Wave vào giỏ"><i class="fa-solid fa-cart-plus"></i></button>
+                        </figure>
+                        <h3 class="product-title">CD Player Wave</h3>
+                        <p class="product-price">1.250.000₫</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2024 Retro Queue. Giữ trọn chất analog trong từng khoảnh khắc.</p>
+        </div>
+    </footer>
+
+    <script src="homepage_cart.js" defer></script>
+</body>
+</html>
