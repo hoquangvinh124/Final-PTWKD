@@ -77,8 +77,66 @@ async function loadProduct(category = null, subcategory = null) {
   }
 }
 
+// Populate TYPE filter dropdown with values from CURRENT filtered products only
+async function populateAllFilters(currentCategory = null, currentSubcategory = null) {
+  try {
+    const allProducts = await getProductData();
+    if (!allProducts || !Array.isArray(allProducts)) return;
+    
+    // Filter to only products matching current page category/subcategory
+    const pageProducts = filterProducts(allProducts, currentCategory, currentSubcategory);
+    
+    // Extract unique categories and subcategories
+    const types = new Set();
+    
+    pageProducts.forEach(product => {
+      // Type: category and subcategory
+      if (product.category) types.add(product.category);
+      if (product.subcategory) types.add(product.subcategory);
+    });
+    
+    // Sort alphabetically
+    const sortedTypes = Array.from(types).sort();
+    
+    // Find TYPE dropdown
+    const allDropdowns = document.querySelectorAll('.filter-dropdown');
+    
+    allDropdowns.forEach(dropdown => {
+      const label = dropdown.querySelector('.filter-label');
+      if (!label) return;
+      
+      const labelText = label.textContent.trim().toUpperCase();
+      const dropdownContent = dropdown.querySelector('.filter-dropdown-content');
+      if (!dropdownContent) return;
+      
+      // Only populate TYPE dropdown
+      if (labelText === 'TYPE') {
+        // Clear and add "All" option
+        dropdownContent.innerHTML = `
+          <div class="filter-dropdown-item selected" onclick="selectFilter(this, 'type')">All</div>
+        `;
+        
+        // Add items ONLY if they exist in current products
+        sortedTypes.forEach(itemText => {
+          const item = document.createElement('div');
+          item.className = 'filter-dropdown-item';
+          item.textContent = itemText;
+          item.onclick = function() { selectFilter(this, 'type'); };
+          dropdownContent.appendChild(item);
+        });
+        
+        console.log(`Populated TYPE filter with ${sortedTypes.length} options`);
+      }
+    });
+    
+    console.log(`Total products on page: ${pageProducts.length}`);
+  } catch (error) {
+    console.error('Failed to populate filters:', error);
+  }
+}
+
 // Chạy khi DOM đã sẵn sàng
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
   // Lấy thông tin category và subcategory từ data attribute của body hoặc từ tên file
   const pageName = window.location.pathname.split('/').pop().replace('.html', '');
   
@@ -102,16 +160,26 @@ document.addEventListener('DOMContentLoaded', function() {
   } else if (pageName.includes('accessory')) {
     category = 'Accessory';
     if (pageName.includes('cassette-player')) {
-      subcategory = 'CassettePlayer';
+      subcategory = 'Cassette Player';
     } else if (pageName.includes('ipod')) {
       subcategory = 'IPod';
     } else if (pageName.includes('cd-player')) {
-      subcategory = 'CDPlayer';
+      subcategory = 'CD Player';
     }
   } else if (pageName.includes('vhs')) {
     category = 'VHS';
   }
   
   // Load sản phẩm với filter tương ứng
-  loadProduct(category, subcategory);
+  await loadProduct(category, subcategory);
+  
+  // Populate ALL filters (TYPE, CONDITION, BRAND) with products from CURRENT page only
+  await populateAllFilters(category, subcategory);
+  
+  // Store products globally for filtering (if filter-dropdown.js is loaded)
+  const products = await getProductData();
+  if (products && Array.isArray(products) && typeof allProducts !== 'undefined') {
+    allProducts = filterProducts(products, category, subcategory);
+    console.log('Global allProducts set:', allProducts.length);
+  }
 });    
