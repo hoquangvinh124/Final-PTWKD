@@ -86,6 +86,7 @@
                 </div>
             </div>
         </div>
+
         <div class="recent_order">
             <h1>Recent Orders</h1>
             <table>
@@ -217,11 +218,32 @@
             }
         });
 
-        // === Click mở chat (chỉ khi KHÔNG kéo) ===
         chatBtn.addEventListener('click', () => {
             if (moved) return; // nếu vừa kéo xong thì KHÔNG click
+
+            const btnRect = chatBtn.getBoundingClientRect();
+            const chatWidth = 300;
+            const chatHeight = 400;
+            const gap = 8; // khoảng cách giữa nút và khung chat
+
+            // Chat lệch sang trái một xíu, ngay bên dưới nút
+            let left = btnRect.left - chatWidth + btnRect.width + gap;
+            let top = btnRect.bottom + gap;
+
+            // Nếu bị tràn xuống dưới màn hình thì mở lên trên
+            if (top + chatHeight > window.innerHeight) {
+                top = btnRect.top - chatHeight - gap;
+            }
+
+            // Nếu bị tràn sang trái thì dịch lại
+            if (left < 10) {
+                left = 10;
+            }
+
+            chatPanel.style.left = `${left}px`;
+            chatPanel.style.top = `${top}px`;
             chatPanel.classList.add('active');
-            chatBtn.classList.add('hide'); // ẩn icon khi mở
+            chatBtn.classList.add('hide'); // ẩn nút khi mở
         });
 
         // === Đóng chat ===
@@ -292,12 +314,7 @@
             chatBody.appendChild(p);
             chatBody.scrollTop = chatBody.scrollHeight; // auto scroll xuống cuối
         }
-
-
     </script>
-
-    
-
     <script>
         $('#menu-btn').click(function() {
             $('#menu').toggleClass("active");
