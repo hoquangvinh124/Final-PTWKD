@@ -36,8 +36,15 @@
             </svg>
             <span class="cart-badge">1</span>
           </button>
+          <button class="header-icon-btn logout-btn" id="logoutBtn" aria-label="Logout">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
         </div>
-      </div>
+      </div>  
       <nav class="navlinks d-flex flex-wrap justify-content-center" aria-label="Top navigation">
         <a href="#overview">AUDIO</a>
         <a href="#songs">VHS</a>
@@ -98,6 +105,7 @@
                 </div>
                 <div class="hero-actions">
                   <button class="hero-btn primary" id="heroEditBtn">Edit profile</button>
+                  <button class="hero-btn secondary" id="changePasswordBtn">Change Password</button>
                 </div>
                 <div class="hero-tabs">
                   <button class="active" data-view="overview">Overview</button>
@@ -416,6 +424,60 @@
         </div>
       </article>
     </section>
+
+    <!-- Change Password Modal -->
+    <div class="change-password-modal" id="changePasswordModal" aria-hidden="true">
+      <div class="change-password-backdrop" data-password-close></div>
+      <div class="change-password-content" role="dialog" aria-modal="true">
+        <button class="change-password-close" type="button" data-password-close aria-label="Close">&times;</button>
+        <h2>Change Password</h2>
+        <p class="change-password-subtitle">Update your account password</p>
+        <form id="changePasswordForm" class="change-password-form">
+          <div class="password-field-group">
+            <label for="currentPassword">Current Password *</label>
+            <div class="password-input-wrapper">
+              <input id="currentPassword" type="password" name="currentPassword" required placeholder="Enter current password">
+              <button type="button" class="toggle-password-visibility" data-target="currentPassword" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="password-field-group">
+            <label for="newPassword">New Password *</label>
+            <div class="password-input-wrapper">
+              <input id="newPassword" type="password" name="newPassword" required placeholder="Enter new password" minlength="6">
+              <button type="button" class="toggle-password-visibility" data-target="newPassword" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <small class="password-hint">At least 6 characters</small>
+          </div>
+          <div class="password-field-group">
+            <label for="confirmPassword">Confirm New Password *</label>
+            <div class="password-input-wrapper">
+              <input id="confirmPassword" type="password" name="confirmPassword" required placeholder="Confirm new password">
+              <button type="button" class="toggle-password-visibility" data-target="confirmPassword" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <p class="password-message" id="passwordMessage" role="alert" hidden></p>
+          <div class="password-actions">
+            <button type="button" class="hero-btn secondary" data-password-close>Cancel</button>
+            <button type="submit" class="hero-btn primary">Update Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <section class="retro-tickets" id="retroTickets">
       <h2>Retro Cine Reservations</h2>
