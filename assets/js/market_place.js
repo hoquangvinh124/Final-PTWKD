@@ -1,7 +1,7 @@
 const products = [
-  { category: "Audio", format: "CD", name: "Mac DeMarco – This Old Dog CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/1.jpg" },
-  { category: "Audio", format: "CD", name: "Mac DeMarco – 2 CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/2.jpg" },
-  { category: "Audio", format: "CD", name: "Mac DeMarco – Salad Days CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/3.jpg" },
+  { id: "test-1", category: "Audio", format: "CD", name: "Mac DeMarco – This Old Dog CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/1.jpg" },
+  { id: "test-2", category: "Audio", format: "CD", name: "Mac DeMarco – 2 CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/2.jpg" },
+  { id: "test-3", category: "Audio", format: "CD", name: "Mac DeMarco – Salad Days CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/3.jpg" },
   { category: "Audio", format: "CD", name: "Bright Eyes – Fevers and Mirrors CD", price: "349.000₫", priceValue: 349000, image: "assets/images/Audio/CD/4.jpg" },
   { category: "Audio", format: "CD", name: "Khruangbin & Leon Bridges – Texas Moon CD", price: "402.000₫", priceValue: 402000, image: "assets/images/Audio/CD/5.jpg" },
   { category: "Audio", format: "CD", name: "Charli XCX – Brat CD", price: "402.000₫", priceValue: 402000, image: "assets/images/Audio/CD/6.jpg" },
@@ -43,8 +43,13 @@ const filterButtons = document.querySelectorAll(".filter-section button");
 const activeFilters = {
   category: document.querySelector("button[data-filter-type='category'].active")?.dataset.filterValue || "All",
   price: document.querySelector("button[data-filter-type='price'].active")?.dataset.filterValue || "all",
-  format: document.querySelector("button[data-filter-type='format'].active")?.dataset.filterValue || "all"
+  format: document.querySelector("button[data-filter-type='format'].active")?.dataset.filterValue || "all",
+  owner: document.querySelector("button[data-filter-type='owner'].active")?.dataset.filterValue || "all"
 };
+
+// Track user's products (products they added)
+// For testing: mark first 3 products as "my products"
+let myProductIds = ["test-1", "test-2", "test-3"];
 
 const detailModal = document.getElementById("productDetail");
 const detailImage = document.getElementById("detailImage");
@@ -152,12 +157,20 @@ function matchesSearch(item) {
   );
 }
 
+function matchesOwner(item) {
+  if (activeFilters.owner === "all") return true;
+  if (activeFilters.owner === "my") return item.id && myProductIds.includes(item.id);
+  if (activeFilters.owner === "others") return !item.id || !myProductIds.includes(item.id);
+  return true;
+}
+
 function getFilteredProducts() {
   return products.filter(item => 
     matchesCategory(item) && 
     matchesFormat(item) && 
     matchesPrice(item) && 
-    matchesSearch(item)
+    matchesSearch(item) &&
+    matchesOwner(item)
   );
 }
 
@@ -185,7 +198,21 @@ function renderProducts(page) {
   items.forEach(item => {
     const card = document.createElement("article");
     card.className = "product-card";
+    
+    const isMyProduct = item.id && myProductIds.includes(item.id);
+    const deleteBtn = isMyProduct ? `
+      <button class="product-delete-btn" data-product-id="${item.id}" title="Delete product">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </button>
+    ` : '';
+    
     card.innerHTML = `
+      ${deleteBtn}
       <div class="product-thumb" data-product-view>
         <img src="${item.image}" alt="${item.name}">
       </div>
@@ -197,9 +224,20 @@ function renderProducts(page) {
     `;
     card.tabIndex = 0;
     
+    // Delete button handler
+    if (isMyProduct) {
+      const deleteButton = card.querySelector(".product-delete-btn");
+      deleteButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openDeleteConfirm(item.id);
+      });
+    }
+    
     // Click on product opens detail
-    card.addEventListener("click", () => {
-      openProductDetail(item);
+    card.addEventListener("click", (e) => {
+      if (!e.target.closest(".product-delete-btn")) {
+        openProductDetail(item);
+      }
     });
     
     card.addEventListener("keydown", event => {
@@ -557,7 +595,11 @@ addProductForm?.addEventListener("submit", (event) => {
   const formData = new FormData(addProductForm);
   const price = Number(formData.get("productPrice"));
   
+  // Generate unique ID for the new product
+  const productId = `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  
   const newProduct = {
+    id: productId,
     category: formData.get("productCategory"),
     format: formData.get("productFormat"),
     name: formData.get("productName"),
@@ -577,8 +619,9 @@ addProductForm?.addEventListener("submit", (event) => {
     }
   };
   
-  // Add to products array
+  // Add to products array and track as my product
   products.push(newProduct);
+  myProductIds.push(productId);
   
   // Re-render current page
   goToPage(currentPage);
@@ -591,12 +634,68 @@ addProductForm?.addEventListener("submit", (event) => {
   console.log("Total products:", products.length);
 });
 
+// Delete Confirmation Modal
+const deleteConfirmModal = document.getElementById("deleteConfirmModal");
+const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+const closeDeleteTargets = deleteConfirmModal?.querySelectorAll("[data-delete-close]") || [];
+
+let productToDelete = null;
+
+function openDeleteConfirm(productId) {
+  if (!deleteConfirmModal) return;
+  productToDelete = productId;
+  deleteConfirmModal.classList.add("is-open");
+  document.body.classList.add("modal-open");
+}
+
+function closeDeleteConfirm() {
+  if (!deleteConfirmModal) return;
+  deleteConfirmModal.classList.remove("is-open");
+  document.body.classList.remove("modal-open");
+  productToDelete = null;
+}
+
+closeDeleteTargets.forEach(btn => btn.addEventListener("click", closeDeleteConfirm));
+
+deleteConfirmModal?.addEventListener("click", event => {
+  if (event.target === deleteConfirmModal) {
+    closeDeleteConfirm();
+  }
+});
+
+confirmDeleteBtn?.addEventListener("click", () => {
+  if (!productToDelete) return;
+  
+  // Find and remove product
+  const productIndex = products.findIndex(p => p.id === productToDelete);
+  if (productIndex !== -1) {
+    const deletedProduct = products[productIndex];
+    products.splice(productIndex, 1);
+    
+    // Remove from myProductIds
+    const myIdIndex = myProductIds.indexOf(productToDelete);
+    if (myIdIndex !== -1) {
+      myProductIds.splice(myIdIndex, 1);
+    }
+    
+    // Close modal
+    closeDeleteConfirm();
+    
+    // Re-render
+    goToPage(currentPage);
+    
+    alert(`Product "${deletedProduct.name}" has been deleted successfully!`);
+  }
+});
+
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") {
     if (detailModal?.classList.contains("is-open")) {
       closeProductDetail();
     } else if (addProductModal?.classList.contains("is-open")) {
       closeAddProductModal();
+    } else if (deleteConfirmModal?.classList.contains("is-open")) {
+      closeDeleteConfirm();
     }
   }
 });
