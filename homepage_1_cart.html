@@ -1,0 +1,541 @@
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+            <link rel="stylesheet" type="text/css" href="homepage_1_cart.css">
+            <link rel="stylesheet" type="text/css" href="header-footer.css">
+            <!-- Thêm vào thẻ <head> -->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+            <title>OLDIE ZONE</title>
+
+            <!-- Thêm vào thẻ <footer> -->
+                
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="search.js" defer></script>
+            <script src="homepage_1_cart.js" defer></script>
+        </head>
+        <body>
+            <!--Header/Navbar-->
+            <header>
+            <nav class="navbar section-content">
+                <div class="header-top">
+                    <a href="#" class="nav-logo" aria-label="Trang chủ Retro Sound">
+                        <img src="assets/images/shopname.jpg" width="150" height="60" alt="Retro Sound Logo">
+                    </a>
+                    <div class="header-icons" role="group" aria-label="Lối tắt điều hướng">
+                        <button type="button" class="header-icon search-btn" aria-label="Tìm kiếm" title="Tìm kiếm">
+                            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="miniCart" aria-haspopup="dialog" title="Giỏ hàng">
+                            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                            <span class="badge" id="cartBadge"></span>
+                        </button>
+                        <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                            <i class="fa-regular fa-user" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">AUDIO</a>
+                        <ul class="submenu">
+                            <li><a href="#" class="submenu-link">CD</a></li>
+                            <li><a href="#" class="submenu-link">VINYL</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link">VHS</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">CASSETTE TAPE</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">POLA CAMERA</a></li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">ACCESSORIES</a>
+                        <ul class="submenu">
+                            <li><a href="#" class="submenu-link">CASSETTE PLAYER</a></li>
+                            <li><a href="#" class="submenu-link">IPOD</a></li>
+                            <li><a href="#" class="submenu-link">CD PLAYER</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link">POLA CAMERA</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">CINE ROOM</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">THREAD</a></li>
+                </ul>
+            </nav>
+                <div class="search-bar" id="searchBar">
+                    <div class="search-container">
+                        <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" id="searchInput">
+                        <button class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mini-cart-overlay" id="miniCartOverlay" hidden></div>
+                <section class="mini-cart" id="miniCart" aria-labelledby="miniCartTitle" hidden>
+                    <header class="mini-cart__head">
+                        <h2 id="miniCartTitle">Giỏ hàng</h2>
+                        <button type="button" class="mini-cart__close" id="miniCartClose" aria-label="Đóng giỏ hàng"></button>
+                    </header>
+                    <div class="mini-cart__body">
+                        <p class="mini-cart__empty" id="miniCartEmpty">Chưa có sản phẩm trong giỏ.</p>
+                        <ul class="mini-cart__items" id="miniCartItems" role="list"></ul>
+                    </div>
+                    <footer class="mini-cart__foot">
+                        <div class="mini-cart__total">
+                            <span>Tổng</span>
+                            <strong id="miniCartTotal">0₫</strong>
+                        </div>
+                        <div class="mini-cart__actions">
+                            <button type="button" class="btn-retro ghost" id="miniCartContinue">Tiếp tục mua hàng</button>
+                            <button type="button" class="btn-retro primary" id="miniCartCheckout">Thanh toán</button>
+                        </div>
+                    </footer>
+                </section>
+        </header>
+
+            <main>
+                <main>
+                    <!-- Hero Section (full width, không bị container giới hạn) -->
+                <section class="hero-section" aria-labelledby="heroTitle">
+                <div class="hero-image-wrapper">
+                    <img src="assets/images/main-banner.jpg" alt="Retro Sound main banner" class="main-banner">
+                    <div class="hero-overlay"></div>
+                    <div class="hero-content">
+                        <p class="eyebrow">Âm thanh cổ điển cho thế hệ mới</p>
+                        <h1 id="heroTitle">Khám phá kho báu Retro Sound</h1>
+                        <p class="hero-description">Từ vinyl nguyên bản, máy ảnh pola cho đến cassette hiếm – tất cả được tuyển chọn để giúp bạn sống lại kỷ nguyên vàng của âm nhạc và điện ảnh.</p>
+                        <div class="hero-actions">
+                            <a href="#" class="btn-retro primary">Khám phá ngay</a>
+                            <a href="#" class="btn-retro ghost">Xem bộ sưu tập</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+                    <!-- Product Banner Section (có margin 2 bên 250px) -->
+                    <section class="product-banner">
+                        <div class="grid-layout">
+                            <!-- Banner 1 (bên trái) -->
+                            <div class="left-side">
+                                <img src="assets/images/Banner1.jpg" alt="Banner 1">
+                            </div>
+
+                            <!-- Bên phải: Banner 2 + Banner 3 -->
+                            <div class="right-side">
+                                <div class="banner banner2">
+                                    <img src="assets/images/Banner2.jpg" alt="Banner 2">
+                                </div>
+                                <div class="banner banner3">
+                                    <img src="assets/images/Banner3.jpg" alt="Banner 3">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </main>
+            <section class="story" aria-labelledby="storyTitle">
+                <div class="story-inner">
+                    <div class="story-copy">
+                        <p class="eyebrow">Retro Sound Studio</p>
+                        <h2 id="storyTitle">Cảm hứng từ những phòng thu thập niên 80</h2>
+                        <p>Chúng tôi săn tìm từng cuộn băng, từng chiếc máy ảnh cũ trên khắp thế giới, phục chế bằng tay và kiểm tra thủ công trước khi đưa đến tay bạn. Bộ sưu tập tại Retro Sound được tuyển chọn bởi những người yêu âm nhạc và nghệ thuật analog, để mỗi sản phẩm đều mang câu chuyện riêng.</p>
+                        <a href="#" class="text-link">Tìm hiểu thêm về hành trình của chúng tôi</a>
+                    </div>
+                    <div class="story-visual">
+                        <div class="story-card">
+                            <img src="assets/images/Vinyl_collection.gif" alt="Cassette collection">
+                            <div class="card-glow"></div>
+                        </div>
+                        <div class="story-stats">
+                            <div>
+                                <span class="stat-number">250+</span>
+                                <span class="stat-label">Bản thu giới hạn</span>
+                            </div>
+                            <div>
+                                <span class="stat-number">50</span>
+                                <span class="stat-label">Máy ảnh pola phục chế</span>
+                            </div>
+                            <div>
+                                <span class="stat-number">30</span>
+                                <span class="stat-label">Sự kiện nghe thử mỗi năm</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="best-seller-arena">
+                <h2 style="text-align:center;">
+                    <span class="home-text">
+                        <span class="home-text">
+                            <span class="home-text">
+                                <span class="home-text">
+                                        <span class="home-text">BEST SELLERS</span>
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                </h2>
+                <div class="grid" id="productGrid">
+                <!-- Product Box 1 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-1" data-name="VHS 13" data-price="$90.00" data-img="assets/images/VHS/13.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm VHS 13 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/VHS/13.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/VHS/14.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>VHS 13</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 2 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-2" data-name="Audio Vinyl 13" data-price="$90.00" data-img="assets/images/Audio/Vinyl/13.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm Audio Vinyl 13 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/Audio/Vinyl/13.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/Audio/Vinyl/14.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>Audio Vinyl 13</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 3 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-3" data-name="Cassette Tape 17" data-price="$90.00" data-img="assets/images/Cassette Tape/17.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm Cassette Tape 17 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/Cassette Tape/17.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/Cassette Tape/18.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>Cassette Tape 17</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 4 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-4" data-name="Pola Camera 11" data-price="$90.00" data-img="assets/images/Pola Camera/11.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm Pola Camera 11 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/Pola Camera/11.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/Pola Camera/12.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>Pola Camera 11</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 5 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-5" data-name="IPod 8" data-price="$90.00" data-img="assets/images/Accessories/IPod/8.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm IPod 8 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/Accessories/IPod/8.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/Accessories/IPod/9.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>IPod 8</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 6 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-6" data-name="CD Player 13" data-price="$90.00" data-img="assets/images/Accessories/CD Player/13.png">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm CD Player 13 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/Accessories/CD Player/13.png" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/Accessories/CD Player/14.png" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>CD Player 13</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 7 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-7" data-name="Pola Camera 15" data-price="$90.00" data-img="assets/images/Pola Camera/15.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm Pola Camera 15 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/Pola Camera/15.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/Pola Camera/16.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>Pola Camera 15</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 8 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-8" data-name="Audio Vinyl 14" data-price="$90.00" data-img="assets/images/Audio/Vinyl/14.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm Audio Vinyl 14 vào giỏ"><i class="shopping-bag-icon"></i></button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/Audio/Vinyl/13.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/Audio/Vinyl/14.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>Audio Vinyl 14</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 9 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-9" data-name="VHS 39" data-price="$90.00" data-img="assets/images/VHS/39.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <button class="btn add" aria-label="Thêm VHS 39 vào giỏ"><i class="shopping-bag-icon"></i></button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/VHS/39.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/VHS/40.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>VHS 39</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                <!-- Product Box 10 -->
+                    <div class="box" height="200px">
+                        <div class="item" data-id="sku-10" data-name="VHS 13" data-price="$90.00" data-img="assets/images/VHS/13.jpg">
+                            <div class="thumb">
+                                <div class="hover-content">
+                                    <ul>
+                                        <li><a href="#"><i class="heart-icon"></i></a></li>
+                                        <li><button class="btn add" aria-label="Thêm VHS 13 vào giỏ">+ Add to cart</button></li>
+                                    </ul>
+                                </div>
+                                <img src="assets/images/VHS/13.jpg" alt="Air Force 1 X" class="main-image">
+                                <img src="assets/images/VHS/14.jpg" alt="Air Force 1 X Hover" class="hover-image">
+                            </div>
+                            <div class="down-content">
+                                <h4>VHS 13</h4>
+                                <div class="product-price">
+                                    <span class="current">$90.00</span>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </section>
+            
+
+            <div class="vaultzone">
+                <div class="artifactz vinora">
+                    <div class="titlemark">Vinyl</div>
+                    <img src="assets/images/cd-home2.png" alt="Vinyl Record"/>
+                    <div><a href="#" class="btn-retro">Shop Now</a></div>
+                </div>
+
+                <div class="artifactz tapella">
+                    <div class="titlemark">Cassettes</div>
+                    <div class="cd-container"> 
+                        <img src="assets/images/cassette-home.gif" alt="Cassette Tape">
+                    </div>
+                    <div><a href="#" class="btn-retro">Shop Now</a></div>
+                </div>
+
+                <div class="artifactz discara">
+                    <div class="titlemark">CDs</div>
+                    <img src="assets/images/cd-home1.png" alt="Compact Disc">
+                    <div><a href="#" class="btn-retro">Shop Now</a></div>
+                </div>
+            </div>
+
+            <main class="gallery-container">
+                <h2 style="text-align:center;">
+                    <span class="home-text">
+                        <span class="home-text">
+                            <span class="home-text">
+                                <span class="home-text">
+                                        <span class="home-text">NEW ARRIVALS</span>
+                                </span>
+                            </span>
+                        </span>
+                    </span>
+                </h2>
+            <div class="slider" style="
+                --width: 180px; 
+                --height:180px;
+                --quantity: 10;
+            ">
+                <div class="list">
+                    <div class="item" style="--position: 1"><a href=""><img src="assets/images/Pola Camera/1.jpg" alt=""></a></div>
+                    <div class="item" style="--position: 2"><img src="assets/images/Audio/Vinyl/14.png" alt=""></div>
+                    <div class="item" style="--position: 3"><img src="assets/images/Cassette Tape/15.png" alt=""></div>
+                    <div class="item" style="--position: 4"><img src="assets/images/VHS/6.png" alt=""></div>
+                    <div class="item" style="--position: 5"><img src="assets/images/Cassette Tape/1.png" alt=""></div>
+                    <div class="item" style="--position: 6"><img src="assets/images/Audio/CDs/6.png" alt=""></div>
+                    <div class="item" style="--position: 7"><img src="assets/images/Pola Camera/2.png" alt=""></div>
+                    <div class="item" style="--position: 8"><img src="assets/images/VHS/17.png" alt=""></div>
+                    <div class="item" style="--position: 9"><img src="assets/images/Cassette Tape/8.png" alt=""></div>
+                    <div class="item" style="--position: 10"><img src="assets/images/Audio/CDs/18.png" alt=""></div>
+                </div>
+            </div>
+
+            <div class="slider slider-offset" style="
+                --width: 180px;
+                --height: 180px;
+                --quantity: 10;
+            ">
+                <div class="list">
+                    <div class="item" style="--position: 1"><img src="assets/images/Cassette Tape/1.png" alt=""></div>
+                    <div class="item" style="--position: 2"><img src="assets/images/Accessories/CD Player/1.png" alt=""></div>
+                    <div class="item" style="--position: 3"><img src="assets/images/Accessories/IPod/1.png" alt=""></div>
+                    <div class="item" style="--position: 4"><img src="assets/images/Accessories/CassettePlayer/16.png" alt=""></div>
+                    <div class="item" style="--position: 5"><img src="assets/images/Audio/CDs/19.png" alt=""></div>
+                    <div class="item" style="--position: 6"><img src="assets/images/Cassette Tape/19.png" alt=""></div>
+                    <div class="item" style="--position: 7"><img src="assets/images/Cassette Tape/15.png" alt=""></div>
+                    <div class="item" style="--position: 8"><img src="assets/images/Pola Camera/10.png" alt=""></div>
+                    <div class="item" style="--position: 9"><img src="assets/images/Pola Camera/17.png" alt=""></div>
+                    <div class="item" style="--position: 10"><img src="assets/images/VHS/20.png" alt=""></div>
+                </div>
+            </div>
+        </main>
+
+            <div class="wrapper">
+    <h2 style="text-align:center; color: #c89d41; margin-bottom: 30px; font-family: 'Barlow', sans-serif;">
+        BỘ SƯU TẬP ĐẶC BIỆT
+    </h2>
+    <div class="gallery-grid">
+        <div class="gallery-item">
+            <img src="assets/images/Pola Camera/1.jpg" alt="Pola Camera">
+            <div class="gallery-overlay">
+                <h3>Pola Camera</h3>
+                <p>Máy ảnh film cổ điển</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="assets/images/Audio/Vinyl/14.png" alt="Vinyl Record">
+            <div class="gallery-overlay">
+                <h3>Vinyl Record</h3>
+                <p>Đĩa than nguyên bản</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="assets/images/Cassette Tape/15.png" alt="Cassette Tape">
+            <div class="gallery-overlay">
+                <h3>Cassette Tape</h3>
+                <p>Băng cối vintage</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="assets/images/VHS/6.png" alt="VHS Tape">
+            <div class="gallery-overlay">
+                <h3>VHS Tape</h3>
+                <p>Băng video cổ điển</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="assets/images/Accessories/CD Player/1.png" alt="CD Player">
+            <div class="gallery-overlay">
+                <h3>CD Player</h3>
+                <p>Máy nghe nhạc CD</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="assets/images/Accessories/IPod/1.png" alt="iPod Classic">
+            <div class="gallery-overlay">
+                <h3>iPod Classic</h3>
+                <p>Thiết bị nghe nhạc huyền thoại</p>
+            </div>
+        </div>
+    </div>
+</div>
+            <div class="footerContainer">
+                <div class="socialIcons">
+                    <a href=""><i class="fa-brands fa-facebook"></i></a>
+                    <a href=""><i class="fa-brands fa-instagram"></i></a>
+                    <a href=""><i class="fa-brands fa-twitter"></i></a>
+                    <a href=""><i class="fa-brands fa-google-plus"></i></a>
+                    <a href=""><i class="fa-brands fa-youtube"></i></a>
+                </div>
+                <div class="footerNav">
+                    <ul>
+                        <li><a href="">HOME</a></li>
+                        <li><a href="">NEWS</a></li>
+                        <li><a href="">PRODUCTS</a></li>
+                        <li><a href="">CONTACT US</a></li>
+                        <li><a href="">OUR TEAM</a></li>
+                    </ul>
+                </div>
+                <div class="footerBottom">
+                    <p>Copyright &copy;2025; Designed by <span class="designer">Nhóm</span></p>
+                </div>
+            </div>
+            
+            </body>
+    </html>
