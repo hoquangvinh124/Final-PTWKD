@@ -944,3 +944,151 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
 
   paginator?.setItems(cards);
 })();
+
+// Logout functionality
+(function() {
+  const logoutBtn = document.getElementById('logoutBtn');
+  
+  if (!logoutBtn) return;
+  
+  logoutBtn.addEventListener('click', () => {
+    // Confirm logout
+    const confirmLogout = confirm('Are you sure you want to logout?');
+    
+    if (confirmLogout) {
+      // Clear authentication data
+      localStorage.removeItem('demo.auth');
+      
+      // Redirect to login page
+      window.location.href = 'login.html';
+    }
+  });
+})();
+
+// Change Password functionality
+(function() {
+  const changePasswordBtn = document.getElementById('changePasswordBtn');
+  const changePasswordModal = document.getElementById('changePasswordModal');
+  const changePasswordForm = document.getElementById('changePasswordForm');
+  const passwordMessage = document.getElementById('passwordMessage');
+  
+  if (!changePasswordBtn || !changePasswordModal || !changePasswordForm) return;
+  
+  // Open modal
+  changePasswordBtn.addEventListener('click', () => {
+    changePasswordModal.setAttribute('aria-hidden', 'false');
+    changePasswordForm.reset();
+    passwordMessage.hidden = true;
+    passwordMessage.className = 'password-message';
+  });
+  
+  // Close modal
+  const closeModal = () => {
+    changePasswordModal.setAttribute('aria-hidden', 'true');
+    changePasswordForm.reset();
+    passwordMessage.hidden = true;
+    passwordMessage.className = 'password-message';
+  };
+  
+  // Close on backdrop click or close button
+  changePasswordModal.addEventListener('click', (e) => {
+    if (e.target.hasAttribute('data-password-close') || e.target.closest('[data-password-close]')) {
+      closeModal();
+    }
+  });
+  
+  // Toggle password visibility
+  changePasswordModal.addEventListener('click', (e) => {
+    const toggleBtn = e.target.closest('.toggle-password-visibility');
+    if (!toggleBtn) return;
+    
+    const targetId = toggleBtn.dataset.target;
+    const input = document.getElementById(targetId);
+    if (!input) return;
+    
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+  });
+  
+  // Handle form submission
+  changePasswordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const currentPassword = document.getElementById('currentPassword').value.trim();
+    const newPassword = document.getElementById('newPassword').value.trim();
+    const confirmPassword = document.getElementById('confirmPassword').value.trim();
+    
+    // Reset message
+    passwordMessage.hidden = true;
+    passwordMessage.className = 'password-message';
+    
+    // Validate inputs
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      showMessage('Please fill in all fields', 'error');
+      return;
+    }
+    
+    if (newPassword.length < 6) {
+      showMessage('New password must be at least 6 characters', 'error');
+      return;
+    }
+    
+    if (newPassword !== confirmPassword) {
+      showMessage('New passwords do not match', 'error');
+      return;
+    }
+    
+    // Get current user
+    const authData = localStorage.getItem('demo.auth');
+    if (!authData) {
+      showMessage('Not authenticated. Please login again.', 'error');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1500);
+      return;
+    }
+    
+    const currentUser = JSON.parse(authData);
+    const username = currentUser.username;
+    
+    // Get users database
+    const usersData = localStorage.getItem('demo.users');
+    if (!usersData) {
+      showMessage('User database not found', 'error');
+      return;
+    }
+    
+    const users = JSON.parse(usersData);
+    const user = users.find(u => u.username === username);
+    
+    if (!user) {
+      showMessage('User not found', 'error');
+      return;
+    }
+    
+    // Verify current password
+    if (user.password !== currentPassword) {
+      showMessage('Current password is incorrect', 'error');
+      return;
+    }
+    
+    // Update password
+    user.password = newPassword;
+    localStorage.setItem('demo.users', JSON.stringify(users));
+    
+    // Show success message
+    showMessage('Password updated successfully!', 'success');
+    
+    // Close modal after 1.5 seconds
+    setTimeout(() => {
+      closeModal();
+    }, 1500);
+  });
+  
+  function showMessage(text, type) {
+    passwordMessage.textContent = text;
+    passwordMessage.className = `password-message ${type}`;
+    passwordMessage.hidden = false;
+  }
+})();
