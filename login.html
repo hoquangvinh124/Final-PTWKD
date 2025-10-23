@@ -46,6 +46,11 @@
               </div>
             </div>
 
+            <div class="remember-me">
+              <input type="checkbox" id="rememberMe" name="rememberMe">
+              <label for="rememberMe">Remember me</label>
+            </div>
+
             <div class="form-actions">
               <a class="forgot-link" href="forgot-password.html">Forgot password?</a>
               <button type="submit" class="primary-btn">Login</button>
@@ -96,10 +101,20 @@
 
     const emailField = document.getElementById('email');
     const passwordField = document.getElementById('password');
+    const rememberMeCheckbox = document.getElementById('rememberMe');
+
+    // Load remembered username if exists
+    const rememberedUsername = localStorage.getItem('rememberedUsername');
+    if (rememberedUsername && emailField) {
+      emailField.value = rememberedUsername;
+      if (rememberMeCheckbox) {
+        rememberMeCheckbox.checked = true;  
+      }
+    }
 
     if (isAuthenticated()) {
       const currentUser = getCurrentUser();
-      if (currentUser && emailField) {
+      if (currentUser && emailField && !rememberedUsername) {
         emailField.value = currentUser.username;
       }
       showMessage('Bạn đã đăng nhập. Bạn có thể tiếp tục hoặc đăng nhập lại.', 'success');
@@ -117,11 +132,19 @@
 
         const username = emailField?.value?.trim();
         const password = passwordField?.value ?? '';
+        const rememberMe = rememberMeCheckbox?.checked ?? false;
 
         const success = login(username, password);
         if (!success) {
           showMessage('Sai tài khoản hoặc mật khẩu. Vui lòng thử lại.', 'error');
           return;
+        }
+
+        // Handle remember me
+        if (rememberMe) {
+          localStorage.setItem('rememberedUsername', username);
+        } else {
+          localStorage.removeItem('rememberedUsername');
         }
 
         showMessage('Đăng nhập thành công! Chúc bạn mua sắm vui vẻ.', 'success');

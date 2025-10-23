@@ -11,27 +11,42 @@
   <link href="./assets/css/market_place.css" rel="stylesheet">
 </head>
 <body>
-  <header class="market-header">
-    <div class="market-container header-inner">
-      <div class="header-top">
-        <a class="header-logo" href="#">
-          <img src="assets/images/logodaxoaphong2.png" alt="LDIE Zone logo">
-        </a>
-        <form class="header-search" role="search" aria-label="Tìm kiếm sản phẩm">
-          <label class="visually-hidden" for="headerSearchInput">Tìm kiếm sản phẩm</label>
-          <input id="headerSearchInput" type="search" placeholder="Tìm cassette, vinyl, phụ kiện..." autocomplete="off">
-          <button type="submit" aria-label="Tìm kiếm">🔎</button>
-        </form>
+  <header class="topbar py-3">
+    <div class="container-fluid">
+      <div class="header-top d-flex justify-content-between align-items-center mb-3">
+        <div class="header-left"></div>
+        <img class="brand" src="assets/images/logodaxoaphong2.png" alt="LDIE Zone logo">
+        <div class="header-right d-flex gap-3">
+          <button class="header-icon-btn" aria-label="Search">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+          <button class="header-icon-btn" aria-label="User profile">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </button>
+          <button class="header-icon-btn header-cart-btn" aria-label="Shopping cart">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="21" r="1"></circle>
+              <circle cx="20" cy="21" r="1"></circle>
+              <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+            </svg>
+            <span class="cart-badge">1</span>
+          </button>
+        </div>
       </div>
-      <nav class="header-nav" aria-label="Main navigation">
-        <a href="#collections" class="active">Audio <span>▼</span></a>
-        <a href="#collections">VHS <span>▼</span></a>
-        <a href="#collections">Cassette Tape <span>▼</span></a>
-        <a href="#collections">Pola Camera <span>▼</span></a>
-        <a href="#collections">Accessories <span>▼</span></a>
-        <a href="#collections">Cinema Room <span>▼</span></a>
-        <a href="#collections">Community <span>▼</span></a>
-        <a href="#collections">Thread <span>▼</span></a>
+      <nav class="navlinks d-flex flex-wrap justify-content-center" aria-label="Top navigation">
+        <a href="#collections" class="active">AUDIO</a>
+        <a href="#collections">VHS</a>
+        <a href="#collections">CASSETTE TAPE</a>
+        <a href="#collections">POLA CAMERA</a>
+        <a href="#collections">ACCESSORIES</a>
+        <a href="#collections">CINE ROOM</a>
+        <a href="#collections">THREAD</a>
       </nav>
     </div>
   </header>
@@ -40,18 +55,32 @@
 
     <section class="market-section" id="collections">
       <div class="market-container">
-        <header class="section-heading">
-          <span class="section-tag">Danh mục nổi bật</span>
-          <h2>Bộ Sưu Tập Được Săn Lùng</h2>
-          <p>Đưa bạn trở về kỷ nguyên vàng của âm thanh với những thiết bị đã được phục chế và kiểm âm kỹ lưỡng.</p>
-        </header>
+        <div class="catalog-header">
+          <h2 class="catalog-title">Market Place</h2>
+          <div class="catalog-header-right">
+            <div class="catalog-search">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+              </svg>
+              <input type="search" id="catalogSearchInput" placeholder="Search products..." />
+            </div>
+            <button class="add-product-btn" type="button" id="addProductBtn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              Add Product
+            </button>
+          </div>
+        </div>
         <div class="catalog-layout">
-          <aside class="catalog-filter" aria-label="Bộ lọc sản phẩm">
-            <h3>Bộ lọc</h3>
+          <aside class="catalog-filter" aria-label="Product filters">
+            <h3>Filters</h3>
             <div class="filter-section">
-              <h4>Danh mục</h4>
+              <h4>Category</h4>
               <ul>
-                <li><button type="button" class="active" data-filter-type="category" data-filter-value="Tất cả">Tất cả</button></li>
+                <li><button type="button" class="active" data-filter-type="category" data-filter-value="All">All</button></li>
                 <li><button type="button" data-filter-type="category" data-filter-value="Audio">Audio</button></li>
                 <li><button type="button" data-filter-type="category" data-filter-value="Cassette Tape">Cassette Tape</button></li>
                 <li><button type="button" data-filter-type="category" data-filter-value="Accessories">Accessories</button></li>
@@ -60,34 +89,42 @@
               </ul>
             </div>
             <div class="filter-section">
-              <h4>Mức giá</h4>
+              <h4>Ownership</h4>
               <ul>
-                <li><button type="button" class="active" data-filter-type="price" data-filter-value="all">Tất cả</button></li>
-                <li><button type="button" data-filter-type="price" data-filter-value="under-500">Dưới 500K</button></li>
-                <li><button type="button" data-filter-type="price" data-filter-value="500-1000">500K - 1 Triệu</button></li>
-                <li><button type="button" data-filter-type="price" data-filter-value="1000-3000">1 - 3 Triệu</button></li>
-                <li><button type="button" data-filter-type="price" data-filter-value="above-3000">Trên 3 Triệu</button></li>
+                <li><button type="button" class="active" data-filter-type="owner" data-filter-value="all">All Products</button></li>
+                <li><button type="button" data-filter-type="owner" data-filter-value="my">My Products</button></li>
+                <li><button type="button" data-filter-type="owner" data-filter-value="others">Others' Products</button></li>
               </ul>
             </div>
             <div class="filter-section">
-              <h4>Định dạng</h4>
+              <h4>Price Range</h4>
               <ul>
-                <li><button type="button" class="active" data-filter-type="format" data-filter-value="all">Tất cả</button></li>
+                <li><button type="button" class="active" data-filter-type="price" data-filter-value="all">All</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="under-500">Under 500K</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="500-1000">500K - 1M</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="1000-3000">1M - 3M</button></li>
+                <li><button type="button" data-filter-type="price" data-filter-value="above-3000">Above 3M</button></li>
+              </ul>
+            </div>
+            <div class="filter-section">
+              <h4>Format</h4>
+              <ul>
+                <li><button type="button" class="active" data-filter-type="format" data-filter-value="all">All</button></li>
                 <li><button type="button" data-filter-type="format" data-filter-value="CD">CD</button></li>
                 <li><button type="button" data-filter-type="format" data-filter-value="Cassette">Cassette</button></li>
                 <li><button type="button" data-filter-type="format" data-filter-value="Vinyl">Vinyl</button></li>
-                <li><button type="button" data-filter-type="format" data-filter-value="Thiết bị">Thiết bị</button></li>
+                <li><button type="button" data-filter-type="format" data-filter-value="Device">Device</button></li>
               </ul>
             </div>
           </aside>
           <div class="card-grid" id="productGrid"></div>
         </div>
-        <nav class="products-pagination" aria-label="Phân trang sản phẩm">
-          <button class="page-btn prev" type="button" aria-label="Trang trước" data-action="prev">‹</button>
+        <nav class="products-pagination" aria-label="Product pagination">
+          <button class="page-btn prev" type="button" aria-label="Previous page" data-action="prev">‹</button>
           <a class="page-number active" href="#" data-page="1">1</a>
           <a class="page-number" href="#" data-page="2">2</a>
           <a class="page-number" href="#" data-page="3">3</a>
-          <button class="page-btn next" type="button" aria-label="Trang sau" data-action="next">›</button>
+          <button class="page-btn next" type="button" aria-label="Next page" data-action="next">›</button>
         </nav>
       </div>
     </section>
@@ -95,32 +132,32 @@
     <section class="market-section testimonials" id="testimonials">
       <div class="market-container">
         <header class="section-heading">
-          <span class="section-tag">Đánh giá cộng đồng</span>
-          <h2>Người Yêu Nhạc Nói Gì?</h2>
+          <span class="section-tag">Community Reviews</span>
+          <h2>What Music Lovers Say</h2>
         </header>
         <div class="testimonial-grid">
           <article class="testimonial-card">
             <div class="avatar">
-              <img src="assets/images/instaicon.png" alt="Khách hàng Sơn">
+              <img src="assets/images/instaicon.png" alt="Customer Son">
             </div>
-            <h3>Trung Sơn</h3>
-            <p>"Turntable nhận được còn đẹp hơn ảnh, kỹ thuật viên đến cân chỉnh tận nhà và dạy cách bảo quản chi tiết."</p>
+            <h3>Trung Son</h3>
+            <p>"The turntable looks even better than the photos. A technician came to my house to calibrate it and taught me detailed maintenance."</p>
             <span class="rating">★★★★★</span>
           </article>
           <article class="testimonial-card">
             <div class="avatar">
-              <img src="assets/images/instaicon.png" alt="Khách hàng Linh">
+              <img src="assets/images/instaicon.png" alt="Customer Linh">
             </div>
-            <h3>Ngọc Linh</h3>
-            <p>"Bộ cassette city pop nghe rất đã, booklet dịch chuẩn và đóng gói cực kỳ đỉnh, giao hàng đúng hẹn."</p>
+            <h3>Ngoc Linh</h3>
+            <p>"The city pop cassette set sounds amazing, booklet translation is accurate, and packaging was excellent. Delivered on time."</p>
             <span class="rating">★★★★★</span>
           </article>
           <article class="testimonial-card">
             <div class="avatar">
-              <img src="assets/images/instaicon.png" alt="Khách hàng Hải">
+              <img src="assets/images/instaicon.png" alt="Customer Hai">
             </div>
-            <h3>Quốc Hải</h3>
-            <p>"Lần đầu mua thiết bị retro mà cảm giác an tâm, đội ngũ LDIE Zone tư vấn nhiệt tình và hậu mãi nhanh."</p>
+            <h3>Quoc Hai</h3>
+            <p>"First time buying retro equipment and felt secure. The LDIE Zone team was enthusiastic and after-sales service was quick."</p>
             <span class="rating">★★★★☆</span>
           </article>
         </div>
@@ -131,24 +168,24 @@
       <div class="market-container">
         <header class="section-heading">
           <span class="section-tag">FAQ</span>
-          <h2>Câu Hỏi Thường Gặp</h2>
+          <h2>Frequently Asked Questions</h2>
         </header>
         <div class="faq-list">
           <details>
-            <summary>Thiết bị có được bảo hành không?</summary>
-            <p>Mỗi sản phẩm đều đi kèm bảo hành tối thiểu 06 tháng, riêng máy đã phục chế và turntable được bảo hành 12 tháng.</p>
+            <summary>Do the devices come with warranty?</summary>
+            <p>Each product comes with a minimum 6-month warranty. Refurbished devices and turntables have a 12-month warranty.</p>
           </details>
           <details>
-            <summary>Tôi có thể kiểm tra hàng trước khi thanh toán?</summary>
-            <p>Bạn có thể hẹn xem trực tiếp tại showroom hoặc yêu cầu video call test máy. Khi giao tận nơi, chúng tôi sẽ setup để bạn kiểm tra lần cuối.</p>
+            <summary>Can I inspect the item before payment?</summary>
+            <p>You can schedule a visit at our showroom or request a video call to test the device. For home delivery, we'll set it up for your final inspection.</p>
           </details>
           <details>
-            <summary>LDIE Zone hỗ trợ vận chuyển ra sao?</summary>
-            <p>Đơn nội thành được giao trong ngày bằng xe chuyên dụng. Đơn tỉnh được đóng gói hai lớp, chèn xốp chống sốc và bảo hiểm 100% giá trị.</p>
+            <summary>How does LDIE Zone handle shipping?</summary>
+            <p>Local orders are delivered same-day by dedicated vehicle. Provincial orders are double-packed with shock-absorbing foam and fully insured.</p>
           </details>
           <details>
-            <summary>Có chính sách đổi trả không?</summary>
-            <p>Nếu sản phẩm phát sinh lỗi kỹ thuật trong vòng 07 ngày, LDIE Zone sẽ đổi thiết bị khác tương đương hoặc hoàn tiền đầy đủ.</p>
+            <summary>Is there a return policy?</summary>
+            <p>If a product develops technical issues within 7 days, LDIE Zone will replace it with an equivalent device or provide a full refund.</p>
           </details>
         </div>
       </div>
@@ -158,9 +195,9 @@
   <div class="product-detail-modal" id="productDetail" aria-hidden="true">
     <div class="product-detail-backdrop" data-detail-close></div>
     <div class="product-detail-content" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
-      <button class="product-detail-close" type="button" data-detail-close aria-label="Đóng">&times;</button>
+      <button class="product-detail-close" type="button" data-detail-close aria-label="Close">&times;</button>
       <div class="product-detail-gallery">
-        <img id="detailImage" alt="Chi tiết sản phẩm">
+        <img id="detailImage" alt="Product detail">
       </div>
       <div class="product-detail-info">
         <header>
@@ -172,23 +209,172 @@
         </header>
         <section class="product-detail-summary">
           <div>
-            <span class="label">Tình trạng</span>
+            <span class="label">Condition</span>
             <span id="detailCondition"></span>
           </div>
           <div>
-            <span class="label">Thương hiệu</span>
+            <span class="label">Brand</span>
             <span id="detailBrand"></span>
           </div>
           <div>
-            <span class="label">Định dạng</span>
+            <span class="label">Format</span>
             <span id="detailFormat"></span>
           </div>
         </section>
         <section class="product-detail-description">
-          <h3>Mô tả</h3>
+          <h3>Description</h3>
           <p id="detailDescription"></p>
           <ul id="detailFeatures"></ul>
         </section>
+        <section class="product-detail-contact" id="detailContactSection">
+          <h3>Contact Seller</h3>
+          <div class="contact-icons">
+            <a href="#" class="contact-icon-link" id="contactFacebook" title="Facebook" target="_blank">
+              <img src="assets/images/fbicon.png" alt="Facebook" />
+            </a>
+            <a href="#" class="contact-icon-link" id="contactInstagram" title="Instagram" target="_blank">
+              <img src="assets/images/instaicon.png" alt="Instagram" />
+            </a>
+            <a href="#" class="contact-icon-link" id="contactZalo" title="Zalo" target="_blank">
+              <img src="assets/images/zaloicon2.png" alt="Zalo" />
+            </a>
+            <a href="#" class="contact-icon-link" id="contactThreads" title="Threads" target="_blank">
+              <img src="assets/images/threadicon.png" alt="Threads" />
+            </a>
+            <a href="tel:" class="contact-icon-link" id="contactPhone" title="Phone">
+              <img src="assets/images/phoneicon.png" alt="Phone" />
+            </a>
+          </div>
+          <div class="contact-links" id="detailContactLinks"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div class="add-product-modal" id="addProductModal" aria-hidden="true">
+    <div class="add-product-backdrop" data-add-close></div>
+    <div class="add-product-content" role="dialog" aria-modal="true" aria-labelledby="addProductTitle">
+      <button class="add-product-close" type="button" data-add-close aria-label="Close">&times;</button>
+      <h2 id="addProductTitle">Add New Product</h2>
+      <form id="addProductForm" class="add-product-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="productName">Product Name *</label>
+            <input type="text" id="productName" name="productName" required placeholder="e.g. Mac DeMarco – 2 CD">
+          </div>
+          <div class="form-group">
+            <label for="productPrice">Price (VND) *</label>
+            <input type="number" id="productPrice" name="productPrice" required placeholder="375000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="productCategory">Category *</label>
+            <select id="productCategory" name="productCategory" required>
+              <option value="">Select category</option>
+              <option value="Audio">Audio</option>
+              <option value="Cassette Tape">Cassette Tape</option>
+              <option value="Accessories">Accessories</option>
+              <option value="Pola Camera">Pola Camera</option>
+              <option value="VHS">VHS</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="productFormat">Format *</label>
+            <select id="productFormat" name="productFormat" required>
+              <option value="">Select format</option>
+              <option value="CD">CD</option>
+              <option value="Vinyl">Vinyl</option>
+              <option value="Cassette">Cassette</option>
+              <option value="Device">Device</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="productImage">Product Image *</label>
+          <div class="image-upload-wrapper">
+            <input type="file" id="productImage" name="productImage" accept="image/*" required hidden>
+            <div class="image-preview" id="imagePreview">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              <span>Click to upload image</span>
+            </div>
+            <button type="button" class="btn-upload" id="uploadBtn">Choose Image</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="productBrand">Brand (Optional)</label>
+          <input type="text" id="productBrand" name="productBrand" placeholder="e.g. Sony, Mac DeMarco">
+        </div>
+        <div class="form-group">
+          <label for="productCondition">Condition (Optional)</label>
+          <input type="text" id="productCondition" name="productCondition" placeholder="e.g. Used - Like New">
+        </div>
+        <div class="form-group">
+          <label for="productLocation">Location (Optional)</label>
+          <input type="text" id="productLocation" name="productLocation" placeholder="e.g. District 7, HCMC">
+        </div>
+        <div class="form-group">
+          <label for="productDescription">Description (Optional)</label>
+          <textarea id="productDescription" name="productDescription" rows="4" placeholder="Enter product description..."></textarea>
+        </div>
+        
+        <div class="form-divider">
+          <span>Contact Information</span>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contactPhone">Phone Number</label>
+            <input type="tel" id="contactPhone" name="contactPhone" placeholder="+84 123 456 789">
+          </div>
+          <div class="form-group">
+            <label for="contactZalo">Zalo</label>
+            <input type="text" id="contactZalo" name="contactZalo" placeholder="Zalo ID or phone">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="contactMessenger">Messenger</label>
+            <input type="url" id="contactMessenger" name="contactMessenger" placeholder="https://m.me/username">
+          </div>
+          <div class="form-group">
+            <label for="contactInstagram">Instagram</label>
+            <input type="text" id="contactInstagram" name="contactInstagram" placeholder="@username">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="contactThreads">Threads</label>
+          <input type="text" id="contactThreads" name="contactThreads" placeholder="@username">
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" data-add-close>Cancel</button>
+          <button type="submit" class="btn-submit">Add Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="delete-confirm-modal" id="deleteConfirmModal" aria-hidden="true">
+    <div class="delete-confirm-backdrop" data-delete-close></div>
+    <div class="delete-confirm-content" role="dialog" aria-modal="true">
+      <button class="delete-confirm-close" type="button" data-delete-close aria-label="Close">&times;</button>
+      <div class="delete-confirm-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h2>Delete Product</h2>
+      <p>Are you sure you want to delete this product? This action cannot be undone.</p>
+      <div class="delete-confirm-actions">
+        <button type="button" class="btn-cancel" data-delete-close>Cancel</button>
+        <button type="button" class="btn-delete" id="confirmDeleteBtn">Delete</button>
       </div>
     </div>
   </div>
@@ -196,24 +382,24 @@
   <footer class="market-footer">
     <div class="market-container footer-grid">
       <div>
-        <img class="footer-logo" src="assets/images/logodaxoaphong2.png" alt="LDIE Zone Market logo nhỏ">
-        <p>LDIE Zone Market - điểm đến của những người yêu âm thanh analog và phong cách retro đích thực.</p>
+        <img class="footer-logo" src="assets/images/logodaxoaphong2.png" alt="LDIE Zone Market logo">
+        <p>LDIE Zone Market - the destination for analog audio lovers and authentic retro style enthusiasts.</p>
       </div>
       <div>
-        <h3>Kết nối</h3>
+        <h3>Connect</h3>
         <ul class="footer-links">
-          <li><a href="#collections">Sản phẩm</a></li>
+          <li><a href="#collections">Products</a></li>
           <li><a href="#collections">Catalog</a></li>
-          <li><a href="#testimonials">Cộng đồng</a></li>
-          <li><a href="#faq">Hỗ trợ</a></li>
+          <li><a href="#testimonials">Community</a></li>
+          <li><a href="#faq">Support</a></li>
         </ul>
       </div>
       <div>
-        <h3>Nhận bản tin</h3>
+        <h3>Newsletter</h3>
         <form class="footer-form" id="newsletterForm">
           <label for="footerEmail" class="visually-hidden">Email</label>
-          <input id="footerEmail" type="email" placeholder="Email của bạn">
-          <button type="submit">Đăng ký</button>
+          <input id="footerEmail" type="email" placeholder="Your email">
+          <button type="submit">Subscribe</button>
         </form>
       </div>
     </div>

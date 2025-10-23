@@ -36,8 +36,15 @@
             </svg>
             <span class="cart-badge">1</span>
           </button>
+          <button class="header-icon-btn logout-btn" id="logoutBtn" aria-label="Logout">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
         </div>
-      </div>
+      </div>  
       <nav class="navlinks d-flex flex-wrap justify-content-center" aria-label="Top navigation">
         <a href="#overview">AUDIO</a>
         <a href="#songs">VHS</a>
@@ -85,10 +92,10 @@
           <div class="hero-face hero-front">
             <div class="hero-container" id="heroFront">
               <div class="hero-portrait">
-                <img src="../Final-PTWKD/assets/images/Tranduythanhanhdaidien.jpg" alt="Huynh Quoc Long portrait">
+                <img src="assets/images/Tranduythanhanhdaidien.jpg" alt="Huynh Quoc Long portrait">
               </div>
               <div class="hero-details">
-                <p class="text-uppercase text-white-50 mb-1 fw-semibold">Jazz Trumpeter</p>
+                <p class="text-uppercase mb-1 fw-semibold member-rank" data-rank="gold">Gold Member</p>
                 <h1><span data-field-display="firstName">Long</span> <span data-field-display="lastName">Huynh</span></h1>
                 <div class="hero-meta">
                   <span data-field-display="city">Ho Chi Minh City</span>
@@ -98,19 +105,19 @@
                 </div>
                 <div class="hero-actions">
                   <button class="hero-btn primary" id="heroEditBtn">Edit profile</button>
+                  <button class="hero-btn secondary" id="changePasswordBtn">Change Password</button>
                 </div>
                 <div class="hero-tabs">
                   <button class="active" data-view="overview">Overview</button>
                   <button data-view="shipping">Shipping Address</button>
-                  <button data-view="shows">Shows</button>
                 </div>
               </div>
             </div>
           </div>
           <div class="hero-face hero-back" id="heroBack">
-            <div class="passport-logo" aria-hidden="true">LDIEZONE</div>
+            <div class="passport-logo" aria-hidden="true">OLDIEZONE</div>
             <div class="passport-photo">
-              <img src="../Final-PTWKD/assets/images/Tranduythanhanhdaidien.jpg" alt="Passport portrait">
+              <img src="assets/images/Tranduythanhanhdaidien.jpg" alt="Passport portrait">
             </div>
             <div class="passport-info d-flex flex-column">
               <div class="passport-field">
@@ -152,7 +159,7 @@
           </div>
         </div>
         <div class="wishlist-grid">
-          <div class="wishlist-card">
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/Titanic.png" alt="Titanic VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -161,8 +168,8 @@
               </div>
               <span class="wishlist-note">Saved July 12 · Romance epic</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/toprun.png" alt="Top Gun VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -171,8 +178,8 @@
               </div>
               <span class="wishlist-note">Saved July 18 · Need for speed night</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/sleepless.png" alt="Sleepless in Seattle VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -181,8 +188,8 @@
               </div>
               <span class="wishlist-note">Saved July 24 · Cozy date idea</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/beauty&amp;beast.png" alt="Beauty and the Beast VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -191,8 +198,8 @@
               </div>
               <span class="wishlist-note">Saved July 28 · Family favourite</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/MIB.png" alt="Men in Black VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -201,8 +208,8 @@
               </div>
               <span class="wishlist-note">Saved August 01 · Sci-fi marathon</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/toystory.png" alt="Toy Story VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -211,8 +218,8 @@
               </div>
               <span class="wishlist-note">Saved August 04 · Pixar nostalgia</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/Indiana.png" alt="Jurassic Park VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -221,8 +228,8 @@
               </div>
               <span class="wishlist-note">Saved August 12 · Creature feature</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/Pocahontas.png" alt="Pocahontas VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -231,8 +238,8 @@
               </div>
               <span class="wishlist-note">Saved August 18 · Classic sing-along</span>
             </div>
-          </div>
-          <div class="wishlist-card">
+          </a>
+          <a href="#" class="wishlist-card" data-url="">
             <img src="assets/images/film VHS/ET.png" alt="E.T. VHS cover">
             <div class="wishlist-card-body">
               <div class="wishlist-card-header">
@@ -241,7 +248,7 @@
               </div>
               <span class="wishlist-note">Saved August 22 · Homecoming night</span>
             </div>
-          </div>
+          </a>
         </div>
         <div class="step-nav-bar">
           <div class="step-nav" data-nav="wishlist" aria-label="Wishlist navigation">
@@ -255,33 +262,37 @@
         <div id="editProfilePanel">
           <form id="editProfileForm" class="edit-form-grid">
             <div class="edit-form-columns">
-              <div class="edit-field-group">
-                <label for="editFirstName">First name</label>
-                <input id="editFirstName" type="text" data-field-input="firstName" placeholder="Enter first name">
+              <div class="edit-form-column">
+                <div class="edit-field-group">
+                  <label for="editFirstName">First name</label>
+                  <input id="editFirstName" type="text" data-field-input="firstName" placeholder="Enter first name">
+                </div>
+                <div class="edit-field-group">
+                  <label for="editLastName">Last name</label>
+                  <input id="editLastName" type="text" data-field-input="lastName" placeholder="Enter last name">
+                </div>
+                <div class="edit-field-group">
+                  <label for="editCountry">Country</label>
+                  <input id="editCountry" type="text" data-field-input="country" placeholder="Enter country">
+                </div>
               </div>
-              <div class="edit-field-group">
-                <label for="editLastName">Last name</label>
-                <input id="editLastName" type="text" data-field-input="lastName" placeholder="Enter last name">
-              </div>
-              <div class="edit-field-group">
-                <label for="editCountry">Country</label>
-                <input id="editCountry" type="text" data-field-input="country" placeholder="Enter country">
-              </div>
-              <div class="edit-field-group">
-                <label for="editCity">City</label>
-                <input id="editCity" type="text" data-field-input="city" placeholder="City">
-              </div>
-              <div class="edit-field-group">
-                <label for="editBirthdate">Birthdate</label>
-                <input id="editBirthdate" type="date" data-field-input="birthdate">
-              </div>
-              <div class="edit-field-group">
-                <label for="editGender">Gender</label>
-                <select id="editGender" data-field-input="gender">
-                  <option value="Man">Man</option>
-                  <option value="Woman">Woman</option>
-                  <option value="Other">Other</option>
-                </select>
+              <div class="edit-form-column">
+                <div class="edit-field-group">
+                  <label for="editCity">City</label>
+                  <input id="editCity" type="text" data-field-input="city" placeholder="City">
+                </div>
+                <div class="edit-field-group">
+                  <label for="editBirthdate">Birthdate</label>
+                  <input id="editBirthdate" type="date" data-field-input="birthdate">
+                </div>
+                <div class="edit-field-group">
+                  <label for="editGender">Gender</label>
+                  <select id="editGender" data-field-input="gender">
+                    <option value="Man">Man</option>
+                    <option value="Woman">Woman</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="avatar-uploader">
@@ -291,7 +302,10 @@
               </label>
               <input id="editAvatar" type="file" accept="image/*" hidden>
             </div>
-            <button class="hero-btn primary align-self-start" id="editProfileSaveBtn" type="button">Save profile</button>
+            <div class="edit-profile-actions" style="display: flex; gap: 1rem; align-items: flex-start; justify-content: flex-end;">
+              <button class="hero-btn secondary" id="editProfileClearBtn" type="button">Clear</button>
+              <button class="hero-btn primary" id="editProfileSaveBtn" type="button">Save profile</button>
+            </div>
           </form>
         </div>
         <div id="shippingAddressPanel">
@@ -411,17 +425,62 @@
       </article>
     </section>
 
+    <!-- Change Password Modal -->
+    <div class="change-password-modal" id="changePasswordModal" aria-hidden="true">
+      <div class="change-password-backdrop" data-password-close></div>
+      <div class="change-password-content" role="dialog" aria-modal="true">
+        <button class="change-password-close" type="button" data-password-close aria-label="Close">&times;</button>
+        <h2>Change Password</h2>
+        <p class="change-password-subtitle">Update your account password</p>
+        <form id="changePasswordForm" class="change-password-form">
+          <div class="password-field-group">
+            <label for="currentPassword">Current Password *</label>
+            <div class="password-input-wrapper">
+              <input id="currentPassword" type="password" name="currentPassword" required placeholder="Enter current password">
+              <button type="button" class="toggle-password-visibility" data-target="currentPassword" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="password-field-group">
+            <label for="newPassword">New Password *</label>
+            <div class="password-input-wrapper">
+              <input id="newPassword" type="password" name="newPassword" required placeholder="Enter new password" minlength="6">
+              <button type="button" class="toggle-password-visibility" data-target="newPassword" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+            <small class="password-hint">At least 6 characters</small>
+          </div>
+          <div class="password-field-group">
+            <label for="confirmPassword">Confirm New Password *</label>
+            <div class="password-input-wrapper">
+              <input id="confirmPassword" type="password" name="confirmPassword" required placeholder="Confirm new password">
+              <button type="button" class="toggle-password-visibility" data-target="confirmPassword" aria-label="Show password">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <p class="password-message" id="passwordMessage" role="alert" hidden></p>
+          <div class="password-actions">
+            <button type="button" class="hero-btn secondary" data-password-close>Cancel</button>
+            <button type="submit" class="hero-btn primary">Update Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <section class="retro-tickets" id="retroTickets">
       <h2>Retro Cine Reservations</h2>
-      <div class="section-toolbar">
-        <div class="filter-group" data-filter="tickets" aria-label="Reservation filter">
-          <button type="button" class="filter-button is-active" data-filter-value="all">All Showtimes</button>
-          <button type="button" class="filter-button" data-filter-value="morning">Morning (6:00 - 12:00)</button>
-          <button type="button" class="filter-button" data-filter-value="afternoon">Afternoon (12:00 - 18:00)</button>
-          <button type="button" class="filter-button" data-filter-value="evening">Evening (18:00 - 22:00)</button>
-          <button type="button" class="filter-button" data-filter-value="latenight">Late Night (22:00 - 2:00)</button>
-        </div>
-      </div>
       <div class="tickets-grid">
         <div
           class="ticket-card"
@@ -437,7 +496,7 @@
           data-code="Booking #RC-482"
           data-room="Retro Cine Hall A"
           data-seats="B12 · B13"
-          data-description="Screening with pre-show trivia. Please arrive 30 minutes early for check-in.">
+          data-description="A teenager is accidentally sent 30 years into the past in a time-traveling DeLorean invented by his friend, and must make sure his high-school-age parents unite in order to save his own existence.">
           <div class="ticket-media">
             <img src="assets/images/film VHS/toprun.png" alt="Back to the Future poster">
             <span class="ticket-media-time">July 12, 2024 · 20:00</span>
@@ -445,11 +504,8 @@
           <div class="ticket-body">
             <div class="ticket-body-header">
               <h3 class="ticket-title">Back to the Future (1985)</h3>
-              <span class="ticket-code">Booking #RC-482</span>
             </div>
             <p class="ticket-room">Retro Cine Hall A</p>
-            <p class="ticket-seats">Seats: B12 · B13</p>
-            <span class="ticket-showtime">Evening Show · 20:00</span>
           </div>
         </div>
         <div
@@ -466,7 +522,7 @@
           data-code="Booking #RC-519"
           data-room="Retro Cine Hall B"
           data-seats="C05 · C06 · C07"
-          data-description="Includes dessert tasting and a post-show director interview livestream.">
+          data-description="A filmmaker recalls his childhood when he fell in love with the movies at his village's theater and formed a deep friendship with the theater's projectionist.">
           <div class="ticket-media">
             <img src="assets/images/film VHS/sleepless.png" alt="Cinema Paradiso poster">
             <span class="ticket-media-time">July 19, 2024 · 21:30</span>
@@ -474,11 +530,8 @@
           <div class="ticket-body">
             <div class="ticket-body-header">
               <h3 class="ticket-title">Cinema Paradiso (1988)</h3>
-              <span class="ticket-code">Booking #RC-519</span>
             </div>
             <p class="ticket-room">Retro Cine Hall B</p>
-            <p class="ticket-seats">Seats: C05 · C06 · C07</p>
-            <span class="ticket-showtime">Evening Show · 21:30</span>
           </div>
         </div>
         <div
@@ -495,7 +548,7 @@
           data-code="Booking #RC-544"
           data-room="Retro Cine Hall C"
           data-seats="A01 · A02"
-          data-description="Silent film with live synth score. Dress code: retro-futurism encouraged.">
+          data-description="In a futuristic city sharply divided between the working class and the city planners, the son of the city's mastermind falls in love with a working-class prophet who predicts the coming of a savior.">
           <div class="ticket-media">
             <img src="assets/images/film VHS/Indiana.png" alt="Metropolis poster">
             <span class="ticket-media-time">July 28, 2024 · 19:00</span>
@@ -503,11 +556,8 @@
           <div class="ticket-body">
             <div class="ticket-body-header">
               <h3 class="ticket-title">Metropolis (1927)</h3>
-              <span class="ticket-code">Booking #RC-544</span>
             </div>
             <p class="ticket-room">Retro Cine Hall C</p>
-            <p class="ticket-seats">Seats: A01 · A02</p>
-            <span class="ticket-showtime">Evening Show · 19:00</span>
           </div>
         </div>
         <div
@@ -524,7 +574,7 @@
           data-code="Booking #RC-558"
           data-room="Retro Cine Hall A"
           data-seats="D02 · D03"
-          data-description="Late-night neon marathon · Includes synthwave DJ warm-up.">
+          data-description="A blade runner must pursue and terminate four replicants who stole a ship in space and have returned to Earth to find their creator.">
           <div class="ticket-media">
             <img src="assets/images/film VHS/MIB.png" alt="Blade Runner poster">
             <span class="ticket-media-time">August 03, 2024 · 22:15</span>
@@ -532,11 +582,8 @@
           <div class="ticket-body">
             <div class="ticket-body-header">
               <h3 class="ticket-title">Blade Runner (1982)</h3>
-              <span class="ticket-code">Booking #RC-558</span>
             </div>
             <p class="ticket-room">Retro Cine Hall A</p>
-            <p class="ticket-seats">Seats: D02 · D03</p>
-            <span class="ticket-showtime">Late Night Show · 22:15</span>
           </div>
         </div>
         <div
@@ -553,7 +600,7 @@
           data-code="Booking #RC-603"
           data-room="Retro Cine Hall B"
           data-seats="VIP Row · Seats 1-4"
-          data-description="Charity sing-along night · Includes complimentary ponchos and photo booth.">
+          data-description="A silent film star falls for a chorus girl just as he and his delusionally jealous screen partner are trying to make the difficult transition to talking pictures in 1920s Hollywood.">
           <div class="ticket-media">
             <img src="assets/images/film VHS/beauty&amp;beast.png" alt="Singin' in the Rain poster">
             <span class="ticket-media-time">August 10, 2024 · 18:45</span>
@@ -561,11 +608,8 @@
           <div class="ticket-body">
             <div class="ticket-body-header">
               <h3 class="ticket-title">Singin' in the Rain (1952)</h3>
-              <span class="ticket-code">Booking #RC-603</span>
             </div>
             <p class="ticket-room">Retro Cine Hall B</p>
-            <p class="ticket-seats">Seats: VIP Row · Seats 1-4</p>
-            <span class="ticket-showtime">Evening Show · 18:45</span>
           </div>
         </div>
         <div
@@ -582,7 +626,7 @@
           data-code="Booking #RC-621"
           data-room="Retro Cine Hall A"
           data-seats="E08 · E09"
-          data-description="Morning classic screening with complimentary coffee and donuts.">
+          data-description="Five high school students from different walks of life endure a Saturday detention under a power-hungry principal, discovering they have more in common than they think.">
           <div class="ticket-media">
             <img src="assets/images/film VHS/toystory.png" alt="The Breakfast Club poster">
             <span class="ticket-media-time">August 15, 2024 · 10:30</span>
@@ -590,11 +634,8 @@
           <div class="ticket-body">
             <div class="ticket-body-header">
               <h3 class="ticket-title">The Breakfast Club (1985)</h3>
-              <span class="ticket-code">Booking #RC-621</span>
             </div>
             <p class="ticket-room">Retro Cine Hall A</p>
-            <p class="ticket-seats">Seats: E08 · E09</p>
-            <span class="ticket-showtime">Morning Show · 10:30</span>
           </div>
         </div>
         <div
@@ -611,7 +652,7 @@
           data-code="Booking #RC-642"
           data-room="Retro Cine Hall B"
           data-seats="F10 · F11 · F12"
-          data-description="Afternoon matinee with nostalgic 80s snacks and refreshments.">
+          data-description="A popular high school student decides to take a day off from school with his girlfriend and best friend, embarking on an adventure through Chicago while trying to avoid getting caught.">
           <div class="ticket-media">
             <img src="assets/images/film VHS/Pocahontas.png" alt="Ferris Bueller's Day Off poster">
             <span class="ticket-media-time">August 20, 2024 · 14:00</span>
@@ -619,11 +660,8 @@
           <div class="ticket-body">
             <div class="ticket-body-header">
               <h3 class="ticket-title">Ferris Bueller's Day Off (1986)</h3>
-              <span class="ticket-code">Booking #RC-642</span>
             </div>
             <p class="ticket-room">Retro Cine Hall B</p>
-            <p class="ticket-seats">Seats: F10 · F11 · F12</p>
-            <span class="ticket-showtime">Afternoon Show · 14:00</span>
           </div>
         </div>
       </div>
@@ -653,19 +691,14 @@
                   <dd id="ticketDetailDate"></dd>
                 </div>
                 <div class="ticket-detail-item">
-                  <dt>Reservation code</dt>
-                  <dd id="ticketDetailCode"></dd>
-                </div>
-                <div class="ticket-detail-item">
                   <dt>Screening room</dt>
                   <dd id="ticketDetailRoom"></dd>
                 </div>
                 <div class="ticket-detail-item">
-                  <dt>Seats</dt>
-                  <dd id="ticketDetailSeats"></dd>
+                  <dt>Summary</dt>
+                  <dd id="ticketDetailSummary"></dd>
                 </div>
               </dl>
-              <p class="ticket-detail-notes" id="ticketDetailNotes"></p>
             </div>
           </div>
         </div>
