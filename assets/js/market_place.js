@@ -47,8 +47,6 @@ const activeFilters = {
   owner: document.querySelector("button[data-filter-type='owner'].active")?.dataset.filterValue || "all"
 };
 
-// Track user's products (products they added)
-// For testing: mark first 3 products as "my products"
 let myProductIds = ["test-1", "test-2", "test-3"];
 
 const detailModal = document.getElementById("productDetail");
@@ -223,8 +221,7 @@ function renderProducts(page) {
       </div>
     `;
     card.tabIndex = 0;
-    
-    // Delete button handler
+
     if (isMyProduct) {
       const deleteButton = card.querySelector(".product-delete-btn");
       deleteButton.addEventListener("click", (e) => {
@@ -232,8 +229,7 @@ function renderProducts(page) {
         openDeleteConfirm(item.id);
       });
     }
-    
-    // Click on product opens detail
+
     card.addEventListener("click", (e) => {
       if (!e.target.closest(".product-delete-btn")) {
         openProductDetail(item);
@@ -300,7 +296,6 @@ filterButtons.forEach(button => {
   });
 });
 
-// Search functionality
 let searchTimeout;
 catalogSearchInput?.addEventListener("input", (e) => {
   clearTimeout(searchTimeout);
@@ -319,29 +314,22 @@ function getFeatureList(item) {
 }
 
 function handleBuyProduct(item) {
-  // Add to cart logic here
   alert(`Added "${item.name}" to cart!\nPrice: ${item.price}`);
   
-  // You can implement actual cart functionality here
-  // For example: addToCart(item);
   console.log("Product added to cart:", item);
 }
 
 function handleBuyNow(item) {
-  // Show contact information section
   const contactSection = document.getElementById("detailContactSection");
   
   if (item.contact && contactSection) {
-    // Scroll to contact section
     contactSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    
-    // Highlight the contact section temporarily
+
     contactSection.style.animation = 'pulse 0.5s ease';
     setTimeout(() => {
       contactSection.style.animation = '';
     }, 500);
-    
-    // If no contact info, show default message
+
     if (!item.contact.phone && !item.contact.zalo && !item.contact.messenger && 
         !item.contact.instagram && !item.contact.threads) {
       alert(`To purchase "${item.name}", please contact the seller.\n\nContact information not available for this product.`);
@@ -634,7 +622,6 @@ addProductForm?.addEventListener("submit", (event) => {
   console.log("Total products:", products.length);
 });
 
-// Delete Confirmation Modal
 const deleteConfirmModal = document.getElementById("deleteConfirmModal");
 const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
 const closeDeleteTargets = deleteConfirmModal?.querySelectorAll("[data-delete-close]") || [];
@@ -665,8 +652,7 @@ deleteConfirmModal?.addEventListener("click", event => {
 
 confirmDeleteBtn?.addEventListener("click", () => {
   if (!productToDelete) return;
-  
-  // Find and remove product
+
   const productIndex = products.findIndex(p => p.id === productToDelete);
   if (productIndex !== -1) {
     const deletedProduct = products[productIndex];
