@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <!-- Left section -->
+    <section id="menu">
+        <div class="logo">
+            <img src="../assets/images/logo.png" alt="">
+        </div>
+        <div class="items">
+            <ul>
+                <li><i class="fa-solid fa-chart-pie"></i><a href="#"> Dashboard</a></li>
+                <li><i class="fa-solid fa-table-cells-large"></i><a href="#"> Products</a></li>
+                <li><i class="fa-solid fa-cart-shopping"></i><a href="#"> Orders</a></li>
+                <li><i class="fa-solid fa-message"></i><a href="#"> Messages</a></li>
+                <li><i class="fa-solid fa-plus"></i><a href="#"> Add Product</a></li>
+                <li><i class="fa-solid fa-gear"></i><a href="#"> Settings</a></li>
+                <li><i class="fa-solid fa-right-from-bracket"></i><a href="#"> Logout</a></li>
+            </ul>
+        </div>
+    </section>
+    <!-- Header-->
+    <section id="interface">
+        <div class="navigation">
+            <div class="n1">
+                <div>
+                    <i id="menu-btn" class="fa-solid fa-bars"></i>
+                </div>
+                <div class="search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text"placeholder="Search">
+                </div>
+            </div>
+
+            <div class="profile">
+                <i class="fa-solid fa-bell"></i>
+                <img src="../assets/images/Tranduythanhanhdaidien.jpg"/>
+            </div>
+        </div>
+    <!-- Main-->
+        <div class="dashboard-header">
+            <h3 class="i-name">Dashboard</h3>
+            <div class="date">
+                <input type="date">
+            </div>
+        </div>
+
+        <div class="values">
+            <div class="val-box">
+                <i class="fa-solid fa-users"></i>
+                <div>
+                    <h3> 9,113 </h3>
+                    <span> New Users</span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <div>
+                    <h3> 197,864 </h3>
+                    <span> Total Orders </span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-film"></i>
+                <div>
+                    <h3> 356,987 </h3>
+                    <span> Products Sell </span>
+                </div>
+            </div>
+            <div class="val-box">
+                <i class="fa-solid fa-wallet"></i>
+                <div>
+                    <h3> 16.175.000VND </h3>
+                    <span> This Month</span>
+                </div>
+            </div>
+        </div>
+        <div class="recent_order">
+            <h1>Recent Orders</h1>
+            <table>
+                <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td>Arctic Monkeys - Vinyl LP</td>
+                    <td>Paid</td>
+                    <td class="success">Delivered</td>
+                    <td class="primary">Detail</td>
+                </tr>
+
+                <tr>
+                    <td>Mac Demarco - This Old Dog CD</td>
+                    <td>Due</td>
+                    <td class="warning">Pending</td>
+                    <td class="primary">Detail</td>
+                </tr>
+
+                <tr>
+                    <td>Taylor Swift - Lover CD</td>
+                    <td>Paid</td>
+                    <td class="processing">Processing</td>
+                    <td class="primary">Detail</td>
+                </tr>
+
+                <tr>
+                    <td>Billie Eilish - Hoodie</td>
+                    <td>Paid</td>
+                    <td class="shipped">Shipped</td>
+                    <td class="primary">Detail</td>
+                </tr>
+
+                <tr>
+                    <td>Frank Ocean - Blonde Vinyl</td>
+                    <td>Paid</td>
+                    <td class="danger">Canceled</td>
+                    <td class="primary">Detail</td>
+                </tr>
+
+                <tr>
+                    <td>Mac Miller - Sweatshirt</td>
+                    <td>Refunded</td>
+                    <td class="refunded">Refunded</td>
+                    <td class="primary">Detail</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+    <!-- Chat Panel -->
+    <div id="chatPanel">
+        <header>
+            <h4>Chat AI</h4>
+            <i class="fa-solid fa-xmark" id="closeChat" style="cursor:pointer;"></i>
+        </header>
+        <div class="chat-body">
+            <p class="ai"><span class="sender">AI:</span> Xin chào! Tôi có thể giúp gì cho bạn?</p>
+        </div>
+
+        <div class="chat-input">
+            <input type="text" placeholder="Nhập tin nhắn...">
+            <button><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Nút mở chat -->
+    <div id="chatBtn">
+        <i class="fa-solid fa-comments"></i>
+        <span class="chatHint">Tôi là Trợ lý AI của OLDIE ZONE🤖</span>
+    </div>
+    <script>
+        const chatPanel = document.getElementById('chatPanel');
+        const chatBtn = document.getElementById('chatBtn');
+        const closeChat = document.getElementById('closeChat');
+        const interfaceSection = document.getElementById('interface');
+
+        let isDragging = false;
+        let offsetX = 0, offsetY = 0;
+        let moved = false; // kiểm tra có kéo thật không
+
+        // === Bắt đầu kéo ===
+        chatBtn.addEventListener('mousedown', (e) => {
+            if (chatBtn.classList.contains('hide')) return;
+            isDragging = true;
+            moved = false;
+            offsetX = e.clientX - chatBtn.getBoundingClientRect().left;
+            offsetY = e.clientY - chatBtn.getBoundingClientRect().top;
+            chatBtn.classList.add('dragging');
+        });
+
+        // === Di chuyển nút ===
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            moved = true;
+
+            const btnWidth = chatBtn.offsetWidth;
+            const btnHeight = chatBtn.offsetHeight;
+            const maxX = window.innerWidth - btnWidth;
+            const maxY = window.innerHeight - btnHeight;
+
+            let left = e.clientX - offsetX;
+            let top = e.clientY - offsetY;
+
+            left = Math.max(0, Math.min(left, maxX));
+            top = Math.max(0, Math.min(top, maxY));
+
+            chatBtn.style.left = `${left}px`;
+            chatBtn.style.top = `${top}px`;
+            chatBtn.style.right = 'auto';
+            chatBtn.style.bottom = 'auto';
+            chatBtn.style.position = 'fixed';
+        });
+
+        // === Kết thúc kéo ===
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                setTimeout(() => chatBtn.classList.remove('dragging'), 100);
+            }
+        });
+
+        // === Click mở chat (chỉ khi KHÔNG kéo) ===
+        chatBtn.addEventListener('click', () => {
+            if (moved) return; // nếu vừa kéo xong thì KHÔNG click
+            chatPanel.classList.add('active');
+            chatBtn.classList.add('hide'); // ẩn icon khi mở
+        });
+
+        // === Đóng chat ===
+        closeChat.addEventListener('click', () => {
+            chatPanel.classList.remove('active');
+            setTimeout(() => chatBtn.classList.remove('hide'), 300); // hiện lại icon
+        });
+        const chatInput = document.querySelector("#chatPanel .chat-input input");
+        const chatButton = document.querySelector("#chatPanel .chat-input button");
+        const chatBody = document.querySelector("#chatPanel .chat-body");
+
+        // Hàm thêm tin nhắn vào chat
+        function addMessage(sender, text) {
+            const p = document.createElement("p");
+            p.innerHTML = `<b>${sender}:</b> ${text}`;
+            chatBody.appendChild(p);
+            chatBody.scrollTop = chatBody.scrollHeight; // tự cuộn xuống dưới
+        }
+
+        // Hàm AI phản hồi (ví dụ cứng, sau có thể thay bằng API)
+        function aiReply(message) {
+            let reply = "Xin lỗi, tôi chưa biết trả lời câu đó 😅";
+            if(message.toLowerCase().includes("xin chào")) reply = "Xin chào! Tôi có thể giúp gì cho bạn?";
+            if(message.toLowerCase().includes("dashboard")) reply = "Bạn đang ở trang Dashboard. Muốn xem thống kê gì?";
+            return reply;
+        }
+
+        // Bấm nút gửi
+        chatButton.addEventListener("click", () => {
+            const message = chatInput.value.trim();
+            if(message === "") return;
+            addMessage("Bạn", message);
+            chatInput.value = "";
+            
+            setTimeout(() => {
+                addMessage("AI", aiReply(message));
+            }, 500); // giả lập AI trả lời sau 0.5s
+        });
+
+        // Nhấn Enter cũng gửi
+        chatInput.addEventListener("keypress", (e) => {
+            if(e.key === "Enter") {
+                chatButton.click();
+            }
+        });
+        function addMessage(sender, text) {
+            const p = document.createElement("p");
+            const span = document.createElement("span");
+            
+            // Tạo span cho tên người gửi
+            span.classList.add("sender");
+            span.textContent = sender + ": "; // tự động thêm dấu ":" sau tên
+            p.appendChild(span);
+
+            // Tạo span cho nội dung tin nhắn
+            const messageSpan = document.createElement("span");
+            messageSpan.classList.add("message-text");
+            messageSpan.textContent = text;
+            p.appendChild(messageSpan);
+
+            // Thêm class để phân biệt vị trí
+            if(sender === "Bạn") {
+                p.classList.add("user"); // bubble bên phải
+            } else {
+                p.classList.add("ai");   // bubble bên trái
+            }
+
+            chatBody.appendChild(p);
+            chatBody.scrollTop = chatBody.scrollHeight; // auto scroll xuống cuối
+        }
+
+
+    </script>
+
+    
+
+    <script>
+        $('#menu-btn').click(function() {
+            $('#menu').toggleClass("active");
+        })
+    </script>
+</body>
+</html>
