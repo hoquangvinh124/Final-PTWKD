@@ -3,7 +3,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 :root{
 /* Colors */
@@ -14,45 +13,8 @@
 --secondary-color: #f3961c;
 --light-pink-color: #faf4f5;
 --medium-gray-color: #ccc;
-/* Font sizes */
---font-size-s: 0.9rem;
---font-size-n: 1rem;
---font-size-m: 1.12rem;
---font-size-l: 1.5rem;
---font-size-xl: 2rem;
---font-size-xxl: 2.3rem;
-/*Font weight*/
---font-weight-normal: 400;
---font-weight-medium: 500;
---font-weight-semibold: 600;
---font-weight-bold: 700;
-/*Border radius*/
---border-radius-s: 8px;
---border-radius-m: 30px;
---border-radius-circle: 50%;
-  /* Spacing */
-  --spacing-xs: 5px;
-  --spacing-s: 10px;
-  --spacing-m: 20px;
-  --spacing-l: 30px;
-  --spacing-xl: 60px;
-  --spacing-xxl: 90px;
-/*Size max width*/
-  --size-max-width: 4000px;
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
+font-family: var(--main-font);
 }
-
-
-/* Styling for whole site 
-.header-top {
-    padding: 20px 0;
-    text-align: center;
-    border-bottom: 3px solid #3b141c;
-}*/
-
 .header-top {
   display: flex;
   align-items: center;
@@ -337,7 +299,7 @@ body {
 
 .submenu-link:hover {
     background-color: #3b141c;
-    color: #B22222;
+    color: var(--secondary-color);
     border-left: 3px solid var(--primary-color);
     padding-left: 25px;
 }
