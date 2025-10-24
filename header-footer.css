@@ -337,7 +337,7 @@ body {
 
 .submenu-link:hover {
     background-color: #3b141c;
-    color: #B22222;
+    color: var(--secondary-color);
     border-left: 3px solid var(--primary-color);
     padding-left: 25px;
 }
