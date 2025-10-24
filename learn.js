@@ -29,8 +29,8 @@ function createProductCard(product) {
             </ul>
           </div>
           <a href="single-product.html?id=${product.id}">
-            <img src="${product.image_front}" alt="${product.name}" class="main-image">
-            <img src="${product.image_back}" alt="${product.name}" class="hover-image">
+            <img src="${product.image_front}" alt="${product.name}" loading="lazy" class="main-image">
+            <img src="${product.image_back}" alt="${product.name}" loading="lazy" class="hover-image">
           </a>
         </div>
         <div class="down-content">
