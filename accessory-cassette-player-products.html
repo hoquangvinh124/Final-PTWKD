@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
   <head>
@@ -18,48 +18,64 @@
 
     <link rel="stylesheet" href="assets/css/templatemo-hexashop.css">
 
-    <link rel="stylesheet" href="assets/css/header-footer.css">
+    <link rel="stylesheet" href="assets/css/header-footer-2.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<!--TemplateMo 571 Hexashop https://templatemo.com/tm-571-hexashop -->
-    </head>
+<!--TemplateMo 571 Hexashop https://templatemo.com/tm-571-hexashop --></head>
     
     <body>
-    
-    
-    <!-- ***** Header Area Start ***** -->
+<!-- ***** Header Area Start ***** -->
     <header>
-        <nav class="navbar">
+        <nav class="navbar section-content">
             <div class="header-top">
-                <a href="#" class="nav-logo">
-                <img src="assets/images/logo.png" width="150px" height="60px">
+                <a href="homepage.html" class="nav-logo" aria-label="Trang chủ Retro Sound">
+                    <img src="assets/images/shopname.jpg" width="150" height="60" alt="Retro Sound Logo">
                 </a>
+                <div class="header-icons" role="group" aria-label="Lối tắt điều hướng">
+                    <button type="button" class="header-icon search-btn" aria-label="Tìm kiếm" title="Tìm kiếm">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartTabPanel cartModal" title="Giỏ hàng">
+                        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                        <span class="badge" id="cartBadge"></span>
+                    </button>
+                    <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                        <i class="fa-regular fa-user" aria-hidden="true"></i>
+                    </button>
+                </div>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="audio-products.html" class="nav-link">Audio</a>
+                    <a href="audio-products.html" class="nav-link">AUDIO</a>
                     <ul class="submenu">
                         <li><a href="audio-cd-products.html" class="submenu-link">CD</a></li>
-                        <li><a href="audio-vinyl-products.html" class="submenu-link">Vinyl</a></li>
+                        <li><a href="audio-vinyl-products.html" class="submenu-link">VINYL</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a href="vhs-products.html" class="nav-link">VHS</a></li>
-                <li class="nav-item"><a href="cassette-tape-products.html" class="nav-link">Cassette Tape</a></li>
-                <li class="nav-item"><a href="camera-products.html" class="nav-link">Pola Camera</a></li>
+                <li class="nav-item"><a href="cassette-tape-products.html" class="nav-link">CASSETTE TAPE</a></li>
+                <li class="nav-item"><a href="camera-products.html" class="nav-link">POLA CAMERA</a></li>
                 <li class="nav-item">
-                    <a href="accessory-products.html" class="nav-link">Accessories</a>
+                    <a href="accessory-products.html" class="nav-link">ACCESSORIES</a>
                     <ul class="submenu">
-                        <li><a href="accessory-cassette-player-products.html" class="submenu-link">Cassette Player</a></li>
-                        <li><a href="accessory-ipod-products.html" class="submenu-link">IPods</a></li>
-                        <li><a href="accessory-cd-player-products.html" class="submenu-link">CD Player</a></li>
+                        <li><a href="accessory-cassette-player-products.html" class="submenu-link">CASSETTE PLAYER</a></li>
+                        <li><a href="accessory-ipod-products.html" class="submenu-link">IPOD</a></li>
+                        <li><a href="accessory-cd-player-products.html" class="submenu-link">CD PLAYER</a></li>
                     </ul>
                 </li>
-                <li class="nav-item"><a href="#" class="nav-link">Cinema Room</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Community</a></li>
-                <li class="nav-item"><a href="#" class="nav-link">Thread</a></li>
+                <li class="nav-item"><a href="retro-cine.html" class="nav-link">CINE ROOM</a></li>
+                <li class="nav-item"><a href="market_place.html" class="nav-link">THREAD</a></li>
             </ul>
         </nav>
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" id="searchInput">
+                <button class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+        </div>
     </header>
     <!-- ***** Header Area End ***** -->
 
@@ -209,7 +225,9 @@
     <script src="assets/js/filter-dropdown.js"></script>
 
     <script src="learn.js"></script>
-
-  </body>
+    <script src="search.js"></script>
+    <script src="script.js"></script>
+<script type="module" src="assets/js/user-auth-handler.js"></script>
+</body>
 
 </html>
