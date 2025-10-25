@@ -1,3 +1,22 @@
+// Authentication check - redirect to login if not authenticated
+(function checkAuth() {
+  const authData = localStorage.getItem('demo.auth');
+  if (!authData) {
+    window.location.href = 'login.html';
+    return;
+  }
+  
+  try {
+    const session = JSON.parse(authData);
+    if (!session || !session.username) {
+      window.location.href = 'login.html';
+    }
+  } catch (e) {
+    localStorage.removeItem('demo.auth');
+    window.location.href = 'login.html';
+  }
+})();
+
 const scrollIntoViewCentered = (element) => {
   if(!element) return;
   element.scrollIntoView({ behavior:'smooth', block:'center' });
