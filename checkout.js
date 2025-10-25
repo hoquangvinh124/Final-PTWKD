@@ -1,225 +1,337 @@
-const currencyFormatter = new Intl.NumberFormat("vi-VN", {
-  maximumFractionDigits: 0,
-});
-
-const orderContainer = document.querySelector(".order-items");
-const items = () => Array.from(orderContainer.querySelectorAll(".order-item"));
-
-const subtotalValue = document.getElementById("subtotalValue");
-const shippingValue = document.getElementById("shippingValue");
-const totalValue = document.getElementById("totalValue");
-const discountValue = document.getElementById("discountValue");
-const discountRow = document.querySelector(".discount-row");
-const shippingRadios = document.querySelectorAll('input[name="shipping"]');
-const discountInput = document.getElementById("discountCode");
-const discountFeedback = document.querySelector(".discount-feedback");
-const applyDiscountBtn = document.getElementById("applyDiscount");
-const payButton = document.getElementById("payNow");
-
-const DISCOUNT_CODES = {
-  LDIEZONE: { type: "percentage", value: 0.1, message: "Giảm 10% toàn bộ đơn hàng" },
-  NHON25: { type: "flat", value: 25000, message: "Giảm trực tiếp 25.000 VND" },
-  FREESHIP: { type: "shipping", value: true, message: "Miễn phí vận chuyển" },
-};
-let 
-let activeDiscount = null;
-
-const sanitizeQuantity = (value) => {
-  const parsed = Number.parseInt(value, 10);
-  if (Number.isNaN(parsed) || parsed < 1) {
-    return 1;
-  }
-  return parsed;
+// Global variables
+let currentStep = 1;
+let orderData = {
+  customer: {},
+  products: {
+    vinyl: { name: "Vinyl Record Player - Retro Edition", price: 299.00, quantity: 1 },
+    cassette: { name: "Cassette Player - Vintage", price: 159.00, quantity: 0 }
+  },
+  shipping: { type: "standard", price: 9.99 },
+  payment: { type: "card" },
+  taxRate: 0.08 // 8% tax rate
 };
 
-const getSelectedShipping = () => {
-  const selected = Array.from(shippingRadios).find((radio) => radio.checked);
-  if (!selected) {
-    return { cost: 0, label: "" };
-  }
-  const cost = Number.parseInt(selected.value, 10) || 0;
-  return { cost, label: selected.dataset.label || "" };
-};
-
-const formatCurrency = (amount) =>
-  `${currencyFormatter.format(Math.max(0, Math.round(amount)))} VND`;
-
-const updateTotals = () => {
-  let subtotal = 0;
-  items().forEach((item) => {
-    const quantityInput = item.querySelector('input[type="number"]');
-    const quantity = sanitizeQuantity(quantityInput.value);
-    quantityInput.value = quantity;
-
-
-    const price = Number.parseInt(item.dataset.price, 10) || 0;
-    subtotal += price * quantity;
+// Initialize the checkout process
+document.addEventListener('DOMContentLoaded', function() {
+  updateProgressSteps();
+  updateOrderSummary();
+  
+  // Add event listeners for product selection
+  document.querySelectorAll('.product-option').forEach(option => {
+    option.addEventListener('click', function() {
+      document.querySelectorAll('.product-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      this.classList.add('selected');
+    });
   });
 
-  let { cost: shippingBase } = getSelectedShipping();
-  if (items().length === 0) {
-    shippingBase = 0;
-  }
-
-  let shipping = shippingBase;
-  let discountAmount = 0;
-
-  if (activeDiscount) {
-    switch (activeDiscount.type) {
-      case "percentage":
-        discountAmount += subtotal * activeDiscount.value;
-        break;
-      case "flat":
-        discountAmount += activeDiscount.value;
-        break;
-      case "shipping":
-        discountAmount += shippingBase;
-        shipping = 0;
-        break;
-      default:
-        break;
-    }
-  }
-
-  if (discountAmount > subtotal + shipping) {
-    discountAmount = subtotal + shipping;
-  }
-
-  const total = subtotal + shipping - discountAmount;
-
-  subtotalValue.textContent = formatCurrency(subtotal);
-  shippingValue.textContent = formatCurrency(shipping);
-  totalValue.textContent = formatCurrency(total);
-
-  if (discountAmount > 0) {
-    discountRow.classList.remove("hidden");
-    discountValue.textContent = `-${formatCurrency(discountAmount)}`;
-  } else {
-    discountRow.classList.add("hidden");
-    discountValue.textContent = "-0 VND";
-  }
-
-  payButton.disabled = total <= 0;
-};
-
-const handleQuantityButton = (button) => {
-  const container = button.closest(".quantity-control");
-  if (!container) return;
-  const input = container.querySelector('input[type="number"]');
-  const direction = button.dataset.direction;
-  const current = sanitizeQuantity(input.value);
-  if (direction === "increase") {
-    input.value = current + 1;
-  } else if (direction === "decrease") {
-    input.value = Math.max(1, current - 1);
-  }
-  updateTotals();
-};
-
-const removeItem = (button) => {
-  const item = button.closest(".order-item");
-  if (!item) return;
-  item.classList.add("removed");
-  window.setTimeout(() => {
-    item.remove();
-    updateTotals();
-  }, 200);
-};
-
-const clearDiscountMessage = () => {
-  discountFeedback.textContent = "";
-  discountFeedback.classList.remove("success", "error");
-};
-
-const setDiscountMessage = (message, type) => {
-  discountFeedback.textContent = message;
-  discountFeedback.classList.remove("success", "error");
-  if (type) {
-    discountFeedback.classList.add(type);
-  }
-};
-
-const applyDiscount = () => {
-  const code = discountInput.value.trim().toUpperCase();
-
-  if (!code) {
-    activeDiscount = null;
-    clearDiscountMessage();
-    updateTotals();
-    return;
-  }
-
-  const discount = DISCOUNT_CODES[code];
-  if (!discount) {
-    activeDiscount = null;
-    setDiscountMessage("Mã giảm giá không hợp lệ.", "error");
-    updateTotals();
-    return;
-  }
-
-  activeDiscount = { code, ...discount };
-  setDiscountMessage(discount.message, "success");
-  updateTotals();
-};
-
-const handleShippingChange = (event) => {
-  if (!(event.target instanceof HTMLInputElement)) return;
-  if (event.target.name !== "shipping") return;
-  updateTotals();
-};
-
-const handlePay = () => {
-  const { label } = getSelectedShipping();
-  const summaryLines = items().map((item) => {
-    const title = item.querySelector("h3")?.textContent || "Sản phẩm";
-    const quantity = sanitizeQuantity(
-      item.querySelector('input[type="number"]').value
-    );
-    return `• ${title} x${quantity}`;
+  // Add event listeners for shipping options
+  document.querySelectorAll('.shipping-option').forEach(option => {
+    option.addEventListener('click', function() {
+      const shippingType = this.dataset.shipping;
+      const shippingPrice = parseFloat(this.dataset.price);
+      
+      document.querySelectorAll('.shipping-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      
+      // Update order data
+      orderData.shipping.type = shippingType;
+      orderData.shipping.price = shippingPrice;
+      
+      // Update order summary
+      updateOrderSummary();
+    });
   });
 
-  const totalText = totalValue.textContent;
-  const message = [
-    "Xác nhận thanh toán",
-    ...summaryLines,
-    `Phương thức vận chuyển: ${label}`,
-    `Tổng thanh toán: ${totalText}`,
-  ].join("\n");
+  // Add event listeners for payment options
+  document.querySelectorAll('.payment-option').forEach(option => {
+    option.addEventListener('click', function() {
+      document.querySelectorAll('.payment-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      this.classList.add('selected');
+      
+      // Update order data
+      orderData.payment.type = this.dataset.payment;
+    });
+  });
 
-  window.alert(message);
-};
+  // Add event listeners for quantity controls
+  document.querySelectorAll('.qty-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const action = this.dataset.action;
+      const product = this.closest('.product-option').dataset.product;
+      const input = this.parentElement.querySelector('.qty-input');
+      let value = parseInt(input.value);
+      
+      if (action === 'increase') {
+        value++;
+      } else if (action === 'decrease' && value > 0) {
+        value--;
+      }
+      
+      input.value = value;
+      
+      // Update order data
+      orderData.products[product].quantity = value;
+      
+      // Update order summary
+      updateOrderSummary();
+    });
+  });
+  
+  // Add event listeners for quantity input changes
+  document.querySelectorAll('.qty-input').forEach(input => {
+    input.addEventListener('change', function() {
+      const product = this.dataset.product;
+      let value = parseInt(this.value);
+      
+      if (isNaN(value) || value < 0) {
+        value = 0;
+        this.value = 0;
+      }
+      
+      // Update order data
+      orderData.products[product].quantity = value;
+      
+      // Update order summary
+      updateOrderSummary();
+    });
+  });
+});
 
-orderContainer.addEventListener("click", (event) => {
-  const target = event.target;
-  if (target instanceof HTMLButtonElement) {
-    if (target.classList.contains("qty-btn")) {
-      handleQuantityButton(target);
+// Fill default customer information
+function fillDefaultInfo() {
+  const defaultInfo = {
+    firstName: "John",
+    lastName: "Doe",
+    email: "john.doe@example.com",
+    phone: "+1 (555) 123-4567",
+    address: "123 Main Street",
+    city: "San Francisco",
+    zipCode: "94103"
+  };
+  
+  // Fill the form fields
+  document.getElementById('firstName').value = defaultInfo.firstName;
+  document.getElementById('lastName').value = defaultInfo.lastName;
+  document.getElementById('email').value = defaultInfo.email;
+  document.getElementById('phone').value = defaultInfo.phone;
+  document.getElementById('address').value = defaultInfo.address;
+  document.getElementById('city').value = defaultInfo.city;
+  document.getElementById('zipCode').value = defaultInfo.zipCode;
+  
+  // Save to order data
+  orderData.customer = defaultInfo;
+  
+  // Show confirmation message
+  showQuickFillConfirmation();
+}
+
+// Show confirmation when default info is filled
+function showQuickFillConfirmation() {
+  // Create a temporary confirmation message
+  const confirmation = document.createElement('div');
+  confirmation.className = 'quick-fill-confirmation';
+  confirmation.innerHTML = `
+    <div class="confirmation-content">
+      <i class="fas fa-check-circle"></i>
+      <span>Default information filled successfully!</span>
+    </div>
+  `;
+  
+  // Add styles for the confirmation
+  const style = document.createElement('style');
+  style.textContent = `
+    .quick-fill-confirmation {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--dark-strong);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 15px 20px;
+      color: var(--highlight);
+      z-index: 1000;
+      animation: slideInRight 0.3s ease, fadeOut 0.3s ease 2s forwards;
     }
-    if (target.classList.contains("remove-item")) {
-      removeItem(target);
+    .confirmation-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
+    .confirmation-content i {
+      font-size: 1.2rem;
+    }
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Add to document and remove after animation
+  document.body.appendChild(confirmation);
+  setTimeout(() => {
+    if (confirmation.parentNode) {
+      confirmation.parentNode.removeChild(confirmation);
+    }
+    if (style.parentNode) {
+      style.parentNode.removeChild(style);
+    }
+  }, 2500);
+}
+
+// Update progress steps
+function updateProgressSteps() {
+  document.querySelectorAll('.step').forEach(step => {
+    const stepNumber = parseInt(step.dataset.step);
+    step.classList.remove('active', 'completed');
+    
+    if (stepNumber === currentStep) {
+      step.classList.add('active');
+    } else if (stepNumber < currentStep) {
+      step.classList.add('completed');
+    }
+  });
+}
+
+// Show specific step
+function showStep(stepNumber) {
+  document.querySelectorAll('.checkout-form').forEach(form => {
+    form.classList.remove('active');
+  });
+  document.getElementById(`step${stepNumber}`).classList.add('active');
+  currentStep = stepNumber;
+  updateProgressSteps();
+}
+
+// Navigate to next step
+function nextStep(fromStep) {
+  // Validate current step before proceeding
+  if (fromStep === 1 && !validateCustomerInfo()) {
+    alert('Please fill in all required customer information');
+    return;
   }
-});
-
-orderContainer.addEventListener("change", (event) => {
-  const target = event.target;
-  if (target instanceof HTMLInputElement && target.type === "number") {
-    target.value = sanitizeQuantity(target.value);
-    updateTotals();
+  
+  if (fromStep === 2 && !validateProducts()) {
+    alert('Please select at least one product');
+    return;
   }
-});
+  
+  showStep(fromStep + 1);
+}
 
-shippingRadios.forEach((radio) => radio.addEventListener("change", handleShippingChange));
+// Navigate to previous step
+function prevStep(fromStep) {
+  showStep(fromStep - 1);
+}
 
-applyDiscountBtn.addEventListener("click", applyDiscount);
-
-discountInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    applyDiscount();
+// Validate customer information
+function validateCustomerInfo() {
+  const firstName = document.getElementById('firstName').value.trim();
+  const lastName = document.getElementById('lastName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
+  const city = document.getElementById('city').value.trim();
+  const zipCode = document.getElementById('zipCode').value.trim();
+  
+  if (!firstName || !lastName || !email || !phone || !address || !city || !zipCode) {
+    return false;
   }
-});
+  
+  // Save customer info to order data
+  orderData.customer = {
+    firstName,
+    lastName,
+    email,
+    phone,
+    address,
+    city,
+    zipCode
+  };
+  
+  return true;
+}
 
-payButton.addEventListener("click", handlePay);
+// Validate products selection
+function validateProducts() {
+  const totalQuantity = Object.values(orderData.products).reduce((sum, product) => sum + product.quantity, 0);
+  return totalQuantity > 0;
+}
 
-updateTotals();
+// Update order summary
+function updateOrderSummary() {
+  const summaryItems = document.getElementById('summaryItems');
+  const subtotalElement = document.getElementById('subtotal');
+  const shippingCostElement = document.getElementById('shippingCost');
+  const taxAmountElement = document.getElementById('taxAmount');
+  const totalAmountElement = document.getElementById('totalAmount');
+  
+  // Clear current items
+  summaryItems.innerHTML = '';
+  
+  // Add products to summary
+  Object.values(orderData.products).forEach(product => {
+    if (product.quantity > 0) {
+      const productElement = document.createElement('div');
+      productElement.className = 'summary-product';
+      productElement.innerHTML = `
+        <div class="summary-product-image">
+          <i class="fa-solid fa-${product === orderData.products.vinyl ? 'record-vinyl' : 'cassette-tape'}"></i>
+        </div>
+        <div class="summary-product-info">
+          <div class="summary-product-name">${product.name}</div>
+          <div class="summary-product-variant">Qty: ${product.quantity}</div>
+        </div>
+        <div class="summary-product-price">$${(product.price * product.quantity).toFixed(2)}</div>
+      `;
+      summaryItems.appendChild(productElement);
+    }
+  });
+  
+  // Calculate totals
+  const subtotal = Object.values(orderData.products).reduce((sum, product) => 
+    sum + (product.price * product.quantity), 0);
+  const shipping = orderData.shipping.price;
+  const tax = subtotal * orderData.taxRate;
+  const total = subtotal + shipping + tax;
+  
+  // Update summary values
+  subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+  shippingCostElement.textContent = shipping > 0 ? `$${shipping.toFixed(2)}` : 'FREE';
+  taxAmountElement.textContent = `$${tax.toFixed(2)}`;
+  totalAmountElement.textContent = `$${total.toFixed(2)}`;
+}
+
+// Complete order
+function completeOrder() {
+  // Show loading screen
+  const loadingScreen = document.getElementById('loadingScreen');
+  loadingScreen.classList.add('active');
+  
+  // Simulate order processing
+  setTimeout(() => {
+    // Hide loading screen
+    loadingScreen.classList.remove('active');
+    
+    // Generate random order ID
+    const orderId = `#LDIE${new Date().getFullYear()}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
+    document.getElementById('orderId').textContent = orderId;
+    
+    // Show success screen
+    showStep(5);
+  }, 3000);
+}
+
+// Go to home page
+function goHome() {
+  window.location.href = 'index.html';
+}

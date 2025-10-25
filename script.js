@@ -472,3 +472,176 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+// Newsletter functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const emailForm = document.querySelector('.email-form');
+    
+    if (emailForm) {
+        emailForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = this.querySelector('.email-input');
+            const email = emailInput.value.trim();
+            
+            if (email) {
+                // Loading effect
+                const submitBtn = this.querySelector('.subscribe-btn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                // Simulate email submission
+                setTimeout(() => {
+                    alert('Thank you for subscribing! We will send updates to: ' + email);
+                    emailInput.value = '';
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 1500);
+            }
+        });
+    }
+});const products = {
+            vinyl: {
+                title: "Vinyl Limited Edition",
+                price: "1.250.000₫",
+                image: "assets/images/Audio/Vinyl/1.png",
+                reviews: [
+                    {
+                        reviewer: "Shayne M.",
+                        date: "24/10/2025",
+                        rating: "★★★★★",
+                        text: "ILOVEMFFY!!"
+                    },
+                    {
+                        reviewer: "Minh Anh",
+                        date: "15/03/2023",
+                        rating: "★★★★★",
+                        text: "Âm thanh tuyệt vời! Tôi đã tìm kiếm bản vinyl này rất lâu."
+                    }
+                ]
+            },
+            cassette: {
+                title: "Cassette Player Pro", 
+                price: "3.200.000₫",
+                image: "https://images.unsplash.com/photo-1589001704894-9575e0f6e0bb?w=300&h=300&fit=crop",
+                reviews: [
+                    {
+                        reviewer: "Tuấn Nguyễn",
+                        date: "22/04/2023",
+                        rating: "★★★★☆",
+                        text: "Thiết kế đẹp, âm thanh ấm áp đúng chất retro."
+                    }
+                ]
+            },
+            boxset: {
+                title: "Box Set Limited Collection",
+                price: "2.000.000₫", 
+                image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300&h=300&fit=crop",
+                reviews: [
+                    {
+                        reviewer: "Hương Giang",
+                        date: "10/05/2023",
+                        rating: "★★★★★",
+                        text: "Bộ sưu tập tuyệt vời! Chất lượng in ấn và vật liệu rất cao cấp."
+                    }
+                ]
+            },
+            turntable: {
+                title: "Turntable Classic Pro",
+                price: "7.500.000₫",
+                image: "https://images.unsplash.com/photo-1587502536575-6dfba0a6e017?w=300&h=300&fit=crop",
+                reviews: [
+                    {
+                        reviewer: "Đức Anh",
+                        date: "05/02/2023",
+                        rating: "★★★★★",
+                        text: "Đầu tư xứng đáng! Âm thanh chi tiết và chân thực."
+                    },
+                    {
+                        reviewer: "Joshua B.",
+                        date: "24/10/2025",
+                        rating: "★★★★★",
+                        text: "I'm very happy with my new skins. The overall look and feel of the camera is dramatically improved and is more enjoyable to handle."
+                    }
+                ]
+            },
+            merch: {
+                title: "Vintage Merch Collection",
+                price: "450.000₫",
+                image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=300&h=300&fit=crop",
+                reviews: [
+                    {
+                        reviewer: "Lan Phương",
+                        date: "18/06/2023",
+                        rating: "★★★★☆",
+                        text: "Chất áo tốt, form dáng đẹp. Thiết kế độc đáo không đụng hàng."
+                    },
+                    {
+                        reviewer: "Michelle C.",
+                        date: "25/10/2025",
+                        rating: "★★★★★",
+                        text: "The camera is so cute and the packaging was really wonderful. Arrived fast."
+                    }
+                ]
+            }
+        };
+
+        // Xử lý sự kiện khi card được click
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function() {
+                const productType = this.getAttribute('data-product');
+                const product = products[productType];
+                
+                if (product) {
+                    // Ẩn default, hiển thị active
+                    document.getElementById('defaultDisplay').style.display = 'none';
+                    const activeDisplay = document.getElementById('activeDisplay');
+                    activeDisplay.style.display = 'block';
+                    
+                    // Cập nhật nội dung
+                    document.getElementById('displayTitle').textContent = product.title;
+                    document.getElementById('displayPrice').textContent = product.price;
+                    document.getElementById('displayImg').src = product.image;
+                    document.getElementById('displayImg').alt = product.title;
+                    
+                    // Cập nhật reviews
+                    const reviewList = document.getElementById('reviewList');
+                    reviewList.innerHTML = '';
+                    
+                    product.reviews.forEach(review => {
+                        const reviewItem = document.createElement('div');
+                        reviewItem.className = 'review-item';
+                        reviewItem.innerHTML = `
+                            <div class="review-header">
+                                <span class="reviewer-name">${review.reviewer}</span>
+                                <span class="review-date">${review.date}</span>
+                            </div>
+                            <div class="review-rating">${review.rating}</div>
+                            <div class="review-text">${review.text}</div>
+                        `;
+                        reviewList.appendChild(reviewItem);
+                    });
+                    
+                    // Thêm hiệu ứng
+                    activeDisplay.style.animation = 'none';
+                    setTimeout(() => {
+                        activeDisplay.style.animation = 'fadeInUp 0.6s ease';
+                    }, 10);
+                }
+            });
+        });
+
+        // Khởi tạo - hiển thị sản phẩm đầu tiên
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.card').click();
+        });
+
+        // Xử lý nút hành động
+        function addToCart() {
+            const productTitle = document.getElementById('displayTitle').textContent;
+            alert(`✅ Đã thêm "${productTitle}" vào giỏ hàng!`);
+        }
+
+        function buyNow() {
+            const productTitle = document.getElementById('displayTitle').textContent;
+            alert(`🚀 Chuyển hướng đến trang thanh toán cho "${productTitle}"`);
+        }
