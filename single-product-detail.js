@@ -182,10 +182,10 @@ function renderProductDetails(product) {
         <article class="review" tabindex="0">
           <div class="review-avatar" aria-hidden="true">${initials}</div>
           <div class="review-body">
-            <header class="review-meta">
+            <div class="review-meta">
               <span class="review-author">${review.user_id}</span>
               <time class="review-date" datetime="${review.date}">${formattedDate}</time>
-            </header>
+            </div>
             <p>${review.comment}</p>
           </div>
         </article>

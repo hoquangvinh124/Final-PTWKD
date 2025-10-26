@@ -1,5 +1,14 @@
+// Cache để tránh fetch nhiều lần
+let productsCache = null;
+
 // Hàm fetch đơn giản để lấy dữ liệu từ product.json
 async function getProductData() {
+  // Trả về cache nếu đã có
+  if (productsCache !== null) {
+    console.log('Sử dụng cache sản phẩm');
+    return productsCache;
+  }
+  
   try {
     const response = await fetch('product.json');
     
@@ -9,6 +18,7 @@ async function getProductData() {
     
     const data = await response.json();
     console.log('Dữ liệu sản phẩm:', data);
+    productsCache = data; // Lưu vào cache
     return data; // Trả về array
   } catch (error) {
     console.error('Lỗi khi fetch dữ liệu:', error);
@@ -29,8 +39,8 @@ function createProductCard(product) {
             </ul>
           </div>
           <a href="single-product.html?id=${product.id}">
-            <img src="${product.image_front}" alt="${product.name}" class="main-image">
-            <img src="${product.image_back}" alt="${product.name}" class="hover-image">
+            <img src="${product.image_front}" alt="${product.name}" loading="lazy" class="main-image">
+            <img src="${product.image_back}" alt="${product.name}" loading="lazy" class="hover-image">
           </a>
         </div>
         <div class="down-content">
