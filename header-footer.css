@@ -173,6 +173,8 @@ font-family: var(--main-font);
   position: relative;
   word-wrap: break-word;
   width: fit-content;
+  background: rgba(255, 255, 255, 0.9);
+  color: black;
 }
 
 .message.user {
@@ -184,7 +186,7 @@ font-family: var(--main-font);
 
 .message.bot {
   background: rgba(255, 255, 255, 0.9);
-  color: var(--dark-color);
+  color: black;
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-bottom-left-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

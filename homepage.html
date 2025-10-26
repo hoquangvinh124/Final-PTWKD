@@ -21,36 +21,6 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Loading Portal -->
-    <div class="loading-portal" id="loadingPortal">
-        <div class="loading-shell">
-            <div class="loading-vinyl" data-fast-forward>
-                <div class="vinyl-center">
-                    <span>OLDIE</span>
-                    <span>ZONE</span>
-                </div>
-                <div class="vinyl-spark"></div>
-            </div>
-            
-            <div class="loading-countdown">
-                <span class="count" data-countdown>3</span>
-                <span class="label">giây</span>
-            </div>
-            
-            <div class="loading-progress">
-                <div class="progress-track">
-                    <div class="progress-bar" data-progress></div>
-                </div>
-            </div>
-            
-            <div class="loading-message" data-message>Đang làm ấm đèn âm ly...</div>
-            <div class="loading-fact" data-fact>Tra dầu bánh răng máy phát để vòng quay mượt hơn.</div>
-            <div class="loading-tip" data-tip>Nhấn phím F để tua nhanh hoặc chạm vào đĩa vinyl phát sáng.</div>
-            
-            <button class="loading-skip" data-action="skip">Bỏ qua</button>
-        </div>
-    </div>
-
     <header>
         <nav class="navbar section-content">
             <div class="header-top">
@@ -124,7 +94,6 @@
         </div>
     </header>
 
-    <!-- Hero Section với Video Background -->
 <section class="hero">
     <div class="video-background">
         <video autoplay muted loop playsinline class="hero-video">
@@ -200,7 +169,7 @@
             </div>
             
             <div class="category-card" id="artifactz discara">
-                <div class="titlemark">CDs</div>
+                <div class="titlemark">Polaroid Camera</div>
                 <div class="category-image-container">
                     <img src="assets/images/polaroid.png" alt="Compact Disc">
                 </div>
@@ -524,26 +493,87 @@
         </div>
     </div>
 </section>
-<div class="wrapper">
+<div class="container">
+    <div class="campaign-header">
+    <h1 class="campaign-title">Retro Tech Revival</h1>
+    <p class="campaign-tagline">"Where vintage technology meets modern nostalgia"</p>
+    </div>
+    <div class="product-display-area">
+            <div class="display-default" id="defaultDisplay">
+                <h3>🎵 Chọn một sản phẩm để xem chi tiết</h3>
+                <p>Click vào các thẻ bên dưới để khám phá bộ sưu tập</p>
+            </div>
+            <div class="display-active" id="activeDisplay">
+                <!-- Product Header -->
+                <div class="product-header">
+                    <div class="product-image">
+                        <img id="displayImg" src="" alt="">
+                    </div>
+                    <div class="product-basic-info">
+                        <div class="product-title" id="displayTitle"></div>
+                        <div class="product-price" id="displayPrice"></div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="addToCart()">Thêm vào giỏ</button>
+                            <button class="btn btn-secondary" onclick="buyNow()">Mua ngay</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reviews Section -->
+                <div class="reviews-section">
+                    <div class="section-title">ĐÁNH GIÁ SẢN PHẨM</div>
+                    <div class="review-list" id="reviewList">
+                        <!-- Reviews will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Gallery -->
+        <div class="wrapper">
             <div class="footer-gallery">
                 <input type="radio" name="slide" id="c1" checked>
-                <label for="c1" class="card">
+                <label for="c1" class="card" data-product="vinyl">
+                    <div class="content">
+                        <h4>Analog Echoes</h4>
+                        <p>Pure analog sound - Every rotation tells a story</p>
+                    </div>
                 </label>
-                <input type="radio" name="slide" id="c2" checked>
-                <label for="c2" class="card">
+
+                <input type="radio" name="slide" id="c2">
+                <label for="c2" class="card" data-product="cassette">
+                    <div class="content">
+                        <h4>Digital Vintage</h4>
+                        <p>90s sound revolution - Crystal clear nostalgia</p>
+                    </div>
                 </label>
-                <input type="radio" name="slide" id="c3" checked>
-                <label for="c3" class="card">
+
+                <input type="radio" name="slide" id="c3">
+                <label for="c3" class="card" data-product="boxset">
+                    <div class="content">
+                        <h4>Instant Memories</h4>
+                        <p>Moments made tangible - Memories you can hold</p>
+                    </div>
                 </label>
-                <input type="radio" name="slide" id="c4" checked>
-                <label for="c4" class="card">
+
+                <input type="radio" name="slide" id="c4">
+                <label for="c4" class="card" data-product="turntable">
+                    <div class="content">
+                        <h4>Rewind Era</h4>
+                        <p>Relive the magic - Every tape holds memories</p>
+                    </div>
                 </label>
-                <input type="radio" name="slide" id="c5" checked>
-                <label for="c5" class="card">
+
+                <input type="radio" name="slide" id="c5">
+                <label for="c5" class="card" data-product="merch">
+                    <div class="content">
+                        <h4>Pocket Revolution</h4>
+                        <p>Music in your pocket - A generation's soundtrack</p>
+                    </div>
                 </label>
             </div>
         </div>
-    <!-- Cart Modal -->
+    </div>
 <div class="cart-overlay" id="cartOverlay"></div>
 <div class="cart-modal" id="cartModal">
     <div class="cart-header">
@@ -644,7 +674,30 @@
             </div>
         </div>
     </main>
-    
+<!-- Newsletter Section -->
+<section class="section newsletter">
+    <div class="container">
+        <div class="newsletter-content">
+            <div class="newsletter-text">
+                <p class="eyebrow">🎶 STAY IN THE LOOP 🎶</p>
+                <h2>Get Early Access</h2>
+                <p>Subscribe to receive updates on limited edition releases, listening events, and exclusive offers from Retro Sound</p>
+            </div>
+            <div class="newsletter-form">
+                <form class="email-form">
+                    <div class="input-group">
+                        <input type="email" placeholder="Enter your email..." class="email-input" required>
+                        <button type="submit" class="subscribe-btn">
+                            <span>Subscribe</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <p class="newsletter-note">We respect your privacy. No spam!</p>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Footer (sử dụng từ header-footer.css) -->
     <div class="footerContainer">

@@ -1,21 +1,19 @@
 ﻿<!DOCTYPE html>
 <html lang="vi">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LDIE Zone - Checkout</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>OLDIE ZONE - Checkout</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="header-footer.css">
-  </head>
-  <body>
-    <!-- Header (sử dụng từ header-footer.css) -->
-    <header>
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+  <header>
         <nav class="navbar section-content">
             <div class="header-top">
         <a href="homepage.html" class="nav-logo" aria-label="Trang chủ Retro Sound">
@@ -29,8 +27,27 @@
                         <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
                         <span class="badge" id="cartBadge"></span>
                     </button>
-                    <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                    <button type="button" class="header-icon user-btn" id="userBtn" aria-label="Tài khoản" title="Tài khoản">
                         <i class="fa-regular fa-user" aria-hidden="true"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <div class="user-name">Nguyễn Văn A</div>
+                                <div class="user-rank">Gold Member</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-link"><i class="fas fa-user"></i>View Profile</a></li>
+                            <li><a href="#" class="dropdown-link"><i class="fas fa-sign-out-alt"></i>Log Out</a></li>
+                        </ul>
+                    </div>
+                    <button class="header-icon chatbot-btn" id="chatbotToggle">
+                        <i class="fas fa-robot"></i>
                     </button>
                 </div>
             </div>
@@ -66,181 +83,274 @@
             </div>
         </div>
     </header>
-
-      <main class="checkout-layout">
-        <section class="checkout-panel glass-panel">
-          <div class="panel-header">
-            <h1>Checkout</h1>
-            <p class="panel-subtitle">Customer Info</p>
-          </div>
-          <form class="checkout-form" autocomplete="on">
-            <label class="floating-label">
-              <span>Họ &amp; Tên</span>
-              <input type="text" name="fullName" placeholder="Nhập họ tên" />
-            </label>
-            <label class="floating-label">
-              <span>Email</span>
-              <input type="email" name="email" placeholder="name@example.com" />
-            </label>
-            <label class="floating-label">
-              <span>Số điện thoại</span>
-              <input type="tel" name="phone" placeholder="(+84) 0123 456 789" />
-            </label>
-            <label class="floating-label">
-              <span>Địa chỉ</span>
-              <input type="text" name="address" placeholder="Số nhà, đường, phường" />
-            </label>
-
-            <div class="form-section">
-              <p class="section-title">Shipping Method</p>
-              <label class="custom-radio">
-                <input
-                  type="radio"
-                  name="shipping"
-                  value="33000"
-                  data-label="Standard Shipping"
-                  checked
-                />
-                <span class="radio-indicator"></span>
-                <span class="radio-text">
-                  <span class="radio-label">Standard Shipping</span>
-                  <span class="radio-price">33.000 VND</span>
-                </span>
-              </label>
-              <label class="custom-radio">
-                <input
-                  type="radio"
-                  name="shipping"
-                  value="55000"
-                  data-label="Express Shipping"
-                />
-                <span class="radio-indicator"></span>
-                <span class="radio-text">
-                  <span class="radio-label">Express Shipping</span>
-                  <span class="radio-price">55.000 VND</span>
-                </span>
-              </label>
-            </div>
-
-            <div class="form-section">
-              <p class="section-title">Payment</p>
-              <label class="custom-radio inline">
-                <input type="radio" name="payment" value="cod" checked />
-                <span class="radio-indicator"></span>
-                <span class="radio-text">
-                  <span class="radio-label">Cash On Delivery (COD)</span>
-                </span>
-              </label>
-              <label class="custom-radio inline">
-                <input type="radio" name="payment" value="card" />
-                <span class="radio-indicator"></span>
-                <span class="radio-text">
-                  <span class="radio-label">Credit / Debit Card</span>
-                </span>
-              </label>
-            </div>
-
-            <label class="floating-label">
-              <span>Mã giảm giá hoặc ghi chú</span>
-              <textarea
-                name="notes"
-                rows="3"
-                placeholder="Ghi chú cho đơn hàng hoặc nhập mã giảm giá"
-              ></textarea>
-            </label>
-          </form>
-
-          <div class="qr-wrapper">
-            <div class="qr-code" aria-label="QR code for mobile checkout"></div>
-            <p class="qr-caption">Quét mã để tiếp tục thanh toán trên điện thoại</p>
-          </div>
-        </section>
-
-        <section class="summary-panel glass-panel">
-          <header class="panel-header">
-            <h2>Order Summary</h2>
-          </header>
-          <div class="order-items">
-            <article class="order-item" data-price="200000">
-              <img src="images/cd-home1.png" alt="Mac DeMarco Salad Days CD" />
-              <div class="item-info">
-                <h3>Mac DeMarco - Salad Days CD</h3>
-                <div class="item-meta">
-                  <span class="unit-price">200.000 VND</span>
-                  <div class="quantity-control" data-label="Mac DeMarco - Salad Days CD">
-                    <button type="button" class="qty-btn" data-direction="decrease">-</button>
-                    <input type="number" min="1" value="1" aria-label="Quantity" />
-                    <button type="button" class="qty-btn" data-direction="increase">+</button>
-                  </div>
+    
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Processing Your Order...</h2>
+            <p>Please wait while we complete your purchase</p>
+        </div>
+    </div>
+    
+    <!-- Checkout Content -->
+    <div class="checkout-page-wrapper">
+        <div class="checkout-content">
+            <!-- Progress Steps -->
+            <div class="checkout-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Customer Info</div>
                 </div>
-              </div>
-              <button class="remove-item" type="button">Remove</button>
-            </article>
-
-            <article class="order-item" data-price="200000">
-              <img src="images/cd-home2.png" alt="Salad Days Cassette" />
-              <div class="item-info">
-                <h3>Mac DeMarco - Salad Days Cassette</h3>
-                <div class="item-meta">
-                  <span class="unit-price">200.000 VND</span>
-                  <div class="quantity-control" data-label="Mac DeMarco - Salad Days Cassette">
-                    <button type="button" class="qty-btn" data-direction="decrease">-</button>
-                    <input type="number" min="1" value="1" aria-label="Quantity" />
-                    <button type="button" class="qty-btn" data-direction="increase">+</button>
-                  </div>
+                <div class="step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Product Details</div>
                 </div>
-              </div>
-              <button class="remove-item" type="button">Remove</button>
-            </article>
-          </div>
+                <div class="step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Shipping</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Payment</div>
+                </div>
+                <div class="step" data-step="5">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Complete</div>
+                </div>
+            </div>
 
-          <div class="discount-box">
-            <label for="discountCode">Discount code or gift card</label>
-            <div class="discount-input">
-              <input
-                type="text"
-                id="discountCode"
-                name="discountCode"
-                placeholder="Enter code"
-                autocomplete="off"
-              />
-              <button type="button" id="applyDiscount">Apply</button>
-            </div>
-            <p class="discount-feedback" role="status" aria-live="polite"></p>
-          </div>
+            <div class="checkout-layout">
+                <!-- Left Column - Checkout Forms -->
+                <div class="checkout-forms">
+                    <!-- Step 1: Customer Information -->
+                    <div class="checkout-form active" id="step1">
+                        <div class="form-title">Customer Information</div>
+                        <div class="quick-fill-section">
+                            <button class="quick-fill-btn" onclick="fillDefaultInfo()">
+                                <i class="fas fa-magic"></i>
+                                Fill Default Info
+                            </button>
+                            <p class="quick-fill-note">Quickly fill in sample information for testing</p>
+                        </div>
+                        <div class="form-section">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-input" placeholder="John" id="firstName">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-input" placeholder="Doe" id="lastName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" placeholder="john.doe@example.com" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input type="tel" class="form-input" placeholder="+1 (555) 123-4567" id="phone">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Address</label>
+                                <input type="text" class="form-input" placeholder="123 Main Street" id="address">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">City</label>
+                                    <input type="text" class="form-input" placeholder="San Francisco" id="city">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">ZIP Code</label>
+                                    <input type="text" class="form-input" placeholder="94103" id="zipCode">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout-navigation">
+                            <div></div> <!-- Empty div for spacing -->
+                            <button class="nav-btn primary" onclick="nextStep(1)">Continue to Products</button>
+                        </div>
+                    </div>
 
-          <dl class="summary-totals">
-            <div class="summary-row">
-              <dt>Tổng tiền hàng</dt>
-              <dd id="subtotalValue">0 VND</dd>
-            </div>
-            <div class="summary-row">
-              <dt>Shipping</dt>
-              <dd id="shippingValue">0 VND</dd>
-            </div>
-            <div class="summary-row discount-row hidden">
-              <dt>Discount</dt>
-              <dd id="discountValue">-0 VND</dd>
-            </div>
-            <div class="summary-row grand-total">
-              <dt>Thành tiền</dt>
-              <dd id="totalValue">0 VND</dd>
-            </div>
-          </dl>
+                    <!-- Step 2: Product Selection -->
+                    <div class="checkout-form" id="step2">
+                        <div class="form-title">Select Your Products</div>
+                        <div class="form-section">
+                            <div class="product-option selected" data-product="vinyl" data-price="299.00">
+                                <div class="product-image">
+                                    <i class="fa-solid fa-record-vinyl"></i>
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-name">Vinyl Record Player - Retro Edition</div>
+                                    <div class="product-price">$299.00</div>
+                                </div>
+                                <div class="quantity-control">
+                                    <button class="qty-btn" data-action="decrease">-</button>
+                                    <input type="text" class="qty-input" value="1" data-product="vinyl">
+                                    <button class="qty-btn" data-action="increase">+</button>
+                                </div>
+                            </div>
+                            <div class="product-option" data-product="cassette" data-price="159.00">
+                                <div class="product-image">
+                                    <i class="fa-solid fa-cassette-tape"></i>
+                                </div>
+                                <div class="product-details">
+                                    <div class="product-name">Cassette Player - Vintage</div>
+                                    <div class="product-price">$159.00</div>
+                                </div>
+                                <div class="quantity-control">
+                                    <button class="qty-btn" data-action="decrease">-</button>
+                                    <input type="text" class="qty-input" value="0" data-product="cassette">
+                                    <button class="qty-btn" data-action="increase">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout-navigation">
+                            <button class="nav-btn" onclick="prevStep(2)">Back</button>
+                            <button class="nav-btn primary" onclick="nextStep(2)">Continue to Shipping</button>
+                        </div>
+                    </div>
 
-          <button type="button" class="pay-button" id="payNow">Pay Now</button>
-        </section>
-      </main>
+                    <!-- Step 3: Shipping Method -->
+                    <div class="checkout-form" id="step3">
+                        <div class="form-title">Shipping Method</div>
+                        <div class="form-section">
+                            <div class="shipping-option selected" data-shipping="standard" data-price="9.99">
+                                <div class="shipping-info">
+                                    <h4>Standard Shipping</h4>
+                                    <p>5-7 business days</p>
+                                </div>
+                                <div class="shipping-price">$9.99</div>
+                            </div>
+                            <div class="shipping-option" data-shipping="express" data-price="19.99">
+                                <div class="shipping-info">
+                                    <h4>Express Shipping</h4>
+                                    <p>2-3 business days</p>
+                                </div>
+                                <div class="shipping-price">$19.99</div>
+                            </div>
+                            <div class="shipping-option" data-shipping="pickup" data-price="0">
+                                <div class="shipping-info">
+                                    <h4>Store Pickup</h4>
+                                    <p>Pick up at nearest store</p>
+                                </div>
+                                <div class="shipping-price">FREE</div>
+                            </div>
+                        </div>
+                        <div class="checkout-navigation">
+                            <button class="nav-btn" onclick="prevStep(3)">Back</button>
+                            <button class="nav-btn primary" onclick="nextStep(3)">Continue to Payment</button>
+                        </div>
+                    </div>
 
-      <footer class="site-footer">
-        <nav class="footer-nav">
-          <a href="#">Home</a>
-          <a href="#">Products</a>
-          <a href="#">Contact</a>
-          <a href="#">Our Team</a>
-        </nav>
-        <p class="copyright">©2025. Designed by NHƠN</p>
-      </footer>
+                    <!-- Step 4: Payment Method -->
+                    <div class="checkout-form" id="step4">
+                        <div class="form-title">Payment Method</div>
+                        <div class="form-section">
+                            <div class="payment-option selected" data-payment="card">
+                                <div class="payment-icon">
+                                    <i class="fa-solid fa-credit-card"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <div class="payment-name">Credit/Debit Card</div>
+                                    <div class="payment-description">Pay with Visa, Mastercard, or American Express</div>
+                                </div>
+                            </div>
+                            <div class="payment-option" data-payment="paypal">
+                                <div class="payment-icon">
+                                    <i class="fa-brands fa-paypal"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <div class="payment-name">PayPal</div>
+                                    <div class="payment-description">Pay with your PayPal account</div>
+                                </div>
+                            </div>
+                            <div class="payment-option" data-payment="giftcard">
+                                <div class="payment-icon">
+                                    <i class="fa-solid fa-gift"></i>
+                                </div>
+                                <div class="payment-info">
+                                    <div class="payment-name">Gift Card</div>
+                                    <div class="payment-description">Use your LDIE Zone gift card</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout-navigation">
+                            <button class="nav-btn" onclick="prevStep(4)">Back</button>
+                            <button class="nav-btn primary" onclick="completeOrder()">Complete Order</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Order Complete -->
+                    <div class="checkout-form" id="step5">
+                        <div class="success-screen">
+                            <div class="success-icon">
+                                <i class="fa-solid fa-check-circle"></i>
+                            </div>
+                            <h2 class="success-title">Order Complete!</h2>
+                            <p class="success-message">
+                                Thank you for your purchase! Your order has been confirmed and will be shipped soon.<br>
+                                Order ID: <strong id="orderId">#LDIE2024001</strong>
+                            </p>
+                            <button class="nav-btn primary" onclick="goHome()">Continue Shopping</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column - Order Summary -->
+                <div class="order-summary glass-panel">
+                    <div class="summary-header">
+                        <h2>Order Summary</h2>
+                    </div>
+                    
+                    <div class="summary-items" id="summaryItems">
+                        <!-- Products will be dynamically added here -->
+                    </div>
+
+                    <div class="summary-details">
+                        <div class="summary-item">
+                            <span>Subtotal</span>
+                            <span id="subtotal">$0.00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Shipping</span>
+                            <span id="shippingCost">$0.00</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Tax</span>
+                            <span id="taxAmount">$0.00</span>
+                        </div>
+                        <div class="summary-item summary-total">
+                            <span>Total</span>
+                            <span id="totalAmount">$0.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footerContainer">
+        <div class="socialIcons">
+            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-google-plus"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <div class="footerNav">
+            <ul>
+                <li><a href="">HOME</a></li>
+                <li><a href="">NEWS</a></li>
+                <li><a href="">PRODUCTS</a></li>
+                <li><a href="">CONTACT US</a></li>
+                <li><a href="">OUR TEAM</a></li>
+            </ul>
+        </div>
+        <div class="footerBottom">
+            <p>Copyright &copy;2025; Designed by <span class="designer">Nhóm</span></p>
+        </div>
     </div>
 
     <script src="checkout.js" defer></script>
