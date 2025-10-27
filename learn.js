@@ -30,12 +30,12 @@ async function getProductData() {
 function createProductCard(product) {
   const productHTML = `
     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 product-grid-item">
-      <div class="item">
+      <div class="item product-card">
         <div class="thumb">
           <div class="hover-content">
             <ul>
-              <li><a href="single-product.html?id=${product.id}"><i class="heart-icon"></i></a></li>
-              <li><a href="single-product.html?id=${product.id}"><i class="shopping-bag-icon"></i></a></li>
+              <li><button class="heart-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="heart-icon"></i></button></li>
+              <li><button class="action-btn add-to-cart" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="shopping-bag-icon"></i></button></li>
             </ul>
           </div>
           <a href="single-product.html?id=${product.id}">
@@ -48,7 +48,7 @@ function createProductCard(product) {
             <h4>${product.name}</h4>
           </a>
           <div class="product-price">
-            <span class="current">${product.price}</span>
+            <span class="current current-price">${product.price}</span>
           </div>
         </div>
       </div>
@@ -81,10 +81,39 @@ async function loadProduct(category = null, subcategory = null) {
       // Thêm sản phẩm vào đầu danh sách
       container.insertAdjacentHTML('afterbegin', productsHTML);
       
+      // Add event listeners for add-to-cart buttons
+      setTimeout(() => {
+        bindAddToCartButtons();
+      }, 100);
+      
       // Log để debug
       console.log(`Loaded ${filteredProducts.length} products for category: ${category || 'All'}, subcategory: ${subcategory || 'All'}`);
     }
   }
+}
+
+// Bind event listeners to add-to-cart buttons
+function bindAddToCartButtons() {
+  if (typeof window.cart === 'undefined') {
+    console.warn('Cart not initialized yet, retrying...');
+    setTimeout(bindAddToCartButtons, 500);
+    return;
+  }
+  
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    if (button.hasAttribute('data-cart-bound')) return; // Skip if already bound
+    
+    button.setAttribute('data-cart-bound', 'true');
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      // Call cart's addToCart method directly
+      window.cart.addToCart(this);
+    });
+  });
+  
+  console.log('Add-to-cart buttons bound successfully');
 }
 
 // Populate TYPE filter dropdown with values from CURRENT filtered products only

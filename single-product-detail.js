@@ -192,6 +192,57 @@ function renderProductDetails(product) {
       `;
     }).join('');
   }
+  
+  // 7. Setup Add to Cart button
+  const addToCartBtn = document.querySelector('.cta');
+  if (addToCartBtn) {
+    // Add data attributes for cart
+    addToCartBtn.setAttribute('data-product-id', product.id);
+    addToCartBtn.setAttribute('data-product-name', product.name);
+    addToCartBtn.setAttribute('data-product-price', product.price);
+    addToCartBtn.setAttribute('data-product-image', product.image_front);
+    addToCartBtn.classList.add('add-to-cart');
+    
+    // Remove old event listeners by cloning
+    const newBtn = addToCartBtn.cloneNode(true);
+    addToCartBtn.parentNode.replaceChild(newBtn, addToCartBtn);
+    
+    // Add new event listener
+    newBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Get quantity from input
+      const qtyInput = document.querySelector('.qty-input');
+      const quantity = qtyInput ? parseInt(qtyInput.value) : 1;
+      
+      // Check if cart is available
+      if (typeof window.cart !== 'undefined') {
+        // Add product to cart with specified quantity
+        for (let i = 0; i < quantity; i++) {
+          window.cart.addToCart(newBtn);
+        }
+      } else {
+        console.error('Cart not initialized yet');
+        alert('Vui lòng đợi trang tải xong');
+      }
+    });
+  }
+  
+  // 8. Setup Heart/Wishlist button
+  const heartBtn = document.querySelector('.icon-btn .heart-icon');
+  if (heartBtn) {
+    const iconBtn = heartBtn.closest('.icon-btn');
+    if (iconBtn) {
+      // Add data attributes for wishlist
+      iconBtn.setAttribute('data-product-id', product.id);
+      iconBtn.setAttribute('data-product-name', product.name);
+      iconBtn.setAttribute('data-product-price', product.price);
+      iconBtn.setAttribute('data-product-image', product.image_front);
+      iconBtn.setAttribute('data-product-category', product.category || '');
+      iconBtn.setAttribute('data-product-subcategory', product.subcategory || '');
+      iconBtn.classList.add('heart-btn');
+    }
+  }
 }
 
 // ===== PHẦN 4: KHỞI TẠO TRANG =====

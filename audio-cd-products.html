@@ -25,7 +25,7 @@
 
     <link rel="stylesheet" href="assets/css/templatemo-hexashop.css">
 
-    <link rel="stylesheet" href="assets/css/header-footer-2.css">
+    <link rel="stylesheet" href="assets/css/header-footer.css">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"></noscript>
 
@@ -49,6 +49,25 @@
                     </button>
                     <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
                         <i class="fa-regular fa-user" aria-hidden="true"></i>
+                    </button>
+                    <div class="user-dropdown" id="userDropdown">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="user-details">
+                                <div class="user-name">Nguyễn Văn A</div>
+                                <div class="user-rank">Gold Member</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-link"><i class="fas fa-user"></i>View Profile</a></li>
+                            <li><a href="#" class="dropdown-link"><i class="fas fa-sign-out-alt"></i>Log Out</a></li>
+                        </ul>
+                    </div>
+                    <button class="header-icon chatbot-btn" id="chatbotToggle">
+                        <i class="fas fa-robot"></i>
                     </button>
                 </div>
             </div>
@@ -196,7 +215,37 @@
     <!-- ***** Products Area Ends ***** -->
     
     <!-- ***** Footer Start ***** -->
-    <footer>
+        <!-- Cart Modal -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3>GIỎ HÀNG CỦA BẠN</h3>
+            <button class="cart-close" id="cartClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically inserted here -->
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Giỏ hàng của bạn đang trống</p>
+            </div>
+        </div>
+        
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Tổng cộng:</span>
+                <span id="cartTotalAmount">0</span>
+            </div>
+            <div class="cart-actions">
+                <button class="checkout-btn" id="checkoutBtn">Thanh toán</button>
+                <button class="continue-shopping" id="continueShopping">TIẾP TỤC MUA HÀNG</button>
+            </div>
+        </div>
+    </div>
+
+<footer>
         <div class="footerContainer">
             <div class="socialIcons">
                 <a href=""><i class="fa-brands fa-facebook"></i></a>
@@ -227,6 +276,7 @@
     <script src="learn.js"></script>    <script src="search.js"></script>
     <script src="script.js"></script>
 <script type="module" src="assets/js/user-auth-handler.js"></script>
-</body>
+<script type="module" src="assets/js/wishlist.js"></script>`n</body>
 
 </html>
+

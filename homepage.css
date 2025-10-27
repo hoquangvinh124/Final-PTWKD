@@ -36,12 +36,14 @@
     font-display: swap;
     font-weight: 100;
 }
+
 body {
-    color: var(--text);
-    line-height: 1.6;
-    background-image: url('assets/images/bg.jpg');
-    overflow-x: hidden;
-    padding-top: 150px; 
+  background-image: url("assets/images/bg.jpg");
+  background-size: cover;   
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center; 
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -153,18 +155,7 @@ img {
     );
     z-index: 1;
 }
-.hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #f39c12, #e74c3c, #f39c12);
-            animation: gradientShift 3s ease infinite;
-            background-size: 200% 200%;
-        }
-        
+
 .eyebrow {
             font-family: var(--font-1);
             font-size: 30px;
@@ -823,25 +814,28 @@ audio {
     gap: 10px;
 }
 
-
-.action-btn {
-    width: 45px;
-    height: 40px;
+.action-btn,
+.heart-btn {
+    width: 55px;
+    height: 45px;
     text-align: center;
-    line-height: 45px;
+    line-height: 50px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 3px 3px 0px #000000;
+    box-shadow: 4px 4px 0px #000000;
     border: 1px solid #000000;
     color: var(--text-dark);
     background-color: var(--white-color);
-    transition: all 0.3s ease;
-    border-radius: 4px;
+    transition: var(--transition-normal, all 0.3s ease);
+    border-radius: 0;
     text-decoration: none;
+    cursor: pointer;
+    position: relative;
 }
 
-.action-btn:hover {
+.action-btn:hover,
+.heart-btn:hover {
     background-color: var(--text-dark);
     color: var(--white-color);
     transform: translateY(-2px);
@@ -1090,8 +1084,18 @@ audio {
     background-repeat: no-repeat;
     background-position: center;
     display: inline-block;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
+    transition: all 0.3s ease;
+}
+
+.heart-icon.active {
+    filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) hue-rotate(346deg) brightness(95%) contrast(93%);
+    transform: scale(1.1);
+}
+
+.heart-icon:hover {
+    transform: scale(1.2);
 }
 
 /* Shopping bag icon custom */
@@ -1102,7 +1106,42 @@ audio {
     background-position: center;
     display: inline-block;
     width: 16px;
-    height: 18px;
+    height: 20px;
+}
+
+/* Wishlist notification */
+.wishlist-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #2c3e50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateX(400px);
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.wishlist-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.wishlist-notification.success {
+    background: #27ae60;
+}
+
+.wishlist-notification.info {
+    background: #3498db;
+}
+
+.wishlist-notification.error {
+    background: #e74c3c;
 }
 
 /* Empty state for products */
@@ -1793,8 +1832,23 @@ audio {
 
 /* Add to cart animation */
 .add-to-cart.added {
-    background-color: #2ecc71 !important;
-    border-color: #2ecc71 !important;
+    background-color: #d5b948 !important;
+    border-color: #d5b948 !important;
+}
+
+/* Heart button style */
+.heart-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.heart-btn:focus {
+    outline: none;
 }
 
 /* Fix for shopping bag icon */
@@ -2447,4 +2501,138 @@ div.pro-gallery.one-row .gallery-horizontal-scroll-inner {
     margin: 0;
 }
 
+
+
+/* ===== WISHLIST STYLES ===== */
+.heart-icon.active,
+.wishlist-like.active {
+    color: #e74c3c !important;
+    background-image: none !important;
+}
+
+.heart-icon.active::before,
+.wishlist-like.active::before {
+    content: "" !important;
+}
+
+.heart-btn,
+.wishlist-like {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.heart-btn:hover,
+.wishlist-like:hover {
+    transform: scale(1.1);
+}
+
+/* Wishlist notification */
+.wishlist-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: white;
+    color: black;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 10000;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    font-weight: 600;
+    border-left: 4px solid #f39c12;
+}
+
+.wishlist-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.wishlist-notification--success {
+    border-left-color: #2ecc71;
+}
+
+.wishlist-notification--error {
+    border-left-color: #e74c3c;
+}
+
+.wishlist-notification--warning {
+    border-left-color: #f39c12;
+}
+
+.wishlist-notification--info {
+    border-left-color: #3498db;
+}
+
+/* Wishlist empty state */
+.wishlist-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+/* Wishlist card animations */
+@keyframes fadeOutScale {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wishlist-card {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Wishlist price in card */
+.wishlist-price {
+    color: #f39c12;
+    font-weight: 700;
+    font-size: 16px;
+    display: block;
+    margin-top: 5px;
+}
+
+.wishlist-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 8px;
+}
+
+
+/* Fix: Prevent heart icon from shifting when clicking cart button */
+.product-actions ul li {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+}
+
+.product-actions ul li button {
+  pointer-events: auto;
+  isolation: isolate;
+}
+
+.product-actions ul li button i {
+  pointer-events: none;
+  display: block;
+}
 

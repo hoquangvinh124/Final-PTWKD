@@ -1,4 +1,7 @@
-// CHECKOUT.JS - Load cart from localStorage and manage checkout flow
+# Python script to create checkout.js with proper encoding
+import codecs
+
+content = '''// CHECKOUT.JS - Load cart from localStorage and manage checkout flow
 console.log('Checkout.js loading...');
 
 // Global variables
@@ -8,23 +11,7 @@ let orderData = {
   products: [],
   shipping: { type: 'standard', price: 9.99 },
   payment: { type: 'card' },
-  taxRate: 0
-};
-
-// Email template data - will be populated when order is completed
-let emailData = {
-  order_number: '',
-  customer_name: '',
-  shipping_name: '',
-  shipping_address: '',
-  shipping_phone: '',
-  payment_method: '',
-  payment_status: 'Pending',
-  items: [],
-  subtotal: '',
-  shipping_fee: '',
-  discount: '0₫',
-  grand_total: ''
+  taxRate: 0.08
 };
 
 // Load cart data from localStorage
@@ -53,10 +40,10 @@ function loadCartData() {
 // Format price to Vietnamese currency
 function formatPrice(price) {
   if (typeof price === 'string' && price.includes('₫')) return price;
-  if (typeof price === 'number') return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '₫';
+  if (typeof price === 'number') return price.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.') + '₫';
   if (typeof price === 'string') {
-    const numPrice = parseInt(price.replace(/\./g, '').replace('₫', '').trim());
-    if (!isNaN(numPrice)) return numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + '₫';
+    const numPrice = parseInt(price.replace(/\\./g, '').replace('₫', '').trim());
+    if (!isNaN(numPrice)) return numPrice.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, '.') + '₫';
   }
   return price;
 }
@@ -65,7 +52,7 @@ function formatPrice(price) {
 function parsePrice(priceString) {
   if (typeof priceString === 'number') return priceString;
   if (typeof priceString === 'string') {
-    const cleanPrice = priceString.replace(/\./g, '').replace('₫', '').trim();
+    const cleanPrice = priceString.replace(/\\./g, '').replace('₫', '').trim();
     return parseInt(cleanPrice) || 0;
   }
   return 0;
@@ -351,123 +338,22 @@ function updateOrderSummary() {
 function completeOrder() {
   const loadingScreen = document.getElementById('loadingScreen');
   loadingScreen.classList.add('active');
-  
-  // Prepare email data
-  prepareEmailData();
-  
   setTimeout(() => {
     loadingScreen.classList.remove('active');
     const orderId = `#LDIE${new Date().getFullYear()}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
     document.getElementById('orderId').textContent = orderId;
-    
-    // Store email data with order ID
-    emailData.order_number = orderId;
-    
-    // Save email data to localStorage for sending
-    localStorage.setItem('orderEmailData', JSON.stringify(emailData));
-    
-    // Send email (you can implement this later)
-    sendOrderConfirmationEmail(emailData);
-    
-    // Clear cart
     localStorage.removeItem('cart');
     showStep(5);
   }, 3000);
-}
-
-// Prepare email data from order information
-function prepareEmailData() {
-  // Customer information
-  emailData.customer_name = `${orderData.customer.firstName} ${orderData.customer.lastName}`;
-  emailData.shipping_name = emailData.customer_name;
-  emailData.shipping_address = `${orderData.customer.address}, ${orderData.customer.city}, ${orderData.customer.zipCode}`;
-  emailData.shipping_phone = orderData.customer.phone;
-  
-  // Payment information
-  const paymentMethods = {
-    'card': 'Credit/Debit Card',
-    'paypal': 'PayPal',
-    'giftcard': 'Gift Card'
-  };
-  emailData.payment_method = paymentMethods[orderData.payment.type] || 'Credit/Debit Card';
-  emailData.payment_status = 'Confirmed';
-  
-  // Product items for email
-  emailData.items = orderData.products.map(product => ({
-    name: product.name,
-    image: product.image,
-    variant: 'Standard', // You can add variant info if needed
-    quantity: product.quantity,
-    price: formatPrice(parsePrice(product.price) * product.quantity)
-  }));
-  
-  // Calculate totals
-  const subtotal = orderData.products.reduce((sum, product) => {
-    return sum + (parsePrice(product.price) * product.quantity);
-  }, 0);
-  const shipping = orderData.shipping.price;
-  const tax = subtotal * orderData.taxRate;
-  const total = subtotal + shipping + tax;
-  
-  emailData.subtotal = formatPrice(subtotal);
-  emailData.shipping_fee = shipping > 0 ? formatPrice(shipping) : 'FREE';
-  emailData.discount = '0₫';
-  emailData.grand_total = formatPrice(total);
-  
-  console.log('Email data prepared:', emailData);
-  return emailData;
-}
-
-// Send order confirmation email (placeholder function)
-function sendOrderConfirmationEmail(data) {
-  console.log('Sending order confirmation email with data:', data);
-  
-  // Prepare email payload
-  const emailPayload = {
-    customer_email: orderData.customer.email,
-    order_data: {
-      order_number: data.order_number,
-      customer_name: data.customer_name,
-      items: data.items,
-      subtotal: data.subtotal,
-      shipping_fee: data.shipping_fee,
-      discount: data.discount,
-      grand_total: data.grand_total,
-      shipping_name: data.shipping_name,
-      shipping_address: data.shipping_address,
-      shipping_phone: data.shipping_phone,
-      payment_method: data.payment_method,
-      payment_status: data.payment_status
-    }
-  };
-  
-  console.log('Email payload:', emailPayload);
-  
-  // Send email via AWS Lambda API
-  fetch('https://688ypaf41h.execute-api.ap-southeast-2.amazonaws.com/default/Order-Confirmation', {
-    method: 'POST',
-    headers: {
-      'x-api-key': 'oldiezone',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(emailPayload)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(result => {
-    console.log('Email sent successfully:', result);
-  })
-  .catch(error => {
-    console.error('Error sending email:', error);
-    alert('Order completed but email failed to send. Please contact support.');
-  });
 }
 
 // Go to home page
 function goHome() {
   window.location.href = 'homepage.html';
 }
+'''
+
+with codecs.open('d:\\TEMPLATE-WEB\\checkout.js', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+print("checkout.js created successfully!")

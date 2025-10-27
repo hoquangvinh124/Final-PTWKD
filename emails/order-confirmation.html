@@ -2,7 +2,7 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title>Oldiezone - Xác nhận đơn hàng</title>
+    <title>Oldiezone - Order Confirmation</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
       body {
@@ -228,21 +228,20 @@
             <tr>
               <td class="header">
                 <div class="brand">
-                  <img src="{{logo_url}}" alt="Oldiezone" />
+                  <img src="https://oldiezone.studio/assets/images/logodaxoaphong2.png" alt="Oldiezone" />
                 </div>
-                <h1>Đơn hàng đã được xác nhận</h1>
-                <p>Mã đơn: <strong>{{order_number}}</strong></p>
-                <span class="status-pill">{{order_status}}</span>
+                <h1>Order Confirmed</h1>
+                <p>Order Number: <strong>{{order_number}}</strong></p>
               </td>
             </tr>
             <tr>
               <td class="summary">
-                <p>Xin chào {{customer_name}},</p>
+                <p>Hello {{customer_name}},</p>
                 <p>
-                  Cảm ơn bạn đã mua sắm tại Oldiezone. Chúng tôi đang chuẩn bị đơn hàng cho bạn và sẽ gửi thông báo ngay khi bưu kiện được bàn giao cho đơn vị vận chuyển.
+                  Thank you for shopping at Oldiezone. We are preparing your order and will send you a notification as soon as your package is handed over to the shipping carrier.
                 </p>
                 <div class="order-box">
-                  <div class="order-box-header">Chi tiết đơn hàng</div>
+                  <div class="order-box-header">Order Details</div>
                   <div class="order-items">
                     {{#each items}}
                     <div class="order-item">
@@ -251,7 +250,7 @@
                       </div>
                       <div class="item-details">
                         <p class="item-title">{{this.name}}</p>
-                        <p class="item-meta">Phân loại: {{this.variant}} · SL: {{this.quantity}}</p>
+                        <p class="item-meta">Variant: {{this.variant}} · Qty: {{this.quantity}}</p>
                       </div>
                       <div class="item-price">{{this.price}}</div>
                     </div>
@@ -260,43 +259,43 @@
                   <div class="totals">
                     <table role="presentation">
                       <tr>
-                        <td class="label">Tạm tính</td>
+                        <td class="label">Subtotal</td>
                         <td class="value">{{subtotal}}</td>
                       </tr>
                       <tr>
-                        <td class="label">Phí vận chuyển</td>
+                        <td class="label">Shipping Fee</td>
                         <td class="value">{{shipping_fee}}</td>
                       </tr>
                       <tr>
-                        <td class="label">Khuyến mãi</td>
+                        <td class="label">Discount</td>
                         <td class="value">-{{discount}}</td>
                       </tr>
                       <tr>
-                        <td class="label">Tổng cộng</td>
+                        <td class="label">Total</td>
                         <td class="value">{{grand_total}}</td>
                       </tr>
                     </table>
                   </div>
                 </div>
-                <a class="cta" href="https://oldiezone.example.com/orders/{{order_number}}">Theo dõi đơn hàng</a>
+                <a class="cta" href="https://oldiezone.studio">Track Your Order</a>
               </td>
             </tr>
             <tr>
               <td class="address">
                 <div class="address-block">
-                  <h3>Địa chỉ giao hàng</h3>
+                  <h3>Shipping Address</h3>
                   <p>{{shipping_name}}<br />{{shipping_address}}<br />{{shipping_phone}}</p>
                 </div>
                 <div class="address-block">
-                  <h3>Phương thức thanh toán</h3>
-                  <p>{{payment_method}}<br />Trạng thái: {{payment_status}}</p>
+                  <h3>Payment Method</h3>
+                  <p>{{payment_method}}<br />Status: {{payment_status}}</p>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="footer">
                 Oldiezone • 123 Retro Avenue, Ho Chi Minh City<br />
-                Có thắc mắc? Gửi email tới support@oldiezone.com hoặc gọi 1900 9779.
+                Have questions? Email us at support@oldiezone.com or call 1900 9779.
               </td>
             </tr>
           </table>

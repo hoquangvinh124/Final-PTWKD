@@ -79,16 +79,29 @@ class Cart {
     addToCart(button) {
         if (!button) return;
         
-        const productCard = button.closest('.product-card');
-        if (!productCard) return;
+        // Check if button has data attributes (from product pages)
+        const hasDataAttributes = button.hasAttribute('data-product-id');
         
-        const productName = productCard.querySelector('h4').textContent;
-        const productPriceText = productCard.querySelector('.current-price').textContent;
-        const productImage = productCard.querySelector('.main-image').src;
-
-        // Generate unique ID based on product name and image
-        const productId = this.generateProductId(productName, productImage);
-        const productPrice = this.parsePrice(productPriceText);
+        let productName, productPriceText, productImage, productId, productPrice;
+        
+        if (hasDataAttributes) {
+            // Get data from button attributes - use ID directly from JSON
+            productId = button.getAttribute('data-product-id');
+            productName = button.getAttribute('data-product-name');
+            productPriceText = button.getAttribute('data-product-price');
+            productImage = button.getAttribute('data-product-image');
+            productPrice = this.parsePrice(productPriceText);
+        } else {
+            // Get data from product card (homepage)
+            const productCard = button.closest('.product-card');
+            if (!productCard) return;
+            
+            productName = productCard.querySelector('h4').textContent;
+            productPriceText = productCard.querySelector('.current-price').textContent;
+            productImage = productCard.querySelector('.main-image').src;
+            productId = this.generateProductId(productName, productImage);
+            productPrice = this.parsePrice(productPriceText);
+        }
 
         console.log('Adding to cart:', { productId, productName, productPrice, productImage });
 
@@ -118,8 +131,8 @@ class Cart {
         // Show animation
         this.showAddToCartAnimation(button);
         
-        // Auto open cart modal
-        this.openCart();
+        // Don't auto open cart modal - let user open it manually
+        // this.openCart();
     }
 
     removeFromCart(productId) {
@@ -340,18 +353,20 @@ class Cart {
     }
 
     showAddToCartAnimation(button) {
+        // Prevent multiple clicks
+        if (button.classList.contains('added')) {
+            return;
+        }
+        
         const originalHTML = button.innerHTML;
-        const originalBackground = button.style.backgroundColor;
         
         button.classList.add('added');
         button.innerHTML = '<i class="fas fa-check"></i>';
-        button.style.backgroundColor = '#2ecc71';
         
         setTimeout(() => {
             button.classList.remove('added');
             button.innerHTML = originalHTML;
-            button.style.backgroundColor = originalBackground;
-        }, 1000);
+        }, 1500);
     }
 
     checkout() {
@@ -360,16 +375,8 @@ class Cart {
             return;
         }
 
-        const totalAmount = this.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        alert(`Chuyển hướng đến trang thanh toán. Tổng tiền: ${this.formatPrice(totalAmount)}`);
-        // Here you would typically redirect to checkout page
-        // window.location.href = '/checkout';
-        
-        // Optional: Clear cart after checkout
-        // this.items = [];
-        // this.saveCart();
-        // this.updateCartUI();
-        // this.closeCart();
+        // Redirect to checkout page
+        window.location.href = 'checkout.html';
     }
 
     // Utility method to get cart summary
@@ -632,7 +639,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Khởi tạo - hiển thị sản phẩm đầu tiên
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.card').click();
+            const firstCard = document.querySelector('.card');
+            if (firstCard) {
+                firstCard.click();
+            }
         });
 
         // Xử lý nút hành động

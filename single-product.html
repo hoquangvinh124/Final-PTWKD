@@ -8,7 +8,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/header-footer-2.css">
+	<link rel="stylesheet" href="assets/css/header-footer.css">
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"></noscript>
 </head>
@@ -200,6 +200,36 @@
 		</section>
 	</main>
 
+	<!-- Cart Modal -->
+	<div class="cart-overlay" id="cartOverlay"></div>
+	<div class="cart-modal" id="cartModal">
+		<div class="cart-header">
+			<h3>GIỎ HÀNG CỦA BẠN</h3>
+			<button class="cart-close" id="cartClose">
+				<i class="fas fa-times"></i>
+			</button>
+		</div>
+		
+		<div class="cart-items" id="cartItems">
+			<!-- Cart items will be dynamically inserted here -->
+			<div class="cart-empty" id="cartEmpty">
+				<i class="fas fa-shopping-cart"></i>
+				<p>Giỏ hàng của bạn đang trống</p>
+			</div>
+		</div>
+		
+		<div class="cart-footer" id="cartFooter" style="display: none;">
+			<div class="cart-total">
+				<span>Tổng cộng:</span>
+				<span id="cartTotalAmount">0₫</span>
+			</div>
+			<div class="cart-actions">
+				<button class="checkout-btn" id="checkoutBtn">Thanh toán</button>
+				<button class="continue-shopping" id="continueShopping">TIẾP TỤC MUA HÀNG</button>
+			</div>
+		</div>
+	</div>
+
 	<!-- ***** Footer Start ***** -->
 	<footer>
 		<div class="footerContainer">
@@ -231,6 +261,11 @@
 	
 	<!-- Script để load chi tiết sản phẩm từ JSON -->
 	<script src="single-product-detail.js"></script>
+	
+	<!-- Script cho cart -->
+	<script src="script.js"></script>
+	<script src="search.js"></script>
 <script type="module" src="assets/js/user-auth-handler.js"></script>
-</body>
+<script type="module" src="assets/js/wishlist.js"></script>`n</body>
 </html>
+
