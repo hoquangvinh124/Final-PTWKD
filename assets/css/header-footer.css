@@ -222,7 +222,7 @@ header {
   backdrop-filter: blur(16px);
   box-shadow: 0 18px 36px rgba(4, 3, 12, 0.45);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  z-index: 999;
+  z-index: 99;
 }
 
 
@@ -256,6 +256,7 @@ header {
   font-size: 18px;
   color: #f5f5f5;
   margin-top: 0;
+  z-index: 1001;
 }
 
 .header-icons .header-icon {
@@ -659,9 +660,10 @@ footer{
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s ease;
-    z-index: 1000;
+    z-index: 99999;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    margin-top: 10px;
+    margin-top: 15px;
+    right: 0;
 }
 
 .user-dropdown.active {
@@ -671,10 +673,11 @@ footer{
 }
 
 .user-info {
-    display: flex;
+    position: relative;
     align-items: center;
     padding: 20px;
     gap: 15px;
+    z-index: 9999;
 }
 
 .user-avatar {
@@ -687,6 +690,8 @@ footer{
     justify-content: center;
     font-size: 24px;
     color: black;
+    overflow: hidden;
+    flex-shrink: 0;
 }
 
 .user-details {
@@ -697,8 +702,9 @@ footer{
     font-family: 'Barlow', sans-serif;
     font-weight: 600;
     color: #eceade;
-    font-size: 16px;
-    margin-bottom: 5px;
+    font-size: 17px;
+    margin: 13px 0;
+    letter-spacing: 1px;
 }
 
 .user-rank {
@@ -752,9 +758,4 @@ footer{
     position: relative;
 }
 
-.user-dropdown {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-}
 

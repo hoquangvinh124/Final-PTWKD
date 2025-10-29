@@ -157,7 +157,6 @@ body {
 	max-width: clamp(400px, 38vw, 640px);
 	margin: 0 0 0 auto;
 	margin-right: 24%;
-	margin-top: 40px;
 	display: flex;
 	flex-direction: column;
 	gap: clamp(16px, 2vw, 24px);

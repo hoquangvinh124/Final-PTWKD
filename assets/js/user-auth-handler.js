@@ -1,41 +1,127 @@
 /**
  * user-auth-handler.js
- * Xử lý click vào user profile icon trong header
- * - Nếu chưa đăng nhập: chuyển đến trang login
- * - Nếu đã đăng nhập: chuyển đến trang user-profile
+ * Xử lý user dropdown dựa trên trạng thái đăng nhập
+ * - Chưa đăng nhập: Hiển thị "Oldiezone Member" + Sign In / Register
+ * - Đã đăng nhập: Hiển thị thông tin user từ DB + View Profile / Sign Out
  */
 
-import { isAuthenticated } from './auth.js';
+import { isAuthenticated, getCurrentUser, logout } from './auth.js';
+
+function renderUserDropdown() {
+  const userDropdown = document.getElementById('userDropdown');
+  if (!userDropdown) return;
+
+  const userInfo = userDropdown.querySelector('.user-info');
+  const dropdownMenu = userDropdown.querySelector('.dropdown-menu');
+
+  if (isAuthenticated()) {
+    // User đã đăng nhập - Lấy dữ liệu từ auth.js
+    const currentUser = getCurrentUser();
+    const userData = currentUser || {};
+
+    // Tính toán rank dựa trên số lần mua hàng
+    let rank = 'Retro Things';
+    if (userData.recentPurchased && userData.recentPurchased.length > 5) {
+      rank = 'Retro Cine';
+    }
+
+    // Cập nhật user info
+    userInfo.innerHTML = `
+      <div class="user-avatar">
+        <img src="${userData.avatar || 'assets/images/default-avatar.jpg'}" alt="User Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+      </div>
+      <div class="user-details">
+        <div class="user-name">${userData.firstName} ${userData.lastName}</div>
+        <div class="user-rank">${rank}</div>
+      </div>
+    `;
+
+    // Cập nhật menu
+    dropdownMenu.innerHTML = `
+      <li><a href="user-profile.html" class="dropdown-link"><i class="fas fa-user"></i>View Profile</a></li>
+      <li><a href="#" class="dropdown-link logout-link"><i class="fas fa-sign-out-alt"></i>Sign Out</a></li>
+    `;
+  } else {
+    // User chưa đăng nhập
+    userInfo.innerHTML = `
+      <div class="user-avatar">
+        <i class="fas fa-user-circle"></i>
+      </div>
+      <div class="user-details">
+        <div class="user-name">Oldiezone Member</div>
+        <div class="user-rank">Guest</div>
+      </div>
+    `;
+
+    // Cập nhật menu
+    dropdownMenu.innerHTML = `
+      <li><a href="login.html" class="dropdown-link"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
+      <li><a href="signup.html" class="dropdown-link"><i class="fas fa-user-plus"></i>Register</a></li>
+    `;
+  }
+
+  // Gắn event listener cho logout
+  const logoutLink = dropdownMenu.querySelector('.logout-link');
+  if (logoutLink) {
+    logoutLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      logout();
+      localStorage.removeItem('userData');
+      window.location.href = 'login.html';
+    });
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Tìm tất cả các user button trong header
-  const userButtons = document.querySelectorAll('.user-btn, .header-icon.user-btn, button[aria-label*="Tài khoản"], button[aria-label*="User profile"]');
-  
-  userButtons.forEach(button => {
-    button.addEventListener('click', (event) => {
+  // Render dropdown ngay khi DOM load
+  renderUserDropdown();
+
+  // Tìm user button
+  const userButton = document.querySelector('.user-btn');
+  const userDropdown = document.getElementById('userDropdown');
+
+  if (userButton) {
+    userButton.addEventListener('click', (event) => {
       event.preventDefault();
-      
-      if (isAuthenticated()) {
-        // Đã đăng nhập -> đi đến user profile
-        window.location.href = 'user-profile.html';
-      } else {
-        // Chưa đăng nhập -> đi đến trang login
-        window.location.href = 'login.html';
+      event.stopPropagation();
+
+      if (userDropdown) {
+        userDropdown.classList.toggle('active');
+        userButton.classList.toggle('active');
       }
     });
+  }
+
+  // Đóng dropdown khi click bên ngoài
+  document.addEventListener('click', function(event) {
+    const userDropdown = document.getElementById('userDropdown');
+    const userButton = document.querySelector('.user-btn');
+
+    // Check nếu click không phải trên dropdown hoặc user button
+    if (userDropdown && userButton) {
+      if (!userDropdown.contains(event.target) && !userButton.contains(event.target)) {
+        userDropdown.classList.remove('active');
+        userButton.classList.remove('active');
+      }
+    }
   });
 
-  // Xử lý cho các link user profile (nếu có)
-  const userLinks = document.querySelectorAll('a[href*="user-profile"]');
-  userLinks.forEach(link => {
+  // Prevent dropdown closing khi click bên trong dropdown
+  if (userDropdown) {
+    userDropdown.addEventListener('click', function(e) {
+      e.stopPropagation();
+    });
+  }
+
+  // Xử lý dropdown links
+  const dropdownLinks = document.querySelectorAll('.dropdown-link');
+  dropdownLinks.forEach(link => {
     link.addEventListener('click', (event) => {
-      event.preventDefault();
-      
-      if (isAuthenticated()) {
-        window.location.href = 'user-profile.html';
-      } else {
-        window.location.href = 'login.html';
-      }
+      // Cho phép navigation để xảy ra
+      const userDropdown = document.getElementById('userDropdown');
+      const userButton = document.querySelector('.user-btn');
+      if (userDropdown) userDropdown.classList.remove('active');
+      if (userButton) userButton.classList.remove('active');
     });
   });
 });

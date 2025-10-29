@@ -455,30 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Debug: Log cart state
     console.log('Cart initialized:', window.cart.getCartSummary());
 });
-// User dropdown functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const userBtn = document.querySelector('.user-btn');
-    const userDropdown = document.getElementById('userDropdown');
-    
-    if (userBtn && userDropdown) {
-        userBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            userDropdown.classList.toggle('active');
-            userBtn.classList.toggle('active');
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function() {
-            userDropdown.classList.remove('active');
-            userBtn.classList.remove('active');
-        });
-        
-        // Prevent dropdown from closing when clicking inside
-        userDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
-});
+
 // Newsletter functionality
 document.addEventListener('DOMContentLoaded', function() {
     const emailForm = document.querySelector('.email-form');

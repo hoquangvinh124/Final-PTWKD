@@ -73,6 +73,15 @@ function cacheSession(user) {
     firstName: user.firstName,
     lastName: user.lastName,
     avatar: user.avatar,
+    dateOfBirth: user.dateOfBirth,
+    gender: user.gender,
+    country: user.country,
+    city: user.city,
+    biography: user.biography,
+    recentPurchased: user.recentPurchased || [],
+    wishlist: user.wishlist || [],
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
     issuedAt: Date.now() 
   };
   localStorage.setItem(AUTH_KEY, JSON.stringify(payload));
