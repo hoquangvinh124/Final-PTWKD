@@ -256,7 +256,7 @@ body > header {
   font-size: 18px;
   color: #f5f5f5;
   margin-top: 0;
-  z-index: 1003;
+  z-index: 1001;
 }
 
 .header-icons .header-icon {
@@ -546,7 +546,7 @@ body > header {
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s ease;
-    z-index: 1002;
+    z-index: 1000;
 }
 
 /* Hiển thị submenu khi hover */
