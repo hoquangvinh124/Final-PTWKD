@@ -137,20 +137,37 @@ function hideNavigation() {
 
 // Cancel booking function
 window.cancelBooking = function(index) {
-    if (confirm('Are you sure you want to cancel this booking?')) {
-        const success = cancelBookedMovie(index);
-        if (success) {
-            // Adjust current page if needed
-            const bookedMovies = getBookedMovies();
-            const totalPages = Math.ceil(bookedMovies.length / ITEMS_PER_PAGE);
-            if (currentPage >= totalPages && currentPage > 0) {
-                currentPage--;
+    const bookedMovies = getBookedMovies();
+    const movie = bookedMovies[index];
+    
+    showConfirmModal({
+        title: 'Cancel Booking',
+        message: `Are you sure you want to cancel your booking for "${movie.title}"?`,
+        confirmText: 'Yes, Cancel',
+        cancelText: 'No, Keep It',
+        type: 'danger',
+        onConfirm: () => {
+            const success = cancelBookedMovie(index);
+            if (success) {
+                // Adjust current page if needed
+                const remainingMovies = getBookedMovies();
+                const totalPages = Math.ceil(remainingMovies.length / ITEMS_PER_PAGE);
+                if (currentPage >= totalPages && currentPage > 0) {
+                    currentPage--;
+                }
+                loadBookedMovies();
+                
+                // Show success notification
+                if (typeof showNotification === 'function') {
+                    showNotification(`Cancelled booking for "${movie.title}"`, 'success');
+                }
+            } else {
+                if (typeof showNotification === 'function') {
+                    showNotification('Failed to cancel booking. Please try again.', 'error');
+                }
             }
-            loadBookedMovies();
-        } else {
-            alert('Failed to cancel booking. Please try again.');
         }
-    }
+    });
 };
 
 // Setup navigation

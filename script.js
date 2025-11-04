@@ -235,7 +235,7 @@ class Cart {
                     <div class="cart-item-controls">
                         <div class="quantity-control">
                             <button class="quantity-btn minus" data-id="${item.id}" type="button">-</button>
-                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="99" data-id="${item.id}">
                             <button class="quantity-btn plus" data-id="${item.id}" type="button">+</button>
                         </div>
                         <button class="remove-item" data-id="${item.id}" type="button" title="Xóa sản phẩm">

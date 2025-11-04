@@ -787,6 +787,10 @@ a{text-decoration:none;color:inherit}
   background-position:right 16px center;
   padding-right:42px;
 }
+.shipping-field-group select option{
+  background:#1a0005;
+  color:#fff;
+}
 .shipping-field-group input::placeholder{
   color:rgba(255,255,255,.35);
 }
@@ -909,6 +913,10 @@ a{text-decoration:none;color:inherit}
   padding:10px 14px;
   color:#fff;
   width:100%;
+}
+.edit-form-grid select option{
+  background:#1a0005;
+  color:#fff;
 }
 .edit-form-grid input:focus,
 .edit-form-grid select:focus{
@@ -1885,6 +1893,7 @@ a{text-decoration:none;color:inherit}
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 

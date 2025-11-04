@@ -129,55 +129,43 @@ function bindWishlistRemoveButtons() {
             const productId = btn.getAttribute('data-product-id');
             if (!productId) return;
 
-            // Show confirmation
-            if (confirm('Remove this item from your wishlist?')) {
-                const result = removeFromWishlist(productId);
-                
-                if (result.success) {
-                    // Animate card removal
-                    const card = btn.closest('.wishlist-card');
-                    if (card) {
-                        card.style.animation = 'fadeOutScale 0.3s ease';
-                        setTimeout(() => {
-                            card.remove();
-                            
-                            // Check if wishlist is empty
-                            const wishlistGrid = document.querySelector('.wishlist-grid');
-                            if (wishlistGrid && wishlistGrid.children.length === 0) {
-                                loadUserWishlist(); // Reload to show empty state
-                            }
-                        }, 300);
-                    }
+            // Get product name for better UX
+            const card = btn.closest('.wishlist-card');
+            const productName = card ? card.querySelector('h3')?.textContent : 'this item';
+
+            // Show confirmation modal
+            showConfirmModal({
+                title: 'Remove from Wishlist',
+                message: `Are you sure you want to remove "${productName}" from your wishlist?`,
+                confirmText: 'Remove',
+                cancelText: 'Cancel',
+                type: 'danger',
+                onConfirm: () => {
+                    const result = removeFromWishlist(productId);
                     
-                    showNotification('Removed from wishlist', 'success');
-                } else {
-                    showNotification('Failed to remove item', 'error');
+                    if (result.success) {
+                        // Animate card removal
+                        if (card) {
+                            card.style.animation = 'fadeOutScale 0.3s ease';
+                            setTimeout(() => {
+                                card.remove();
+                                
+                                // Check if wishlist is empty
+                                const wishlistGrid = document.querySelector('.wishlist-grid');
+                                if (wishlistGrid && wishlistGrid.children.length === 0) {
+                                    loadUserWishlist(); // Reload to show empty state
+                                }
+                            }, 300);
+                        }
+                        
+                        showNotification('Removed from wishlist', 'success');
+                    } else {
+                        showNotification('Failed to remove item', 'error');
+                    }
                 }
-            }
+            });
         });
     });
-}
-
-/**
- * Show notification
- */
-function showNotification(message, type = 'info') {
-    const existing = document.querySelector('.wishlist-notification');
-    if (existing) {
-        existing.remove();
-    }
-
-    const notification = document.createElement('div');
-    notification.className = `wishlist-notification wishlist-notification--${type}`;
-    notification.textContent = message;
-    document.body.appendChild(notification);
-
-    setTimeout(() => notification.classList.add('show'), 10);
-
-    setTimeout(() => {
-        notification.classList.remove('show');
-        setTimeout(() => notification.remove(), 300);
-    }, 2500);
 }
 
 /**

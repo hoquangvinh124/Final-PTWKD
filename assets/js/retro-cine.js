@@ -236,8 +236,10 @@ let currentBookingData = null;
 
 function showBookingModal(movie, showtime) {
   if (!isAuthenticated()) {
-    alert('Please login to book a movie');
-    window.location.href = 'login.html';
+    showNotification('Please login to book a movie', 'warning');
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 1500);
     return;
   }
 
@@ -272,10 +274,10 @@ function confirmBooking() {
   const success = addBookedMovie(currentBookingData);
 
   if (success) {
-    alert(`Successfully booked "${currentBookingData.title}"!\nShowtime: ${currentBookingData.showtime}`);
+    showNotification(`Successfully booked "${currentBookingData.title}"! Showtime: ${currentBookingData.showtime}`, 'success');
     hideBookingModal();
   } else {
-    alert('Failed to book movie. Please try again.');
+    showNotification('Failed to book movie. Please try again.', 'error');
   }
 }
 

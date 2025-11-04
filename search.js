@@ -1,4 +1,5 @@
 // Search functionality
+document.addEventListener('DOMContentLoaded', function() {
 const searchBtn = document.querySelector('.search-btn');
 const searchBar = document.getElementById('searchBar');
 const searchInput = document.getElementById('searchInput');
@@ -165,3 +166,5 @@ if (searchBar) {
         }
     });
 }
+
+}); // End DOMContentLoaded

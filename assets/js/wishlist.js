@@ -27,8 +27,10 @@ class Wishlist {
     toggleWishlist(button) {
         // Kiểm tra đăng nhập
         if (!isAuthenticated()) {
-            alert('Vui lòng đăng nhập để sử dụng wishlist!');
-            window.location.href = 'login.html';
+            showNotification('Please login to use wishlist!', 'warning');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1500);
             return;
         }
 
@@ -41,21 +43,48 @@ class Wishlist {
         }
 
         const heartIcon = button.querySelector('.heart-icon');
+        const isUserProfilePage = window.location.pathname.includes('user-profile.html');
         
         // Kiểm tra sản phẩm đã trong wishlist chưa
         if (isInWishlist(product.id)) {
             // Xóa khỏi wishlist
-            const result = removeFromWishlist(product.id);
-            if (result.success) {
-                heartIcon.classList.remove('active');
-                this.showNotification('Đã xóa khỏi wishlist', 'success');
+            // Chỉ show modal nếu đang ở trang user-profile
+            if (isUserProfilePage) {
+                showConfirmModal({
+                    title: 'Remove from Wishlist',
+                    message: `Are you sure you want to remove "${product.name}" from your wishlist?`,
+                    confirmText: 'Remove',
+                    cancelText: 'Cancel',
+                    type: 'danger',
+                    onConfirm: () => {
+                        const result = removeFromWishlist(product.id);
+                        if (result.success) {
+                            heartIcon.classList.remove('active');
+                            showNotification(`Removed "${product.name}" from wishlist`, 'success');
+                            setTimeout(() => window.location.reload(), 1000);
+                        }
+                    }
+                });
+            } else {
+                // Xóa trực tiếp không cần modal ở các trang khác
+                const result = removeFromWishlist(product.id);
+                if (result.success) {
+                    heartIcon.classList.remove('active');
+                    showNotification(`Removed "${product.name}" from wishlist`, 'success');
+                    
+                    // Animation
+                    heartIcon.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        heartIcon.style.transform = 'scale(1)';
+                    }, 300);
+                }
             }
         } else {
             // Thêm vào wishlist
             const result = addToWishlist(product);
             if (result.success) {
                 heartIcon.classList.add('active');
-                this.showNotification('Đã thêm vào wishlist', 'success');
+                showNotification(`Added "${product.name}" to wishlist`, 'success');
                 
                 // Animation
                 heartIcon.style.transform = 'scale(1.3)';
@@ -63,7 +92,7 @@ class Wishlist {
                     heartIcon.style.transform = 'scale(1)';
                 }, 300);
             } else if (result.reason === 'ALREADY_IN_WISHLIST') {
-                this.showNotification('Sản phẩm đã có trong wishlist', 'info');
+                showNotification('Product already in wishlist', 'info');
             }
         }
 
@@ -123,28 +152,6 @@ class Wishlist {
                 icon.classList.remove('active');
             }
         });
-    }
-
-    showNotification(message, type = 'info') {
-        // Tạo notification element
-        const notification = document.createElement('div');
-        notification.className = `wishlist-notification ${type}`;
-        notification.textContent = message;
-        
-        document.body.appendChild(notification);
-        
-        // Show animation
-        setTimeout(() => {
-            notification.classList.add('show');
-        }, 10);
-        
-        // Hide và remove sau 2s
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 2000);
     }
 }
 
