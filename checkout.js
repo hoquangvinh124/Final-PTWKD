@@ -1,6 +1,21 @@
 // CHECKOUT.JS - Load cart from localStorage and manage checkout flow
 console.log('Checkout.js loading...');
 
+// Import auth functions - using dynamic import for non-module script
+let addPurchasedOrder, getCurrentUser, isAuthenticated;
+
+// Dynamically import auth functions
+(async () => {
+  try {
+    const authModule = await import('./assets/js/auth.js');
+    addPurchasedOrder = authModule.addPurchasedOrder;
+    getCurrentUser = authModule.getCurrentUser;
+    isAuthenticated = authModule.isAuthenticated;
+  } catch (error) {
+    console.error('Failed to load auth module:', error);
+  }
+})();
+
 // Global variables
 let currentStep = 1;
 let orderData = {
@@ -351,24 +366,74 @@ function updateOrderSummary() {
 function completeOrder() {
   const loadingScreen = document.getElementById('loadingScreen');
   loadingScreen.classList.add('active');
-  
+
   // Prepare email data
   prepareEmailData();
-  
+
   setTimeout(() => {
     loadingScreen.classList.remove('active');
     const orderId = `#LDIE${new Date().getFullYear()}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
     document.getElementById('orderId').textContent = orderId;
-    
+
     // Store email data with order ID
     emailData.order_number = orderId;
-    
+
     // Save email data to localStorage for sending
     localStorage.setItem('orderEmailData', JSON.stringify(emailData));
-    
+
     // Send email (you can implement this later)
     sendOrderConfirmationEmail(emailData);
-    
+
+    // Save order to user's purchased orders (if logged in)
+    if (isAuthenticated && addPurchasedOrder) {
+      const subtotal = orderData.products.reduce((sum, product) => {
+        return sum + (parsePrice(product.price) * product.quantity);
+      }, 0);
+      const shipping = orderData.shipping.price;
+      const tax = subtotal * orderData.taxRate;
+      const total = subtotal + shipping + tax;
+
+      // Get shipping method name
+      const shippingMethods = {
+        'standard': 'Standard Shipping',
+        'express': 'Express Shipping',
+        'pickup': 'Store Pickup'
+      };
+
+      const paymentMethods = {
+        'card': 'Credit/Debit Card',
+        'paypal': 'PayPal',
+        'giftcard': 'Gift Card'
+      };
+
+      const orderToSave = {
+        orderId: orderId,
+        orderDate: new Date().toISOString(),
+        status: 'Processing',
+        customer: orderData.customer,
+        products: orderData.products.map(p => ({
+          ...p,
+          price: parsePrice(p.price)
+        })),
+        shipping: {
+          type: orderData.shipping.type,
+          price: shipping,
+          method: shippingMethods[orderData.shipping.type] || 'Standard Shipping'
+        },
+        payment: {
+          type: orderData.payment.type,
+          method: paymentMethods[orderData.payment.type] || 'Credit/Debit Card'
+        },
+        subtotal: subtotal,
+        shippingCost: shipping,
+        tax: tax,
+        total: total
+      };
+
+      addPurchasedOrder(orderToSave);
+      console.log('Order saved to user profile:', orderToSave);
+    }
+
     // Clear cart
     localStorage.removeItem('cart');
     showStep(5);

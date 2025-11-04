@@ -146,6 +146,7 @@
                 <div class="hero-tabs">
                   <button class="active" data-view="overview">Overview</button>
                   <button data-view="shipping">Shipping Address</button>
+                  <button data-view="orders">Purchased Orders</button>
                 </div>
               </div>
             </div>
@@ -373,6 +374,19 @@
               <button class="hero-btn primary" id="editProfileSaveBtn" type="button">Save profile</button>
             </div>
           </form>
+        </div>
+      </article>
+    </section>
+
+    <!-- Purchased Orders Section -->
+    <section class="purchased-orders-section" id="purchasedOrdersSection" style="display: none;">
+      <article class="glass-card">
+        <div class="orders-header">
+          <h2>Purchased Orders</h2>
+          <p class="orders-subtitle">View your order history and track deliveries</p>
+        </div>
+        <div class="orders-list" id="ordersList">
+          <!-- Orders will be dynamically loaded here -->
         </div>
       </article>
     </section>
@@ -647,6 +661,7 @@
   <script src="assets/js/confirm-modal.js"></script>
   <script type="module" src="assets/js/user-wishlist.js"></script>
   <script type="module" src="assets/js/user-booked-movies.js"></script>
+  <script type="module" src="assets/js/user-purchased-orders.js"></script>
   <script type="module" src="assets/js/user-profile.js"></script>
   <script type="module" src="assets/js/user-auth-handler.js"></script>
 </body>

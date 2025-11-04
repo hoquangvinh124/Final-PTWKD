@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - OLDIEZONE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/header-footer.css">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #2a2a2a;
+            --accent: #f6d28a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(246, 210, 138, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-top: 100px;
+        }
+
+        .order-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            color: #ffd966;
+        }
+
+        .order-detail-header {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .order-id-large {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+        }
+
+        .order-status-large {
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .order-status-large.delivered {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+
+        .order-status-large.shipped {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196f3;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+        }
+
+        .order-status-large.processing {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ff9800;
+            border: 1px solid rgba(255, 152, 0, 0.3);
+        }
+
+        .order-header-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .order-info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .order-info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+        }
+
+        .order-info-value {
+            font-size: 15px;
+            color: var(--text-primary);
+        }
+
+        .order-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .order-products-section,
+        .order-summary-section,
+        .order-customer-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .product-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(246, 210, 138, 0.1);
+        }
+
+        .product-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price-qty {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .product-qty {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(246, 210, 138, 0.1);
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-top: 1.5rem;
+            margin-top: 0.5rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .summary-value {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        .summary-row:last-child .summary-label {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .summary-row:last-child .summary-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .order-customer-section {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+        }
+
+        .customer-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .customer-info-group h3 {
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .customer-info-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .customer-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            min-width: 100px;
+        }
+
+        .customer-value {
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        @media (max-width: 968px) {
+            .order-content {
+                grid-template-columns: 1fr;
+            }
+
+            .order-header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .order-detail-container {
+                padding: 1rem;
+            }
+
+            .product-item {
+                flex-direction: column;
+            }
+
+            .product-image {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar section-content">
+            <div class="header-top">
+                <a href="homepage.html" class="nav-logo" aria-label="Trang chủ Retro Sound">
+                    <img src="assets/images/shopname.jpg" width="150" height="60" alt="Retro Sound Logo">
+                </a>
+                <div class="header-icons" role="group" aria-label="Lối tắt điều hướng">
+                    <button type="button" class="header-icon search-btn" aria-label="Tìm kiếm" title="Tìm kiếm">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartTabPanel cartModal" title="Giỏ hàng">
+                        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                        <span class="badge" id="cartBadge"></span>
+                    </button>
+                    <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                        <i class="fa-regular fa-user" aria-hidden="true"></i>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="user-details">
+                                    <div class="user-name">Oldiezone Member</div>
+                                    <div class="user-rank">Guest</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <ul class="dropdown-menu">
+                                <li><a href="login.html" class="dropdown-link"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
+                                <li><a href="signup.html" class="dropdown-link"><i class="fas fa-user-plus"></i>Register</a></li>
+                            </ul>
+                        </div>
+                    </button>
+                    <button class="header-icon chatbot-btn" id="chatbotToggle">
+                        <i class="fas fa-robot"></i>
+                    </button>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="audio-products.html" class="nav-link">AUDIO</a>
+                    <ul class="submenu">
+                        <li><a href="audio-cd-products.html" class="submenu-link">CD</a></li>
+                        <li><a href="audio-vinyl-products.html" class="submenu-link">VINYL</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="vhs-products.html" class="nav-link">VHS</a></li>
+                <li class="nav-item"><a href="cassette-tape-products.html" class="nav-link">CASSETTE TAPE</a></li>
+                <li class="nav-item"><a href="camera-products.html" class="nav-link">POLA CAMERA</a></li>
+                <li class="nav-item">
+                    <a href="accessory-products.html" class="nav-link">ACCESSORIES</a>
+                    <ul class="submenu">
+                        <li><a href="accessory-cassette-player-products.html" class="submenu-link">CASSETTE PLAYER</a></li>
+                        <li><a href="accessory-ipod-products.html" class="submenu-link">IPOD</a></li>
+                        <li><a href="accessory-cd-player-products.html" class="submenu-link">CD PLAYER</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="retro-cine.html" class="nav-link">CINE ROOM</a></li>
+                <li class="nav-item"><a href="market_place.html" class="nav-link">THREAD</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" id="searchInput">
+                <button class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+                <div class="search-dropdown" id="searchDropdown"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="order-detail-container">
+        <a href="user-profile.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Orders
+        </a>
+
+        <div class="order-detail-header">
+            <div class="order-header-top">
+                <div class="order-id-large" id="orderIdDisplay">Loading...</div>
+                <div class="order-status-large" id="orderStatusDisplay">Loading...</div>
+            </div>
+            <div class="order-header-info" id="orderHeaderInfo">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <div class="order-content">
+            <div>
+                <div class="order-products-section">
+                    <h2 class="section-title">Products</h2>
+                    <div id="productsList">
+                        <!-- Products will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="order-customer-section">
+                    <h2 class="section-title">Customer Information</h2>
+                    <div class="customer-info-grid" id="customerInfo">
+                        <!-- Customer info will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="order-summary-section">
+                    <h2 class="section-title">Order Summary</h2>
+                    <div id="orderSummary">
+                        <!-- Summary will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+    <script type="module" src="assets/js/user-auth-handler.js"></script>
+    <script type="module" src="assets/js/order-detail.js"></script>
+</body>
+</html>

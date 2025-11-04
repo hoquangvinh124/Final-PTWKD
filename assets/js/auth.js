@@ -16,6 +16,87 @@ const DEFAULT_USERS = [
     avatar: 'assets/images/default-avatar.jpg',
     memberRank: 'Gold Member',
     recentPurchased: [],
+    purchasedOrders: [
+      {
+        orderId: '#LDIE20240001',
+        orderDate: '2024-12-15T10:30:00',
+        status: 'Delivered',
+        customer: {
+          firstName: 'Long',
+          lastName: 'Huynh',
+          email: 'test@example.com',
+          phone: '+84 787 567 381',
+          address: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM',
+          city: 'TP. Hồ Chí Minh',
+          zipCode: '700000'
+        },
+        products: [
+          {
+            id: 'vinyl001',
+            name: 'The Beatles - Abbey Road Vinyl',
+            price: 450000,
+            quantity: 1,
+            image: 'assets/images/vinyl/abbey-road.jpg'
+          },
+          {
+            id: 'cd002',
+            name: 'Pink Floyd - Dark Side of the Moon CD',
+            price: 250000,
+            quantity: 2,
+            image: 'assets/images/cd/dark-side.jpg'
+          }
+        ],
+        shipping: {
+          type: 'express',
+          price: 50000,
+          method: 'Express Shipping'
+        },
+        payment: {
+          type: 'card',
+          method: 'Credit/Debit Card'
+        },
+        subtotal: 950000,
+        shippingCost: 50000,
+        tax: 0,
+        total: 1000000
+      },
+      {
+        orderId: '#LDIE20240002',
+        orderDate: '2025-01-10T14:20:00',
+        status: 'Shipped',
+        customer: {
+          firstName: 'Long',
+          lastName: 'Huynh',
+          email: 'test@example.com',
+          phone: '+84 787 567 381',
+          address: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM',
+          city: 'TP. Hồ Chí Minh',
+          zipCode: '700000'
+        },
+        products: [
+          {
+            id: 'cassette001',
+            name: 'Michael Jackson - Thriller Cassette',
+            price: 180000,
+            quantity: 1,
+            image: 'assets/images/cassette/thriller.jpg'
+          }
+        ],
+        shipping: {
+          type: 'standard',
+          price: 25000,
+          method: 'Standard Shipping'
+        },
+        payment: {
+          type: 'paypal',
+          method: 'PayPal'
+        },
+        subtotal: 180000,
+        shippingCost: 25000,
+        tax: 0,
+        total: 205000
+      }
+    ],
     wishlist: [],
     bookedMovies: [],
     createdAt: '2024-01-01',
@@ -39,6 +120,7 @@ export function createNewUser(username, password, email = '', firstName = '', la
     avatar: 'assets/images/default-avatar.jpg',
     memberRank: 'Member',
     recentPurchased: [],
+    purchasedOrders: [],
     wishlist: [],
     bookedMovies: [],
     createdAt: new Date().toISOString(),
@@ -78,6 +160,7 @@ function cacheSession(user) {
     biography: user.biography,
     memberRank: user.memberRank || 'Member',
     recentPurchased: user.recentPurchased || [],
+    purchasedOrders: user.purchasedOrders || [],
     wishlist: user.wishlist || [],
     bookedMovies: user.bookedMovies || [],
     createdAt: user.createdAt,
@@ -330,4 +413,66 @@ export function cancelBookedMovie(index) {
   }
 
   return false;
+}
+
+/**
+ * Add a purchased order to the user's purchasedOrders list
+ */
+export function addPurchasedOrder(orderData) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) {
+    console.error('No user logged in');
+    return false;
+  }
+
+  const users = loadUsers();
+  const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+  if (userIndex === -1) {
+    console.error('User not found in storage');
+    return false;
+  }
+
+  // Initialize purchasedOrders if it doesn't exist
+  if (!users[userIndex].purchasedOrders) {
+    users[userIndex].purchasedOrders = [];
+  }
+
+  // Add order with timestamp
+  const order = {
+    ...orderData,
+    orderDate: orderData.orderDate || new Date().toISOString()
+  };
+
+  users[userIndex].purchasedOrders.unshift(order); // Add to beginning of array
+  users[userIndex].updatedAt = new Date().toISOString();
+
+  // Save to storage
+  saveUsers(users);
+
+  // Update session
+  cacheSession(users[userIndex]);
+
+  return true;
+}
+
+/**
+ * Get all purchased orders for current user
+ */
+export function getPurchasedOrders() {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return [];
+
+  return currentUser.purchasedOrders || [];
+}
+
+/**
+ * Get a specific purchased order by orderId
+ */
+export function getPurchasedOrderById(orderId) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return null;
+
+  const orders = currentUser.purchasedOrders || [];
+  return orders.find(order => order.orderId === orderId) || null;
 }

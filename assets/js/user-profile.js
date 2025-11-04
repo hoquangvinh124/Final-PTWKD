@@ -479,11 +479,18 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
       }else if(view === 'shipping'){
         setEditMode(false, {skipTabUpdate:true});
         setTabActive(view);
+        profileMain.classList.remove('orders-mode');
         profileMain.classList.add('shipping-mode');
+      }else if(view === 'orders'){
+        setEditMode(false, {skipTabUpdate:true});
+        setTabActive(view);
+        profileMain.classList.remove('shipping-mode');
+        profileMain.classList.add('orders-mode');
       }else{
         setEditMode(false, {skipTabUpdate:true});
         setTabActive(view);
         profileMain.classList.remove('shipping-mode');
+        profileMain.classList.remove('orders-mode');
       }
     });
   });
