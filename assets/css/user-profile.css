@@ -1310,7 +1310,8 @@ a{text-decoration:none;color:inherit}
   transform:translateY(-1px);
 }
 
-.step-button.is-active{
+.step-button.is-active,
+.step-button.active{
   background:#ff6468;
   border-color:#ff6468;
   color:#2b050b;

@@ -750,6 +750,14 @@
     </section>
   </main>
   <script type="module" src="assets/js/user-wishlist.js"></script>
+  <script type="module" src="assets/js/wishlist-sample-data.js"></script>
+  <script type="module">
+    // Initialize wishlist with sample data if empty
+    import { initializeWishlistSamples } from './assets/js/wishlist-sample-data.js';
+    initializeWishlistSamples();
+  </script>
+  <!-- Debug helper - Remove in production -->
+  <script src="assets/js/clear-wishlist-helper.js"></script>
   <script src="assets/js/user-profile.js"></script>
 </body>
 </html>
