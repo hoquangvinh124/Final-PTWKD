@@ -53,23 +53,23 @@
                     </button>
                     <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
                         <i class="fa-regular fa-user" aria-hidden="true"></i>
-                    </button>
-                    <div class="user-dropdown" id="userDropdown">
-                        <div class="user-info">
-                            <div class="user-avatar">
-                                <i class="fas fa-user-circle"></i>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="user-details">
+                                    <div class="user-name">Oldiezone Member</div>
+                                    <div class="user-rank">Guest</div>
+                                </div>
                             </div>
-                            <div class="user-details">
-                                <div class="user-name">Oldiezone Member</div>
-                                <div class="user-rank">Guest</div>
-                            </div>
+                            <div class="dropdown-divider"></div>
+                            <ul class="dropdown-menu">
+                                <li><a href="login.html" class="dropdown-link"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
+                                <li><a href="signup.html" class="dropdown-link"><i class="fas fa-user-plus"></i>Register</a></li>
+                            </ul>
                         </div>
-                        <div class="dropdown-divider"></div>
-                        <ul class="dropdown-menu">
-                            <li><a href="login.html" class="dropdown-link"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
-                            <li><a href="signup.html" class="dropdown-link"><i class="fas fa-user-plus"></i>Register</a></li>
-                        </ul>
-                    </div>
+                    </button>
                     <button class="header-icon chatbot-btn" id="chatbotToggle">
                         <i class="fas fa-robot"></i>
                     </button>
@@ -104,6 +104,7 @@
                 <button class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
                     <i class="fa-solid fa-times"></i>
                 </button>
+                <div class="search-dropdown" id="searchDropdown"></div>
             </div>
         </div>
     </header>
@@ -217,6 +218,30 @@
         </div>
     </section>
     <!-- ***** Products Area Ends ***** -->
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>Chatbot Assistant</h3>
+            <button class="chatbot-close" id="chatbotClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message-container bot">
+                <div class="message bot">
+                    Hello! How can I help you today?
+                    <div class="timestamp">Just now</div>
+                </div>
+            </div>
+        </div> 
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="chatbotSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
     
     <!-- ***** Footer Start ***** -->
         <!-- Cart Modal -->
@@ -280,10 +305,12 @@
 
     <script src="learn.js"></script>
 
-      <script src="search.js"></script>
+      <script src="search.js" defer></script>
     <script src="script.js"></script>
+    <script src="chatbot.js"></script>
 <script type="module" src="assets/js/user-auth-handler.js"></script>
-<script type="module" src="assets/js/wishlist.js"></script>`n</body>
+<script type="module" src="assets/js/wishlist.js"></script>
+</body>
 
 </html>
 

@@ -292,14 +292,18 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
 
   const initialAvatar = heroAvatar ? heroAvatar.getAttribute('src') : '';
   const editSaveBtn = document.getElementById('editProfileSaveBtn');
+
+  // Load profile data from session
+  const sessionData = JSON.parse(localStorage.getItem('demo.auth') || '{}');
   const profileData = {
-    firstName:'Long',
-    lastName:'Huynh',
-    city:'Ho Chi Minh City',
-    birthdate:'2001-05-09',
-    country:'Vietnam',
-    gender:'Man',
-    avatar: initialAvatar
+    firstName: sessionData.firstName || '',
+    lastName: sessionData.lastName || '',
+    city: sessionData.city || '',
+    birthdate: sessionData.dateOfBirth || '',
+    country: sessionData.country || '',
+    gender: sessionData.gender || '',
+    memberRank: sessionData.memberRank || 'Member',
+    avatar: sessionData.avatar || initialAvatar
   };
 
   const formatDate = (value) => {
@@ -953,6 +957,12 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
       card.setAttribute('aria-hidden', visible ? 'false' : 'true');
     });
   };
+
+  // Hide navigation if not enough items (check before creating paginator)
+  if (cards.length <= 8) {
+    nav.parentElement.style.display = 'none';
+    return; // Don't create paginator
+  }
 
   const paginator = createPaginator(nav, {
     perPage: 8,

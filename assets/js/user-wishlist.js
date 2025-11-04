@@ -24,12 +24,19 @@ export function loadUserWishlist() {
 
     if (!wishlist || wishlist.length === 0) {
         wishlistGrid.innerHTML = `
-            <div class="wishlist-empty">
-                <i class="heart-icon" style="font-size: 48px; opacity: 0.3;">❤</i>
-                <p style="margin-top: 20px; color: #666;">Your wishlist is empty</p>
-                <a href="homepage.html" class="btn-browse" style="margin-top: 15px; display: inline-block; padding: 10px 20px; background: black; color: white; text-decoration: none; border-radius: 5px;">Browse Products</a>
+            <div class="wishlist-empty" style="text-align: center; padding: 60px 20px; color: #999; grid-column: 1 / -1;">
+                <i class="fas fa-heart" style="font-size: 48px; color: rgba(246, 210, 138, 0.3); margin-bottom: 20px; display: block;"></i>
+                <p style="font-size: 16px; margin-bottom: 20px;">Your wishlist is empty</p>
+                <a href="homepage.html" class="btn-cine" style="display: inline-block; padding: 10px 24px; background: #f6d28a; color: #3b141c; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; transition: all 0.3s ease;">BROWSE PRODUCTS</a>
             </div>
         `;
+
+        // Hide pagination when empty
+        const nav = document.querySelector('[data-nav="wishlist"]');
+        if (nav && nav.parentElement) {
+            nav.parentElement.style.display = 'none';
+        }
+
         return;
     }
 
@@ -38,6 +45,16 @@ export function loadUserWishlist() {
         const card = createWishlistCard(item);
         wishlistGrid.appendChild(card);
     });
+
+    // Show pagination if needed (more than 8 items)
+    const nav = document.querySelector('[data-nav="wishlist"]');
+    if (nav && nav.parentElement) {
+        if (wishlist.length > 8) {
+            nav.parentElement.style.display = 'flex';
+        } else {
+            nav.parentElement.style.display = 'none';
+        }
+    }
 
     // Bind remove buttons
     bindWishlistRemoveButtons();

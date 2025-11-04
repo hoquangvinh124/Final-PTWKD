@@ -11,12 +11,13 @@
     <img src="assets/images/rapphim.png" alt="Cinema Background" class="cinema-bg">
 
     <div class="video-frame">
-      <video id="movie" controls>
+      <video id="movie" controls autoplay muted playsinline>
         <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
       </video>
-      <button id="chatToggle" class="chat-toggle">💬</button>
     </div>
   </div>
+
+  <button id="chatToggle" class="chat-toggle">💬</button>
 
   <div class="chat-box hidden" id="chatBox">
     <div class="chat-header">Chat Room</div>

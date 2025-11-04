@@ -9,20 +9,34 @@ import { isAuthenticated, getCurrentUser, logout } from './auth.js';
 
 function renderUserDropdown() {
   const userDropdown = document.getElementById('userDropdown');
-  if (!userDropdown) return;
+  if (!userDropdown) {
+    console.error('userDropdown element not found');
+    return;
+  }
 
   const userInfo = userDropdown.querySelector('.user-info');
   const dropdownMenu = userDropdown.querySelector('.dropdown-menu');
+
+  if (!userInfo || !dropdownMenu) {
+    console.error('user-info or dropdown-menu not found');
+    return;
+  }
+
+  console.log('isAuthenticated:', isAuthenticated());
+  console.log('currentUser:', getCurrentUser());
 
   if (isAuthenticated()) {
     // User đã đăng nhập - Lấy dữ liệu từ auth.js
     const currentUser = getCurrentUser();
     const userData = currentUser || {};
 
-    // Tính toán rank dựa trên số lần mua hàng
-    let rank = 'Retro Things';
-    if (userData.recentPurchased && userData.recentPurchased.length > 5) {
-      rank = 'Retro Cine';
+    // Sử dụng memberRank từ userData, nếu không có thì tính dựa trên số lần mua hàng
+    let rank = userData.memberRank || 'Member';
+    if (!userData.memberRank) {
+      // Fallback: Tính toán rank dựa trên số lần mua hàng nếu không có memberRank
+      if (userData.recentPurchased && userData.recentPurchased.length > 5) {
+        rank = 'Gold Member';
+      }
     }
 
     // Cập nhật user info
@@ -70,11 +84,24 @@ function renderUserDropdown() {
       window.location.href = 'login.html';
     });
   }
+
+  // Attach event listeners to all dropdown links
+  const dropdownLinks = dropdownMenu.querySelectorAll('.dropdown-link');
+  dropdownLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+      const userDropdown = document.getElementById('userDropdown');
+      const userButton = document.querySelector('.user-btn');
+      if (userDropdown) userDropdown.classList.remove('active');
+      if (userButton) userButton.classList.remove('active');
+    });
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   // Render dropdown ngay khi DOM load
-  renderUserDropdown();
+  setTimeout(() => {
+    renderUserDropdown();
+  }, 100);
 
   // Tìm user button
   const userButton = document.querySelector('.user-btn');

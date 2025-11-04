@@ -105,7 +105,7 @@ body::before {
 }
 
 .checkout-content {
-  background: url('assets/images/disco.png');
+  background: url('assets/images/disco.png') no-repeat center center / cover;
   border-radius: 20px;
   padding: 40px;
   margin-top: 20px;

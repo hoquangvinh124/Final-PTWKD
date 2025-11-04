@@ -1006,15 +1006,30 @@ a{text-decoration:none;color:inherit}
   gap:24px;
 }
 
-.profile-main.edit-mode .wishlist-header,
-.profile-main.edit-mode .wishlist-grid,
-.profile-main.edit-mode .wishlist-section .step-nav-bar{
+/* Hide wishlist sections when in edit mode */
+.profile-main.edit-mode .wishlist-section,
+.profile-main.shipping-mode .wishlist-section{
+  display:none !important;
+}
+
+/* Hide edit profile section by default */
+.edit-profile-section{
   display:none;
 }
-.profile-main.shipping-mode .wishlist-header,
-.profile-main.shipping-mode .wishlist-grid,
-.profile-main.shipping-mode .wishlist-section .step-nav-bar{
+
+/* Show edit profile section when in edit mode */
+.profile-main.edit-mode .edit-profile-section{
+  display:block !important;
+}
+
+/* Hide shipping address section by default */
+.shipping-address-section{
   display:none;
+}
+
+/* Show shipping address section when in shipping mode */
+.profile-main.shipping-mode .shipping-address-section{
+  display:block !important;
 }
 
 .wishlist-header h2{
@@ -1815,5 +1830,141 @@ a{text-decoration:none;color:inherit}
     flex-direction: column;
     gap: 5px;
     margin-top: 8px;
+}
+
+/* Booked Movies Section */
+.booked-movies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    padding: 20px 0;
+}
+
+.booked-movie-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.4s ease;
+    max-width: 230px;
+}
+
+.booked-movie-card:hover {
+    transform: translateY(-5px);
+    border-color: #f6d28a;
+    box-shadow: 0 8px 25px rgba(246, 210, 138, 0.2);
+}
+
+.booked-movie-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    display: block;
+}
+
+.booked-movie-body {
+    padding: 15px;
+}
+
+.booked-movie-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.booked-movie-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f6d28a;
+    margin: 0;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.booked-movie-showtime {
+    font-size: 13px;
+    color: #ffd966;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.booked-movie-meta {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 12px;
+}
+
+.booked-movie-cancel {
+    width: 100%;
+    padding: 8px;
+    background: rgba(255, 59, 48, 0.1);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+    color: #ff3b30;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.booked-movie-cancel:hover {
+    background: rgba(255, 59, 48, 0.2);
+    border-color: #ff3b30;
+}
+
+.booked-movies-empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+    grid-column: 1 / -1;
+}
+
+.booked-movies-empty i {
+    font-size: 64px;
+    color: rgba(246, 210, 138, 0.3);
+    margin-bottom: 20px;
+}
+
+.booked-movies-empty p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.booked-movies-empty .btn-cine {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #f6d28a;
+    color: #3b141c;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.booked-movies-empty .btn-cine:hover {
+    background: #ffd966;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(246, 210, 138, 0.4);
+}
+
+@media (max-width: 992px) {
+    .booked-movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .booked-movies-grid {
+        grid-template-columns: 1fr;
+    }
 }
 

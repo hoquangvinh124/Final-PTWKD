@@ -30,19 +30,65 @@ body {
 /* Video trong khung màn chiếu */
 .video-frame {
   position: absolute;
-  top: 10.55%;
-  left: 24%;
-  width: 51%;
-  height: 50%;
-  background: black;
-  border: 2px solid #2a0e0e;
+  top: 3.2%;
+  left: 368px;
+  width: 780px;
+  height: 416px;
+  background: #0a0a0a;
+  border: none;
   overflow: hidden;
+  /* Ánh sáng phát ra nhẹ hơn từ màn hình */
+  filter: drop-shadow(0 0 30px rgba(200, 200, 255, 0.15))
+          drop-shadow(0 0 60px rgba(150, 150, 200, 0.1));
+}
+
+/* Lớp overlay tạo hiệu ứng màn chiếu */
+.video-frame::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.03) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 3px
+    );
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0.4;
+}
+
+/* Hiệu ứng vignette - tối hơn ở viền */
+.video-frame::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.2) 70%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
 }
 
 .video-frame video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
+  position: relative;
+  z-index: 1;
+  /* Điều chỉnh màu sắc giống máy chiếu thật */
+  filter: brightness(0.9) contrast(1.1) saturate(0.95);
 }
 
 /* ===== Chat Toggle Button ===== */
@@ -110,6 +156,10 @@ body {
   overflow-y: auto;
   font-size: 14px;
   color: #f1e3c1;
+}
+
+.chat-messages p {
+  margin-bottom: 2px;
 }
 
 .chat-input {
