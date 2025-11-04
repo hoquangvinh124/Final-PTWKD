@@ -9,7 +9,9 @@
 body{
   margin:0;
   font-family:"Barlow",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  background:radial-gradient(circle at top,#43040b 0%,#170004 52%,#030001 100%);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.823),rgba(0, 0, 0, 0.789)),
+    url("../images/bg.jpg") center/cover fixed;
   color:#fff4f5;
   min-height:100vh;
 }
