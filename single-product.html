@@ -4,11 +4,11 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>RC Succession - Rhapsody</title>
-	<link rel="stylesheet" href="assets/css/single-product.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/header-footer.css">
+	<link rel="stylesheet" href="assets/css/single-product.css">
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"></noscript>
 </head>
@@ -31,23 +31,26 @@
                     </button>
                     <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
                         <i class="fa-regular fa-user" aria-hidden="true"></i>
-                    </button>
-                    <div class="user-dropdown" id="userDropdown">
-                        <div class="user-info">
-                            <div class="user-avatar">
-                                <i class="fas fa-user-circle"></i>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="user-details">
+                                    <div class="user-name">Oldiezone Member</div>
+                                    <div class="user-rank">Guest</div>
+                                </div>
                             </div>
-                            <div class="user-details">
-                                <div class="user-name">Oldiezone Member</div>
-                                <div class="user-rank">Guest</div>
-                            </div>
+                            <div class="dropdown-divider"></div>
+                            <ul class="dropdown-menu">
+                                <li><a href="login.html" class="dropdown-link"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
+                                <li><a href="signup.html" class="dropdown-link"><i class="fas fa-user-plus"></i>Register</a></li>
+                            </ul>
                         </div>
-                        <div class="dropdown-divider"></div>
-                        <ul class="dropdown-menu">
-                            <li><a href="login.html" class="dropdown-link"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
-                            <li><a href="signup.html" class="dropdown-link"><i class="fas fa-user-plus"></i>Register</a></li>
-                        </ul>
-                    </div>
+                    </button>
+                    <button class="header-icon chatbot-btn" id="chatbotToggle">
+                        <i class="fas fa-robot"></i>
+                    </button>
                 </div>
             </div>
             <ul class="nav-menu">
@@ -79,6 +82,7 @@
                 <button class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
                     <i class="fa-solid fa-times"></i>
                 </button>
+                <div class="search-dropdown" id="searchDropdown"></div>
             </div>
         </div>
     </header>
@@ -246,6 +250,30 @@
 		</div>
 	</div>
 
+	<!-- Chatbot Window -->
+	<div class="chatbot-window" id="chatbotWindow">
+		<div class="chatbot-header">
+			<h3>Chatbot Assistant</h3>
+			<button class="chatbot-close" id="chatbotClose">
+				<i class="fas fa-times"></i>
+			</button>
+		</div>
+		<div class="chatbot-messages" id="chatbotMessages">
+			<div class="message-container bot">
+				<div class="message bot">
+					Hello! How can I help you today?
+					<div class="timestamp">Just now</div>
+				</div>
+			</div>
+		</div> 
+		<div class="chatbot-input">
+			<input type="text" id="chatbotInput" placeholder="Type your message...">
+			<button id="chatbotSend">
+				<i class="fas fa-paper-plane"></i>
+			</button>
+		</div>
+	</div>
+
 	<!-- ***** Footer Start ***** -->
 	<footer>
 		<div class="footerContainer">
@@ -280,8 +308,10 @@
 	
 	<!-- Script cho cart -->
 	<script src="script.js"></script>
-	<script src="search.js"></script>
+	<script src="search.js" defer></script>
+	<script src="chatbot.js"></script>
 <script type="module" src="assets/js/user-auth-handler.js"></script>
-<script type="module" src="assets/js/wishlist.js"></script>`n</body>
+<script type="module" src="assets/js/wishlist.js"></script>
+</body>
 </html>
 

@@ -1,4 +1,5 @@
-// Nhân đôi hàng poster để tạo hiệu ứng chạy vô hạn
+import { isAuthenticated, addBookedMovie } from './auth.js';
+
 document.querySelectorAll('.poster-row').forEach(row => {
   const cloneContent = row.innerHTML;
   row.innerHTML += cloneContent;
@@ -65,20 +66,54 @@ for (let hour = 0; hour < 24; hour += 2) {
 // Lịch chiếu trong ngày
 function displaySchedule(dayIndex) {
   scheduleDiv.innerHTML = "";
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
   showtimes.forEach((time, i) => {
     const movie = movies[i % movies.length];
+    const startMinutes = toMinutes(time);
+    const endMinutes = (startMinutes + 120) % (24 * 60);
     const endTime = getEndTime(time);
+
+    // Kiểm tra phim hiện tại đang chiếu không
+    let isNowPlaying = false;
+    if (startMinutes < endMinutes) {
+      isNowPlaying = currentMinutes >= startMinutes && currentMinutes < endMinutes;
+    } else {
+      // Trường hợp qua 0h (ví dụ 22:00 - 00:00)
+      isNowPlaying = currentMinutes >= startMinutes || currentMinutes < endMinutes;
+    }
+
     const card = document.createElement("div");
     card.className = "movie-card";
     card.innerHTML = `
       <img src="${movie.poster}" alt="${movie.title}">
       <h3>${movie.title}</h3>
       <p>${time} - ${endTime}</p>
-      <button class="book-btn">BOOK NOW</button>
+      <button class="book-btn ${isNowPlaying ? 'watch-now' : ''}">
+        ${isNowPlaying ? "WATCH NOW" : "BOOK NOW"}
+      </button>
     `;
     scheduleDiv.appendChild(card);
+
+    const button = card.querySelector(".book-btn");
+    if (button.textContent.trim() === "WATCH NOW") {
+      button.addEventListener("click", () => {
+        window.location.href = "room.html";
+      });
+    } else {
+      button.addEventListener("click", () => {
+        showBookingModal(movie, `${time} - ${endTime}`);
+      });
+    }
   });
 }
+
+setInterval(() => {
+  const activeBtn = document.querySelector(".week-bar button.active");
+  if (activeBtn) displaySchedule(activeBtn.dataset.day);
+}, 60 * 1000); // cập nhật mỗi phút
+
 
 function getEndTime(start) {
   const [h, m] = start.split(":").map(Number);
@@ -170,20 +205,90 @@ function renderNowNext() {
 
     const posterWrap = container.querySelector('.poster-wrap');
     posterWrap.addEventListener('click', () => {
-      window.location.href = 'movieroom.html';
+      window.location.href = 'room.html';
     });
     posterWrap.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') 
         {
             e.preventDefault();
-            window.location.href = 'movieroom.html';
+            window.location.href = 'room.html';
       }
     });
   }
 
   renderBox(currentBox, currentSlot, 'WATCH NOW');
   renderBox(nextBox, nextSlot, 'BOOK NOW');
+
+  // Add booking functionality to "BOOK NOW" button
+  const nextPosterWrap = nextBox.querySelector('.poster-wrap');
+  nextPosterWrap.removeEventListener('click', gotoRoom);
+  nextPosterWrap.addEventListener('click', () => {
+    showBookingModal(nextSlot.movie, nextSlot.timeLabel);
+  });
 }
+
+function gotoRoom() {
+  window.location.href = 'room.html';
+}
+
+// Booking Modal Functions
+let currentBookingData = null;
+
+function showBookingModal(movie, showtime) {
+  if (!isAuthenticated()) {
+    alert('Please login to book a movie');
+    window.location.href = 'login.html';
+    return;
+  }
+
+  const modal = document.getElementById('bookingModal');
+  const movieTitleSpan = document.getElementById('movieTitle');
+  const movieShowtimeSpan = document.getElementById('movieShowtime');
+
+  movieTitleSpan.textContent = movie.title;
+  movieShowtimeSpan.textContent = showtime;
+
+  currentBookingData = {
+    title: movie.title,
+    poster: movie.poster,
+    year: movie.year,
+    director: movie.director,
+    description: movie.description,
+    showtime: showtime
+  };
+
+  modal.classList.add('active');
+}
+
+function hideBookingModal() {
+  const modal = document.getElementById('bookingModal');
+  modal.classList.remove('active');
+  currentBookingData = null;
+}
+
+function confirmBooking() {
+  if (!currentBookingData) return;
+
+  const success = addBookedMovie(currentBookingData);
+
+  if (success) {
+    alert(`Successfully booked "${currentBookingData.title}"!\nShowtime: ${currentBookingData.showtime}`);
+    hideBookingModal();
+  } else {
+    alert('Failed to book movie. Please try again.');
+  }
+}
+
+// Modal event listeners
+document.getElementById('confirmBooking').addEventListener('click', confirmBooking);
+document.getElementById('cancelBooking').addEventListener('click', hideBookingModal);
+
+// Close modal when clicking outside
+document.getElementById('bookingModal').addEventListener('click', (e) => {
+  if (e.target.id === 'bookingModal') {
+    hideBookingModal();
+  }
+});
 
 renderNowNext();
 (function scheduleAutoUpdate()

@@ -99,14 +99,17 @@ main.product-page {
     gap: 48px;
 }
 
+/* DISABLED - Using header-footer.css styles instead
 .site-header {
   width: 100%;
   background-color: black;
   margin: 0;
   padding: 0;
 }
+*/
 
 /* Navbar Layout */
+/* DISABLED - Using header-footer.css styles instead
 .navbar {
   background-color: black !important;
   padding: 0 !important;
@@ -116,8 +119,10 @@ main.product-page {
   width: 100% !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+*/
 
 /* Header Top - Logo Container */
+/* DISABLED - Using header-footer.css styles instead
 .site-header .header-top {
   width: 100% !important;
   padding: var(--spacing-m) 0 !important;
@@ -139,9 +144,10 @@ main.product-page {
   height: 60px !important;
   max-width: 100% !important;
 }
+*/
 
-/* Menu Container */
-.nav-menu {
+/* Menu Container - DISABLED - Using header-footer.css styles */
+/* .nav-menu {
   background-color: black !important;
   display: flex !important;
   flex-wrap: nowrap !important;
@@ -152,14 +158,15 @@ main.product-page {
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
-}
+} */
 
-/* Menu Items */
-.nav-item {
+/* Menu Items - DISABLED - Using header-footer.css styles */
+/* .nav-item {
   position: relative;
-}
+} */
 
-.nav-link {
+/* Commented out to use header-footer.css styles */
+/* .nav-link {
   font-family: 'Roboto', sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -178,9 +185,10 @@ main.product-page {
   color: #c89d41;
   border-bottom-color: var(--primary-color);
 }
-
+ */
+/* Commented out to use header-footer.css styles */
 /* Submenu Styles */
-.submenu {
+/* .submenu {
   position: absolute;
   top: 100%;
   left: 0;
@@ -218,10 +226,10 @@ main.product-page {
   color: var(--dark-color);
   border-left-color: var(--primary-color);
   padding-left: 25px;
-}
+} */
 
 /* Submenu Arrow Indicator */
-.nav-item:has(.submenu) .nav-link::after {
+/* .nav-item:has(.submenu) .nav-link::after {
   content: "▼";
   font-size: 10px;
   margin-left: 8px;
@@ -232,7 +240,7 @@ main.product-page {
 .nav-item:hover .nav-link::after {
   transform: rotate(180deg);
   color: #c89d41;
-}
+} */
 
 .product-hero {
     display: grid;
@@ -1290,7 +1298,7 @@ i.shopping-bag-icon {
     position: absolute;
     top: -8px;
     right: -8px;
-    background: #e67e22;
+   background: linear-gradient(135deg, #ff98f6, #ffc66a);
     color: white;
     border-radius: 50%;
     width: 20px;

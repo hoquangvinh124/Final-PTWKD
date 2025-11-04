@@ -11,8 +11,8 @@ chatToggle.addEventListener('click', () => {
   chatBox.classList.toggle('hidden');
 });
 
-// Gửi tin nhắn
-sendBtn.addEventListener('click', () => {
+// Hàm gửi tin nhắn
+function sendMessage() {
   const message = chatInput.value.trim();
   if (message) {
     const p = document.createElement('p');
@@ -20,5 +20,15 @@ sendBtn.addEventListener('click', () => {
     chatMessages.appendChild(p);
     chatInput.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+}
+
+// Gửi tin nhắn khi click nút Send
+sendBtn.addEventListener('click', sendMessage);
+
+// Gửi tin nhắn khi nhấn Enter
+chatInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    sendMessage();
   }
 });

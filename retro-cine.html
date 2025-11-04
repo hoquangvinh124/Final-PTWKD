@@ -9,7 +9,7 @@
   <body>
     <div class="container">
       <div class="left">
-        <a href="nhap.html" class="logo">
+        <a href="homepage.html" class="logo">
           <img src="assets/images/logo.png" alt="Logo">
         </a>
         <h1>TRY VHS<br>EXPERIENCE</h1>
@@ -167,7 +167,7 @@
       <div class="schedule" id="schedule"></div>
     </section>
     <div class="store-section">
-      <a href="nhap.html" class="store-link">
+      <a href="vhs-products.html" class="store-link">
         <span>store</span>
         <span class="arrow">→</span>
       </a>
@@ -191,7 +191,22 @@
       </div>
     </section>
 
-    <script src="assets/js/retro-cine.js"></script>
+    <!-- Booking Confirmation Modal -->
+    <div class="booking-modal" id="bookingModal">
+      <div class="booking-modal-content">
+        <h2>CONFIRM BOOKING</h2>
+        <p class="booking-question">Do you want to book <span id="movieTitle"></span>?</p>
+        <div class="booking-details">
+          <p><strong>Showtime:</strong> <span id="movieShowtime"></span></p>
+        </div>
+        <div class="booking-buttons">
+          <button class="booking-btn booking-confirm" id="confirmBooking">BOOK</button>
+          <button class="booking-btn booking-cancel" id="cancelBooking">CANCEL</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="assets/js/retro-cine.js"></script>
   </body>
 </html>
 

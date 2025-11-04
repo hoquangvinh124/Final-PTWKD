@@ -6,22 +6,18 @@ const DEFAULT_USERS = [
     username: 'test',
     password: 'test123',
     email: 'test@example.com',
-    firstName: 'John',
-    lastName: 'Doe',
+    firstName: 'Long',
+    lastName: 'Huynh',
     dateOfBirth: '1990-05-15',
     gender: 'Male',
     country: 'Vietnam',
     city: 'Ho Chi Minh City',
     biography: 'Music enthusiast and vintage collector. Love old school vibes!',
     avatar: 'assets/images/default-avatar.jpg',
-    recentPurchased: [
-      { id: 'prod1', name: 'Vintage Vinyl Record', purchasedAt: '2025-01-15', price: 250000 },
-      { id: 'prod2', name: 'Cassette Player', purchasedAt: '2025-02-20', price: 450000 }
-    ],
-    wishlist: [
-      { id: 'prod3', name: 'Polaroid Camera', price: 1200000, addedAt: '2025-01-10' },
-      { id: 'prod4', name: 'VHS Player', price: 800000, addedAt: '2025-01-12' }
-    ],
+    memberRank: 'Gold Member',
+    recentPurchased: [],
+    wishlist: [],
+    bookedMovies: [],
     createdAt: '2024-01-01',
     updatedAt: '2025-01-20'
   }
@@ -41,8 +37,10 @@ export function createNewUser(username, password, email = '', firstName = '', la
     city: '',
     biography: '',
     avatar: 'assets/images/default-avatar.jpg',
+    memberRank: 'Member',
     recentPurchased: [],
     wishlist: [],
+    bookedMovies: [],
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
@@ -67,7 +65,7 @@ export function saveUsers(users) {
 }
 
 function cacheSession(user) {
-  const payload = { 
+  const payload = {
     username: user.username,
     email: user.email,
     firstName: user.firstName,
@@ -78,11 +76,13 @@ function cacheSession(user) {
     country: user.country,
     city: user.city,
     biography: user.biography,
+    memberRank: user.memberRank || 'Member',
     recentPurchased: user.recentPurchased || [],
     wishlist: user.wishlist || [],
+    bookedMovies: user.bookedMovies || [],
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
-    issuedAt: Date.now() 
+    issuedAt: Date.now()
   };
   localStorage.setItem(AUTH_KEY, JSON.stringify(payload));
   return payload;
@@ -240,3 +240,94 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+/**
+ * Add a booked movie to the user's bookedMovies list
+ */
+export function addBookedMovie(movieData) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) {
+    console.error('No user logged in');
+    return false;
+  }
+
+  const users = loadUsers();
+  const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+  if (userIndex === -1) {
+    console.error('User not found in storage');
+    return false;
+  }
+
+  // Initialize bookedMovies if it doesn't exist
+  if (!users[userIndex].bookedMovies) {
+    users[userIndex].bookedMovies = [];
+  }
+
+  // Add booking with timestamp
+  const booking = {
+    ...movieData,
+    bookedAt: new Date().toISOString()
+  };
+
+  users[userIndex].bookedMovies.push(booking);
+  users[userIndex].updatedAt = new Date().toISOString();
+
+  // Save to storage
+  saveUsers(users);
+
+  // Update session
+  cacheSession(users[userIndex]);
+
+  return true;
+}
+
+/**
+ * Get all booked movies for current user
+ */
+export function getBookedMovies() {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return [];
+
+  return currentUser.bookedMovies || [];
+}
+
+/**
+ * Cancel a booked movie by index
+ */
+export function cancelBookedMovie(index) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) {
+    console.error('No user logged in');
+    return false;
+  }
+
+  const users = loadUsers();
+  const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+  if (userIndex === -1) {
+    console.error('User not found in storage');
+    return false;
+  }
+
+  // Initialize bookedMovies if it doesn't exist
+  if (!users[userIndex].bookedMovies) {
+    users[userIndex].bookedMovies = [];
+  }
+
+  // Remove booking at index
+  if (index >= 0 && index < users[userIndex].bookedMovies.length) {
+    users[userIndex].bookedMovies.splice(index, 1);
+    users[userIndex].updatedAt = new Date().toISOString();
+
+    // Save to storage
+    saveUsers(users);
+
+    // Update session
+    cacheSession(users[userIndex]);
+
+    return true;
+  }
+
+  return false;
+}

@@ -393,12 +393,26 @@ class Cart {
     }
 }
 
+// Initialize cart immediately or when DOM is ready
+function initializeCart() {
+    if (!window.cart) {
+        console.log('Initializing cart...');
+        window.cart = new Cart();
+    }
+}
+
+// Initialize immediately if DOM is already loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeCart);
+} else {
+    // DOM already loaded
+    initializeCart();
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing cart...');
-    
-    // Initialize cart
-    window.cart = new Cart();
+    // Ensure cart is initialized
+    initializeCart();
     
     // Video optimization
     const heroVideo = document.querySelector('.hero-video');
