@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Test LocalStorage</title>
+</head>
+<body>
+    <h1>LocalStorage Test</h1>
+    <button onclick="checkStorage()">Check Storage</button>
+    <button onclick="initStorage()">Initialize Storage</button>
+    <button onclick="clearStorage()">Clear Storage</button>
+    <pre id="output"></pre>
+    
+    <script>
+        function checkStorage() {
+            const output = document.getElementById('output');
+            const auth = localStorage.getItem('demo.auth');
+            const users = localStorage.getItem('demo.users');
+            
+            output.textContent = 'demo.auth:\n' + (auth || 'NOT FOUND') + '\n\n' +
+                               'demo.users:\n' + (users || 'NOT FOUND');
+        }
+        
+        function initStorage() {
+            const defaultUsers = [{
+                username: 'test',
+                password: 'test123',
+                email: 'test@example.com',
+                firstName: 'Long',
+                lastName: 'Huynh',
+                dateOfBirth: '2001-05-09',
+                gender: 'Man',
+                country: 'Vietnam',
+                city: 'Ho Chi Minh City',
+                biography: 'Music enthusiast',
+                avatar: 'assets/images/Tranduythanhanhdaidien.jpg',
+                memberRank: 'Gold Member',
+                recentPurchased: [],
+                wishlist: [],
+                bookedMovies: []
+            }];
+            
+            localStorage.setItem('demo.users', JSON.stringify(defaultUsers));
+            alert('Storage initialized!');
+            checkStorage();
+        }
+        
+        function clearStorage() {
+            localStorage.removeItem('demo.auth');
+            localStorage.removeItem('demo.users');
+            alert('Storage cleared!');
+            checkStorage();
+        }
+    </script>
+</body>
+</html>

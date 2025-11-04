@@ -1,26 +1,25 @@
-// Search functionality - wrapped in DOMContentLoaded to ensure elements exist
-document.addEventListener('DOMContentLoaded', function() {
-    const searchBtn = document.querySelector('.search-btn');
-    const searchBar = document.getElementById('searchBar');
-    const searchInput = document.getElementById('searchInput');
-    const searchClose = document.getElementById('searchClose');
-    const searchDropdown = document.getElementById('searchDropdown');
+// Search functionality
+const searchBtn = document.querySelector('.search-btn');
+const searchBar = document.getElementById('searchBar');
+const searchInput = document.getElementById('searchInput');
+const searchClose = document.getElementById('searchClose');
+const searchDropdown = document.getElementById('searchDropdown');
 
-    let allProducts = [];
-    let searchTimeout;
+let allProducts = [];
+let searchTimeout;
 
-    // Load products from JSON
-    async function loadProducts() {
-        try {
-            const response = await fetch('product.json');
-            allProducts = await response.json();
-        } catch (error) {
-            console.error('Error loading products:', error);
-        }
+// Load products from JSON
+async function loadProducts() {
+    try {
+        const response = await fetch('product.json');
+        allProducts = await response.json();
+    } catch (error) {
+        console.error('Error loading products:', error);
     }
+}
 
-    // Initialize
-    loadProducts();
+// Initialize
+loadProducts();
 
 function openSearch() {
     if (searchBar && searchInput) {
@@ -166,5 +165,3 @@ if (searchBar) {
         }
     });
 }
-
-}); // End of DOMContentLoaded

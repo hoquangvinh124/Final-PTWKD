@@ -1,3 +1,6 @@
+// Import auth functions
+import { loadUsers, saveUsers, getCurrentUser, USERS_KEY } from './auth.js';
+
 // Authentication check - redirect to login if not authenticated
 (function checkAuth() {
   const authData = localStorage.getItem('demo.auth');
@@ -1081,18 +1084,12 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
     const currentUser = JSON.parse(authData);
     const username = currentUser.username;
     
-    // Get users database
-    const usersData = localStorage.getItem('demo.users');
-    if (!usersData) {
-      showMessage('User database not found', 'error');
-      return;
-    }
-    
-    const users = JSON.parse(usersData);
+    // Get users database using auth.js function (auto-initializes with DEFAULT_USERS)
+    const users = loadUsers();
     const user = users.find(u => u.username === username);
     
     if (!user) {
-      showMessage('User not found', 'error');
+      showMessage('User not found in database', 'error');
       return;
     }
     
@@ -1102,9 +1099,10 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
       return;
     }
     
-    // Update password
+    // Update password in users database
     user.password = newPassword;
-    localStorage.setItem('demo.users', JSON.stringify(users));
+    user.updatedAt = new Date().toISOString();
+    saveUsers(users);
     
     // Show success message
     showMessage('Password updated successfully!', 'success');
