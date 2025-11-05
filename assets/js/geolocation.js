@@ -7,9 +7,9 @@
 // AWS Location Service Configuration
 // See AWS_IDENTITY_POOL_SETUP.md for complete setup instructions
 const AWS_CONFIG = {
-  identityPoolId: 'YOUR_IDENTITY_POOL_ID', // Example: 'ap-southeast-2:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  identityPoolId: 'ap-southeast-2:cd063ab7-873e-403b-b801-7a3a62110e2a', // Example: 'ap-southeast-2:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
   region: 'ap-southeast-2', // Your AWS region (Sydney)
-  placeIndexName: 'YOUR_PLACE_INDEX_NAME', // Example: 'OldieZone-PlaceIndex'
+  placeIndexName: 'Place-Index-Oldiezone', // Example: 'OldieZone-PlaceIndex'
   language: 'vi' // Language for address results (Vietnamese)
 };
 

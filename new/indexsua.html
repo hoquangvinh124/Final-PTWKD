@@ -1,324 +1,594 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <title>Oldie Zone • Command Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2Lw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
 </head>
-<body>
-    <!-- Left section -->
-    <section id="menu">
-        <div class="logo">
-            <img src="../assets/images/logo.png" alt="">
+<body class="dashboard-body">
+    <div class="dashboard-grid">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar__brand">
+                <img src="../assets/images/logo.png" alt="Oldie Zone" class="sidebar__logo">
+                <div class="sidebar__brand-text">
+                    <span class="sidebar__eyebrow">OLDIE ZONE</span>
+                    <strong class="sidebar__title">Control Hub</strong>
+                </div>
+            </div>
+
+            <nav class="sidebar__nav">
+                <p class="sidebar__section">Overview</p>
+                <a href="#" class="sidebar__link active"><i class="fa-solid fa-chart-pie"></i>Dashboard</a>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-record-vinyl"></i>Catalog</a>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-bag-shopping"></i>Orders</a>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-ticket"></i>Screenings</a>
+
+                <p class="sidebar__section">CRM</p>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-user-group"></i>Customers</a>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-comments"></i>Support Inbox <span class="pill">8</span></a>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-bullhorn"></i>Campaigns</a>
+
+                <p class="sidebar__section">Configuration</p>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-swatchbook"></i>Themes</a>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-gear"></i>Settings</a>
+                <a href="#" class="sidebar__link"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+            </nav>
+
+            <div class="sidebar__cta">
+                <h4>Need quick stats?</h4>
+                <p>Trigger instant health reports of your marketplace.</p>
+                <button class="btn btn--light" id="triggerPulse"><i class="fa-solid fa-wave-square"></i>Run Pulse Scan</button>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="main" id="main">
+            <header class="topbar">
+                <div class="topbar__left">
+                    <button class="icon-btn" id="menuToggle" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+                    <div class="topbar__search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="search" placeholder="Search analytics, users, orders…">
+                    </div>
+                </div>
+                <div class="topbar__right">
+                    <button class="icon-btn"><i class="fa-solid fa-circle-plus"></i></button>
+                    <button class="icon-btn"><i class="fa-solid fa-bell"></i><span class="dot"></span></button>
+                    <div class="topbar__profile">
+                        <img src="../assets/images/Tranduythanhanhdaidien.jpg" alt="Admin avatar">
+                        <div>
+                            <p class="profile__name">Long Huynh</p>
+                            <span class="profile__role">Lead Curator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="hero">
+                <div class="hero__copy">
+                    <h1>Morning, Long!<span class="spark">✦</span></h1>
+                    <p>Your retro empire grew 12% overnight. Keep the groove going with today’s opportunities.</p>
+                    <div class="hero__actions">
+                        <button class="btn btn--primary"><i class="fa-solid fa-plus"></i>Add New Product</button>
+                        <button class="btn btn--outline"><i class="fa-regular fa-paper-plane"></i>Send Broadcast</button>
+                    </div>
+                </div>
+                <div class="hero__stats">
+                    <div class="hero-card">
+                        <span class="hero-card__title">Live Visitors</span>
+                        <strong class="hero-card__value">312</strong>
+                        <span class="hero-card__delta up"><i class="fa-solid fa-arrow-trend-up"></i>+18% vs last hour</span>
+                    </div>
+                    <div class="hero-card">
+                        <span class="hero-card__title">Conversion</span>
+                        <strong class="hero-card__value">4.8%</strong>
+                        <span class="hero-card__delta down"><i class="fa-solid fa-arrow-trend-down"></i>-0.6% vs avg</span>
+                    </div>
+                    <div class="hero-card">
+                        <span class="hero-card__title">Stock Alerts</span>
+                        <strong class="hero-card__value">6</strong>
+                        <span class="hero-card__delta neutral"><i class="fa-solid fa-record-vinyl"></i>Vinyl restock required</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section__heading">
+                    <h2>Live Metrics</h2>
+                    <div class="section__filters">
+                        <button class="chips active">Today</button>
+                        <button class="chips">7 days</button>
+                        <button class="chips">30 days</button>
+                    </div>
+                </div>
+                <div class="stat-grid">
+                    <article class="stat-card">
+                        <header>
+                            <div class="stat-icon stat-icon--amber"><i class="fa-solid fa-users"></i></div>
+                            <span class="stat-label">New Customers</span>
+                        </header>
+                        <strong class="stat-value">9,113</strong>
+                        <span class="stat-subtext up"><i class="fa-solid fa-arrow-up"></i>+22% MOM</span>
+                    </article>
+                    <article class="stat-card">
+                        <header>
+                            <div class="stat-icon stat-icon--emerald"><i class="fa-solid fa-cart-shopping"></i></div>
+                            <span class="stat-label">Total Orders</span>
+                        </header>
+                        <strong class="stat-value">197,864</strong>
+                        <span class="stat-subtext up"><i class="fa-solid fa-arrow-up"></i>+5,462 today</span>
+                    </article>
+                    <article class="stat-card">
+                        <header>
+                            <div class="stat-icon stat-icon--indigo"><i class="fa-solid fa-record-vinyl"></i></div>
+                            <span class="stat-label">Top Category</span>
+                        </header>
+                        <strong class="stat-value">Vintage Vinyl</strong>
+                        <span class="stat-subtext neutral"><i class="fa-solid fa-star"></i>68% of revenue</span>
+                    </article>
+                    <article class="stat-card">
+                        <header>
+                            <div class="stat-icon stat-icon--rose"><i class="fa-solid fa-wallet"></i></div>
+                            <span class="stat-label">Monthly Revenue</span>
+                        </header>
+                        <strong class="stat-value">₫16.18B</strong>
+                        <span class="stat-subtext up"><i class="fa-solid fa-arrow-up"></i>+12.5% growth</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section analytics">
+                <article class="card analytics__primary">
+                    <div class="card__header">
+                        <div>
+                            <h3>Revenue Rhythm</h3>
+                            <span>How your marketplace performed in the last 30 days</span>
+                        </div>
+                        <button class="btn btn--ghost"><i class="fa-solid fa-download"></i>Export</button>
+                    </div>
+                    <canvas id="revenueChart" height="120"></canvas>
+                </article>
+                <article class="card analytics__secondary">
+                    <div class="card__header">
+                        <div>
+                            <h3>Channel Mix</h3>
+                            <span>Where conversions originate</span>
+                        </div>
+                        <button class="btn btn--ghost"><i class="fa-solid fa-sliders"></i>Adjust</button>
+                    </div>
+                    <div class="doughnut-wrap">
+                        <canvas id="channelChart" height="220"></canvas>
+                    </div>
+                    <ul class="legend">
+                        <li><span class="dot dot--amber"></span> Marketplace (42%)</li>
+                        <li><span class="dot dot--emerald"></span> Preorders (26%)</li>
+                        <li><span class="dot dot--indigo"></span> Events (19%)</li>
+                        <li><span class="dot dot--rose"></span> Direct (13%)</li>
+                    </ul>
+                </article>
+            </section>
+
+            <section class="section split">
+                <article class="card table-card">
+                    <div class="card__header">
+                        <div>
+                            <h3>Recent Orders</h3>
+                            <span>Last sync 2 minutes ago</span>
+                        </div>
+                        <button class="btn btn--ghost"><i class="fa-solid fa-arrow-rotate-right"></i>Refresh</button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Customer</th>
+                                    <th>Status</th>
+                                    <th>Payment</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Arctic Monkeys • Vinyl LP</td>
+                                    <td>Tran Mai</td>
+                                    <td><span class="badge badge--success">Delivered</span></td>
+                                    <td>Card</td>
+                                    <td>₫1,256,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Mac DeMarco • Old Dog CD</td>
+                                    <td>Le Phuc</td>
+                                    <td><span class="badge badge--warning">Pending</span></td>
+                                    <td>COD</td>
+                                    <td>₫620,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Billie Eilish • Hoodie</td>
+                                    <td>Vo Han</td>
+                                    <td><span class="badge badge--info">Processing</span></td>
+                                    <td>Card</td>
+                                    <td>₫980,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Frank Ocean • Blonde Vinyl</td>
+                                    <td>Ho Quang</td>
+                                    <td><span class="badge badge--danger">Cancelled</span></td>
+                                    <td>Refunded</td>
+                                    <td>₫0</td>
+                                </tr>
+                                <tr>
+                                    <td>Mac Miller • Sweatshirt</td>
+                                    <td>Dang Anh</td>
+                                    <td><span class="badge badge--success">Delivered</span></td>
+                                    <td>Card</td>
+                                    <td>₫1,050,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <div class="column-stack">
+                    <article class="card timeline-card">
+                        <div class="card__header">
+                            <div>
+                                <h3>Today’s Timeline</h3>
+                                <span>Auto generated workflow sync</span>
+                            </div>
+                        </div>
+                        <ul class="timeline">
+                            <li>
+                                <span class="timeline__time">08:20</span>
+                                <div class="timeline__bubble">
+                                    <h4>Daily inventory sync</h4>
+                                    <p>182 SKUs adjusted, 6 low-stock alerts issued.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="timeline__time">10:05</span>
+                                <div class="timeline__bubble">
+                                    <h4>Wholesale request</h4>
+                                    <p>Vintage VHS bundle request from Hanoi Film Club.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="timeline__time">12:40</span>
+                                <div class="timeline__bubble">
+                                    <h4>Playlist drop</h4>
+                                    <p>Retro Cine published the "Neon Tokyo" screening set.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <span class="timeline__time">15:00</span>
+                                <div class="timeline__bubble">
+                                    <h4>Creator spotlight</h4>
+                                    <p>Feature article scheduled for The Cassette Collective.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="card tasks-card">
+                        <div class="card__header">
+                            <div>
+                                <h3>Quick Actions</h3>
+                                <span>Plan your next moves</span>
+                            </div>
+                        </div>
+                        <ul class="task-list">
+                            <li><input type="checkbox" id="task-1" checked><label for="task-1">Approve 12 new marketplace vendors</label><span class="tag tag--emerald">Marketplace</span></li>
+                            <li><input type="checkbox" id="task-2"><label for="task-2">Design cassette launch campaign assets</label><span class="tag tag--amber">Marketing</span></li>
+                            <li><input type="checkbox" id="task-3"><label for="task-3">Schedule retro cinema screenings calendar</label><span class="tag tag--indigo">Events</span></li>
+                            <li><input type="checkbox" id="task-4"><label for="task-4">Prepare restock for midnight sale</label><span class="tag tag--rose">Operations</span></li>
+                        </ul>
+                        <button class="btn btn--primary btn--full"><i class="fa-solid fa-wand-magic-sparkles"></i>Create automation</button>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section triple">
+                <article class="card insights-card">
+                    <div class="card__header">
+                        <div>
+                            <h3>Top Performing Products</h3>
+                            <span>Curated by demand & margin</span>
+                        </div>
+                    </div>
+                    <ul class="product-list">
+                        <li>
+                            <div class="product-thumb" style="background-image: url('../assets/images/Audio/Vinyl/vinyl-5.jpeg');"></div>
+                            <div class="product-meta">
+                                <h4>Kate Bush – Hounds of Love Vinyl</h4>
+                                <p>Sell-through 96% • Margin 48%</p>
+                            </div>
+                            <span class="badge badge--outline">#1</span>
+                        </li>
+                        <li>
+                            <div class="product-thumb" style="background-image: url('../assets/images/Accessories/CD Player/cd1.jpg');"></div>
+                            <div class="product-meta">
+                                <h4>Sony Retro CD Walkman</h4>
+                                <p>Sell-through 88% • Margin 35%</p>
+                            </div>
+                            <span class="badge badge--outline">#2</span>
+                        </li>
+                        <li>
+                            <div class="product-thumb" style="background-image: url('../assets/images/Cassette Tape/cassette-2.jpg');"></div>
+                            <div class="product-meta">
+                                <h4>The Cure – Dream Cassette</h4>
+                                <p>Sell-through 82% • Margin 42%</p>
+                            </div>
+                            <span class="badge badge--outline">#3</span>
+                        </li>
+                    </ul>
+                </article>
+
+                    <article class="card feedback-card">
+                        <div class="card__header">
+                            <div>
+                                <h3>Community Buzz</h3>
+                                <span>Latest highlights from loyal fans</span>
+                            </div>
+                        </div>
+                        <ul class="feedback">
+                            <li>
+                                <span class="feedback__user">@filmwave</span>
+                                <p>“The retro cine nights keep teleporting me to 1983. Please keep the lineup coming!”</p>
+                                <span class="feedback__score up"><i class="fa-solid fa-thumbs-up"></i>+58 sentiment</span>
+                            </li>
+                            <li>
+                                <span class="feedback__user">@midnightgrooves</span>
+                                <p>“Need more limited cassette drops. Sell out in minutes!”</p>
+                                <span class="feedback__score neutral"><i class="fa-solid fa-hourglass-half"></i>Moderate demand</span>
+                            </li>
+                            <li>
+                                <span class="feedback__user">@cinephileclub</span>
+                                <p>“Loving the VHS remasters. Consider bundling themed snacks?”</p>
+                                <span class="feedback__score up"><i class="fa-solid fa-lightbulb"></i>Idea logged</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                <article class="card conversion-card">
+                    <div class="card__header">
+                        <div>
+                            <h3>Conversion Pulse</h3>
+                            <span>Minute-by-minute funnel health</span>
+                        </div>
+                    </div>
+                    <canvas id="pulseChart" height="180"></canvas>
+                    <div class="conversion-legend">
+                        <div>
+                            <span class="dot dot--emerald"></span>
+                            Checkout completion <strong>72%</strong>
+                        </div>
+                        <div>
+                            <span class="dot dot--amber"></span>
+                            Wishlist to cart <strong>41%</strong>
+                        </div>
+                        <div>
+                            <span class="dot dot--rose"></span>
+                            Cart retention <strong>63%</strong>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </main>
+
+        <!-- Floating Chat -->
+        <div class="chat-launcher" id="chatLauncher" aria-label="Open AI assistant">
+            <i class="fa-solid fa-robot"></i>
+            <span>Ask Vinyl AI</span>
         </div>
-        <div class="items">
-            <ul>
-                <li><i class="fa-solid fa-chart-pie"></i><a href="#"> Dashboard</a></li>
-                <li><i class="fa-solid fa-table-cells-large"></i><a href="#"> Products</a></li>
-                <li><i class="fa-solid fa-cart-shopping"></i><a href="#"> Orders</a></li>
-                <li><i class="fa-solid fa-message"></i><a href="#"> Messages</a></li>
-                <li><i class="fa-solid fa-plus"></i><a href="#"> Add Product</a></li>
-                <li><i class="fa-solid fa-gear"></i><a href="#"> Settings</a></li>
-                <li><i class="fa-solid fa-right-from-bracket"></i><a href="#"> Logout</a></li>
-            </ul>
-        </div>
-    </section>
-    <!-- Header-->
-    <section id="interface">
-        <div class="navigation">
-            <div class="n1">
+
+        <aside class="chat-panel" id="chatPanel" aria-hidden="true">
+            <header>
                 <div>
-                    <i id="menu-btn" class="fa-solid fa-bars"></i>
+                    <h4>Vinyl AI Assistant</h4>
+                    <span>Online • Ready to jam</span>
                 </div>
-                <div class="search">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text"placeholder="Search">
-                </div>
-            </div>
-
-            <div class="profile">
-                <i class="fa-solid fa-bell"></i>
-                <img src="../assets/images/Tranduythanhanhdaidien.jpg"/>
-            </div>
-        </div>
-    <!-- Main-->
-        <div class="dashboard-header">
-            <h3 class="i-name">Dashboard</h3>
-            <div class="date">
-                <input type="date">
-            </div>
-        </div>
-
-        <div class="values">
-            <div class="val-box">
-                <i class="fa-solid fa-users"></i>
-                <div>
-                    <h3> 9,113 </h3>
-                    <span> New Users</span>
+                <button class="icon-btn" id="closeChat" aria-label="Close chat"><i class="fa-solid fa-xmark"></i></button>
+            </header>
+            <div class="chat-log" id="chatLog">
+                <div class="chat-msg ai">
+                    <span class="chat-msg__sender">AI</span>
+                    <p>Chào Long! Bạn muốn xem báo cáo hay lên lịch sự kiện mới?</p>
                 </div>
             </div>
-            <div class="val-box">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <div>
-                    <h3> 197,864 </h3>
-                    <span> Total Orders </span>
-                </div>
-            </div>
-            <div class="val-box">
-                <i class="fa-solid fa-film"></i>
-                <div>
-                    <h3> 356,987 </h3>
-                    <span> Products Sell </span>
-                </div>
-            </div>
-            <div class="val-box">
-                <i class="fa-solid fa-wallet"></i>
-                <div>
-                    <h3> 16.175.000VND </h3>
-                    <span> This Month</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="recent_order">
-            <h1>Recent Orders</h1>
-            <table>
-                <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Payment</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr>
-                    <td>Arctic Monkeys - Vinyl LP</td>
-                    <td>Paid</td>
-                    <td class="success">Delivered</td>
-                    <td class="primary">Detail</td>
-                </tr>
-
-                <tr>
-                    <td>Mac Demarco - This Old Dog CD</td>
-                    <td>Due</td>
-                    <td class="warning">Pending</td>
-                    <td class="primary">Detail</td>
-                </tr>
-
-                <tr>
-                    <td>Taylor Swift - Lover CD</td>
-                    <td>Paid</td>
-                    <td class="processing">Processing</td>
-                    <td class="primary">Detail</td>
-                </tr>
-
-                <tr>
-                    <td>Billie Eilish - Hoodie</td>
-                    <td>Paid</td>
-                    <td class="shipped">Shipped</td>
-                    <td class="primary">Detail</td>
-                </tr>
-
-                <tr>
-                    <td>Frank Ocean - Blonde Vinyl</td>
-                    <td>Paid</td>
-                    <td class="danger">Canceled</td>
-                    <td class="primary">Detail</td>
-                </tr>
-
-                <tr>
-                    <td>Mac Miller - Sweatshirt</td>
-                    <td>Refunded</td>
-                    <td class="refunded">Refunded</td>
-                    <td class="primary">Detail</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </section>
-    <!-- Chat Panel -->
-    <div id="chatPanel">
-        <header>
-            <h4>Chat AI</h4>
-            <i class="fa-solid fa-xmark" id="closeChat" style="cursor:pointer;"></i>
-        </header>
-        <div class="chat-body">
-            <p class="ai"><span class="sender">AI:</span> Xin chào! Tôi có thể giúp gì cho bạn?</p>
-        </div>
-
-        <div class="chat-input">
-            <input type="text" placeholder="Nhập tin nhắn...">
-            <button><i class="fa-solid fa-paper-plane"></i></button>
-        </div>
+            <form class="chat-input" id="chatForm">
+                <input type="text" id="chatMessage" placeholder="Nhập tin nhắn…" autocomplete="off">
+                <button type="submit" class="icon-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
+        </aside>
     </div>
 
-    <!-- Nút mở chat -->
-    <div id="chatBtn">
-        <i class="fa-solid fa-comments"></i>
-        <span class="chatHint">Tôi là Trợ lý AI của OLDIE ZONE🤖</span>
-    </div>
     <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const main = document.getElementById('main');
+        const menuToggle = document.getElementById('menuToggle');
+        const chatLauncher = document.getElementById('chatLauncher');
         const chatPanel = document.getElementById('chatPanel');
-        const chatBtn = document.getElementById('chatBtn');
         const closeChat = document.getElementById('closeChat');
-        const interfaceSection = document.getElementById('interface');
+        const chatForm = document.getElementById('chatForm');
+        const chatMessage = document.getElementById('chatMessage');
+        const chatLog = document.getElementById('chatLog');
+        const triggerPulse = document.getElementById('triggerPulse');
 
-        let isDragging = false;
-        let offsetX = 0, offsetY = 0;
-        let moved = false; // kiểm tra có kéo thật không
-
-        // === Bắt đầu kéo ===
-        chatBtn.addEventListener('mousedown', (e) => {
-            if (chatBtn.classList.contains('hide')) return;
-            isDragging = true;
-            moved = false;
-            offsetX = e.clientX - chatBtn.getBoundingClientRect().left;
-            offsetY = e.clientY - chatBtn.getBoundingClientRect().top;
-            chatBtn.classList.add('dragging');
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('sidebar--collapsed');
+            main.classList.toggle('main--expanded');
         });
 
-        // === Di chuyển nút ===
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            moved = true;
-
-            const btnWidth = chatBtn.offsetWidth;
-            const btnHeight = chatBtn.offsetHeight;
-            const maxX = window.innerWidth - btnWidth;
-            const maxY = window.innerHeight - btnHeight;
-
-            let left = e.clientX - offsetX;
-            let top = e.clientY - offsetY;
-
-            left = Math.max(0, Math.min(left, maxX));
-            top = Math.max(0, Math.min(top, maxY));
-
-            chatBtn.style.left = `${left}px`;
-            chatBtn.style.top = `${top}px`;
-            chatBtn.style.right = 'auto';
-            chatBtn.style.bottom = 'auto';
-            chatBtn.style.position = 'fixed';
+        chatLauncher.addEventListener('click', () => {
+            chatPanel.classList.add('chat-panel--open');
+            chatPanel.setAttribute('aria-hidden', 'false');
+            chatMessage.focus();
         });
 
-        // === Kết thúc kéo ===
-        document.addEventListener('mouseup', () => {
-            if (isDragging) {
-                isDragging = false;
-                setTimeout(() => chatBtn.classList.remove('dragging'), 100);
-            }
-        });
-
-        chatBtn.addEventListener('click', () => {
-            if (moved) return; // nếu vừa kéo xong thì KHÔNG click
-
-            const btnRect = chatBtn.getBoundingClientRect();
-            const chatWidth = 300;
-            const chatHeight = 400;
-            const gap = 8; // khoảng cách giữa nút và khung chat
-
-            // Chat lệch sang trái một xíu, ngay bên dưới nút
-            let left = btnRect.left - chatWidth + btnRect.width + gap;
-            let top = btnRect.bottom + gap;
-
-            // Nếu bị tràn xuống dưới màn hình thì mở lên trên
-            if (top + chatHeight > window.innerHeight) {
-                top = btnRect.top - chatHeight - gap;
-            }
-
-            // Nếu bị tràn sang trái thì dịch lại
-            if (left < 10) {
-                left = 10;
-            }
-
-            chatPanel.style.left = `${left}px`;
-            chatPanel.style.top = `${top}px`;
-            chatPanel.classList.add('active');
-            chatBtn.classList.add('hide'); // ẩn nút khi mở
-        });
-
-        // === Đóng chat ===
         closeChat.addEventListener('click', () => {
-            chatPanel.classList.remove('active');
-            setTimeout(() => chatBtn.classList.remove('hide'), 300); // hiện lại icon
+            chatPanel.classList.remove('chat-panel--open');
+            chatPanel.setAttribute('aria-hidden', 'true');
         });
-        const chatInput = document.querySelector("#chatPanel .chat-input input");
-        const chatButton = document.querySelector("#chatPanel .chat-input button");
-        const chatBody = document.querySelector("#chatPanel .chat-body");
 
-        // Hàm thêm tin nhắn vào chat
-        function addMessage(sender, text) {
-            const p = document.createElement("p");
-            p.innerHTML = `<b>${sender}:</b> ${text}`;
-            chatBody.appendChild(p);
-            chatBody.scrollTop = chatBody.scrollHeight; // tự cuộn xuống dưới
-        }
+        chatForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const message = chatMessage.value.trim();
+            if (!message) return;
 
-        // Hàm AI phản hồi (ví dụ cứng, sau có thể thay bằng API)
-        function aiReply(message) {
-            let reply = "Xin lỗi, tôi chưa biết trả lời câu đó 😅";
-            if(message.toLowerCase().includes("xin chào")) reply = "Xin chào! Tôi có thể giúp gì cho bạn?";
-            if(message.toLowerCase().includes("dashboard")) reply = "Bạn đang ở trang Dashboard. Muốn xem thống kê gì?";
-            return reply;
-        }
+            appendMessage('you', 'Bạn', message);
+            chatMessage.value = '';
 
-        // Bấm nút gửi
-        chatButton.addEventListener("click", () => {
-            const message = chatInput.value.trim();
-            if(message === "") return;
-            addMessage("Bạn", message);
-            chatInput.value = "";
-            
             setTimeout(() => {
-                addMessage("AI", aiReply(message));
-            }, 500); // giả lập AI trả lời sau 0.5s
+                const replies = [
+                    'Đã ghi nhận! Mình sẽ tạo báo cáo doanh thu mới.',
+                    'Inventory bot đã được kích hoạt để kiểm tra kho.',
+                    'Mình vừa book lịch họp với team marketing lúc 14:00.',
+                    'Đã gửi email nhắc thanh toán cho khách chậm.',
+                ];
+                const reply = replies[Math.floor(Math.random() * replies.length)];
+                appendMessage('ai', 'AI', reply);
+            }, 600);
         });
 
-        // Nhấn Enter cũng gửi
-        chatInput.addEventListener("keypress", (e) => {
-            if(e.key === "Enter") {
-                chatButton.click();
-            }
-        });
-        function addMessage(sender, text) {
-            const p = document.createElement("p");
-            const span = document.createElement("span");
-            
-            // Tạo span cho tên người gửi
-            span.classList.add("sender");
-            span.textContent = sender + ": "; // tự động thêm dấu ":" sau tên
-            p.appendChild(span);
+        const appendMessage = (type, sender, text) => {
+            const bubble = document.createElement('div');
+            bubble.className = `chat-msg ${type}`;
+            bubble.innerHTML = `<span class="chat-msg__sender">${sender}</span><p>${text}</p>`;
+            chatLog.appendChild(bubble);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        };
 
-            // Tạo span cho nội dung tin nhắn
-            const messageSpan = document.createElement("span");
-            messageSpan.classList.add("message-text");
-            messageSpan.textContent = text;
-            p.appendChild(messageSpan);
+        if (window.Chart) {
+            const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+            const gradient = ctxRevenue.createLinearGradient(0, 0, 0, 260);
+            gradient.addColorStop(0, 'rgba(255, 100, 104, 0.45)');
+            gradient.addColorStop(1, 'rgba(255, 100, 104, 0)');
 
-            // Thêm class để phân biệt vị trí
-            if(sender === "Bạn") {
-                p.classList.add("user"); // bubble bên phải
-            } else {
-                p.classList.add("ai");   // bubble bên trái
-            }
+            new Chart(ctxRevenue, {
+                type: 'line',
+                data: {
+                    labels: ['Oct 10', 'Oct 15', 'Oct 20', 'Oct 25', 'Oct 30', 'Nov 4'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [6.2, 7.9, 8.5, 9.4, 10.6, 11.3],
+                        fill: true,
+                        tension: 0.4,
+                        backgroundColor: gradient,
+                        borderColor: '#ff6468',
+                        pointBackgroundColor: '#ff6468',
+                        pointBorderWidth: 0,
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1b0b11',
+                            titleColor: '#fef0df',
+                            bodyColor: '#fef0df',
+                            borderColor: 'rgba(255, 100, 104, 0.3)',
+                            borderWidth: 1,
+                            padding: 12
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: 'rgba(255, 244, 230, 0.65)' },
+                            grid: { color: 'rgba(255, 244, 230, 0.08)' }
+                        },
+                        y: {
+                            ticks: { color: 'rgba(255, 244, 230, 0.65)', callback: value => `₫${value}B` },
+                            grid: { color: 'rgba(255, 244, 230, 0.08)' }
+                        }
+                    }
+                }
+            });
 
-            chatBody.appendChild(p);
-            chatBody.scrollTop = chatBody.scrollHeight; // auto scroll xuống cuối
+            const ctxChannel = document.getElementById('channelChart').getContext('2d');
+            new Chart(ctxChannel, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Marketplace', 'Preorders', 'Events', 'Direct'],
+                    datasets: [{
+                        data: [42, 26, 19, 13],
+                        backgroundColor: ['#f6d28a', '#62d5b4', '#6c8ff5', '#ff8aa6'],
+                        borderWidth: 0,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    cutout: '68%',
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            const ctxPulse = document.getElementById('pulseChart').getContext('2d');
+            new Chart(ctxPulse, {
+                type: 'line',
+                data: {
+                    labels: ['09:00', '09:20', '09:40', '10:00', '10:20', '10:40', '11:00'],
+                    datasets: [{
+                        label: 'Checkout',
+                        data: [62, 68, 71, 69, 74, 76, 72],
+                        borderColor: '#62d5b4',
+                        tension: 0.45,
+                        pointRadius: 0,
+                        borderWidth: 3
+                    }, {
+                        label: 'Wishlist',
+                        data: [34, 35, 38, 40, 39, 42, 41],
+                        borderColor: '#f6d28a',
+                        tension: 0.45,
+                        pointRadius: 0,
+                        borderDash: [5,3],
+                        borderWidth: 2
+                    }, {
+                        label: 'Cart retention',
+                        data: [53, 57, 58, 61, 63, 64, 63],
+                        borderColor: '#ff8aa6',
+                        tension: 0.45,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { ticks: { color: 'rgba(255, 244, 230, 0.65)' }, grid: { display: false } },
+                        y: { ticks: { color: 'rgba(255, 244, 230, 0.65)', callback: value => value + '%' }, grid: { color: 'rgba(255, 244, 230, 0.08)' } }
+                    }
+                }
+            });
         }
-    </script>
-    <script>
-        $('#menu-btn').click(function() {
-            $('#menu').toggleClass("active");
-        })
+
+        triggerPulse?.addEventListener('click', () => {
+            triggerPulse.classList.add('btn--loading');
+            triggerPulse.disabled = true;
+            triggerPulse.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>Running scan…';
+
+            setTimeout(() => {
+                triggerPulse.classList.remove('btn--loading');
+                triggerPulse.disabled = false;
+                triggerPulse.innerHTML = '<i class="fa-solid fa-wave-square"></i>Pulse Scan Complete';
+            }, 2600);
+        });
+    });
     </script>
 </body>
 </html>
