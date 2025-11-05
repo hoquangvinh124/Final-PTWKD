@@ -1,6 +1,31 @@
 // CHECKOUT.JS - Load cart from localStorage and manage checkout flow
 console.log('Checkout.js loading...');
 
+// Import auth functions - using dynamic import for non-module script
+let addPurchasedOrder, getCurrentUser, isAuthenticated, getShippingAddress;
+let getAddressFromGPS, showGPSLoading, isGeolocationSupported;
+
+// Dynamically import auth and geolocation functions
+(async () => {
+  try {
+    const authModule = await import('./assets/js/auth.js');
+    addPurchasedOrder = authModule.addPurchasedOrder;
+    getCurrentUser = authModule.getCurrentUser;
+    isAuthenticated = authModule.isAuthenticated;
+    getShippingAddress = authModule.getShippingAddress;
+
+    const geoModule = await import('./assets/js/geolocation.js');
+    getAddressFromGPS = geoModule.getAddressFromGPS;
+    showGPSLoading = geoModule.showGPSLoading;
+    isGeolocationSupported = geoModule.isGeolocationSupported;
+
+    // Initialize buttons after modules are loaded
+    initializeAddressButtons();
+  } catch (error) {
+    console.error('Failed to load modules:', error);
+  }
+})();
+
 // Global variables
 let currentStep = 1;
 let orderData = {
@@ -154,6 +179,153 @@ function setupEventListeners() {
       orderData.payment.type = this.dataset.payment;
     });
   });
+}
+
+// Initialize address buttons (called after modules are loaded)
+function initializeAddressButtons() {
+  const useDefaultBtn = document.getElementById('useDefaultAddressBtn');
+  const gpsBtn = document.getElementById('checkoutGPSBtn');
+
+  // Use Default Address Button
+  if (useDefaultBtn) {
+    useDefaultBtn.addEventListener('click', fillDefaultAddress);
+  }
+
+  // GPS Button
+  if (gpsBtn) {
+    if (!isGeolocationSupported || !isGeolocationSupported()) {
+      gpsBtn.disabled = true;
+      gpsBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> GPS Not Supported';
+    } else {
+      gpsBtn.addEventListener('click', fillAddressFromGPS);
+    }
+  }
+}
+
+// Fill default address from user profile
+function fillDefaultAddress() {
+  if (!isAuthenticated || !isAuthenticated()) {
+    alert('Please login to use your saved address');
+    return;
+  }
+
+  const address = getShippingAddress();
+
+  if (!address || !address.fullName) {
+    alert('No saved address found. Please set your shipping address in your profile first.');
+    return;
+  }
+
+  // Parse full name into first and last name
+  const nameParts = (address.fullName || '').trim().split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || '';
+
+  // Get current user email if available
+  const currentUser = getCurrentUser && getCurrentUser();
+  const userEmail = (currentUser && currentUser.email) || '';
+
+  // Fill in the form with saved data
+  document.getElementById('firstName').value = firstName;
+  document.getElementById('lastName').value = lastName;
+  document.getElementById('email').value = userEmail;
+  document.getElementById('phone').value = address.phone || '';
+
+  // Use the detailed street address saved from user profile
+  // This includes: house number, road, ward, district (saved from GPS or manual input)
+  document.getElementById('address').value = address.street || '';
+
+  // Use the EXACT city value from dropdown that was selected in user profile
+  // This is already in the correct format (e.g., "TP. Hồ Chí Minh", "Hà Nội")
+  document.getElementById('city').value = address.city || '';
+
+  document.getElementById('zipCode').value = address.zipCode || '';
+
+  console.log('Filled from saved address:', {
+    street: address.street,
+    city: address.city,
+    zipCode: address.zipCode
+  });
+
+  // Update order data
+  orderData.customer = {
+    firstName,
+    lastName,
+    email: userEmail,
+    phone: address.phone || '',
+    address: address.street || '',
+    city: address.city || '',
+    zipCode: address.zipCode || ''
+  };
+
+  showQuickFillConfirmation('Saved address filled successfully!');
+}
+
+// Fill address from GPS
+async function fillAddressFromGPS() {
+  const gpsBtn = document.getElementById('checkoutGPSBtn');
+  const hideLoading = showGPSLoading(gpsBtn);
+
+  try {
+    await getAddressFromGPS(
+      // onSuccess
+      (addressData) => {
+        hideLoading();
+
+        // Fill in the form with DETAILED GPS data
+        const addressInput = document.getElementById('address');
+        const cityInput = document.getElementById('city');
+        const zipCodeInput = document.getElementById('zipCode');
+
+        // Use detailedStreet which includes: house number, road, ward, district
+        if (addressInput && addressData.detailedStreet) {
+          addressInput.value = addressData.detailedStreet;
+          console.log('Checkout - Detailed address filled:', addressData.detailedStreet);
+        }
+
+        // Fill city/province - already matched to Vietnamese standard
+        if (cityInput && addressData.city) {
+          cityInput.value = addressData.city;
+          console.log('Checkout - City filled:', addressData.city);
+        }
+
+        // Fill zipcode if available
+        if (zipCodeInput && addressData.zipCode) {
+          zipCodeInput.value = addressData.zipCode;
+        }
+
+        // Show detailed success message
+        const accuracy = addressData.coordinates ? Math.round(addressData.coordinates.accuracy) : 0;
+        let message = `Detailed address detected! (Accuracy: ${accuracy}m)`;
+
+        console.log('GPS Components:', {
+          houseNumber: addressData.houseNumber,
+          road: addressData.road,
+          ward: addressData.ward,
+          district: addressData.district,
+          city: addressData.city
+        });
+
+        showQuickFillConfirmation(message);
+
+        // Warn if accuracy is low
+        if (accuracy > 50) {
+          setTimeout(() => {
+            alert(`GPS accuracy is ${accuracy}m. Please verify the address is correct before proceeding.`);
+          }, 500);
+        }
+      },
+      // onError
+      (errorMessage) => {
+        hideLoading();
+        alert(errorMessage);
+      }
+    );
+  } catch (error) {
+    hideLoading();
+    console.error('GPS Error:', error);
+    alert('Unable to get your location. Please enter address manually.');
+  }
 }
 
 // Initialize the checkout process
@@ -351,24 +523,74 @@ function updateOrderSummary() {
 function completeOrder() {
   const loadingScreen = document.getElementById('loadingScreen');
   loadingScreen.classList.add('active');
-  
+
   // Prepare email data
   prepareEmailData();
-  
+
   setTimeout(() => {
     loadingScreen.classList.remove('active');
     const orderId = `#LDIE${new Date().getFullYear()}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
     document.getElementById('orderId').textContent = orderId;
-    
+
     // Store email data with order ID
     emailData.order_number = orderId;
-    
+
     // Save email data to localStorage for sending
     localStorage.setItem('orderEmailData', JSON.stringify(emailData));
-    
+
     // Send email (you can implement this later)
     sendOrderConfirmationEmail(emailData);
-    
+
+    // Save order to user's purchased orders (if logged in)
+    if (isAuthenticated && addPurchasedOrder) {
+      const subtotal = orderData.products.reduce((sum, product) => {
+        return sum + (parsePrice(product.price) * product.quantity);
+      }, 0);
+      const shipping = orderData.shipping.price;
+      const tax = subtotal * orderData.taxRate;
+      const total = subtotal + shipping + tax;
+
+      // Get shipping method name
+      const shippingMethods = {
+        'standard': 'Standard Shipping',
+        'express': 'Express Shipping',
+        'pickup': 'Store Pickup'
+      };
+
+      const paymentMethods = {
+        'card': 'Credit/Debit Card',
+        'paypal': 'PayPal',
+        'giftcard': 'Gift Card'
+      };
+
+      const orderToSave = {
+        orderId: orderId,
+        orderDate: new Date().toISOString(),
+        status: 'Processing',
+        customer: orderData.customer,
+        products: orderData.products.map(p => ({
+          ...p,
+          price: parsePrice(p.price)
+        })),
+        shipping: {
+          type: orderData.shipping.type,
+          price: shipping,
+          method: shippingMethods[orderData.shipping.type] || 'Standard Shipping'
+        },
+        payment: {
+          type: orderData.payment.type,
+          method: paymentMethods[orderData.payment.type] || 'Credit/Debit Card'
+        },
+        subtotal: subtotal,
+        shippingCost: shipping,
+        tax: tax,
+        total: total
+      };
+
+      addPurchasedOrder(orderToSave);
+      console.log('Order saved to user profile:', orderToSave);
+    }
+
     // Clear cart
     localStorage.removeItem('cart');
     showStep(5);

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oldie Zone — Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="assets/css/admin-style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="assets/images/logo.png" alt="Oldie Zone" class="logo">
+            <div class="brand">
+                <h2>OLDIE ZONE</h2>
+                <span>Admin Dashboard</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section">
+                <span class="nav-title">MENU</span>
+                <a href="#dashboard" class="nav-link active" data-page="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#products" class="nav-link" data-page="products">
+                    <i class="fas fa-box"></i>
+                    <span>Sản phẩm</span>
+                    <span class="badge">142</span>
+                </a>
+                <a href="#orders" class="nav-link" data-page="orders">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Đơn hàng</span>
+                    <span class="badge badge-warning">12</span>
+                </a>
+                <a href="#customers" class="nav-link" data-page="customers">
+                    <i class="fas fa-users"></i>
+                    <span>Khách hàng</span>
+                </a>
+                <a href="#screenings" class="nav-link" data-page="screenings">
+                    <i class="fas fa-film"></i>
+                    <span>Retro Cine</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-title">PHÂN TÍCH</span>
+                <a href="#analytics" class="nav-link" data-page="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#reports" class="nav-link" data-page="reports">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Báo cáo</span>
+                </a>
+            </div>
+
+            <div class="nav-section">
+                <span class="nav-title">CÀI ĐẶT</span>
+                <a href="#settings" class="nav-link" data-page="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Cài đặt</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <img src="assets/images/Tranduythanhanhdaidien.jpg" alt="Admin">
+                <div class="user-info">
+                    <strong>Long Huynh</strong>
+                    <span>Admin</span>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm, đơn hàng, khách hàng...">
+            </div>
+
+            <div class="header-actions">
+                <button class="icon-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                
+                <button class="icon-btn" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <div class="header-profile">
+                    <img src="assets/images/Tranduythanhanhdaidien.jpg" alt="Admin">
+                    <span>Long Huynh</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div class="welcome-text">
+                    <h1 id="welcomeText">Chào buổi sáng, Long! 👋</h1>
+                    <p>Doanh thu hôm nay đang tăng <strong id="revenueGrowth">+12%</strong> so với hôm qua</p>
+                </div>
+                <div class="welcome-actions">
+                    <button class="btn btn-primary" id="addProductBtn">
+                        <i class="fas fa-plus"></i>
+                        Thêm sản phẩm
+                    </button>
+                    <button class="btn btn-outline" id="exportBtn">
+                        <i class="fas fa-download"></i>
+                        Xuất báo cáo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Tổng đơn hàng</span>
+                        <h3 class="stat-value" data-target="1247">0</h3>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+12% so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Doanh thu</span>
+                        <h3 class="stat-value currency" data-target="45820000">0</h3>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+8.5% so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Khách hàng mới</span>
+                        <h3 class="stat-value" data-target="892">0</h3>
+                        <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+15% so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Sản phẩm</span>
+                        <h3 class="stat-value" data-target="142">0</h3>
+                        <div class="stat-change negative">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>6 sản phẩm hết hàng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3>Doanh thu theo tháng</h3>
+                            <span>Biểu đồ doanh thu 6 tháng gần nhất</span>
+                        </div>
+                        <select id="revenueFilter" class="filter-select">
+                            <option value="6">6 tháng</option>
+                            <option value="12">12 tháng</option>
+                            <option value="24">24 tháng</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div>
+                            <h3>Phân loại sản phẩm</h3>
+                            <span>Tỷ lệ doanh thu theo danh mục</span>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Orders & Top Products -->
+            <div class="bottom-grid">
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Đơn hàng gần đây</h3>
+                        <button class="btn-text" id="viewAllOrders">Xem tất cả <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="ordersTable">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày đặt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Will be populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="top-products-card">
+                    <div class="table-header">
+                        <h3>Sản phẩm bán chạy</h3>
+                        <button class="btn-text" id="viewAllProducts">Xem tất cả <i class="fas fa-arrow-right"></i></button>
+                    </div>
+                    <div class="products-list" id="topProductsList">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Dropdown -->
+    <div class="notification-dropdown" id="notificationDropdown">
+        <div class="notification-header">
+            <h4>Thông báo</h4>
+            <button class="mark-all-read">Đánh dấu tất cả đã đọc</button>
+        </div>
+        <div class="notification-list">
+            <div class="notification-item unread">
+                <div class="notification-icon blue">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="notification-content">
+                    <p><strong>Đơn hàng mới #1234</strong></p>
+                    <span>Khách hàng Nguyễn Văn A vừa đặt 1 đơn hàng mới</span>
+                    <time>5 phút trước</time>
+                </div>
+            </div>
+            <div class="notification-item unread">
+                <div class="notification-icon orange">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="notification-content">
+                    <p><strong>Cảnh báo tồn kho</strong></p>
+                    <span>Sản phẩm "Vinyl The Beatles" sắp hết hàng</span>
+                    <time>1 giờ trước</time>
+                </div>
+            </div>
+            <div class="notification-item">
+                <div class="notification-icon green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="notification-content">
+                    <p><strong>Thanh toán thành công</strong></p>
+                    <span>Đơn hàng #1230 đã được thanh toán</span>
+                    <time>3 giờ trước</time>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script src="assets/js/admin-script.js"></script>
+</body>
+</html>
