@@ -1,4 +1,11 @@
-const products = [
+// Import auth functions
+import { getCurrentUser, isAuthenticated } from './auth.js';
+
+// LocalStorage key for marketplace products
+const MARKETPLACE_PRODUCTS_KEY = 'marketplace.products';
+
+// Default products (admin products - no seller info, cannot be deleted)
+const DEFAULT_PRODUCTS = [
   { id: "test-1", category: "Audio", format: "CD", name: "Mac DeMarco – This Old Dog CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/1.jpg" },
   { id: "test-2", category: "Audio", format: "CD", name: "Mac DeMarco – 2 CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/2.jpg" },
   { id: "test-3", category: "Audio", format: "CD", name: "Mac DeMarco – Salad Days CD", price: "375.000₫", priceValue: 375000, image: "assets/images/Audio/CD/3.jpg" },
@@ -39,6 +46,52 @@ const products = [
   { category: "VHS", format: "Device", name: "Ghostbusters Original VHS", price: "780.000₫", priceValue: 780000, image: "assets/images/VHS/6.jpg" }
 ];
 
+/**
+ * Load products from localStorage, merge with default products
+ */
+function loadProducts() {
+  try {
+    const stored = localStorage.getItem(MARKETPLACE_PRODUCTS_KEY);
+    if (!stored) return [...DEFAULT_PRODUCTS];
+    
+    const userProducts = JSON.parse(stored);
+    // Merge: default products + user-created products
+    return [...DEFAULT_PRODUCTS, ...userProducts];
+  } catch (err) {
+    console.warn('Failed to load marketplace products:', err);
+    return [...DEFAULT_PRODUCTS];
+  }
+}
+
+/**
+ * Save user-created products to localStorage (not including default products)
+ */
+function saveProducts(allProducts) {
+  try {
+    // Only save user-created products (those with sellerUsername)
+    const userProducts = allProducts.filter(p => p.sellerUsername);
+    localStorage.setItem(MARKETPLACE_PRODUCTS_KEY, JSON.stringify(userProducts));
+  } catch (err) {
+    console.error('Failed to save marketplace products:', err);
+  }
+}
+
+/**
+ * Check if current user can delete a product
+ */
+function canDeleteProduct(product) {
+  if (!isAuthenticated()) return false;
+  
+  const currentUser = getCurrentUser();
+  if (!currentUser) return false;
+  
+  // Can only delete if product was created by current user
+  return product.sellerUsername === currentUser.username;
+}
+
+// Initialize products from localStorage
+let products = loadProducts();
+
 const filterButtons = document.querySelectorAll(".filter-section button");
 const activeFilters = {
   category: document.querySelector("button[data-filter-type='category'].active")?.dataset.filterValue || "All",
@@ -46,8 +99,6 @@ const activeFilters = {
   format: document.querySelector("button[data-filter-type='format'].active")?.dataset.filterValue || "all",
   owner: document.querySelector("button[data-filter-type='owner'].active")?.dataset.filterValue || "all"
 };
-
-let myProductIds = ["test-1", "test-2", "test-3"];
 
 const detailModal = document.getElementById("productDetail");
 const detailImage = document.getElementById("detailImage");
@@ -156,9 +207,23 @@ function matchesSearch(item) {
 }
 
 function matchesOwner(item) {
+  if (!isAuthenticated()) {
+    // If not logged in, show all products
+    return activeFilters.owner === "all";
+  }
+  
+  const currentUser = getCurrentUser();
+  if (!currentUser) return activeFilters.owner === "all";
+  
   if (activeFilters.owner === "all") return true;
-  if (activeFilters.owner === "my") return item.id && myProductIds.includes(item.id);
-  if (activeFilters.owner === "others") return !item.id || !myProductIds.includes(item.id);
+  if (activeFilters.owner === "my") {
+    // My products are those created by current user
+    return item.sellerUsername === currentUser.username;
+  }
+  if (activeFilters.owner === "others") {
+    // Others' products are those not created by current user (or default products)
+    return !item.sellerUsername || item.sellerUsername !== currentUser.username;
+  }
   return true;
 }
 
@@ -197,8 +262,9 @@ function renderProducts(page) {
     const card = document.createElement("article");
     card.className = "product-card";
     
-    const isMyProduct = item.id && myProductIds.includes(item.id);
-    const deleteBtn = isMyProduct ? `
+    // Check if current user can delete this product
+    const canDelete = canDeleteProduct(item);
+    const deleteBtn = canDelete ? `
       <button class="product-delete-btn" data-product-id="${item.id}" title="Delete product">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="3 6 5 6 21 6"></polyline>
@@ -222,7 +288,7 @@ function renderProducts(page) {
     `;
     card.tabIndex = 0;
 
-    if (isMyProduct) {
+    if (canDelete) {
       const deleteButton = card.querySelector(".product-delete-btn");
       deleteButton.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -575,6 +641,18 @@ addProductModal?.addEventListener("click", event => {
 addProductForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   
+  // Check if user is authenticated
+  if (!isAuthenticated()) {
+    alert("Please login to add products!");
+    return;
+  }
+  
+  const currentUser = getCurrentUser();
+  if (!currentUser) {
+    alert("Please login to add products!");
+    return;
+  }
+  
   if (!uploadedImageData) {
     alert("Please upload a product image!");
     return;
@@ -604,12 +682,19 @@ addProductForm?.addEventListener("submit", (event) => {
       messenger: formData.get("contactMessenger") || undefined,
       instagram: formData.get("contactInstagram") || undefined,
       threads: formData.get("contactThreads") || undefined
-    }
+    },
+    // Seller information
+    sellerUsername: currentUser.username,
+    sellerName: `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim() || currentUser.username,
+    sellerAvatar: currentUser.avatar || 'assets/images/default-avatar.jpg',
+    createdAt: new Date().toISOString()
   };
   
-  // Add to products array and track as my product
+  // Add to products array
   products.push(newProduct);
-  myProductIds.push(productId);
+  
+  // Save to localStorage
+  saveProducts(products);
   
   // Re-render current page
   goToPage(currentPage);
@@ -653,25 +738,42 @@ deleteConfirmModal?.addEventListener("click", event => {
 confirmDeleteBtn?.addEventListener("click", () => {
   if (!productToDelete) return;
 
-  const productIndex = products.findIndex(p => p.id === productToDelete);
-  if (productIndex !== -1) {
-    const deletedProduct = products[productIndex];
-    products.splice(productIndex, 1);
-    
-    // Remove from myProductIds
-    const myIdIndex = myProductIds.indexOf(productToDelete);
-    if (myIdIndex !== -1) {
-      myProductIds.splice(myIdIndex, 1);
-    }
-    
-    // Close modal
+  // Check if user is authenticated and has permission to delete
+  if (!isAuthenticated()) {
+    alert("Please login to delete products!");
     closeDeleteConfirm();
-    
-    // Re-render
-    goToPage(currentPage);
-    
-    alert(`Product "${deletedProduct.name}" has been deleted successfully!`);
+    return;
   }
+
+  const productIndex = products.findIndex(p => p.id === productToDelete);
+  if (productIndex === -1) {
+    alert("Product not found!");
+    closeDeleteConfirm();
+    return;
+  }
+
+  const product = products[productIndex];
+  
+  // Check if user has permission to delete
+  if (!canDeleteProduct(product)) {
+    alert("You don't have permission to delete this product!");
+    closeDeleteConfirm();
+    return;
+  }
+
+  const deletedProduct = products[productIndex];
+  products.splice(productIndex, 1);
+  
+  // Save to localStorage
+  saveProducts(products);
+  
+  // Close modal
+  closeDeleteConfirm();
+  
+  // Re-render
+  goToPage(currentPage);
+  
+  alert(`Product "${deletedProduct.name}" has been deleted successfully!`);
 });
 
 document.addEventListener("keydown", event => {
