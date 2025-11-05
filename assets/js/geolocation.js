@@ -20,63 +20,42 @@ const HIGH_ACCURACY_OPTIONS = {
   maximumAge: 0
 };
 
-// AWS SDK will be loaded dynamically
+// AWS SDK v2 is loaded from CDN in HTML (window.AWS)
 let locationClient = null;
 
 /**
- * Load AWS SDK v3 libraries dynamically from CDN
- * Following Amazon's official code pattern
+ * Initialize AWS SDK v2 for Location Service
+ * Uses global AWS object loaded from CDN
+ * Following Amazon Q's recommended pattern for browser usage
  */
 async function loadAWSSDK() {
   if (locationClient) {
-    return; // Already loaded
+    return; // Already initialized
   }
 
   try {
-    console.log('Loading AWS SDK v3 from CDN (Amazon official pattern)...');
-
-    // Try multiple CDN providers for best browser compatibility
-    let locationModule, authModule;
-
-    try {
-      // Try unpkg first (best for browser ESM)
-      console.log('Trying unpkg CDN...');
-      locationModule = await import('https://unpkg.com/@aws-sdk/client-location@3.621.0?module');
-      authModule = await import('https://unpkg.com/@aws/amazon-location-utilities-auth-helper@1.0.5?module');
-    } catch (unpkgError) {
-      console.log('unpkg failed, trying jsDelivr...');
-      try {
-        locationModule = await import('https://cdn.jsdelivr.net/npm/@aws-sdk/client-location@3.621.0/+esm');
-        authModule = await import('https://cdn.jsdelivr.net/npm/@aws/amazon-location-utilities-auth-helper@1.0.5/+esm');
-      } catch (jsdelivrError) {
-        console.log('jsDelivr failed, trying esm.sh...');
-        locationModule = await import('https://esm.sh/@aws-sdk/client-location@3.621.0');
-        authModule = await import('https://esm.sh/@aws/amazon-location-utilities-auth-helper@1.0.5');
-      }
+    // Check if AWS SDK is loaded
+    if (typeof AWS === 'undefined' || !window.AWS) {
+      throw new Error('AWS SDK not loaded. Please ensure aws-sdk-2.x.x.min.js is included in your HTML.');
     }
 
-    const { LocationClient, SearchPlaceIndexForPositionCommand } = locationModule;
-    const { withIdentityPoolId } = authModule;
+    console.log('Initializing AWS Location Service (SDK v2)...');
 
-    // Create authentication helper (Amazon's pattern)
-    console.log('Creating auth helper with Identity Pool...');
-    const authHelper = await withIdentityPoolId(AWS_CONFIG.identityPoolId);
-
-    // Create Location Service client (Amazon's pattern)
-    locationClient = new LocationClient({
-      region: AWS_CONFIG.region,
-      ...authHelper.getLocationClientConfig(),
+    // Configure AWS credentials with Cognito Identity Pool
+    AWS.config.region = AWS_CONFIG.region;
+    AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: AWS_CONFIG.identityPoolId
     });
 
-    // Store command class for later use
-    window.SearchPlaceIndexForPositionCommand = SearchPlaceIndexForPositionCommand;
+    // Create Location Service client
+    locationClient = new AWS.Location();
 
-    console.log('✓ AWS Location Service SDK loaded successfully');
+    console.log('✓ AWS Location Service initialized successfully');
     console.log('✓ Using Identity Pool:', AWS_CONFIG.identityPoolId);
     console.log('✓ Region:', AWS_CONFIG.region);
   } catch (error) {
-    console.error('Failed to load AWS SDK:', error);
-    throw new Error('Unable to load AWS Location Service. Please check your configuration.');
+    console.error('Failed to initialize AWS SDK:', error);
+    throw new Error('Unable to initialize AWS Location Service. Please check your configuration.');
   }
 }
 
@@ -160,22 +139,22 @@ export async function reverseGeocode(latitude, longitude) {
 /**
  * Reverse geocode using AWS Location Service with Identity Pool
  * Provides EXACT address with detailed components
+ * Uses AWS SDK v2 API
  */
 async function reverseGeocodeAWS(latitude, longitude) {
   try {
     // AWS expects [longitude, latitude] format (different from standard lat/lng!)
-    const input = {
+    const params = {
       IndexName: AWS_CONFIG.placeIndexName,
       Position: [longitude, latitude], // Note: [lng, lat] NOT [lat, lng]
       Language: AWS_CONFIG.language,
       MaxResults: 1
     };
 
-    console.log('AWS Reverse Geocoding Request:', input);
+    console.log('AWS Reverse Geocoding Request:', params);
 
-    // Create command and send request
-    const command = new window.SearchPlaceIndexForPositionCommand(input);
-    const response = await locationClient.send(command);
+    // Call AWS Location Service (SDK v2 API pattern)
+    const response = await locationClient.searchPlaceIndexForPosition(params).promise();
 
     console.log('AWS Geocoding Response:', response);
 
