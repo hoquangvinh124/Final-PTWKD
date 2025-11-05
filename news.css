@@ -118,58 +118,133 @@ a {
     min-height: 600px;
 }
 
-/* News Tabs */
-.news-tabs {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 50px;
-    flex-wrap: wrap;
+/* News Layout with Sidebar */
+.news-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+    align-items: start;
 }
 
-.tab-btn {
-    padding: 15px 35px;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 2px solid rgba(243, 156, 28, 0.3);
-    border-radius: 50px;
-    font-family: 'Barlow', sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+/* Sidebar Styles */
+.news-sidebar {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid rgba(243, 156, 28, 0.2);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 100px;
+}
+
+.sidebar-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(243, 156, 28, 0.3);
+}
+
+.sidebar-header h3 {
+    color: var(--secondary);
+    font-size: 20px;
+    font-weight: 700;
     display: flex;
     align-items: center;
     gap: 10px;
-    backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.tab-btn i {
+.sidebar-header i {
     font-size: 18px;
 }
 
-.tab-btn:hover {
-    background: rgba(243, 156, 28, 0.2);
-    border-color: var(--secondary);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(243, 156, 28, 0.3);
+/* Sidebar Categories */
+.sidebar-category {
+    margin-bottom: 25px;
 }
 
-.tab-btn.active {
+.category-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-title i {
+    color: var(--secondary);
+    font-size: 18px;
+}
+
+.category-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-items li {
+    margin-bottom: 8px;
+}
+
+/* Feed Buttons */
+.feed-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-family: 'Barlow', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+}
+
+.feed-btn i {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+}
+
+.feed-btn:hover {
+    background: rgba(243, 156, 28, 0.1);
+    border-color: var(--secondary);
+    color: white;
+    transform: translateX(5px);
+}
+
+.feed-btn:hover i {
+    color: var(--secondary);
+}
+
+.feed-btn.active {
     background: var(--secondary);
     color: black;
     border-color: var(--secondary);
-    box-shadow: 0 5px 20px rgba(243, 156, 28, 0.4);
+    font-weight: 700;
 }
 
-/* Tab Content */
-.tab-content {
-    display: none;
+.feed-btn.active i {
+    color: black;
+}
+
+/* Main Content Area */
+.news-main {
+    min-height: 600px;
+}
+
+.news-content {
     animation: fadeIn 0.5s ease;
-}
-
-.tab-content.active {
-    display: block;
 }
 
 @keyframes fadeIn {
@@ -517,6 +592,15 @@ a {
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+    .news-layout {
+        grid-template-columns: 250px 1fr;
+        gap: 30px;
+    }
+
+    .news-sidebar {
+        padding: 20px;
+    }
+
     .news-grid {
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 25px;
@@ -540,15 +624,24 @@ a {
         font-size: 16px;
     }
 
-    .news-tabs {
-        flex-direction: column;
-        align-items: center;
+    /* Stack sidebar on top of content */
+    .news-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
 
-    .tab-btn {
-        width: 100%;
-        max-width: 300px;
-        justify-content: center;
+    .news-sidebar {
+        position: static;
+        top: auto;
+    }
+
+    .sidebar-category {
+        margin-bottom: 20px;
+    }
+
+    .feed-btn {
+        padding: 10px 12px;
+        font-size: 13px;
     }
 
     .news-grid {
@@ -587,5 +680,18 @@ a {
 
     .news-card-content {
         padding: 20px;
+    }
+
+    .sidebar-header h3 {
+        font-size: 18px;
+    }
+
+    .category-title {
+        font-size: 14px;
+    }
+
+    .feed-btn {
+        padding: 10px;
+        font-size: 12px;
     }
 }

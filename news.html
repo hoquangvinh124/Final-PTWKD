@@ -99,57 +99,111 @@
     <section class="news-hero">
         <div class="container">
             <div class="news-hero-content">
-                <p class="eyebrow">🎵 MUSIC NEWS & REVIEWS 🎵</p>
-                <h1>Latest from Pitchfork</h1>
-                <p class="subtitle">Discover the latest album and track reviews from the music world</p>
+                <p class="eyebrow">🎵 NEWS & STORIES 🎵</p>
+                <h1>Discover Retro Culture</h1>
+                <p class="subtitle">Music reviews, photography stories, and analog lifestyle from around the world</p>
             </div>
         </div>
     </section>
 
-    <!-- News Tabs -->
+    <!-- News Section with Sidebar -->
     <section class="news-section">
         <div class="container">
-            <div class="news-tabs">
-                <button class="tab-btn active" data-tab="albums">
-                    <i class="fas fa-compact-disc"></i>
-                    Album Reviews
-                </button>
-                <button class="tab-btn" data-tab="tracks">
-                    <i class="fas fa-music"></i>
-                    Track Reviews
-                </button>
-            </div>
+            <div class="news-layout">
+                <!-- Sidebar -->
+                <aside class="news-sidebar">
+                    <div class="sidebar-header">
+                        <h3><i class="fas fa-list"></i> Topics</h3>
+                    </div>
 
-            <!-- Loading Indicator -->
-            <div class="loading-indicator" id="loadingIndicator">
-                <div class="loading-spinner">
-                    <i class="fas fa-record-vinyl fa-spin"></i>
-                </div>
-                <p>Loading latest reviews...</p>
-            </div>
+                    <!-- Rhythm Feed Category -->
+                    <div class="sidebar-category">
+                        <div class="category-title">
+                            <i class="fas fa-music"></i>
+                            <span>Rhythm Feed</span>
+                        </div>
+                        <ul class="category-items">
+                            <li>
+                                <button class="feed-btn active" data-feed="pitchfork-albums">
+                                    <i class="fas fa-compact-disc"></i>
+                                    <span>Album Reviews</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="feed-btn" data-feed="pitchfork-tracks">
+                                    <i class="fas fa-headphones"></i>
+                                    <span>Track Reviews</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
 
-            <!-- Albums Tab Content -->
-            <div class="tab-content active" id="albums-content">
-                <div class="news-grid" id="albumsGrid">
-                    <!-- Album reviews will be inserted here by JavaScript -->
-                </div>
-            </div>
+                    <!-- Life through the Lens Category -->
+                    <div class="sidebar-category">
+                        <div class="category-title">
+                            <i class="fas fa-camera-retro"></i>
+                            <span>Life through the Lens</span>
+                        </div>
+                        <ul class="category-items">
+                            <li>
+                                <button class="feed-btn" data-feed="emulsive">
+                                    <i class="fas fa-film"></i>
+                                    <span>Emulsive Stories</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="feed-btn" data-feed="analog-cafe">
+                                    <i class="fas fa-coffee"></i>
+                                    <span>Analog Cafe</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
 
-            <!-- Tracks Tab Content -->
-            <div class="tab-content" id="tracks-content">
-                <div class="news-grid" id="tracksGrid">
-                    <!-- Track reviews will be inserted here by JavaScript -->
-                </div>
-            </div>
+                    <!-- Movie Time Category -->
+                    <div class="sidebar-category">
+                        <div class="category-title">
+                            <i class="fas fa-tv"></i>
+                            <span>Movie Time</span>
+                        </div>
+                        <ul class="category-items">
+                            <li>
+                                <button class="feed-btn" data-feed="denofgeek">
+                                    <i class="fas fa-popcorn"></i>
+                                    <span>Den of Geek</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
 
-            <!-- Error Message -->
-            <div class="error-message" id="errorMessage" style="display: none;">
-                <i class="fas fa-exclamation-triangle"></i>
-                <h3>Oops! Something went wrong</h3>
-                <p>We couldn't load the news feed. Please try again later.</p>
-                <button class="retry-btn" onclick="location.reload()">
-                    <i class="fas fa-redo"></i> Try Again
-                </button>
+                <!-- Main Content -->
+                <main class="news-main">
+                    <!-- Loading Indicator -->
+                    <div class="loading-indicator" id="loadingIndicator">
+                        <div class="loading-spinner">
+                            <i class="fas fa-record-vinyl fa-spin"></i>
+                        </div>
+                        <p>Loading latest stories...</p>
+                    </div>
+
+                    <!-- News Grid -->
+                    <div class="news-content" id="newsContent">
+                        <div class="news-grid" id="newsGrid">
+                            <!-- News items will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div class="error-message" id="errorMessage" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Oops! Something went wrong</h3>
+                        <p>We couldn't load the news feed. Please try again later.</p>
+                        <button class="retry-btn" onclick="location.reload()">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                    </div>
+                </main>
             </div>
         </div>
     </section>
