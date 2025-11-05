@@ -144,4 +144,11 @@ function renderProducts(products) {
     }
     
     console.log(`Rendered ${products.length} products`);
+    
+    // Trigger pagination refresh
+    setTimeout(() => {
+        if (window.productPagination) {
+            window.productPagination.refresh();
+        }
+    }, 100);
 }

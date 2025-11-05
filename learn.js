@@ -86,6 +86,13 @@ async function loadProduct(category = null, subcategory = null) {
         bindAddToCartButtons();
       }, 100);
       
+      // Trigger pagination refresh after products loaded
+      setTimeout(() => {
+        if (window.productPagination) {
+          window.productPagination.refresh();
+        }
+      }, 200);
+      
       // Log để debug
       console.log(`Loaded ${filteredProducts.length} products for category: ${category || 'All'}, subcategory: ${subcategory || 'All'}`);
     }
