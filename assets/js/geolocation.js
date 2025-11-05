@@ -1,12 +1,16 @@
 /**
- * High-Accuracy Geolocation Module with Google Maps API
+ * High-Accuracy Geolocation Module with AWS Location Service
  * Provides GPS location with reverse geocoding for EXACT address detection
  */
 
-// Google Maps API Key
-// Get your FREE API key at: https://console.cloud.google.com/google/maps-apis
-// Free tier: 28,500 requests per month
-const GOOGLE_API_KEY = 'AIzaSyBTpwikgtbKHZGSr66C7NoPvNpRjKC7pIw'; // Replace with your key
+// AWS Location Service Configuration
+// Get your API key at: https://console.aws.amazon.com/location/
+// See AWS_LOCATION_SETUP.md for complete setup instructions
+const AWS_CONFIG = {
+  apiKey: 'YOUR_AWS_API_KEY_HERE', // Replace with your AWS Location Service API key
+  region: 'us-east-1', // Your AWS region (e.g., 'us-east-1', 'ap-southeast-1')
+  language: 'vi' // Language for address results (Vietnamese)
+};
 
 // Geolocation options for maximum accuracy
 const HIGH_ACCURACY_OPTIONS = {
@@ -15,9 +19,61 @@ const HIGH_ACCURACY_OPTIONS = {
   maximumAge: 0
 };
 
+// AWS SDK will be loaded dynamically from CDN
+let awsLocationClient = null;
+let geoPlacesClient = null;
+
+/**
+ * Load AWS SDK libraries dynamically
+ */
+async function loadAWSSDK() {
+  if (awsLocationClient && geoPlacesClient) {
+    return; // Already loaded
+  }
+
+  try {
+    // Load AWS SDK for GeoPlaces from CDN
+    if (!window.AWS) {
+      await loadScript('https://sdk.amazonaws.com/js/aws-sdk-2.1543.0.min.js');
+    }
+
+    // Initialize AWS credentials with API key
+    window.AWS.config.update({
+      region: AWS_CONFIG.region,
+      credentials: new window.AWS.Credentials({
+        accessKeyId: AWS_CONFIG.apiKey,
+        secretAccessKey: 'not-needed-for-api-key'
+      })
+    });
+
+    // Create Location Service client
+    awsLocationClient = new window.AWS.Location({
+      region: AWS_CONFIG.region
+    });
+
+    console.log('AWS Location Service SDK loaded successfully');
+  } catch (error) {
+    console.error('Failed to load AWS SDK:', error);
+    throw new Error('Unable to load AWS Location Service. Please check your configuration.');
+  }
+}
+
+/**
+ * Helper function to load external script
+ */
+function loadScript(src) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
 /**
  * Get current GPS location with high accuracy
- * @returns {Promise<{latitude: number, longitude: number}>}
+ * @returns {Promise<{latitude: number, longitude: number, accuracy: number}>}
  */
 export async function getCurrentLocation() {
   return new Promise((resolve, reject) => {
@@ -55,143 +111,187 @@ export async function getCurrentLocation() {
 }
 
 /**
- * Reverse geocode coordinates to detailed address using Google Maps Geocoding API
- * Much more accurate than OSM, especially in Vietnam with exact house numbers
+ * Reverse geocode coordinates to detailed address using AWS Location Service
  * @param {number} latitude
  * @param {number} longitude
  * @returns {Promise<Object>}
  */
 export async function reverseGeocode(latitude, longitude) {
   try {
-    // Try Google Geocoding API first (most accurate)
-    if (GOOGLE_API_KEY && GOOGLE_API_KEY !== 'YOUR_GOOGLE_API_KEY_HERE') {
-      return await reverseGeocodeGoogle(latitude, longitude);
-    } else {
-      console.warn('Google API key not configured, falling back to OpenStreetMap');
+    // Check if API key is configured
+    if (!AWS_CONFIG.apiKey || AWS_CONFIG.apiKey === 'YOUR_AWS_API_KEY_HERE') {
+      console.warn('AWS API key not configured, falling back to OpenStreetMap');
       return await reverseGeocodeOSM(latitude, longitude);
     }
+
+    // Load AWS SDK if not already loaded
+    await loadAWSSDK();
+
+    // Use AWS Location Service for reverse geocoding
+    return await reverseGeocodeAWS(latitude, longitude);
   } catch (error) {
     console.error('Reverse geocoding error:', error);
-    throw new Error('Unable to convert location to address. Please try again or enter manually.');
+
+    // Fallback to OpenStreetMap if AWS fails
+    try {
+      console.log('Falling back to OpenStreetMap...');
+      return await reverseGeocodeOSM(latitude, longitude);
+    } catch (osmError) {
+      throw new Error('Unable to convert location to address. Please try again or enter manually.');
+    }
   }
 }
 
 /**
- * Reverse geocode using Google Maps Geocoding API
- * Provides EXACT address with house number, especially accurate in Vietnam
+ * Reverse geocode using AWS Location Service
+ * Provides EXACT address with detailed components
  */
-async function reverseGeocodeGoogle(latitude, longitude) {
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_API_KEY}&language=vi&result_type=street_address|route|premise`;
+async function reverseGeocodeAWS(latitude, longitude) {
+  try {
+    // AWS expects [longitude, latitude] format (different from standard lat/lng!)
+    const params = {
+      IndexName: 'explore.place', // AWS managed place index
+      Position: [longitude, latitude], // Note: [lng, lat] NOT [lat, lng]
+      Language: AWS_CONFIG.language,
+      MaxResults: 1
+    };
 
-  const response = await fetch(url);
+    console.log('AWS Reverse Geocoding Request:', params);
 
-  if (!response.ok) {
-    throw new Error('Google Geocoding API error');
+    // Call AWS Location Service SearchPlaceIndexForPosition
+    const response = await awsLocationClient.searchPlaceIndexForPosition(params).promise();
+
+    console.log('AWS Geocoding Response:', response);
+
+    if (!response.Results || response.Results.length === 0) {
+      throw new Error('No address found for this location');
+    }
+
+    // Get the most accurate result
+    const result = response.Results[0];
+    const place = result.Place;
+
+    console.log('AWS Place Details:', place);
+
+    // Extract address components
+    const addressNumber = place.AddressNumber || '';
+    const street = place.Street || '';
+    const neighborhood = place.Neighborhood || '';
+    const municipality = place.Municipality || ''; // District/Quận/Huyện
+    const subRegion = place.SubRegion || ''; // Province/Tỉnh/Thành phố
+    const region = place.Region || '';
+    const postalCode = place.PostalCode || '';
+    const country = place.Country || '';
+
+    // Build detailed street address for Vietnam
+    const detailedStreet = buildAWSDetailedStreet({
+      addressNumber,
+      street,
+      neighborhood,
+      municipality
+    });
+
+    // Map to Vietnamese city format
+    const city = mapAWSCityToVietnamese(subRegion, region, municipality);
+
+    return {
+      fullAddress: place.Label || '',
+      detailedStreet: detailedStreet,
+      streetNumber: addressNumber,
+      route: street,
+      ward: neighborhood,
+      district: municipality,
+      city: city,
+      postalCode: postalCode,
+      country: country,
+      raw: place
+    };
+  } catch (error) {
+    console.error('AWS Geocoding Error:', error);
+    throw error;
   }
-
-  const data = await response.json();
-
-  if (data.status !== 'OK' || !data.results || data.results.length === 0) {
-    throw new Error(`Geocoding failed: ${data.status}`);
-  }
-
-  // Get the most accurate result (usually first one)
-  const result = data.results[0];
-  const addressComponents = result.address_components;
-
-  console.log('Google Geocoding Response:', result);
-
-  // Extract components
-  const components = {
-    streetNumber: getComponent(addressComponents, 'street_number'),
-    route: getComponent(addressComponents, 'route'),
-    sublocality3: getComponent(addressComponents, 'sublocality_level_3'), // Thôn/Ấp
-    sublocality2: getComponent(addressComponents, 'sublocality_level_2'), // Xã/Phường
-    sublocality1: getComponent(addressComponents, 'sublocality_level_1'), // Quận/Huyện
-    city: getComponent(addressComponents, 'administrative_area_level_1'), // Tỉnh/Thành phố
-    country: getComponent(addressComponents, 'country'),
-    postalCode: getComponent(addressComponents, 'postal_code')
-  };
-
-  console.log('Extracted Components:', components);
-
-  // Build detailed street address
-  const detailedStreet = buildGoogleDetailedStreet(components);
-  const city = mapGoogleCityToVietnamese(components);
-
-  return {
-    fullAddress: result.formatted_address,
-    detailedStreet: detailedStreet,
-    streetNumber: components.streetNumber,
-    route: components.route,
-    ward: components.sublocality2,
-    district: components.sublocality1,
-    city: city,
-    postalCode: components.postalCode,
-    raw: result
-  };
 }
 
 /**
- * Get component from Google address_components array
- */
-function getComponent(components, type) {
-  const component = components.find(c => c.types.includes(type));
-  return component ? component.long_name : '';
-}
-
-/**
- * Build detailed street address from Google components
+ * Build detailed street address from AWS components
  * Format: "123 Nguyễn Văn Linh, Phường Tân Phú, Quận 7"
  */
-function buildGoogleDetailedStreet(components) {
+function buildAWSDetailedStreet(components) {
   const parts = [];
 
-  // Street number (Số nhà) - Google is very accurate with this
-  if (components.streetNumber) {
-    parts.push(components.streetNumber);
+  // Street number (Số nhà)
+  if (components.addressNumber) {
+    parts.push(components.addressNumber);
   }
 
-  // Route/Street name
-  if (components.route) {
-    parts.push(components.route);
+  // Street name
+  if (components.street) {
+    parts.push(components.street);
   }
 
-  // Ward (Phường/Xã) - sublocality_level_2
-  if (components.sublocality2) {
-    parts.push(components.sublocality2);
+  // Neighborhood/Ward (Phường/Xã)
+  if (components.neighborhood) {
+    // Add prefix if needed
+    const ward = components.neighborhood;
+    if (!ward.toLowerCase().includes('phường') &&
+        !ward.toLowerCase().includes('xã') &&
+        !ward.toLowerCase().includes('ward')) {
+      parts.push('Phường ' + ward);
+    } else {
+      parts.push(ward);
+    }
   }
 
-  // District (Quận/Huyện) - sublocality_level_1
-  if (components.sublocality1) {
-    parts.push(components.sublocality1);
+  // Municipality/District (Quận/Huyện)
+  if (components.municipality) {
+    const district = components.municipality;
+    if (!district.toLowerCase().includes('quận') &&
+        !district.toLowerCase().includes('huyện') &&
+        !district.toLowerCase().includes('district')) {
+      // Detect if urban or rural
+      const isUrban = district.match(/^\d+$/) ||
+                     district.toLowerCase().includes('city');
+      const prefix = isUrban ? 'Quận ' : 'Huyện ';
+      parts.push(prefix + district);
+    } else {
+      parts.push(district);
+    }
   }
 
   return parts.join(', ');
 }
 
 /**
- * Map Google's city name to Vietnamese province format for dropdown
+ * Map AWS city name to Vietnamese province format for dropdown
  */
-function mapGoogleCityToVietnamese(components) {
-  const cityName = components.city || '';
+function mapAWSCityToVietnamese(subRegion, region, municipality) {
+  const cityName = subRegion || region || municipality || '';
 
-  // Google returns Vietnamese names directly, but we need to match dropdown format
+  // Common mappings for major Vietnamese cities
   const cityMappings = {
     'Thành phố Hồ Chí Minh': 'TP. Hồ Chí Minh',
     'Hồ Chí Minh': 'TP. Hồ Chí Minh',
+    'Ho Chi Minh City': 'TP. Hồ Chí Minh',
     'Thành phố Hà Nội': 'Hà Nội',
+    'Hà Nội': 'Hà Nội',
+    'Hanoi': 'Hà Nội',
     'Thành phố Đà Nẵng': 'Đà Nẵng',
+    'Đà Nẵng': 'Đà Nẵng',
+    'Da Nang': 'Đà Nẵng',
     'Thành phố Hải Phòng': 'Hải Phòng',
-    'Thành phố Cần Thơ': 'Cần Thơ'
+    'Hải Phòng': 'Hải Phòng',
+    'Hai Phong': 'Hải Phòng',
+    'Thành phố Cần Thơ': 'Cần Thơ',
+    'Cần Thơ': 'Cần Thơ',
+    'Can Tho': 'Cần Thơ'
   };
 
-  // Check exact mapping first
+  // Check exact mapping
   if (cityMappings[cityName]) {
     return cityMappings[cityName];
   }
 
-  // If it already starts with a province name, return as is
+  // List of Vietnamese provinces (must match dropdown)
   const provinceList = [
     'Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ',
     'Hà Giang', 'Cao Bằng', 'Lào Cai', 'Bắc Kạn', 'Lạng Sơn',
@@ -209,8 +309,10 @@ function mapGoogleCityToVietnamese(components) {
   ];
 
   // Find matching province
+  const searchText = cityName.toLowerCase();
   for (const province of provinceList) {
-    if (cityName.includes(province) || province.includes(cityName)) {
+    const provinceClean = province.toLowerCase().replace('tp. ', '');
+    if (searchText.includes(provinceClean) || provinceClean.includes(searchText)) {
       return province;
     }
   }
@@ -221,7 +323,7 @@ function mapGoogleCityToVietnamese(components) {
 
 /**
  * Fallback: Reverse geocode using OpenStreetMap Nominatim
- * Less accurate than Google but free without API key
+ * Less accurate but free without API key
  */
 async function reverseGeocodeOSM(latitude, longitude) {
   try {
@@ -399,7 +501,7 @@ function mapToVietnameseProvince(cityName, address) {
 
 /**
  * Get address from GPS with loading UI feedback
- * Uses Google Maps API for EXACT address with house number
+ * Uses AWS Location Service for EXACT address with house number
  * @param {Function} onSuccess - Callback with address object
  * @param {Function} onError - Callback with error message
  * @param {Function} onProgress - Optional callback for progress updates
@@ -423,16 +525,16 @@ export async function getAddressFromGPS(onSuccess, onError, onProgress) {
       if (onProgress) onProgress('Good accuracy. Getting detailed address...');
     }
 
-    // Step 2: Reverse geocode to get EXACT address from Google
+    // Step 2: Reverse geocode to get EXACT address from AWS
     const address = await reverseGeocode(location.latitude, location.longitude);
-    console.log('Google Geocoding - Detailed address:', address);
+    console.log('AWS Geocoding - Detailed address:', address);
 
     // Step 3: Format result with EXACT detailed information
     const result = {
-      // Detailed street from Google includes EXACT house number
+      // Detailed street includes house number, road, ward, district
       detailedStreet: address.detailedStreet,
       // Individual components for maximum flexibility
-      streetNumber: address.streetNumber, // EXACT house number from Google!
+      streetNumber: address.streetNumber,
       route: address.route,
       ward: address.ward,
       district: address.district,
