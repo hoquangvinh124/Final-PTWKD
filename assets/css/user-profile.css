@@ -9,7 +9,9 @@
 body{
   margin:0;
   font-family:"Barlow",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  background:radial-gradient(circle at top,#43040b 0%,#170004 52%,#030001 100%);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.823),rgba(0, 0, 0, 0.789)),
+    url("../images/bg.jpg") center/cover fixed;
   color:#fff4f5;
   min-height:100vh;
 }
@@ -1057,7 +1059,9 @@ a{text-decoration:none;color:inherit}
 .wishlist-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,1fr);
   gap:18px;
+  max-height:none;
 }
 
 .wishlist-card{
@@ -1636,7 +1640,7 @@ a{text-decoration:none;color:inherit}
     transform:translateX(-50%);
     font-size:clamp(26px,6vw,48px);
   }
-  .wishlist-grid{grid-template-columns:repeat(3,1fr);}
+  .wishlist-grid{grid-template-columns:repeat(3,1fr);grid-template-rows:auto;}
 }
 @media (max-width:576px){
   .profile-main{padding:0 12px}
@@ -1666,7 +1670,7 @@ a{text-decoration:none;color:inherit}
     gap:8px;
   }
   .passport-field span::after{display:none;}
-  .wishlist-grid{grid-template-columns:repeat(2,1fr);}
+  .wishlist-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;}
   .wishlist-card img{height:200px;}
   .edit-form-columns{grid-template-columns:1fr;}
   .shipping-row-2{grid-template-columns:1fr;}

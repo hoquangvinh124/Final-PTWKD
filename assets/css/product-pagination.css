@@ -1,0 +1,81 @@
+/* Product Pagination Styles */
+.product-pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 40px 0 20px 0;
+  padding: 20px 0;
+  padding-right: 25px; /* Align with product grid gap */
+}
+
+.product-pagination {
+  display: none; /* Hidden by default, shown by JS when needed */
+  align-items: center;
+  gap: 10px;
+}
+
+.product-pagination.show {
+  display: flex;
+}
+
+.page-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  border-radius: 10px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  min-width: 36px;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+}
+
+.page-btn:not(:disabled):hover,
+.page-btn:not(:disabled):focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.page-btn.is-active {
+  background: #ff6468;
+  color: #2b050b;
+  box-shadow: 0 4px 12px rgba(255, 100, 104, 0.35);
+}
+
+.page-btn.page-control {
+  min-width: 36px;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .product-pagination-container {
+    margin: 30px 0 15px;
+    padding: 15px 0;
+  }
+  
+  .product-pagination {
+    gap: 8px;
+  }
+  
+  .page-btn {
+    min-width: 32px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  
+  .page-btn.page-control {
+    min-width: 28px;
+  }
+}
