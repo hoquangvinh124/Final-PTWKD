@@ -50,19 +50,19 @@ export async function getCurrentLocation() {
 }
 
 /**
- * Reverse geocode coordinates to address using OpenStreetMap Nominatim
+ * Reverse geocode coordinates to detailed address using OpenStreetMap Nominatim
  * @param {number} latitude
  * @param {number} longitude
  * @returns {Promise<Object>}
  */
 export async function reverseGeocode(latitude, longitude) {
   try {
-    // Using OpenStreetMap Nominatim API (free, no API key required)
+    // Using OpenStreetMap Nominatim API with maximum detail (zoom=18)
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`;
 
     const response = await fetch(url, {
       headers: {
-        'User-Agent': 'OldieZone-Shop' // Required by Nominatim
+        'User-Agent': 'OldieZone-Shop'
       }
     });
 
@@ -76,13 +76,21 @@ export async function reverseGeocode(latitude, longitude) {
       throw new Error('Unable to determine address from location');
     }
 
-    // Extract and format address components
+    // Extract detailed address components
     const address = data.address;
+
+    // Build detailed street address with all components
+    const detailedStreet = buildDetailedStreetAddress(address);
+    const city = formatCityForVietnam(address);
 
     return {
       fullAddress: data.display_name,
-      street: formatStreetAddress(address),
-      city: formatCity(address),
+      detailedStreet: detailedStreet,
+      houseNumber: address.house_number || '',
+      road: address.road || '',
+      ward: address.suburb || address.neighbourhood || address.quarter || '',
+      district: address.city_district || address.county || address.town || '',
+      city: city,
       state: address.state || '',
       country: address.country || '',
       postcode: address.postcode || '',
@@ -95,58 +103,130 @@ export async function reverseGeocode(latitude, longitude) {
 }
 
 /**
- * Format street address from Nominatim address components
+ * Build detailed street address with house number, road, ward, district
  */
-function formatStreetAddress(address) {
+function buildDetailedStreetAddress(address) {
   const parts = [];
 
-  // Street number and name
-  if (address.house_number) parts.push(address.house_number);
-  if (address.road) parts.push(address.road);
+  // House number (Số nhà)
+  if (address.house_number) {
+    parts.push(address.house_number);
+  }
 
-  // Alternative address components
-  if (!parts.length && address.hamlet) parts.push(address.hamlet);
-  if (!parts.length && address.suburb) parts.push(address.suburb);
-  if (!parts.length && address.neighbourhood) parts.push(address.neighbourhood);
+  // Road/Street name (Đường)
+  if (address.road) {
+    parts.push(address.road);
+  }
 
-  return parts.join(' ') || '';
-}
-
-/**
- * Format city from Nominatim address components
- */
-function formatCity(address) {
-  // Try different city-level components in order of preference
-  return address.city ||
-         address.town ||
-         address.village ||
-         address.municipality ||
-         address.county ||
-         address.state_district ||
-         '';
-}
-
-/**
- * Map Vietnamese province names to standard format
- */
-function mapVietnameseProvince(city, state) {
-  const vietnameseProvinces = {
-    'Hà Nội': ['Hanoi', 'Ha Noi', 'Hà Nội'],
-    'TP. Hồ Chí Minh': ['Ho Chi Minh City', 'Saigon', 'Sài Gòn', 'Thành phố Hồ Chí Minh'],
-    'Đà Nẵng': ['Da Nang', 'Đà Nẵng', 'Danang'],
-    'Hải Phòng': ['Hai Phong', 'Hải Phòng', 'Haiphong'],
-    'Cần Thơ': ['Can Tho', 'Cần Thơ', 'Cantho']
-  };
-
-  const searchText = (city + ' ' + state).toLowerCase();
-
-  for (const [standard, variants] of Object.entries(vietnameseProvinces)) {
-    if (variants.some(v => searchText.includes(v.toLowerCase()))) {
-      return standard;
+  // Ward/Suburb/Neighbourhood (Phường/Xã)
+  const ward = address.suburb || address.neighbourhood || address.quarter || address.hamlet;
+  if (ward) {
+    // Add prefix if needed
+    if (!ward.toLowerCase().includes('phường') &&
+        !ward.toLowerCase().includes('xã') &&
+        !ward.toLowerCase().includes('ward')) {
+      parts.push('Phường ' + ward);
+    } else {
+      parts.push(ward);
     }
   }
 
-  return city || state;
+  // District (Quận/Huyện)
+  const district = address.city_district || address.county || address.town;
+  if (district) {
+    // Add prefix if needed
+    if (!district.toLowerCase().includes('quận') &&
+        !district.toLowerCase().includes('huyện') &&
+        !district.toLowerCase().includes('district')) {
+      // Try to detect if it's urban (Quận) or rural (Huyện)
+      const isUrbanDistrict = district.match(/^\d+$/) ||
+                              address.city === 'Ho Chi Minh City' ||
+                              address.city === 'Hanoi';
+      const prefix = isUrbanDistrict ? 'Quận ' : 'Huyện ';
+      parts.push(prefix + district);
+    } else {
+      parts.push(district);
+    }
+  }
+
+  return parts.join(', ') || '';
+}
+
+/**
+ * Format city specifically for Vietnam with proper province names
+ */
+function formatCityForVietnam(address) {
+  // Get city/province name
+  const cityName = address.city ||
+                   address.town ||
+                   address.village ||
+                   address.municipality ||
+                   address.state ||
+                   '';
+
+  // Map to standard Vietnamese province names
+  return mapToVietnameseProvince(cityName, address);
+}
+
+/**
+ * Map to standard Vietnamese province names (must match dropdown options)
+ */
+function mapToVietnameseProvince(cityName, address) {
+  const searchText = cityName.toLowerCase();
+
+  // Exact mappings for major cities
+  const exactMappings = {
+    'hanoi': 'Hà Nội',
+    'ha noi': 'Hà Nội',
+    'hà nội': 'Hà Nội',
+    'ho chi minh city': 'TP. Hồ Chí Minh',
+    'ho chi minh': 'TP. Hồ Chí Minh',
+    'saigon': 'TP. Hồ Chí Minh',
+    'sài gòn': 'TP. Hồ Chí Minh',
+    'thành phố hồ chí minh': 'TP. Hồ Chí Minh',
+    'da nang': 'Đà Nẵng',
+    'đà nẵng': 'Đà Nẵng',
+    'danang': 'Đà Nẵng',
+    'hai phong': 'Hải Phòng',
+    'hải phòng': 'Hải Phòng',
+    'haiphong': 'Hải Phòng',
+    'can tho': 'Cần Thơ',
+    'cần thơ': 'Cần Thơ',
+    'cantho': 'Cần Thơ'
+  };
+
+  // Check exact match first
+  if (exactMappings[searchText]) {
+    return exactMappings[searchText];
+  }
+
+  // Full list of Vietnamese provinces (must match dropdown in user-profile.html)
+  const provinces = [
+    'Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ',
+    'Hà Giang', 'Cao Bằng', 'Lào Cai', 'Bắc Kạn', 'Lạng Sơn',
+    'Tuyên Quang', 'Thái Nguyên', 'Phú Thọ', 'Yên Bái', 'Bắc Giang',
+    'Quảng Ninh', 'Hòa Bình', 'Sơn La', 'Điện Biên', 'Lai Châu',
+    'Vĩnh Phúc', 'Bắc Ninh', 'Hải Dương', 'Hưng Yên', 'Hà Nam',
+    'Nam Định', 'Ninh Bình', 'Thanh Hóa', 'Nghệ An', 'Hà Tĩnh',
+    'Quảng Bình', 'Quảng Trị', 'Thừa Thiên - Huế', 'Quảng Nam', 'Quảng Ngãi',
+    'Bình Định', 'Phú Yên', 'Khánh Hòa', 'Ninh Thuận'
+  ];
+
+  // Try to find matching province by partial name
+  for (const province of provinces) {
+    const provinceClean = province.toLowerCase()
+      .replace('tp. ', '')
+      .replace('thừa thiên - ', '');
+
+    if (searchText.includes(provinceClean) || provinceClean.includes(searchText)) {
+      return province;
+    }
+  }
+
+  // If no match found, return original with proper capitalization
+  return cityName.split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
 }
 
 /**
@@ -171,16 +251,21 @@ export async function getAddressFromGPS(onSuccess, onError, onProgress) {
       if (onProgress) onProgress('High accuracy location detected. Getting address...');
     }
 
-    // Step 2: Reverse geocode
+    // Step 2: Reverse geocode to get detailed address
     const address = await reverseGeocode(location.latitude, location.longitude);
-    console.log('Reverse geocoded address:', address);
+    console.log('Detailed address:', address);
 
-    // Step 3: Format for Vietnam
-    const formattedCity = mapVietnameseProvince(address.city, address.state);
-
+    // Step 3: Format result with detailed information
     const result = {
-      street: address.street,
-      city: formattedCity,
+      // Detailed street includes: house number, road, ward, district
+      detailedStreet: address.detailedStreet,
+      // Individual components for flexibility
+      houseNumber: address.houseNumber,
+      road: address.road,
+      ward: address.ward,
+      district: address.district,
+      // City matched to dropdown options
+      city: address.city,
       zipCode: address.postcode,
       fullAddress: address.fullAddress,
       coordinates: {

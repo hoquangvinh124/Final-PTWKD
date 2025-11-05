@@ -35,39 +35,64 @@ document.addEventListener('DOMContentLoaded', () => {
           (addressData) => {
             hideLoading();
 
-            // Fill in the form with GPS data
+            // Fill in the form with DETAILED GPS data
             const streetInput = document.getElementById('shippingStreet');
             const citySelect = document.getElementById('shippingCity');
 
-            if (streetInput && addressData.street) {
-              streetInput.value = addressData.street;
+            // Use detailedStreet which includes house number, road, ward, district
+            if (streetInput && addressData.detailedStreet) {
+              streetInput.value = addressData.detailedStreet;
+              console.log('Detailed street filled:', addressData.detailedStreet);
             }
 
+            // Auto-select the exact city/province in dropdown
             if (citySelect && addressData.city) {
-              // Try to select the city in the dropdown
-              const options = Array.from(citySelect.options);
-              const matchingOption = options.find(opt =>
-                opt.value.toLowerCase().includes(addressData.city.toLowerCase()) ||
-                addressData.city.toLowerCase().includes(opt.value.toLowerCase())
+              // The city is already mapped to match dropdown options in geolocation.js
+              const exactMatch = Array.from(citySelect.options).find(
+                opt => opt.value === addressData.city
               );
 
-              if (matchingOption) {
-                citySelect.value = matchingOption.value;
-              } else {
-                // If not found in dropdown, just set the value (will show as text)
+              if (exactMatch) {
                 citySelect.value = addressData.city;
+                console.log('City auto-selected:', addressData.city);
+              } else {
+                // Fallback: try partial match
+                const partialMatch = Array.from(citySelect.options).find(
+                  opt => opt.value.toLowerCase().includes(addressData.city.toLowerCase())
+                );
+                if (partialMatch) {
+                  citySelect.value = partialMatch.value;
+                  console.log('City partial match selected:', partialMatch.value);
+                } else {
+                  console.warn('City not found in dropdown:', addressData.city);
+                  showNotification(`City "${addressData.city}" not found in list. Please select manually.`, 'warning');
+                }
               }
             }
 
-            // Show success notification
-            showNotification('Location detected successfully!', 'success');
+            // Show success notification with details
+            const accuracy = addressData.coordinates ? Math.round(addressData.coordinates.accuracy) : 0;
+            let message = `Location detected! Accuracy: ${accuracy}m`;
 
-            // Log accuracy
-            if (addressData.coordinates) {
-              console.log(`GPS Accuracy: ${Math.round(addressData.coordinates.accuracy)}m`);
-              if (addressData.coordinates.accuracy > 50) {
-                showNotification('Location accuracy is moderate. You may need to adjust the address.', 'info');
-              }
+            if (addressData.houseNumber) {
+              message += `\nHouse: ${addressData.houseNumber}`;
+            }
+            if (addressData.road) {
+              message += `\nRoad: ${addressData.road}`;
+            }
+            if (addressData.ward) {
+              message += `\nWard: ${addressData.ward}`;
+            }
+            if (addressData.district) {
+              message += `\nDistrict: ${addressData.district}`;
+            }
+
+            console.log(message);
+            showNotification('Detailed address filled successfully!', 'success');
+
+            // Warn if accuracy is low
+            if (accuracy > 50) {
+              showNotification(`GPS accuracy: ${accuracy}m. Please verify the address is correct.`, 'info');
             }
           },
           // onError

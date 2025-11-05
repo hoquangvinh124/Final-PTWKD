@@ -221,25 +221,37 @@ function fillDefaultAddress() {
   const firstName = nameParts[0] || '';
   const lastName = nameParts.slice(1).join(' ') || '';
 
-  // Fill in the form
-  document.getElementById('firstName').value = firstName;
-  document.getElementById('lastName').value = lastName;
-  document.getElementById('phone').value = address.phone || '';
-  document.getElementById('address').value = address.street || '';
-  document.getElementById('city').value = address.city || '';
-  document.getElementById('zipCode').value = address.zipCode || '';
-
   // Get current user email if available
   const currentUser = getCurrentUser && getCurrentUser();
-  if (currentUser && currentUser.email) {
-    document.getElementById('email').value = currentUser.email;
-  }
+  const userEmail = (currentUser && currentUser.email) || '';
+
+  // Fill in the form with saved data
+  document.getElementById('firstName').value = firstName;
+  document.getElementById('lastName').value = lastName;
+  document.getElementById('email').value = userEmail;
+  document.getElementById('phone').value = address.phone || '';
+
+  // Use the detailed street address saved from user profile
+  // This includes: house number, road, ward, district (saved from GPS or manual input)
+  document.getElementById('address').value = address.street || '';
+
+  // Use the EXACT city value from dropdown that was selected in user profile
+  // This is already in the correct format (e.g., "TP. Hồ Chí Minh", "Hà Nội")
+  document.getElementById('city').value = address.city || '';
+
+  document.getElementById('zipCode').value = address.zipCode || '';
+
+  console.log('Filled from saved address:', {
+    street: address.street,
+    city: address.city,
+    zipCode: address.zipCode
+  });
 
   // Update order data
   orderData.customer = {
     firstName,
     lastName,
-    email: document.getElementById('email').value,
+    email: userEmail,
     phone: address.phone || '',
     address: address.street || '',
     city: address.city || '',
@@ -260,29 +272,48 @@ async function fillAddressFromGPS() {
       (addressData) => {
         hideLoading();
 
-        // Fill in the form with GPS data
+        // Fill in the form with DETAILED GPS data
         const addressInput = document.getElementById('address');
         const cityInput = document.getElementById('city');
         const zipCodeInput = document.getElementById('zipCode');
 
-        if (addressInput && addressData.street) {
-          addressInput.value = addressData.street;
+        // Use detailedStreet which includes: house number, road, ward, district
+        if (addressInput && addressData.detailedStreet) {
+          addressInput.value = addressData.detailedStreet;
+          console.log('Checkout - Detailed address filled:', addressData.detailedStreet);
         }
 
+        // Fill city/province - already matched to Vietnamese standard
         if (cityInput && addressData.city) {
           cityInput.value = addressData.city;
+          console.log('Checkout - City filled:', addressData.city);
         }
 
+        // Fill zipcode if available
         if (zipCodeInput && addressData.zipCode) {
           zipCodeInput.value = addressData.zipCode;
         }
 
-        // Show success message
-        let message = 'Location detected successfully!';
-        if (addressData.coordinates && addressData.coordinates.accuracy > 50) {
-          message += ' (Accuracy: ~' + Math.round(addressData.coordinates.accuracy) + 'm)';
-        }
+        // Show detailed success message
+        const accuracy = addressData.coordinates ? Math.round(addressData.coordinates.accuracy) : 0;
+        let message = `Detailed address detected! (Accuracy: ${accuracy}m)`;
+
+        console.log('GPS Components:', {
+          houseNumber: addressData.houseNumber,
+          road: addressData.road,
+          ward: addressData.ward,
+          district: addressData.district,
+          city: addressData.city
+        });
+
         showQuickFillConfirmation(message);
+
+        // Warn if accuracy is low
+        if (accuracy > 50) {
+          setTimeout(() => {
+            alert(`GPS accuracy is ${accuracy}m. Please verify the address is correct before proceeding.`);
+          }, 500);
+        }
       },
       // onError
       (errorMessage) => {
