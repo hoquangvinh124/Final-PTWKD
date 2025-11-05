@@ -1,14 +1,15 @@
 /**
  * High-Accuracy Geolocation Module with AWS Location Service
+ * Uses AWS Identity Pool for authentication (no API keys needed in code!)
  * Provides GPS location with reverse geocoding for EXACT address detection
  */
 
 // AWS Location Service Configuration
-// Get your API key at: https://console.aws.amazon.com/location/
-// See AWS_LOCATION_SETUP.md for complete setup instructions
+// See AWS_IDENTITY_POOL_SETUP.md for complete setup instructions
 const AWS_CONFIG = {
-  apiKey: 'YOUR_AWS_API_KEY_HERE', // Replace with your AWS Location Service API key
-  region: 'us-east-1', // Your AWS region (e.g., 'us-east-1', 'ap-southeast-1')
+  identityPoolId: 'YOUR_IDENTITY_POOL_ID', // Example: 'ap-southeast-2:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+  region: 'ap-southeast-2', // Your AWS region (Sydney)
+  placeIndexName: 'YOUR_PLACE_INDEX_NAME', // Example: 'OldieZone-PlaceIndex'
   language: 'vi' // Language for address results (Vietnamese)
 };
 
@@ -19,56 +20,46 @@ const HIGH_ACCURACY_OPTIONS = {
   maximumAge: 0
 };
 
-// AWS SDK will be loaded dynamically from CDN
-let awsLocationClient = null;
-let geoPlacesClient = null;
+// AWS SDK will be loaded dynamically
+let locationClient = null;
+let authHelper = null;
 
 /**
- * Load AWS SDK libraries dynamically
+ * Load AWS SDK v3 libraries dynamically from CDN
  */
 async function loadAWSSDK() {
-  if (awsLocationClient && geoPlacesClient) {
+  if (locationClient && authHelper) {
     return; // Already loaded
   }
 
   try {
-    // Load AWS SDK for GeoPlaces from CDN
-    if (!window.AWS) {
-      await loadScript('https://sdk.amazonaws.com/js/aws-sdk-2.1543.0.min.js');
-    }
+    console.log('Loading AWS SDK v3 from CDN...');
 
-    // Initialize AWS credentials with API key
-    window.AWS.config.update({
-      region: AWS_CONFIG.region,
-      credentials: new window.AWS.Credentials({
-        accessKeyId: AWS_CONFIG.apiKey,
-        secretAccessKey: 'not-needed-for-api-key'
-      })
-    });
+    // Load AWS SDK for Location Service from CDN (using esm.sh)
+    const locationModule = await import('https://esm.sh/@aws-sdk/client-location@3.621.0');
+    const authModule = await import('https://esm.sh/@aws/amazon-location-utilities-auth-helper@1.0.5');
+
+    const { LocationClient, SearchPlaceIndexForPositionCommand } = locationModule;
+    const { withIdentityPoolId } = authModule;
+
+    // Create authentication helper with Identity Pool
+    authHelper = await withIdentityPoolId(AWS_CONFIG.identityPoolId);
 
     // Create Location Service client
-    awsLocationClient = new window.AWS.Location({
-      region: AWS_CONFIG.region
+    locationClient = new LocationClient({
+      region: AWS_CONFIG.region,
+      ...authHelper.getLocationClientConfig(),
     });
 
+    // Store command class for later use
+    window.SearchPlaceIndexForPositionCommand = SearchPlaceIndexForPositionCommand;
+
     console.log('AWS Location Service SDK loaded successfully');
+    console.log('Using Identity Pool:', AWS_CONFIG.identityPoolId);
   } catch (error) {
     console.error('Failed to load AWS SDK:', error);
     throw new Error('Unable to load AWS Location Service. Please check your configuration.');
   }
-}
-
-/**
- * Helper function to load external script
- */
-function loadScript(src) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = src;
-    script.onload = resolve;
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
 }
 
 /**
@@ -118,9 +109,15 @@ export async function getCurrentLocation() {
  */
 export async function reverseGeocode(latitude, longitude) {
   try {
-    // Check if API key is configured
-    if (!AWS_CONFIG.apiKey || AWS_CONFIG.apiKey === 'YOUR_AWS_API_KEY_HERE') {
-      console.warn('AWS API key not configured, falling back to OpenStreetMap');
+    // Check if Identity Pool ID is configured
+    if (!AWS_CONFIG.identityPoolId || AWS_CONFIG.identityPoolId === 'YOUR_IDENTITY_POOL_ID') {
+      console.warn('AWS Identity Pool not configured, falling back to OpenStreetMap');
+      return await reverseGeocodeOSM(latitude, longitude);
+    }
+
+    // Check if Place Index Name is configured
+    if (!AWS_CONFIG.placeIndexName || AWS_CONFIG.placeIndexName === 'YOUR_PLACE_INDEX_NAME') {
+      console.warn('AWS Place Index Name not configured, falling back to OpenStreetMap');
       return await reverseGeocodeOSM(latitude, longitude);
     }
 
@@ -143,23 +140,24 @@ export async function reverseGeocode(latitude, longitude) {
 }
 
 /**
- * Reverse geocode using AWS Location Service
+ * Reverse geocode using AWS Location Service with Identity Pool
  * Provides EXACT address with detailed components
  */
 async function reverseGeocodeAWS(latitude, longitude) {
   try {
     // AWS expects [longitude, latitude] format (different from standard lat/lng!)
-    const params = {
-      IndexName: 'explore.place', // AWS managed place index
+    const input = {
+      IndexName: AWS_CONFIG.placeIndexName,
       Position: [longitude, latitude], // Note: [lng, lat] NOT [lat, lng]
       Language: AWS_CONFIG.language,
       MaxResults: 1
     };
 
-    console.log('AWS Reverse Geocoding Request:', params);
+    console.log('AWS Reverse Geocoding Request:', input);
 
-    // Call AWS Location Service SearchPlaceIndexForPosition
-    const response = await awsLocationClient.searchPlaceIndexForPosition(params).promise();
+    // Create command and send request
+    const command = new window.SearchPlaceIndexForPositionCommand(input);
+    const response = await locationClient.send(command);
 
     console.log('AWS Geocoding Response:', response);
 
