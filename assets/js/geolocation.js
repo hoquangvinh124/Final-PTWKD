@@ -22,33 +22,35 @@ const HIGH_ACCURACY_OPTIONS = {
 
 // AWS SDK will be loaded dynamically
 let locationClient = null;
-let authHelper = null;
 
 /**
  * Load AWS SDK v3 libraries dynamically from CDN
  */
 async function loadAWSSDK() {
-  if (locationClient && authHelper) {
+  if (locationClient) {
     return; // Already loaded
   }
 
   try {
     console.log('Loading AWS SDK v3 from CDN...');
 
-    // Load AWS SDK for Location Service from CDN (using esm.sh)
+    // Load AWS SDK modules from CDN
     const locationModule = await import('https://esm.sh/@aws-sdk/client-location@3.621.0');
-    const authModule = await import('https://esm.sh/@aws/amazon-location-utilities-auth-helper@1.0.5');
+    const credentialsModule = await import('https://esm.sh/@aws-sdk/credential-providers@3.621.0');
 
     const { LocationClient, SearchPlaceIndexForPositionCommand } = locationModule;
-    const { withIdentityPoolId } = authModule;
+    const { fromCognitoIdentityPool } = credentialsModule;
 
-    // Create authentication helper with Identity Pool
-    authHelper = await withIdentityPoolId(AWS_CONFIG.identityPoolId);
+    // Create credentials using Cognito Identity Pool
+    const credentials = fromCognitoIdentityPool({
+      clientConfig: { region: AWS_CONFIG.region },
+      identityPoolId: AWS_CONFIG.identityPoolId
+    });
 
-    // Create Location Service client
+    // Create Location Service client with credentials
     locationClient = new LocationClient({
       region: AWS_CONFIG.region,
-      ...authHelper.getLocationClientConfig(),
+      credentials: credentials
     });
 
     // Store command class for later use
@@ -56,6 +58,7 @@ async function loadAWSSDK() {
 
     console.log('AWS Location Service SDK loaded successfully');
     console.log('Using Identity Pool:', AWS_CONFIG.identityPoolId);
+    console.log('Region:', AWS_CONFIG.region);
   } catch (error) {
     console.error('Failed to load AWS SDK:', error);
     throw new Error('Unable to load AWS Location Service. Please check your configuration.');
