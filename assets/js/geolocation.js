@@ -25,7 +25,7 @@ let locationClient = null;
 
 /**
  * Load AWS SDK v3 libraries dynamically from CDN
- * Using Skypack CDN which is optimized for browser usage
+ * Following Amazon's official code pattern
  */
 async function loadAWSSDK() {
   if (locationClient) {
@@ -33,33 +33,47 @@ async function loadAWSSDK() {
   }
 
   try {
-    console.log('Loading AWS SDK v3 from CDN (browser-optimized)...');
+    console.log('Loading AWS SDK v3 from CDN (Amazon official pattern)...');
 
-    // Load AWS SDK modules from Skypack (browser-compatible CDN)
-    const locationModule = await import('https://cdn.skypack.dev/@aws-sdk/client-location@3.621.0');
-    const credentialsModule = await import('https://cdn.skypack.dev/@aws-sdk/credential-providers@3.621.0');
+    // Try multiple CDN providers for best browser compatibility
+    let locationModule, authModule;
+
+    try {
+      // Try unpkg first (best for browser ESM)
+      console.log('Trying unpkg CDN...');
+      locationModule = await import('https://unpkg.com/@aws-sdk/client-location@3.621.0?module');
+      authModule = await import('https://unpkg.com/@aws/amazon-location-utilities-auth-helper@1.0.5?module');
+    } catch (unpkgError) {
+      console.log('unpkg failed, trying jsDelivr...');
+      try {
+        locationModule = await import('https://cdn.jsdelivr.net/npm/@aws-sdk/client-location@3.621.0/+esm');
+        authModule = await import('https://cdn.jsdelivr.net/npm/@aws/amazon-location-utilities-auth-helper@1.0.5/+esm');
+      } catch (jsdelivrError) {
+        console.log('jsDelivr failed, trying esm.sh...');
+        locationModule = await import('https://esm.sh/@aws-sdk/client-location@3.621.0');
+        authModule = await import('https://esm.sh/@aws/amazon-location-utilities-auth-helper@1.0.5');
+      }
+    }
 
     const { LocationClient, SearchPlaceIndexForPositionCommand } = locationModule;
-    const { fromCognitoIdentityPool } = credentialsModule;
+    const { withIdentityPoolId } = authModule;
 
-    // Create credentials using Cognito Identity Pool
-    const credentials = fromCognitoIdentityPool({
-      clientConfig: { region: AWS_CONFIG.region },
-      identityPoolId: AWS_CONFIG.identityPoolId
-    });
+    // Create authentication helper (Amazon's pattern)
+    console.log('Creating auth helper with Identity Pool...');
+    const authHelper = await withIdentityPoolId(AWS_CONFIG.identityPoolId);
 
-    // Create Location Service client with credentials
+    // Create Location Service client (Amazon's pattern)
     locationClient = new LocationClient({
       region: AWS_CONFIG.region,
-      credentials: credentials
+      ...authHelper.getLocationClientConfig(),
     });
 
     // Store command class for later use
     window.SearchPlaceIndexForPositionCommand = SearchPlaceIndexForPositionCommand;
 
-    console.log('AWS Location Service SDK loaded successfully');
-    console.log('Using Identity Pool:', AWS_CONFIG.identityPoolId);
-    console.log('Region:', AWS_CONFIG.region);
+    console.log('✓ AWS Location Service SDK loaded successfully');
+    console.log('✓ Using Identity Pool:', AWS_CONFIG.identityPoolId);
+    console.log('✓ Region:', AWS_CONFIG.region);
   } catch (error) {
     console.error('Failed to load AWS SDK:', error);
     throw new Error('Unable to load AWS Location Service. Please check your configuration.');
