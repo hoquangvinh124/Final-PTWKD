@@ -25,6 +25,7 @@ let locationClient = null;
 
 /**
  * Load AWS SDK v3 libraries dynamically from CDN
+ * Using Skypack CDN which is optimized for browser usage
  */
 async function loadAWSSDK() {
   if (locationClient) {
@@ -32,11 +33,11 @@ async function loadAWSSDK() {
   }
 
   try {
-    console.log('Loading AWS SDK v3 from CDN...');
+    console.log('Loading AWS SDK v3 from CDN (browser-optimized)...');
 
-    // Load AWS SDK modules from CDN
-    const locationModule = await import('https://esm.sh/@aws-sdk/client-location@3.621.0');
-    const credentialsModule = await import('https://esm.sh/@aws-sdk/credential-providers@3.621.0');
+    // Load AWS SDK modules from Skypack (browser-compatible CDN)
+    const locationModule = await import('https://cdn.skypack.dev/@aws-sdk/client-location@3.621.0');
+    const credentialsModule = await import('https://cdn.skypack.dev/@aws-sdk/credential-providers@3.621.0');
 
     const { LocationClient, SearchPlaceIndexForPositionCommand } = locationModule;
     const { fromCognitoIdentityPool } = credentialsModule;
