@@ -398,7 +398,15 @@
           <form id="shippingAddressForm" class="shipping-form-modern">
             <h3 class="shipping-form-title">Update Address Information</h3>
             <p class="shipping-form-subtitle">Use the information below when billing</p>
-            
+
+            <div class="gps-action-group">
+              <button type="button" class="gps-btn" id="shippingGPSBtn">
+                <i class="fas fa-location-crosshairs"></i>
+                Use My Current Location (GPS)
+              </button>
+              <span class="gps-hint">High accuracy location detection</span>
+            </div>
+
             <div class="shipping-form-grid">
               <div class="shipping-row-2">
                 <div class="shipping-field-group">
@@ -662,6 +670,7 @@
   <script type="module" src="assets/js/user-wishlist.js"></script>
   <script type="module" src="assets/js/user-booked-movies.js"></script>
   <script type="module" src="assets/js/user-purchased-orders.js"></script>
+  <script type="module" src="assets/js/user-profile-shipping.js"></script>
   <script type="module" src="assets/js/user-profile.js"></script>
   <script type="module" src="assets/js/user-auth-handler.js"></script>
 </body>

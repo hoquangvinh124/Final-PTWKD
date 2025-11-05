@@ -128,11 +128,19 @@
                     <div class="checkout-form active" id="step1">
                         <div class="form-title">Customer Information</div>
                         <div class="quick-fill-section">
+                            <button class="quick-fill-btn" id="useDefaultAddressBtn" type="button">
+                                <i class="fas fa-user-check"></i>
+                                Use My Saved Address
+                            </button>
+                            <button class="quick-fill-btn gps-style" id="checkoutGPSBtn" type="button">
+                                <i class="fas fa-location-crosshairs"></i>
+                                Use GPS Location
+                            </button>
                             <button class="quick-fill-btn" onclick="fillDefaultInfo()">
                                 <i class="fas fa-magic"></i>
-                                Fill Default Info
+                                Fill Sample Info
                             </button>
-                            <p class="quick-fill-note">Quickly fill in sample information for testing</p>
+                            <p class="quick-fill-note">Quick fill options for convenience</p>
                         </div>
                         <div class="form-section">
                             <div class="form-row">

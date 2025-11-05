@@ -15,6 +15,14 @@ const DEFAULT_USERS = [
     biography: 'Music enthusiast and vintage collector. Love old school vibes!',
     avatar: 'assets/images/default-avatar.jpg',
     memberRank: 'Gold Member',
+    shippingAddress: {
+      fullName: 'Huynh Quoc Long',
+      phone: '+84 787 567 381',
+      street: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM, Tô Vĩnh Diện',
+      city: 'TP. Hồ Chí Minh',
+      zipCode: '700000',
+      addressType: 'home'
+    },
     recentPurchased: [],
     purchasedOrders: [
       {
@@ -119,6 +127,14 @@ export function createNewUser(username, password, email = '', firstName = '', la
     biography: '',
     avatar: 'assets/images/default-avatar.jpg',
     memberRank: 'Member',
+    shippingAddress: {
+      fullName: '',
+      phone: '',
+      street: '',
+      city: '',
+      zipCode: '',
+      addressType: 'home'
+    },
     recentPurchased: [],
     purchasedOrders: [],
     wishlist: [],
@@ -159,6 +175,14 @@ function cacheSession(user) {
     city: user.city,
     biography: user.biography,
     memberRank: user.memberRank || 'Member',
+    shippingAddress: user.shippingAddress || {
+      fullName: '',
+      phone: '',
+      street: '',
+      city: '',
+      zipCode: '',
+      addressType: 'home'
+    },
     recentPurchased: user.recentPurchased || [],
     purchasedOrders: user.purchasedOrders || [],
     wishlist: user.wishlist || [],
@@ -475,4 +499,52 @@ export function getPurchasedOrderById(orderId) {
 
   const orders = currentUser.purchasedOrders || [];
   return orders.find(order => order.orderId === orderId) || null;
+}
+
+/**
+ * Update shipping address for current user
+ */
+export function updateShippingAddress(addressData) {
+  const currentUser = getCurrentUser();
+  if (!currentUser) {
+    console.error('No user logged in');
+    return false;
+  }
+
+  const users = loadUsers();
+  const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+  if (userIndex === -1) {
+    console.error('User not found in storage');
+    return false;
+  }
+
+  // Update shipping address
+  users[userIndex].shippingAddress = {
+    fullName: addressData.fullName || '',
+    phone: addressData.phone || '',
+    street: addressData.street || '',
+    city: addressData.city || '',
+    zipCode: addressData.zipCode || '',
+    addressType: addressData.addressType || 'home'
+  };
+  users[userIndex].updatedAt = new Date().toISOString();
+
+  // Save to storage
+  saveUsers(users);
+
+  // Update session
+  cacheSession(users[userIndex]);
+
+  return true;
+}
+
+/**
+ * Get shipping address for current user
+ */
+export function getShippingAddress() {
+  const currentUser = getCurrentUser();
+  if (!currentUser) return null;
+
+  return currentUser.shippingAddress || null;
 }

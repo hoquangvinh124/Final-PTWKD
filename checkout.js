@@ -2,17 +2,27 @@
 console.log('Checkout.js loading...');
 
 // Import auth functions - using dynamic import for non-module script
-let addPurchasedOrder, getCurrentUser, isAuthenticated;
+let addPurchasedOrder, getCurrentUser, isAuthenticated, getShippingAddress;
+let getAddressFromGPS, showGPSLoading, isGeolocationSupported;
 
-// Dynamically import auth functions
+// Dynamically import auth and geolocation functions
 (async () => {
   try {
     const authModule = await import('./assets/js/auth.js');
     addPurchasedOrder = authModule.addPurchasedOrder;
     getCurrentUser = authModule.getCurrentUser;
     isAuthenticated = authModule.isAuthenticated;
+    getShippingAddress = authModule.getShippingAddress;
+
+    const geoModule = await import('./assets/js/geolocation.js');
+    getAddressFromGPS = geoModule.getAddressFromGPS;
+    showGPSLoading = geoModule.showGPSLoading;
+    isGeolocationSupported = geoModule.isGeolocationSupported;
+
+    // Initialize buttons after modules are loaded
+    initializeAddressButtons();
   } catch (error) {
-    console.error('Failed to load auth module:', error);
+    console.error('Failed to load modules:', error);
   }
 })();
 
@@ -169,6 +179,122 @@ function setupEventListeners() {
       orderData.payment.type = this.dataset.payment;
     });
   });
+}
+
+// Initialize address buttons (called after modules are loaded)
+function initializeAddressButtons() {
+  const useDefaultBtn = document.getElementById('useDefaultAddressBtn');
+  const gpsBtn = document.getElementById('checkoutGPSBtn');
+
+  // Use Default Address Button
+  if (useDefaultBtn) {
+    useDefaultBtn.addEventListener('click', fillDefaultAddress);
+  }
+
+  // GPS Button
+  if (gpsBtn) {
+    if (!isGeolocationSupported || !isGeolocationSupported()) {
+      gpsBtn.disabled = true;
+      gpsBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> GPS Not Supported';
+    } else {
+      gpsBtn.addEventListener('click', fillAddressFromGPS);
+    }
+  }
+}
+
+// Fill default address from user profile
+function fillDefaultAddress() {
+  if (!isAuthenticated || !isAuthenticated()) {
+    alert('Please login to use your saved address');
+    return;
+  }
+
+  const address = getShippingAddress();
+
+  if (!address || !address.fullName) {
+    alert('No saved address found. Please set your shipping address in your profile first.');
+    return;
+  }
+
+  // Parse full name into first and last name
+  const nameParts = (address.fullName || '').trim().split(' ');
+  const firstName = nameParts[0] || '';
+  const lastName = nameParts.slice(1).join(' ') || '';
+
+  // Fill in the form
+  document.getElementById('firstName').value = firstName;
+  document.getElementById('lastName').value = lastName;
+  document.getElementById('phone').value = address.phone || '';
+  document.getElementById('address').value = address.street || '';
+  document.getElementById('city').value = address.city || '';
+  document.getElementById('zipCode').value = address.zipCode || '';
+
+  // Get current user email if available
+  const currentUser = getCurrentUser && getCurrentUser();
+  if (currentUser && currentUser.email) {
+    document.getElementById('email').value = currentUser.email;
+  }
+
+  // Update order data
+  orderData.customer = {
+    firstName,
+    lastName,
+    email: document.getElementById('email').value,
+    phone: address.phone || '',
+    address: address.street || '',
+    city: address.city || '',
+    zipCode: address.zipCode || ''
+  };
+
+  showQuickFillConfirmation('Saved address filled successfully!');
+}
+
+// Fill address from GPS
+async function fillAddressFromGPS() {
+  const gpsBtn = document.getElementById('checkoutGPSBtn');
+  const hideLoading = showGPSLoading(gpsBtn);
+
+  try {
+    await getAddressFromGPS(
+      // onSuccess
+      (addressData) => {
+        hideLoading();
+
+        // Fill in the form with GPS data
+        const addressInput = document.getElementById('address');
+        const cityInput = document.getElementById('city');
+        const zipCodeInput = document.getElementById('zipCode');
+
+        if (addressInput && addressData.street) {
+          addressInput.value = addressData.street;
+        }
+
+        if (cityInput && addressData.city) {
+          cityInput.value = addressData.city;
+        }
+
+        if (zipCodeInput && addressData.zipCode) {
+          zipCodeInput.value = addressData.zipCode;
+        }
+
+        // Show success message
+        let message = 'Location detected successfully!';
+        if (addressData.coordinates && addressData.coordinates.accuracy > 50) {
+          message += ' (Accuracy: ~' + Math.round(addressData.coordinates.accuracy) + 'm)';
+        }
+        showQuickFillConfirmation(message);
+      },
+      // onError
+      (errorMessage) => {
+        hideLoading();
+        alert(errorMessage);
+      }
+    );
+  } catch (error) {
+    hideLoading();
+    console.error('GPS Error:', error);
+    alert('Unable to get your location. Please enter address manually.');
+  }
 }
 
 // Initialize the checkout process

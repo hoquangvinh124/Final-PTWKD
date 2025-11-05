@@ -638,8 +638,34 @@ body::before {
   box-shadow: 0 4px 12px rgba(255, 179, 71, 0.4);
 }
 
+.quick-fill-btn.gps-style {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+}
+
+.quick-fill-btn.gps-style:hover {
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+.quick-fill-btn:disabled {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.4);
+  cursor: not-allowed;
+}
+
 .quick-fill-note {
   font-size: 0.85rem;
   color: var(--muted);
   margin: 0;
+}
+
+.quick-fill-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.quick-fill-section .quick-fill-note {
+  flex-basis: 100%;
 }
