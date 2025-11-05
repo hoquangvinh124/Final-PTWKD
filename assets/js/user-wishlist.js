@@ -2,10 +2,14 @@
 import { isAuthenticated, getCurrentUser, loadUsers } from './auth.js';
 import { getWishlist, removeFromWishlist } from './user.js';
 
+// Pagination state
+let currentWishlistPage = 0;
+const ITEMS_PER_PAGE = 8; // 4 columns × 2 rows
+
 /**
  * Load and render wishlist products in user profile
  */
-export function loadUserWishlist() {
+export function loadUserWishlist(page = 0) {
     if (!isAuthenticated()) {
         console.warn('User not authenticated');
         return;
@@ -40,24 +44,91 @@ export function loadUserWishlist() {
         return;
     }
 
-    // Render wishlist items
-    wishlist.forEach(item => {
+    // Update current page
+    currentWishlistPage = page;
+
+    // Calculate pagination
+    const totalPages = Math.ceil(wishlist.length / ITEMS_PER_PAGE);
+    const startIndex = page * ITEMS_PER_PAGE;
+    const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, wishlist.length);
+    const itemsToShow = wishlist.slice(startIndex, endIndex);
+
+    // Render only items for current page (max 8 items)
+    itemsToShow.forEach(item => {
         const card = createWishlistCard(item);
         wishlistGrid.appendChild(card);
     });
 
-    // Show pagination if needed (more than 8 items)
-    const nav = document.querySelector('[data-nav="wishlist"]');
-    if (nav && nav.parentElement) {
-        if (wishlist.length > 8) {
-            nav.parentElement.style.display = 'flex';
-        } else {
-            nav.parentElement.style.display = 'none';
-        }
-    }
+    // Update pagination
+    updateWishlistPagination(totalPages, page);
 
     // Bind remove buttons
     bindWishlistRemoveButtons();
+}
+
+/**
+ * Update pagination controls for wishlist
+ */
+function updateWishlistPagination(totalPages, currentPage) {
+    const nav = document.querySelector('[data-nav="wishlist"]');
+    
+    if (!nav || !nav.parentElement) return;
+
+    // Show/hide pagination based on total pages
+    if (totalPages <= 1) {
+        nav.parentElement.style.display = 'none';
+        return;
+    }
+
+    nav.parentElement.style.display = 'flex';
+
+    // Clear existing page buttons (keep prev/next)
+    const prevBtn = nav.querySelector('[data-action="prev"]');
+    const nextBtn = nav.querySelector('[data-action="next"]');
+    const existingPageButtons = nav.querySelectorAll('.step-button:not(.step-button--control)');
+    existingPageButtons.forEach(btn => btn.remove());
+
+    // Calculate which pages to show (show up to 3 page numbers)
+    let startPage = Math.max(0, currentPage - 1);
+    let endPage = Math.min(totalPages - 1, startPage + 2);
+    
+    // Adjust if we're near the end
+    if (endPage - startPage < 2) {
+        startPage = Math.max(0, endPage - 2);
+    }
+
+    // Create page number buttons
+    for (let i = startPage; i <= endPage; i++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.type = 'button';
+        pageBtn.className = 'step-button';
+        pageBtn.textContent = i + 1;
+        pageBtn.setAttribute('data-index-slot', i);
+        
+        if (i === currentPage) {
+            pageBtn.classList.add('is-active');
+        }
+        
+        pageBtn.onclick = () => loadUserWishlist(i);
+        
+        // Insert before the next button
+        nav.insertBefore(pageBtn, nextBtn);
+    }
+
+    // Update prev/next buttons
+    if (prevBtn) {
+        prevBtn.disabled = currentPage === 0;
+        prevBtn.onclick = () => {
+            if (currentPage > 0) loadUserWishlist(currentPage - 1);
+        };
+    }
+
+    if (nextBtn) {
+        nextBtn.disabled = currentPage >= totalPages - 1;
+        nextBtn.onclick = () => {
+            if (currentPage < totalPages - 1) loadUserWishlist(currentPage + 1);
+        };
+    }
 }
 
 /**
@@ -153,7 +224,7 @@ function bindWishlistRemoveButtons() {
                                 // Check if wishlist is empty
                                 const wishlistGrid = document.querySelector('.wishlist-grid');
                                 if (wishlistGrid && wishlistGrid.children.length === 0) {
-                                    loadUserWishlist(); // Reload to show empty state
+                                    loadUserWishlist(0); // Reload to show empty state
                                 }
                             }, 300);
                         }
@@ -188,7 +259,7 @@ export function updateWishlistCount() {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('user-profile.html')) {
-        loadUserWishlist();
+        loadUserWishlist(0); // Start from page 0
         updateWishlistCount();
     }
 });
