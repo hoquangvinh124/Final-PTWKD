@@ -497,7 +497,7 @@ body {
 .schedule {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 20px;
+  gap: 40px;
   justify-items: center;
   margin-top: 25px;
 }
@@ -573,6 +573,18 @@ body {
   color: #f6d28a;
   flex: 1; 
   min-width: 0; /* tránh tràn khi flex */
+}
+
+.email input[type="email"]:-webkit-autofill,
+.email input[type="email"]:-webkit-autofill:hover,
+.email input[type="email"]:-webkit-autofill:focus,
+.email input[type="email"]:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #3b141c inset !important;
+  -webkit-text-fill-color: #f6d28a !important;
+  box-shadow: 0 0 0 1000px #3b141c inset !important;
+  border: 1px solid #f5f0e1 !important;
+  caret-color: #f6d28a;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .email input[type="email"]::placeholder {

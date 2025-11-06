@@ -406,9 +406,10 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
   const setEditMode = (enable, opts = {}) => {
     profileMain.classList.toggle('edit-mode', enable);
     profileMain.classList.remove('shipping-mode');
+    profileMain.classList.remove('orders-mode');
     heroCard.classList.toggle('is-flipped', enable);
     featuredTitle.textContent = enable ? 'Edit profile' : 'Wishlist';
-    featuredAction.textContent = enable ? 'Autosave' : 'Updated';
+    featuredAction.textContent = enable ? 'Autosave' : 'What You’re Eyeing';
     if(!opts.skipTabUpdate){
       setTabActive(enable ? 'edit' : 'overview');
     }

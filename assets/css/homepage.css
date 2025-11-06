@@ -852,12 +852,13 @@ audio {
 }
 
 .product-info h4 {
-    font-size: 16px;
-    color: white;
+    font-size: 15px;
+    color: #eceade;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-transform: uppercase;
-    line-height: 1.4;
+    text-align: center;
+    font-family: 'Barlow', sans-serif;
 }
 
 /* Retro Sale Tag Styles */
@@ -1027,21 +1028,11 @@ audio {
 }
 
 .current-price {
-    font-size: 18px;
+    font-size: 14px;
     color: #f39c12;
-    font-weight: 700;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-    position: relative;
-}
-
-.current-price::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #f39c12, transparent);
+    font-weight: 600;
+    display: block;
+    text-align: center;
 }
 
 /* Responsive design cho 5 sp */
@@ -2377,6 +2368,18 @@ div.pro-gallery.one-row .gallery-horizontal-scroll-inner {
     outline: none;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+}
+
+.email-input:-webkit-autofill,
+.email-input:-webkit-autofill:hover,
+.email-input:-webkit-autofill:focus,
+.email-input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset !important;
+    -webkit-text-fill-color: white !important;
+    box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+    caret-color: white;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .email-input::placeholder {

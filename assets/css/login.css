@@ -329,6 +329,17 @@ body {
 	letter-spacing: 0.03em;
 }
 
+.field input:-webkit-autofill,
+.field input:-webkit-autofill:hover,
+.field input:-webkit-autofill:focus,
+.field input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+	-webkit-text-fill-color: #24110a !important;
+	box-shadow: 0 0 0 1000px transparent inset !important;
+	caret-color: #24110a;
+	transition: background-color 5000s ease-in-out 0s;
+}
+
 .field input::placeholder {
 	color: rgba(36, 17, 10, 0.65);
 }

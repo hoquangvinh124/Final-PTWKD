@@ -24,10 +24,10 @@ function loadBookedMovies() {
 
     if (!bookedMovies || bookedMovies.length === 0) {
         container.innerHTML = `
-            <div class="booked-movies-empty" style="text-align: center; padding: 60px 20px; color: #999; grid-column: 1 / -1;">
-                <i class="fas fa-film" style="font-size: 48px; color: rgba(246, 210, 138, 0.3); margin-bottom: 20px; display: block;"></i>
-                <p style="font-size: 16px; margin-bottom: 20px;">You haven't booked any movies yet</p>
-                <a href="retro-cine.html" class="btn-cine" style="display: inline-block; padding: 10px 24px; background: #f6d28a; color: #3b141c; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; transition: all 0.3s ease;">BROWSE MOVIES</a>
+            <div class="booked-movies-empty">
+                <i class="fas fa-film"></i>
+                <p>You haven't booked any movies yet</p>
+                <a href="retro-cine.html" class="btn-cine">BROWSE MOVIES</a>
             </div>
         `;
         hideNavigation();
