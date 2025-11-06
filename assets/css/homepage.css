@@ -23,22 +23,22 @@
 
 @font-face {
     font-family: 'RetroFont';
-    src: url('assets/fonts/GulfsDisplay-Normal.woff2') format('woff2'),
-         url('assets/fonts/GulfsDisplay-Normal.ttf') format('woff');
+    src: url('../fonts/GulfsDisplay-Normal.woff2') format('woff2'),
+         url('../fonts/GulfsDisplay-Normal.ttf') format('woff');
     font-style: normal;
     font-display: swap;
     font-weight: 100;
 }
 @font-face {
     font-family: 'Font1';
-    src: url('assets/fonts/flexslider-icon.woff') format('woff2');
+    src: url('../fonts/flexslider-icon.woff') format('woff2');
     font-style: normal;
     font-display: swap;
     font-weight: 100;
 }
 
 body {
-  background-image: url("assets/images/bg.jpg");
+  background-image: url("../images/bg.jpg");
   background-size: cover;   
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -1079,7 +1079,7 @@ audio {
 
 /* Heart icon custom */
 .heart-icon {
-    background-image: url('assets/images/heart-icon.svg');
+    background-image: url('../images/heart-icon.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1100,7 +1100,7 @@ audio {
 
 /* Shopping bag icon custom */
 .shopping-bag-icon {
-    background-image: url('assets/images/shopping-bag-icon.svg');
+    background-image: url('../images/shopping-bag-icon.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -1626,7 +1626,7 @@ audio {
     flex: 1;
     overflow-y: auto;
     padding: 20px;
-    background-image: url('assets/images/material.png');
+    background-image: url('../images/material.png');
 }
 
 .cart-item {
@@ -2236,11 +2236,11 @@ div.pro-gallery.one-row .gallery-horizontal-scroll-inner {
         }
 
         /* Card backgrounds */
-        .card[for="c1"] { background: url('assets/images/vinyl.png'); }
-        .card[for="c2"] { background: url('assets/images/cdplayer.png'); }
-        .card[for="c3"] { background: url('assets/images/pola.png'); }
-        .card[for="c4"] { background: url('assets/images/vhs.png'); }
-        .card[for="c5"] { background: url('assets/images/ipod.png'); }
+        .card[for="c1"] { background: url('../images/vinyl.png'); }
+        .card[for="c2"] { background: url('../images/cdplayer.png'); }
+        .card[for="c3"] { background: url('../images/pola.png'); }
+        .card[for="c4"] { background: url('../images/vhs.png'); }
+        .card[for="c5"] { background: url('../images/ipod.png'); }
 
         .card .icon {
             position: absolute;

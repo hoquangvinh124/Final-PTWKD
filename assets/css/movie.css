@@ -115,7 +115,7 @@ body {
 
 /* CTA SECTION */
 .cta-vintage {
-  background: #f3e5c0 url("assets/images/bgcta.png") center/cover;
+  background: #f3e5c0 url("../images/bgcta.png") center/cover;
   background-blend-mode: multiply;
   color: #4b3b2f;
   text-align: center;
@@ -202,7 +202,7 @@ body {
 
 .movie-box {
   flex: 1;
-  background-image: url('assets/images/product-detail-background.jpg');
+  background-image: url('../images/product-detail-background.jpg');
   border-radius: 10px;
   padding: 18px;
   display: flex;
