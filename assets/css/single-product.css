@@ -1269,7 +1269,25 @@ i.shopping-bag-icon {
     font-family: 'GulfsDisplay', sans-serif;
 }
 
-/* Bootstrap's .row class handles the flex layout, no need for custom CSS here */
+/* Custom grid for 5 items per row (Bootstrap only supports 12-column grid) */
+.related-products-section .product-grid-item {
+    flex: 0 0 auto;
+    width: 20%; /* 5 items per row: 100% / 5 = 20% */
+    padding: 0 15px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .related-products-section .product-grid-item {
+        width: 25%; /* 4 items per row */
+    }
+}
+
+@media (max-width: 992px) {
+    .related-products-section .product-grid-item {
+        width: 33.333%; /* 3 items per row */
+    }
+}
 
 @media (max-width: 768px) {
     .related-products-section {
@@ -1279,6 +1297,16 @@ i.shopping-bag-icon {
     .related-products-title {
         font-size: 28px;
         margin-bottom: 30px;
+    }
+
+    .related-products-section .product-grid-item {
+        width: 50%; /* 2 items per row */
+    }
+}
+
+@media (max-width: 576px) {
+    .related-products-section .product-grid-item {
+        width: 100%; /* 1 item per row */
     }
 }
 

@@ -307,9 +307,9 @@ async function loadRelatedProducts(currentProduct) {
       return false;
     });
 
-    // Shuffle và lấy ngẫu nhiên 4 sản phẩm
+    // Shuffle và lấy ngẫu nhiên 5 sản phẩm
     const shuffled = relatedProducts.sort(() => 0.5 - Math.random());
-    const selectedProducts = shuffled.slice(0, 4);
+    const selectedProducts = shuffled.slice(0, 5);
 
     // Render related products
     const relatedProductsGrid = document.getElementById('relatedProductsGrid');
