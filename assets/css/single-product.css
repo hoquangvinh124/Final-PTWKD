@@ -1263,6 +1263,12 @@ i.shopping-bag-icon {
     font-family: 'GulfsDisplay', sans-serif;
 }
 
+/* Fix Bootstrap row negative margin causing left alignment issue */
+.related-products-section .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
 /* Custom grid for 5 items per row (Bootstrap only supports 12-column grid) */
 .related-products-section .product-grid-item {
     flex: 0 0 auto;
