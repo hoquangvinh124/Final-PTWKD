@@ -39,6 +39,10 @@
     font-weight: 100;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: url(../images/bg.jpg) center center/cover no-repeat fixed;
     max-width: 100%;
@@ -68,20 +72,46 @@ a {
 /* News Hero Section */
 .news-hero {
     position: relative;
-    padding: 120px 0 80px;
+    padding: 0;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    background: 
+        linear-gradient(
+            135deg,
+            rgba(139, 69, 19, 0.5) 0%,
+            rgba(59, 20, 28, 0.7) 100%,
+            rgba(0, 0, 0, 0.85) 100%
+        ),
+        url('../images/main-banner.jpg') center top/cover no-repeat;
+    background-size: cover;
+    background-position: center top;
+    overflow: hidden;
+}
+
+.news-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(
-        135deg,
-        rgba(139, 69, 19, 0.3) 0%,
-        rgba(59, 20, 28, 0.5) 50%,
-        rgba(0, 0, 0, 0.7) 100%
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.5) 100%
     );
-    border-bottom: 2px solid rgba(243, 156, 28, 0.3);
+    z-index: 0;
 }
 
 .news-hero-content {
     max-width: 800px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    padding: 60px 20px;
 }
 
 .eyebrow {
@@ -269,6 +299,7 @@ a {
     opacity: 1;
     transition: opacity 0.5s ease;
     min-height: 400px;
+    will-change: opacity;
 }
 
 /* News Card */
@@ -280,6 +311,9 @@ a {
     border: 1px solid rgba(243, 156, 28, 0.2);
     cursor: pointer;
     contain: layout style paint;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .news-card:hover {

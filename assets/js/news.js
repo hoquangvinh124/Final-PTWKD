@@ -179,13 +179,11 @@ function preloadAllImages(container) {
             img.onload = () => resolve();
             img.onerror = () => {
                 // Even if image fails, resolve to not block everything
-                console.warn('Failed to load image:', img.src);
                 resolve();
             };
 
             // Timeout after 10 seconds
             setTimeout(() => {
-                console.warn('Image load timeout:', img.src);
                 resolve();
             }, 10000);
         });

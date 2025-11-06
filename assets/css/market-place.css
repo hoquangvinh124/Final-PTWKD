@@ -21,6 +21,11 @@ body{
   color:var(--text);
   min-height:100vh;
 }
+ul,li{
+  padding:0;
+  margin:0;
+  list-style:none;
+}
 a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
 
