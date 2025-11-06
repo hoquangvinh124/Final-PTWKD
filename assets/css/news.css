@@ -272,6 +272,9 @@ a {
     grid-template-columns: repeat(3, 1fr);
     gap: 25px;
     margin-bottom: 40px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    min-height: 400px;
 }
 
 /* News Card */

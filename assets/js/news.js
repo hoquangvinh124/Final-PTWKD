@@ -131,7 +131,7 @@ async function fetchRSS(feedUrl) {
 }
 
 // Display news items
-function displayNews(items, feedConfig) {
+async function displayNews(items, feedConfig) {
     const grid = document.getElementById('newsGrid');
     const errorMessage = document.getElementById('errorMessage');
 
@@ -148,10 +148,50 @@ function displayNews(items, feedConfig) {
         return;
     }
 
+    // Create HTML content but keep it hidden
     grid.innerHTML = items.map(item => createNewsCard(item, feedConfig)).join('');
+    grid.style.opacity = '0';
+
+    // Pre-load all images before showing content
+    await preloadAllImages(grid);
+
+    // Show grid with smooth fade-in after all images loaded
+    grid.style.transition = 'opacity 0.5s ease';
+    grid.style.opacity = '1';
 
     // Add click handlers to news cards
     addNewsCardClickHandlers();
+}
+
+// Pre-load all images in the grid
+function preloadAllImages(container) {
+    const images = container.querySelectorAll('img');
+
+    const imagePromises = Array.from(images).map(img => {
+        return new Promise((resolve, reject) => {
+            // If image is already loaded
+            if (img.complete) {
+                resolve();
+                return;
+            }
+
+            // Wait for image to load
+            img.onload = () => resolve();
+            img.onerror = () => {
+                // Even if image fails, resolve to not block everything
+                console.warn('Failed to load image:', img.src);
+                resolve();
+            };
+
+            // Timeout after 10 seconds
+            setTimeout(() => {
+                console.warn('Image load timeout:', img.src);
+                resolve();
+            }, 10000);
+        });
+    });
+
+    return Promise.all(imagePromises);
 }
 
 // Create a news card HTML
@@ -180,11 +220,8 @@ function createNewsCard(item, feedConfig) {
             <div class="news-card-image">
                 <img src="${imageUrl}"
                      alt="${escapeHTML(title)}"
-                     loading="lazy"
                      decoding="async"
-                     onerror="this.src='${getFallbackImage(currentFeed)}'"
-                     style="opacity: 0; transition: opacity 0.3s ease;"
-                     onload="this.style.opacity=1">
+                     onerror="this.src='${getFallbackImage(currentFeed)}'">
                 <span class="news-badge">${badgeType}</span>
             </div>
             <div class="news-card-content">
