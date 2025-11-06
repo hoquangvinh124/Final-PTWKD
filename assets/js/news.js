@@ -178,7 +178,13 @@ function createNewsCard(item, feedConfig) {
     return `
         <article class="news-card" data-url="${link}">
             <div class="news-card-image">
-                <img src="${imageUrl}" alt="${escapeHTML(title)}" loading="lazy" onerror="this.src='${getFallbackImage(currentFeed)}'">
+                <img src="${imageUrl}"
+                     alt="${escapeHTML(title)}"
+                     loading="lazy"
+                     decoding="async"
+                     onerror="this.src='${getFallbackImage(currentFeed)}'"
+                     style="opacity: 0; transition: opacity 0.3s ease;"
+                     onload="this.style.opacity=1">
                 <span class="news-badge">${badgeType}</span>
             </div>
             <div class="news-card-content">
@@ -361,6 +367,9 @@ if ('IntersectionObserver' in window) {
                 }
             }
         });
+    }, {
+        rootMargin: '50px 0px',
+        threshold: 0.01
     });
 
     // Observe all images with data-src attribute
