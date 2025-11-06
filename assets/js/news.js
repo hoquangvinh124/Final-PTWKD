@@ -33,7 +33,7 @@ const RSS_FEEDS = {
         url: 'https://www.denofgeek.com/feed/',
         category: 'Movie Time',
         type: 'Entertainment',
-        icon: 'fa-popcorn'
+        icon: 'fa-glasses'
     }
 };
 
