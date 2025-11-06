@@ -11,7 +11,7 @@
     --shadow: 0 4px 12px rgba(0,0,0,0.08);
     --transition: all 0.3s ease;
     --main-font: 'Barlow';
-    --title-font: 'RetroFont';
+    --title-font: 'Barlow';
     --font-1: 'Font1';
 }
 * {
@@ -23,11 +23,9 @@
 
 @font-face {
     font-family: 'RetroFont';
-    src: url('../fonts/GulfsDisplay-Normal.woff2') format('woff2'),
-         url('../fonts/GulfsDisplay-Normal.ttf') format('woff');
+    src: url('../fonts/NeuePlak-ExtendedExtraBlack.woff2') format('woff2');
     font-style: normal;
     font-display: swap;
-    font-weight: 100;
 }
 @font-face {
     font-family: 'Font1';
@@ -81,11 +79,12 @@ img {
 }
 
 .section-title h2 {
-    font-size: 36px;
-    color: #f39c12;
-    display: inline-block;
-    margin-bottom: 15px;
-    font-family: var(--title-font);
+  font-family: 'RetroFont';
+  color: #f39c12;
+  font-size: 60px;
+  text-align: center;
+  margin: 50px;
+  text-shadow: rgba(230, 139, 55, 0.7) 0px 4px 5px;
 }
 
 .section-title h2::after {
@@ -96,6 +95,7 @@ img {
     transform: translateX(-50%);
     width: 80px;
     height: 3px;
+
 }
 
 .btn {
