@@ -40,10 +40,7 @@
 }
 
 body {
-    background-image: url("../images/bg.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
+    background: url(../images/bg.jpg) center center/cover no-repeat fixed;
     max-width: 100%;
     color: white;
     overflow-x: hidden;
