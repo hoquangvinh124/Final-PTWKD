@@ -12,7 +12,6 @@ const DEFAULT_USERS = [
     gender: 'Male',
     country: 'Vietnam',
     city: 'Ho Chi Minh City',
-    biography: 'Music enthusiast and vintage collector. Love old school vibes!',
     avatar: 'assets/images/default-avatar.jpg',
     memberRank: 'Gold Member',
     shippingAddress: {

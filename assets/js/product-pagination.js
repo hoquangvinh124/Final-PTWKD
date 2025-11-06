@@ -26,13 +26,28 @@ class ProductPagination {
       return;
     }
 
-    // Create pagination controls if not exists
+    // Create pagination controls IMMEDIATELY (empty, will be populated later)
     this.createPaginationControls();
     
-    // Wait a bit for products to load
-    setTimeout(() => {
+    // Check products immediately and keep checking until they load
+    this.checkAndRefresh();
+  }
+  
+  /**
+   * Check for products and refresh pagination
+   */
+  checkAndRefresh() {
+    const products = this.productContainer.querySelectorAll('.product-grid-item, .col-xl-3, .col-lg-3');
+    
+    if (products.length > 0) {
+      // Products are loaded, refresh pagination
       this.refresh();
-    }, 500);
+    } else {
+      // Products not loaded yet, check again after a short delay
+      setTimeout(() => {
+        this.checkAndRefresh();
+      }, 100);
+    }
   }
 
   /**
@@ -43,7 +58,7 @@ class ProductPagination {
     let existingContainer = document.querySelector('.product-pagination-container');
     
     if (!existingContainer) {
-      // Create new pagination container
+      // Create new pagination container - HIDDEN by default
       const paginationHTML = `
         <div class="product-pagination-container">
           <div class="product-pagination" id="productPagination">
@@ -54,7 +69,7 @@ class ProductPagination {
         </div>
       `;
       
-      // Insert after product grid
+      // Insert after product grid IMMEDIATELY (before products load)
       const productSection = document.querySelector('#products .col-xl-8');
       if (productSection) {
         productSection.insertAdjacentHTML('beforeend', paginationHTML);
@@ -78,12 +93,16 @@ class ProductPagination {
     
     this.totalItems = this.allProductElements.length;
     
+    console.log(`📊 Pagination: Found ${this.totalItems} products`);
+    
     // Show/hide pagination based on item count
     if (this.totalItems <= this.itemsPerPage) {
+      console.log('✅ Products <= 16, hiding pagination');
       this.hidePagination();
       // Show all products
       this.allProductElements.forEach(el => el.style.display = '');
     } else {
+      console.log(`✅ Products > 16, showing pagination (${Math.ceil(this.totalItems / this.itemsPerPage)} pages)`);
       this.showPagination();
       this.updatePagination();
       this.showPage(0);
@@ -92,8 +111,10 @@ class ProductPagination {
 
   /**
    * Show specific page
+   * @param {number} pageIndex - Page index to show
+   * @param {boolean} shouldScroll - Whether to scroll to top (default: false for initial load)
    */
-  showPage(pageIndex) {
+  showPage(pageIndex, shouldScroll = false) {
     this.currentPage = pageIndex;
     
     const startIndex = pageIndex * this.itemsPerPage;
@@ -111,10 +132,13 @@ class ProductPagination {
     // Update pagination UI
     this.updatePaginationUI();
     
-    // Scroll to top of products
-    const productsSection = document.querySelector('#products');
-    if (productsSection) {
-      productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Only scroll if explicitly requested (when user clicks pagination)
+    if (shouldScroll) {
+      const productsSection = document.querySelector('#products');
+      if (productsSection) {
+        // Scroll to top of products smoothly
+        productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   }
 
@@ -154,7 +178,8 @@ class ProductPagination {
       }
       
       pageBtn.addEventListener('click', () => {
-        this.showPage(i);
+        // User clicked, so scroll to top
+        this.showPage(i, true);
       });
       
       // Insert before next button
@@ -200,7 +225,8 @@ class ProductPagination {
     if (prevBtn) {
       prevBtn.addEventListener('click', () => {
         if (this.currentPage > 0) {
-          this.showPage(this.currentPage - 1);
+          // User clicked, so scroll to top
+          this.showPage(this.currentPage - 1, true);
           this.updatePagination();
         }
       });
@@ -212,7 +238,8 @@ class ProductPagination {
       nextBtn.addEventListener('click', () => {
         const totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
         if (this.currentPage < totalPages - 1) {
-          this.showPage(this.currentPage + 1);
+          // User clicked, so scroll to top
+          this.showPage(this.currentPage + 1, true);
           this.updatePagination();
         }
       });
@@ -243,12 +270,11 @@ window.productPagination = new ProductPagination();
 
 // Auto-initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-  // Wait for products to load first
-  setTimeout(() => {
-    if (window.productPagination) {
-      window.productPagination.init();
-    }
-  }, 1000);
+  // Initialize immediately - pagination will be created right away (hidden)
+  // Products will be checked and pagination shown only when needed
+  if (window.productPagination) {
+    window.productPagination.init();
+  }
 });
 
 // Re-initialize when products are filtered

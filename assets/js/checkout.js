@@ -8,13 +8,13 @@ let getAddressFromGPS, showGPSLoading, isGeolocationSupported;
 // Dynamically import auth and geolocation functions
 (async () => {
   try {
-    const authModule = await import('./assets/js/auth.js');
+    const authModule = await import('./auth.js');
     addPurchasedOrder = authModule.addPurchasedOrder;
     getCurrentUser = authModule.getCurrentUser;
     isAuthenticated = authModule.isAuthenticated;
     getShippingAddress = authModule.getShippingAddress;
 
-    const geoModule = await import('./assets/js/geolocation.js');
+    const geoModule = await import('./geolocation.js');
     getAddressFromGPS = geoModule.getAddressFromGPS;
     showGPSLoading = geoModule.showGPSLoading;
     isGeolocationSupported = geoModule.isGeolocationSupported;
