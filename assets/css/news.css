@@ -120,6 +120,10 @@ a {
     min-height: 600px;
 }
 
+.news-section .container {
+    padding-left: 10px;
+}
+
 /* News Layout with Sidebar */
 .news-layout {
     display: grid;
@@ -137,6 +141,7 @@ a {
     backdrop-filter: blur(10px);
     position: sticky;
     top: 100px;
+    margin-left: -5px;
 }
 
 .sidebar-header {
