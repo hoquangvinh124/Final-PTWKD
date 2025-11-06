@@ -308,7 +308,7 @@ body > header {
     background: #000000;
     backdrop-filter: blur(20px);
     padding: 10px 50px;
-    z-index: 1001;
+    z-index: 99;
     transform: translateY(-100%); /* Ẩn lên trên */
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
@@ -546,7 +546,7 @@ body > header {
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s ease;
-    z-index: 1000;
+    z-index: 10000;
 }
 
 /* Hiển thị submenu khi hover */
