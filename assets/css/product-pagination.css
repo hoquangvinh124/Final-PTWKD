@@ -41,15 +41,17 @@
 
 .page-btn:not(:disabled):hover,
 .page-btn:not(:disabled):focus-visible {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background: rgba(255, 179, 71, 0.15);
+  border: 1px solid rgba(255, 179, 71, 0.4);
+  color: rgb(255, 179, 71);
   transform: translateY(-1px);
 }
 
 .page-btn.is-active {
-  background: #ff6468;
+  background: linear-gradient(135deg, rgb(255, 179, 71), rgb(255, 140, 66));
+  border: 1px solid rgb(255, 179, 71);
   color: #2b050b;
-  box-shadow: 0 4px 12px rgba(255, 100, 104, 0.35);
+  box-shadow: 0 8px 20px rgba(255, 179, 71, 0.4);
 }
 
 .page-btn.page-control {

@@ -35,7 +35,7 @@ function showNotification(message, type = 'success') {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: linear-gradient(135deg, #1a0005 0%, #2d0008 100%);
+        background: rgba(0, 0, 0, 0.9);
         border: 1px solid rgba(255, 100, 104, 0.3);
         border-radius: 12px;
         padding: 16px 24px;

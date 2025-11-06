@@ -4,7 +4,7 @@ import { getWishlist, removeFromWishlist } from './user.js';
 
 // Pagination state
 let currentWishlistPage = 0;
-const ITEMS_PER_PAGE = 8; // 4 columns × 2 rows
+const ITEMS_PER_PAGE = 3; // 3 items per page
 
 /**
  * Load and render wishlist products in user profile
@@ -28,10 +28,10 @@ export function loadUserWishlist(page = 0) {
 
     if (!wishlist || wishlist.length === 0) {
         wishlistGrid.innerHTML = `
-            <div class="wishlist-empty" style="text-align: center; padding: 60px 20px; color: #999; grid-column: 1 / -1;">
-                <i class="fas fa-heart" style="font-size: 48px; color: rgba(246, 210, 138, 0.3); margin-bottom: 20px; display: block;"></i>
-                <p style="font-size: 16px; margin-bottom: 20px;">Your wishlist is empty</p>
-                <a href="homepage.html" class="btn-cine" style="display: inline-block; padding: 10px 24px; background: #f6d28a; color: #3b141c; text-decoration: none; border-radius: 8px; font-weight: 700; font-size: 14px; letter-spacing: 0.5px; transition: all 0.3s ease;">BROWSE PRODUCTS</a>
+            <div class="wishlist-empty">
+                <i class="fas fa-heart"></i>
+                <p>Your wishlist is empty</p>
+                <a href="homepage.html" class="btn-browse">BROWSE PRODUCTS</a>
             </div>
         `;
 
@@ -53,7 +53,7 @@ export function loadUserWishlist(page = 0) {
     const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, wishlist.length);
     const itemsToShow = wishlist.slice(startIndex, endIndex);
 
-    // Render only items for current page (max 8 items)
+    // Render only items for current page (max 3 items)
     itemsToShow.forEach(item => {
         const card = createWishlistCard(item);
         wishlistGrid.appendChild(card);
