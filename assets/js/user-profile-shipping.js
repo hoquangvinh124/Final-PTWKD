@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!shippingForm) return;
 
-  // Load saved shipping address
-  loadShippingAddress();
+  // Initialize shipping address display
+  initShippingDisplay();
 
   // GPS Button Handler
   if (shippingGPSBtn) {
@@ -173,9 +173,12 @@ function loadShippingAddress() {
 
   // Update display
   updateShippingDisplay(address);
+}
 
-  // Show appropriate panel
-  const hasData = Object.values(address).some(v => v);
+// Initialize shipping address display on page load
+function initShippingDisplay() {
+  const address = getShippingAddress();
+  const hasData = address && Object.values(address).some(v => v);
   const shippingFormPanel = document.getElementById('shippingAddressForm');
   const shippingSavedDisplay = document.getElementById('shippingAddressSaved');
 

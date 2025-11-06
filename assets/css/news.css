@@ -24,8 +24,8 @@
 
 @font-face {
     font-family: 'RetroFont';
-    src: url('assets/fonts/GulfsDisplay-Normal.woff2') format('woff2'),
-         url('assets/fonts/GulfsDisplay-Normal.ttf') format('woff');
+    src: url('../fonts/GulfsDisplay-Normal.woff2') format('woff2'),
+         url('../fonts/GulfsDisplay-Normal.ttf') format('woff');
     font-style: normal;
     font-display: swap;
     font-weight: 100;
@@ -33,14 +33,14 @@
 
 @font-face {
     font-family: 'Font1';
-    src: url('assets/fonts/flexslider-icon.woff') format('woff2');
+    src: url('../fonts/flexslider-icon.woff') format('woff2');
     font-style: normal;
     font-display: swap;
     font-weight: 100;
 }
 
 body {
-    background-image: url("assets/images/bg.jpg");
+    background-image: url("../images/bg.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
