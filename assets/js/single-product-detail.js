@@ -246,28 +246,30 @@ function renderProductDetails(product) {
 }
 
 // ===== PHẦN 4: LOAD RELATED PRODUCTS =====
-// Hàm tạo HTML cho related product card (giống createProductCard trong learn.js)
+// Hàm tạo HTML cho related product card (dùng đúng cấu trúc từ learn.js)
 function createRelatedProductCard(product) {
   const productHTML = `
-    <div class="item product-card">
-      <div class="thumb">
-        <div class="hover-content">
-          <ul>
-            <li><button class="heart-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="heart-icon"></i></button></li>
-            <li><button class="action-btn add-to-cart" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="shopping-bag-icon"></i></button></li>
-          </ul>
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 product-grid-item">
+      <div class="item product-card">
+        <div class="thumb">
+          <div class="hover-content">
+            <ul>
+              <li><button class="heart-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="heart-icon"></i></button></li>
+              <li><button class="action-btn add-to-cart" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="shopping-bag-icon"></i></button></li>
+            </ul>
+          </div>
+          <a href="single-product.html?id=${product.id}">
+            <img src="${product.image_front}" alt="${product.name}" loading="lazy" class="main-image">
+            <img src="${product.image_back}" alt="${product.name}" loading="lazy" class="hover-image">
+          </a>
         </div>
-        <a href="single-product.html?id=${product.id}">
-          <img src="${product.image_front}" alt="${product.name}" loading="lazy" class="main-image">
-          <img src="${product.image_back}" alt="${product.name}" loading="lazy" class="hover-image">
-        </a>
-      </div>
-      <div class="down-content">
-        <a href="single-product.html?id=${product.id}">
-          <h4>${product.name}</h4>
-        </a>
-        <div class="product-price">
-          <span class="current current-price">${product.price}</span>
+        <div class="down-content">
+          <a href="single-product.html?id=${product.id}">
+            <h4>${product.name}</h4>
+          </a>
+          <div class="product-price">
+            <span class="current current-price">${product.price}</span>
+          </div>
         </div>
       </div>
     </div>
