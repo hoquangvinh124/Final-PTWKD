@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <!-- DNS Prefetch & Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music News - OLDIE ZONE</title>
+    <link rel="stylesheet" href="assets/css/news.css">
+    <link rel="stylesheet" href="assets/css/header-footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="assets/js/search.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
+    <script src="assets/js/news.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar section-content">
+            <div class="header-top">
+                <a href="homepage.html" class="nav-logo" aria-label="Trang chủ Retro Sound">
+                    <img src="assets/images/shopname.jpg" width="150" height="60" alt="Retro Sound Logo">
+                </a>
+                <div class="header-icons" role="group" aria-label="Lối tắt điều hướng">
+                    <button type="button" class="header-icon search-btn" aria-label="Tìm kiếm" title="Tìm kiếm">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartTabPanel cartModal" title="Giỏ hàng">
+                        <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                        <span class="badge" id="cartBadge"></span>
+                    </button>
+                    <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                        <i class="fa-regular fa-user" aria-hidden="true"></i>
+                        <div class="user-dropdown" id="userDropdown">
+                            <div class="user-info">
+                                <div class="user-avatar">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <div class="user-details">
+                                    <div class="user-name">Oldiezone Member</div>
+                                    <div class="user-rank">Guest</div>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <ul class="dropdown-menu">
+                                <li><a href="login.html" class="dropdown-link"><i class="fas fa-sign-in-alt"></i>Sign In</a></li>
+                                <li><a href="signup.html" class="dropdown-link"><i class="fas fa-user-plus"></i>Register</a></li>
+                            </ul>
+                        </div>
+                    </button>
+                    <button class="header-icon chatbot-btn" id="chatbotToggle">
+                        <i class="fas fa-robot"></i>
+                    </button>
+                </div>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="audio-products.html" class="nav-link">AUDIO</a>
+                    <ul class="submenu">
+                        <li><a href="audio-cd-products.html" class="submenu-link">CD</a></li>
+                        <li><a href="audio-vinyl-products.html" class="submenu-link">VINYL</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="vhs-products.html" class="nav-link">VHS</a></li>
+                <li class="nav-item"><a href="cassette-tape-products.html" class="nav-link">CASSETTE TAPE</a></li>
+                <li class="nav-item"><a href="camera-products.html" class="nav-link">POLA CAMERA</a></li>
+                <li class="nav-item">
+                    <a href="accessory-products.html" class="nav-link">ACCESSORIES</a>
+                    <ul class="submenu">
+                        <li><a href="accessory-cassette-player-products.html" class="submenu-link">CASSETTE PLAYER</a></li>
+                        <li><a href="accessory-ipod-products.html" class="submenu-link">IPOD</a></li>
+                        <li><a href="accessory-cd-player-products.html" class="submenu-link">CD PLAYER</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a href="retro-cine.html" class="nav-link">CINE ROOM</a></li>
+                <li class="nav-item"><a href="market-place.html" class="nav-link">THREAD</a></li>
+                <li class="nav-item"><a href="news.html" class="nav-link">NEWS</a></li>
+            </ul>
+        </nav>
+        <div class="search-bar" id="searchBar">
+            <div class="search-container">
+                <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" id="searchInput">
+                <button class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+                <div class="search-dropdown" id="searchDropdown"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- News Hero Section -->
+    <section class="news-hero">
+        <div class="container">
+            <div class="news-hero-content">
+                <p class="eyebrow">🎵 NEWS & STORIES 🎵</p>
+                <h1>Discover Retro Culture</h1>
+                <p class="subtitle">Music reviews, photography stories, and analog lifestyle from around the world</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section with Sidebar -->
+    <section class="news-section">
+        <div class="container">
+            <div class="news-layout">
+                <!-- Sidebar -->
+                <aside class="news-sidebar">
+                    <div class="sidebar-header">
+                        <h3><i class="fas fa-list"></i> Topics</h3>
+                    </div>
+
+                    <!-- Rhythm Feed Category -->
+                    <div class="sidebar-category">
+                        <div class="category-title">
+                            <i class="fas fa-music"></i>
+                            <span>Rhythm Feed</span>
+                        </div>
+                        <ul class="category-items">
+                            <li>
+                                <button class="feed-btn active" data-feed="pitchfork-albums">
+                                    <i class="fas fa-compact-disc"></i>
+                                    <span>Album Reviews</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="feed-btn" data-feed="pitchfork-tracks">
+                                    <i class="fas fa-headphones"></i>
+                                    <span>Track Reviews</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Life through the Lens Category -->
+                    <div class="sidebar-category">
+                        <div class="category-title">
+                            <i class="fas fa-camera-retro"></i>
+                            <span>Life through the Lens</span>
+                        </div>
+                        <ul class="category-items">
+                            <li>
+                                <button class="feed-btn" data-feed="emulsive">
+                                    <i class="fas fa-film"></i>
+                                    <span>Emulsive Stories</span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="feed-btn" data-feed="analog-cafe">
+                                    <i class="fas fa-coffee"></i>
+                                    <span>Analog Cafe</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Movie Time Category -->
+                    <div class="sidebar-category">
+                        <div class="category-title">
+                            <i class="fas fa-tv"></i>
+                            <span>Movie Time</span>
+                        </div>
+                        <ul class="category-items">
+                            <li>
+                                <button class="feed-btn" data-feed="denofgeek">
+                                    <i class="fas fa-glasses"></i>
+                                    <span>Den of Geek</span>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="news-main">
+                    <!-- Loading Indicator -->
+                    <div class="loading-indicator" id="loadingIndicator">
+                        <div class="loading-spinner">
+                            <i class="fas fa-record-vinyl fa-spin"></i>
+                        </div>
+                        <p>Loading latest stories...</p>
+                    </div>
+
+                    <!-- News Grid -->
+                    <div class="news-content" id="newsContent">
+                        <div class="news-grid" id="newsGrid">
+                            <!-- News items will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div class="error-message" id="errorMessage" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Oops! Something went wrong</h3>
+                        <p>We couldn't load the news feed. Please try again later.</p>
+                        <button class="retry-btn" onclick="location.reload()">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="section newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <p class="eyebrow">🎶 STAY UPDATED 🎶</p>
+                    <h2>Never Miss a Beat</h2>
+                    <p>Subscribe to receive the latest music news, reviews, and exclusive content from Retro Sound</p>
+                </div>
+                <div class="newsletter-form">
+                    <form class="email-form">
+                        <div class="input-group">
+                            <input type="email" placeholder="Enter your email..." class="email-input" required>
+                            <button type="submit" class="subscribe-btn">
+                                <span>Subscribe</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <p class="newsletter-note">We respect your privacy. No spam!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3>GIỎ HÀNG CỦA BẠN</h3>
+            <button class="cart-close" id="cartClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Giỏ hàng của bạn đang trống</p>
+            </div>
+        </div>
+
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Tổng cộng:</span>
+                <span id="cartTotalAmount">0₫</span>
+            </div>
+            <div class="cart-actions">
+                <button class="checkout-btn" id="checkoutBtn">Thanh toán</button>
+                <button class="continue-shopping" id="continueShopping">TIẾP TỤC MUA HÀNG</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>Chatbot Assistant</h3>
+            <button class="chatbot-close" id="chatbotClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message-container bot">
+                <div class="message bot">
+                    Hello! How can I help you today?
+                    <div class="timestamp">Just now</div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="chatbotSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footerContainer">
+        <div class="socialIcons">
+            <a href=""><i class="fa-brands fa-facebook"></i></a>
+            <a href=""><i class="fa-brands fa-instagram"></i></a>
+            <a href=""><i class="fa-brands fa-twitter"></i></a>
+            <a href=""><i class="fa-brands fa-google-plus"></i></a>
+            <a href=""><i class="fa-brands fa-youtube"></i></a>
+        </div>
+        <div class="footerNav">
+            <ul>
+                <li><a href="homepage.html">HOME</a></li>
+                <li><a href="news.html">NEWS</a></li>
+                <li><a href="audio-products.html">PRODUCTS</a></li>
+                <li><a href="">CONTACT US</a></li>
+                <li><a href="">OUR TEAM</a></li>
+            </ul>
+        </div>
+        <div class="footerBottom">
+            <p>Copyright &copy;2025; Designed by <span class="designer">Nhóm</span></p>
+        </div>
+    </div>
+
+    <script src="assets/js/chatbot.js"></script>
+    <script src="assets/js/notification.js"></script>
+    <script src="assets/js/confirm-modal.js"></script>
+    <script type="module" src="assets/js/user-auth-handler.js"></script>
+    <script type="module" src="assets/js/wishlist.js"></script>
+</body>
+</html>
