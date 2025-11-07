@@ -162,11 +162,10 @@ function renderProductDetails(product) {
   const detailsList = document.querySelector('#details-specs .details-list');
   if (detailsList && product.subcategory) {
     detailsList.innerHTML = `
-      <li><span>Danh mục</span><span>${product.category}</span></li>
-      <li><span>Loại</span><span>${product.subcategory}</span></li>
-      <li><span>Giá</span><span>${product.price}</span></li>
-      <li><span>Số lượng</span><span>${product.stock_quantity}</span></li>
-      <li><span>Thương hiệu</span><span>${product.brand.name || 'N/A'}</span></li>
+      <li><span>Category</span><span>${product.category}</span></li>
+      <li><span>Type</span><span>${product.subcategory}</span></li>
+      <li><span>Price</span><span>${product.price}</span></li>
+      <li><span>Quantity Available</span><span>${product.stock_quantity}</span></li>
     `;
   }
   

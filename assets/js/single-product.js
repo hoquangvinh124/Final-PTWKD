@@ -174,9 +174,33 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            // Check authentication
+            const authData = localStorage.getItem('demo.auth');
+            
+            if (!authData) {
+                alert('You must be logged in to submit a review. Please sign in first.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Parse user data from demo.auth
+            let currentUser;
+            try {
+                currentUser = JSON.parse(authData);
+                if (!currentUser || !currentUser.username) {
+                    throw new Error('Invalid session');
+                }
+            } catch (e) {
+                console.error('Session error:', e);
+                alert('You must be logged in to submit a review. Please sign in first.');
+                window.location.href = 'login.html';
+                return;
+            }
+
             var reviewText = textarea.value.trim();
 
             if (!reviewText.length) {
+                alert('Please enter your review before submitting.');
                 return;
             }
 
@@ -187,13 +211,18 @@ document.addEventListener('DOMContentLoaded', function () {
             var reviewItem = createElement('article', 'review');
             reviewItem.setAttribute('tabindex', '0');
 
-            var avatar = createElement('div', 'review-avatar', createInitials('Bạn đọc'));
+            // Get user's full name from demo.auth
+            const userName = (currentUser.firstName || '') + ' ' + (currentUser.lastName || '');
+            const displayName = userName.trim() || currentUser.username;
+            const userInitials = createInitials(displayName);
+
+            var avatar = createElement('div', 'review-avatar', userInitials);
             avatar.setAttribute('aria-hidden', 'true');
 
             var body = createElement('div', 'review-body');
             var meta = createElement('header', 'review-meta');
 
-            var author = createElement('span', 'review-author', 'Bạn đọc');
+            var author = createElement('span', 'review-author', displayName);
 
             var now = new Date();
             var formatted = formatDate(now);
