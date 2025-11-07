@@ -860,12 +860,23 @@ i.shopping-bag-icon {
     border: 1px solid rgba(255, 198, 160, 0.12);
     outline: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    margin-bottom: 16px;
+    border-bottom: 2px solid #000000;
+}
+
+.review:last-child {
+    border-bottom: none;
 }
 
 .review:focus-visible {
     border-color: rgba(255, 224, 190, 0.55);
     box-shadow: 0 18px 32px rgba(0, 0, 0, 0.32);
     transform: translateY(-2px);
+}
+
+.review:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 198, 160, 0.2);
 }
 
 .review-avatar {
@@ -906,7 +917,8 @@ i.shopping-bag-icon {
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: rgba(255, 207, 184, 0.55);
+    color: #000000;
+    font-weight: 500;
 }
 
 .review p {
@@ -920,6 +932,7 @@ i.shopping-bag-icon {
     display: flex;
     flex-direction: column;
     gap: 14px;
+    margin-top: 20px;
 }
 
 .review-form textarea {
@@ -927,19 +940,23 @@ i.shopping-bag-icon {
     min-height: 100px;
     padding: 14px 16px;
     border-radius: 16px;
-    border: 1px solid rgba(255, 196, 156, 0.26);
-    background: rgba(255, 255, 255, 0.08);
-    color: #ffeadd;
+    border: 2px solid #000000;
+    background: #000000;
+    color: #ffffff;
     font-size: 15px;
     line-height: 1.5;
     font-family: inherit;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.review-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
 .review-form textarea:focus {
     outline: none;
-    border-color: rgba(255, 208, 170, 0.6);
-    box-shadow: 0 0 0 3px rgba(255, 208, 170, 0.25);
+    border-color: #333333;
+    box-shadow: 0 0 0 3px rgba(51, 51, 51, 0.3);
 }
 
 .review-submit {
