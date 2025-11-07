@@ -7,8 +7,13 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
 	<link rel="stylesheet" href="assets/css/header-footer.css">
 	<link rel="stylesheet" href="assets/css/single-product.css">
+	<link rel="stylesheet" href="assets/css/products.css">
 	<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"></noscript>
 </head>
@@ -329,6 +334,17 @@
 				</section>
 			</article>
 		</section>
+
+		<!-- ***** You May Also Like Section Start ***** -->
+		<section class="related-products-section" id="relatedProducts">
+			<h2 class="related-products-title">YOU MAY ALSO LIKE</h2>
+			<div id="products">
+				<div class="related-products-grid row gx-5" id="relatedProductsGrid">
+					<!-- Related products will be loaded here dynamically -->
+				</div>
+			</div>
+		</section>
+		<!-- ***** You May Also Like Section End ***** -->
 	</main>
 
 	<!-- Cart Modal -->

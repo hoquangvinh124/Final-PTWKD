@@ -244,29 +244,146 @@ function renderProductDetails(product) {
   }
 }
 
-// ===== PHẦN 4: KHỞI TẠO TRANG =====
+// ===== PHẦN 4: LOAD RELATED PRODUCTS =====
+// Hàm tạo HTML cho related product card (dùng đúng cấu trúc từ learn.js)
+function createRelatedProductCard(product) {
+  const productHTML = `
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 product-grid-item">
+      <div class="item product-card">
+        <div class="thumb">
+          <div class="hover-content">
+            <ul>
+              <li><button class="heart-btn" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="heart-icon"></i></button></li>
+              <li><button class="action-btn add-to-cart" data-product-id="${product.id}" data-product-name="${product.name}" data-product-price="${product.price}" data-product-image="${product.image_front}"><i class="shopping-bag-icon"></i></button></li>
+            </ul>
+          </div>
+          <a href="single-product.html?id=${product.id}">
+            <img src="${product.image_front}" alt="${product.name}" loading="lazy" class="main-image">
+            <img src="${product.image_back}" alt="${product.name}" loading="lazy" class="hover-image">
+          </a>
+        </div>
+        <div class="down-content">
+          <a href="single-product.html?id=${product.id}">
+            <h4>${product.name}</h4>
+          </a>
+          <div class="product-price">
+            <span class="current current-price">${product.price}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return productHTML;
+}
+
+// Hàm load và hiển thị related products
+async function loadRelatedProducts(currentProduct) {
+  try {
+    const response = await fetch('product.json');
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const allProducts = await response.json();
+
+    // Lọc sản phẩm cùng category/subcategory, loại trừ sản phẩm hiện tại
+    const relatedProducts = allProducts.filter(p => {
+      // Loại trừ chính sản phẩm hiện tại
+      if (p.id === currentProduct.id) return false;
+
+      // Ưu tiên sản phẩm cùng subcategory
+      if (currentProduct.subcategory && p.subcategory === currentProduct.subcategory) {
+        return true;
+      }
+
+      // Nếu không có subcategory match, lấy cùng category
+      if (p.category === currentProduct.category) {
+        return true;
+      }
+
+      return false;
+    });
+
+    // Shuffle và lấy ngẫu nhiên 5 sản phẩm
+    const shuffled = relatedProducts.sort(() => 0.5 - Math.random());
+    const selectedProducts = shuffled.slice(0, 5);
+
+    // Render related products
+    const relatedProductsGrid = document.getElementById('relatedProductsGrid');
+    if (relatedProductsGrid && selectedProducts.length > 0) {
+      relatedProductsGrid.innerHTML = selectedProducts
+        .map(product => createRelatedProductCard(product))
+        .join('');
+
+      // Bind add-to-cart buttons cho related products
+      setTimeout(() => {
+        bindRelatedProductsButtons();
+      }, 100);
+
+      console.log(`Loaded ${selectedProducts.length} related products`);
+    } else if (relatedProductsGrid && selectedProducts.length === 0) {
+      // Ẩn section nếu không có sản phẩm liên quan
+      const relatedSection = document.getElementById('relatedProducts');
+      if (relatedSection) {
+        relatedSection.style.display = 'none';
+      }
+    }
+  } catch (error) {
+    console.error('Lỗi khi load related products:', error);
+  }
+}
+
+// Bind event listeners cho related products buttons
+function bindRelatedProductsButtons() {
+  if (typeof window.cart === 'undefined') {
+    console.warn('Cart not initialized yet, retrying...');
+    setTimeout(bindRelatedProductsButtons, 500);
+    return;
+  }
+
+  document.querySelectorAll('#relatedProductsGrid .add-to-cart').forEach(button => {
+    if (button.hasAttribute('data-cart-bound')) return;
+
+    button.setAttribute('data-cart-bound', 'true');
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      window.cart.addToCart(this);
+    });
+  });
+
+  console.log('Related products add-to-cart buttons bound successfully');
+}
+
+// ===== PHẦN 5: KHỞI TẠO TRANG =====
 async function initSingleProduct() {
   // Lấy ID từ URL
   const productId = getProductIdFromURL();
-  
+
   if (!productId) {
     alert('Không tìm thấy sản phẩm. Vui lòng quay lại trang danh sách.');
     window.location.href = 'products.html';
     return;
   }
-  
+
   // Lấy thông tin sản phẩm từ JSON
   const product = await getProductById(productId);
-  
+
   if (!product) {
     alert('Không tìm thấy sản phẩm. Vui lòng quay lại trang danh sách.');
     window.location.href = 'products.html';
     return;
   }
-  
+
   // Render thông tin sản phẩm
   renderProductDetails(product);
-  
+
+  // Load related products
+  await loadRelatedProducts(product);
+
   console.log('Đã load thông tin sản phẩm:', product);
 }
 
