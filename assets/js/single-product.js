@@ -166,6 +166,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     textarea.value = sanitized;
                 }
             });
+
+            // Add Enter key listener to submit review
+            textarea.addEventListener('keydown', function (event) {
+                // Check if Enter is pressed without Shift (Shift+Enter for new line)
+                if (event.key === 'Enter' && !event.shiftKey) {
+                    event.preventDefault();
+                    reviewForm.dispatchEvent(new Event('submit'));
+                }
+            });
         }
 
         reviewForm.addEventListener('submit', function (event) {
@@ -311,6 +320,46 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 quantityInput.value = sanitizedValue;
             }
+        });
+    }
+
+    // FAQ Accordion functionality
+    var faqQuestions = document.querySelectorAll('.faq-question');
+    
+    if (faqQuestions.length) {
+        faqQuestions.forEach(function(question) {
+            question.addEventListener('click', function() {
+                var isExpanded = question.getAttribute('aria-expanded') === 'true';
+                var answer = question.nextElementSibling;
+                
+                // Close all other FAQ items
+                faqQuestions.forEach(function(otherQuestion) {
+                    if (otherQuestion !== question) {
+                        otherQuestion.setAttribute('aria-expanded', 'false');
+                        var otherAnswer = otherQuestion.nextElementSibling;
+                        if (otherAnswer) {
+                            otherAnswer.style.maxHeight = '0';
+                        }
+                    }
+                });
+                
+                // Toggle current FAQ item
+                if (isExpanded) {
+                    question.setAttribute('aria-expanded', 'false');
+                    answer.style.maxHeight = '0';
+                } else {
+                    question.setAttribute('aria-expanded', 'true');
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }
+            });
+            
+            // Keyboard accessibility
+            question.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    question.click();
+                }
+            });
         });
     }
 });
