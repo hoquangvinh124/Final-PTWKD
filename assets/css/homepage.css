@@ -81,9 +81,9 @@ img {
 .section-title h2 {
   font-family: 'RetroFont';
   color: #f39c12;
-  font-size: 60px;
+  font-size: 50px;
   text-align: center;
-  margin: 50px;
+  margin-bottom: 50px;
   text-shadow: rgba(230, 139, 55, 0.7) 0px 4px 5px;
 }
 
@@ -116,7 +116,7 @@ img {
 /* Hero Section với Video */
 .hero {
     position: relative;
-    height: 100vh;
+    height: 106vh;
     min-height: 600px;
     display: flex;
     align-items: center;
@@ -351,7 +351,7 @@ img {
 .category-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    gap: 50px; /* Tăng từ 30px lên 50px */
     position: relative;
     z-index: 1;
 }
@@ -403,12 +403,12 @@ img {
     justify-content: center;
     width: 100%;
     margin-bottom: 25px;
-    min-height: 200px; /* Đảm bảo chiều cao tối thiểu */
+    min-height: 300px; /* Tăng chiều cao */
 }
 
 .category-card img {
-    max-width: 80%; /* Giảm width để có khoảng trống hai bên */
-    max-height: 180px; /* Giới hạn chiều cao tối đa */
+    max-width: 100%; /* Tăng từ 80% lên 100% */
+    max-height: 280px; /* Tăng từ 180px lên 280px */
     width: auto;
     height: auto;
     object-fit: contain;
@@ -417,18 +417,18 @@ img {
 
 /* Điều chỉnh riêng cho từng loại sản phẩm */
 #artifactz\ vinora img {
-    max-width: 70%; /* Vinyl có thể nhỏ hơn một chút */
-    max-height: 160px;
+    max-width: 90%; /* Tăng từ 70% lên 90% */
+    max-height: 260px; /* Tăng từ 160px */
 }
 
 #artifactz\ tapella .cd-container {
-    max-width: 85%; /* Cassette có thể rộng hơn */
+    max-width: 100%; /* Tăng từ 85% lên 100% */
     max-height: 170px;
 }
 
 #artifactz\ discara img {
-    max-width: 75%; /* CD cân đối */
-    max-height: 165px;
+    max-width: 90%; /* Tăng từ 75% lên 90% */
+    max-height: 260px; /* Tăng từ 165px lên 260px */
 }
 
 .category-card:hover img {
