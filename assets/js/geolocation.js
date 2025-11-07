@@ -168,7 +168,7 @@ async function reverseGeocodeAWS(latitude, longitude) {
 
     console.log('AWS Place Details:', place);
 
-    // Extract address components
+    // Extract address components directly
     const addressNumber = place.AddressNumber || '';
     const street = place.Street || '';
     const neighborhood = place.Neighborhood || '';
@@ -178,20 +178,12 @@ async function reverseGeocodeAWS(latitude, longitude) {
     const postalCode = place.PostalCode || '';
     const country = place.Country || '';
 
-    // Build detailed street address for Vietnam
-    const detailedStreet = buildAWSDetailedStreet({
-      addressNumber,
-      street,
-      neighborhood,
-      municipality
-    });
-
-    // Map to Vietnamese city format
-    const city = mapAWSCityToVietnamese(subRegion, region, municipality);
+    // Use address directly without normalization
+    const city = subRegion || region || municipality || '';
 
     return {
       fullAddress: place.Label || '',
-      detailedStreet: detailedStreet,
+      detailedStreet: place.Label || '',
       streetNumber: addressNumber,
       route: street,
       ward: neighborhood,
@@ -205,115 +197,6 @@ async function reverseGeocodeAWS(latitude, longitude) {
     console.error('AWS Geocoding Error:', error);
     throw error;
   }
-}
-
-/**
- * Build detailed street address from AWS components
- * Format: "123 Nguyễn Văn Linh, Phường Tân Phú, Quận 7"
- */
-function buildAWSDetailedStreet(components) {
-  const parts = [];
-
-  // Street number (Số nhà)
-  if (components.addressNumber) {
-    parts.push(components.addressNumber);
-  }
-
-  // Street name
-  if (components.street) {
-    parts.push(components.street);
-  }
-
-  // Neighborhood/Ward (Phường/Xã)
-  if (components.neighborhood) {
-    // Add prefix if needed
-    const ward = components.neighborhood;
-    if (!ward.toLowerCase().includes('phường') &&
-        !ward.toLowerCase().includes('xã') &&
-        !ward.toLowerCase().includes('ward')) {
-      parts.push('Phường ' + ward);
-    } else {
-      parts.push(ward);
-    }
-  }
-
-  // Municipality/District (Quận/Huyện)
-  if (components.municipality) {
-    const district = components.municipality;
-    if (!district.toLowerCase().includes('quận') &&
-        !district.toLowerCase().includes('huyện') &&
-        !district.toLowerCase().includes('district')) {
-      // Detect if urban or rural
-      const isUrban = district.match(/^\d+$/) ||
-                     district.toLowerCase().includes('city');
-      const prefix = isUrban ? 'Quận ' : 'Huyện ';
-      parts.push(prefix + district);
-    } else {
-      parts.push(district);
-    }
-  }
-
-  return parts.join(', ');
-}
-
-/**
- * Map AWS city name to Vietnamese province format for dropdown
- */
-function mapAWSCityToVietnamese(subRegion, region, municipality) {
-  const cityName = subRegion || region || municipality || '';
-
-  // Common mappings for major Vietnamese cities
-  const cityMappings = {
-    'Thành phố Hồ Chí Minh': 'TP. Hồ Chí Minh',
-    'Hồ Chí Minh': 'TP. Hồ Chí Minh',
-    'Ho Chi Minh City': 'TP. Hồ Chí Minh',
-    'Thành phố Hà Nội': 'Hà Nội',
-    'Hà Nội': 'Hà Nội',
-    'Hanoi': 'Hà Nội',
-    'Thành phố Đà Nẵng': 'Đà Nẵng',
-    'Đà Nẵng': 'Đà Nẵng',
-    'Da Nang': 'Đà Nẵng',
-    'Thành phố Hải Phòng': 'Hải Phòng',
-    'Hải Phòng': 'Hải Phòng',
-    'Hai Phong': 'Hải Phòng',
-    'Thành phố Cần Thơ': 'Cần Thơ',
-    'Cần Thơ': 'Cần Thơ',
-    'Can Tho': 'Cần Thơ'
-  };
-
-  // Check exact mapping
-  if (cityMappings[cityName]) {
-    return cityMappings[cityName];
-  }
-
-  // List of Vietnamese provinces (must match dropdown)
-  const provinceList = [
-    'Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ',
-    'Hà Giang', 'Cao Bằng', 'Lào Cai', 'Bắc Kạn', 'Lạng Sơn',
-    'Tuyên Quang', 'Thái Nguyên', 'Phú Thọ', 'Yên Bái', 'Bắc Giang',
-    'Quảng Ninh', 'Hòa Bình', 'Sơn La', 'Điện Biên', 'Lai Châu',
-    'Vĩnh Phúc', 'Bắc Ninh', 'Hải Dương', 'Hưng Yên', 'Hà Nam',
-    'Nam Định', 'Ninh Bình', 'Thanh Hóa', 'Nghệ An', 'Hà Tĩnh',
-    'Quảng Bình', 'Quảng Trị', 'Thừa Thiên - Huế', 'Quảng Nam', 'Quảng Ngãi',
-    'Bình Định', 'Phú Yên', 'Khánh Hòa', 'Ninh Thuận', 'Bình Thuận',
-    'Kon Tum', 'Gia Lai', 'Đắk Lắk', 'Đắk Nông', 'Lâm Đồng',
-    'Bình Phước', 'Tây Ninh', 'Bình Dương', 'Đồng Nai', 'Bà Rịa - Vũng Tàu',
-    'Long An', 'Tiền Giang', 'Bến Tre', 'Trà Vinh', 'Vĩnh Long',
-    'Đồng Tháp', 'An Giang', 'Kiên Giang', 'Hậu Giang', 'Sóc Trăng',
-    'Bạc Liêu', 'Cà Mau'
-  ];
-
-  // Find matching province
-  const searchText = cityName.toLowerCase();
-  for (const province of provinceList) {
-    const provinceClean = province.toLowerCase().replace('tp. ', '');
-    if (searchText.includes(provinceClean) || provinceClean.includes(searchText)) {
-      return province;
-    }
-  }
-
-  // Return as-is if no match
-  return cityName;
 }
 
 /**
@@ -341,16 +224,15 @@ async function reverseGeocodeOSM(latitude, longitude) {
       throw new Error('Unable to determine address from location');
     }
 
-    // Extract detailed address components
+    // Extract detailed address components directly
     const address = data.address;
 
-    // Build detailed street address with all components
-    const detailedStreet = buildDetailedStreetAddress(address);
-    const city = formatCityForVietnam(address);
+    // Use address directly without normalization
+    const city = address.city || address.town || address.village || address.municipality || address.state || '';
 
     return {
       fullAddress: data.display_name,
-      detailedStreet: detailedStreet,
+      detailedStreet: data.display_name,
       houseNumber: address.house_number || '',
       road: address.road || '',
       ward: address.suburb || address.neighbourhood || address.quarter || '',
@@ -365,133 +247,6 @@ async function reverseGeocodeOSM(latitude, longitude) {
     console.error('Reverse geocoding error:', error);
     throw new Error('Unable to convert location to address. Please try again or enter manually.');
   }
-}
-
-/**
- * Build detailed street address with house number, road, ward, district
- */
-function buildDetailedStreetAddress(address) {
-  const parts = [];
-
-  // House number (Số nhà)
-  if (address.house_number) {
-    parts.push(address.house_number);
-  }
-
-  // Road/Street name (Đường)
-  if (address.road) {
-    parts.push(address.road);
-  }
-
-  // Ward/Suburb/Neighbourhood (Phường/Xã)
-  const ward = address.suburb || address.neighbourhood || address.quarter || address.hamlet;
-  if (ward) {
-    // Add prefix if needed
-    if (!ward.toLowerCase().includes('phường') &&
-        !ward.toLowerCase().includes('xã') &&
-        !ward.toLowerCase().includes('ward')) {
-      parts.push('Phường ' + ward);
-    } else {
-      parts.push(ward);
-    }
-  }
-
-  // District (Quận/Huyện)
-  const district = address.city_district || address.county || address.town;
-  if (district) {
-    // Add prefix if needed
-    if (!district.toLowerCase().includes('quận') &&
-        !district.toLowerCase().includes('huyện') &&
-        !district.toLowerCase().includes('district')) {
-      // Try to detect if it's urban (Quận) or rural (Huyện)
-      const isUrbanDistrict = district.match(/^\d+$/) ||
-                              address.city === 'Ho Chi Minh City' ||
-                              address.city === 'Hanoi';
-      const prefix = isUrbanDistrict ? 'Quận ' : 'Huyện ';
-      parts.push(prefix + district);
-    } else {
-      parts.push(district);
-    }
-  }
-
-  return parts.join(', ') || '';
-}
-
-/**
- * Format city specifically for Vietnam with proper province names
- */
-function formatCityForVietnam(address) {
-  // Get city/province name
-  const cityName = address.city ||
-                   address.town ||
-                   address.village ||
-                   address.municipality ||
-                   address.state ||
-                   '';
-
-  // Map to standard Vietnamese province names
-  return mapToVietnameseProvince(cityName, address);
-}
-
-/**
- * Map to standard Vietnamese province names (must match dropdown options)
- */
-function mapToVietnameseProvince(cityName, address) {
-  const searchText = cityName.toLowerCase();
-
-  // Exact mappings for major cities
-  const exactMappings = {
-    'hanoi': 'Hà Nội',
-    'ha noi': 'Hà Nội',
-    'hà nội': 'Hà Nội',
-    'ho chi minh city': 'TP. Hồ Chí Minh',
-    'ho chi minh': 'TP. Hồ Chí Minh',
-    'saigon': 'TP. Hồ Chí Minh',
-    'sài gòn': 'TP. Hồ Chí Minh',
-    'thành phố hồ chí minh': 'TP. Hồ Chí Minh',
-    'da nang': 'Đà Nẵng',
-    'đà nẵng': 'Đà Nẵng',
-    'danang': 'Đà Nẵng',
-    'hai phong': 'Hải Phòng',
-    'hải phòng': 'Hải Phòng',
-    'haiphong': 'Hải Phòng',
-    'can tho': 'Cần Thơ',
-    'cần thơ': 'Cần Thơ',
-    'cantho': 'Cần Thơ'
-  };
-
-  // Check exact match first
-  if (exactMappings[searchText]) {
-    return exactMappings[searchText];
-  }
-
-  // Full list of Vietnamese provinces (must match dropdown in user-profile.html)
-  const provinces = [
-    'Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ',
-    'Hà Giang', 'Cao Bằng', 'Lào Cai', 'Bắc Kạn', 'Lạng Sơn',
-    'Tuyên Quang', 'Thái Nguyên', 'Phú Thọ', 'Yên Bái', 'Bắc Giang',
-    'Quảng Ninh', 'Hòa Bình', 'Sơn La', 'Điện Biên', 'Lai Châu',
-    'Vĩnh Phúc', 'Bắc Ninh', 'Hải Dương', 'Hưng Yên', 'Hà Nam',
-    'Nam Định', 'Ninh Bình', 'Thanh Hóa', 'Nghệ An', 'Hà Tĩnh',
-    'Quảng Bình', 'Quảng Trị', 'Thừa Thiên - Huế', 'Quảng Nam', 'Quảng Ngãi',
-    'Bình Định', 'Phú Yên', 'Khánh Hòa', 'Ninh Thuận'
-  ];
-
-  // Try to find matching province by partial name
-  for (const province of provinces) {
-    const provinceClean = province.toLowerCase()
-      .replace('tp. ', '')
-      .replace('thừa thiên - ', '');
-
-    if (searchText.includes(provinceClean) || provinceClean.includes(searchText)) {
-      return province;
-    }
-  }
-
-  // If no match found, return original with proper capitalization
-  return cityName.split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
 }
 
 /**
