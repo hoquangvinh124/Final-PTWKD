@@ -250,6 +250,100 @@ async function reverseGeocodeOSM(latitude, longitude) {
 }
 
 /**
+ * Smart city/province matching for Vietnamese dropdown options
+ * Matches GPS returned city names to standard Vietnamese province names
+ */
+export function matchCityToDropdown(cityName) {
+  if (!cityName) return '';
+
+  const searchText = cityName.toLowerCase().trim();
+
+  // Exact mappings for major cities
+  const exactMappings = {
+    'thành phố hồ chí minh': 'TP. Hồ Chí Minh',
+    'hồ chí minh': 'TP. Hồ Chí Minh',
+    'ho chi minh city': 'TP. Hồ Chí Minh',
+    'ho chi minh': 'TP. Hồ Chí Minh',
+    'saigon': 'TP. Hồ Chí Minh',
+    'sài gòn': 'TP. Hồ Chí Minh',
+    'hcmc': 'TP. Hồ Chí Minh',
+    'tp hcm': 'TP. Hồ Chí Minh',
+    'tp. hcm': 'TP. Hồ Chí Minh',
+    'hanoi': 'Hà Nội',
+    'ha noi': 'Hà Nội',
+    'hà nội': 'Hà Nội',
+    'thành phố hà nội': 'Hà Nội',
+    'da nang': 'Đà Nẵng',
+    'đà nẵng': 'Đà Nẵng',
+    'danang': 'Đà Nẵng',
+    'thành phố đà nẵng': 'Đà Nẵng',
+    'hai phong': 'Hải Phòng',
+    'hải phòng': 'Hải Phòng',
+    'haiphong': 'Hải Phòng',
+    'thành phố hải phòng': 'Hải Phòng',
+    'can tho': 'Cần Thơ',
+    'cần thơ': 'Cần Thơ',
+    'cantho': 'Cần Thơ',
+    'thành phố cần thơ': 'Cần Thơ'
+  };
+
+  // Check exact match first
+  if (exactMappings[searchText]) {
+    return exactMappings[searchText];
+  }
+
+  // Full list of Vietnamese provinces (must match dropdown options)
+  const provinces = [
+    'Hà Nội', 'TP. Hồ Chí Minh', 'Đà Nẵng', 'Hải Phòng', 'Cần Thơ',
+    'Hà Giang', 'Cao Bằng', 'Lào Cai', 'Bắc Kạn', 'Lạng Sơn',
+    'Tuyên Quang', 'Thái Nguyên', 'Phú Thọ', 'Yên Bái', 'Bắc Giang',
+    'Quảng Ninh', 'Hòa Bình', 'Sơn La', 'Điện Biên', 'Lai Châu',
+    'Vĩnh Phúc', 'Bắc Ninh', 'Hải Dương', 'Hưng Yên', 'Hà Nam',
+    'Nam Định', 'Ninh Bình', 'Thanh Hóa', 'Nghệ An', 'Hà Tĩnh',
+    'Quảng Bình', 'Quảng Trị', 'Thừa Thiên - Huế', 'Quảng Nam', 'Quảng Ngãi',
+    'Bình Định', 'Phú Yên', 'Khánh Hòa', 'Ninh Thuận', 'Bình Thuận',
+    'Kon Tum', 'Gia Lai', 'Đắk Lắk', 'Đắk Nông', 'Lâm Đồng',
+    'Bình Phước', 'Tây Ninh', 'Bình Dương', 'Đồng Nai', 'Bà Rịa - Vũng Tàu',
+    'Long An', 'Tiền Giang', 'Bến Tre', 'Trà Vinh', 'Vĩnh Long',
+    'Đồng Tháp', 'An Giang', 'Kiên Giang', 'Hậu Giang', 'Sóc Trăng',
+    'Bạc Liêu', 'Cà Mau'
+  ];
+
+  // Try to find matching province by partial name
+  for (const province of provinces) {
+    const provinceClean = province.toLowerCase()
+      .replace('tp. ', '')
+      .replace('thành phố ', '')
+      .replace('tỉnh ', '')
+      .replace('thừa thiên - ', '')
+      .replace('bà rịa - ', '')
+      .trim();
+
+    const searchClean = searchText
+      .replace('tp. ', '')
+      .replace('tp ', '')
+      .replace('thành phố ', '')
+      .replace('tỉnh ', '')
+      .replace('thừa thiên - ', '')
+      .replace('bà rịa - ', '')
+      .trim();
+
+    // Exact match on cleaned names
+    if (searchClean === provinceClean) {
+      return province;
+    }
+
+    // Contains match
+    if (searchClean.includes(provinceClean) || provinceClean.includes(searchClean)) {
+      return province;
+    }
+  }
+
+  // If no match found, return original
+  return cityName;
+}
+
+/**
  * Get address from GPS with loading UI feedback
  * Uses AWS Location Service for EXACT address with house number
  * @param {Function} onSuccess - Callback with address object
@@ -280,6 +374,9 @@ export async function getAddressFromGPS(onSuccess, onError, onProgress) {
     console.log('AWS Geocoding - Detailed address:', address);
 
     // Step 3: Format result with EXACT detailed information
+    // Use smart matching to ensure city matches dropdown options
+    const matchedCity = matchCityToDropdown(address.city);
+
     const result = {
       // Detailed street includes house number, road, ward, district
       detailedStreet: address.detailedStreet,
@@ -288,8 +385,9 @@ export async function getAddressFromGPS(onSuccess, onError, onProgress) {
       route: address.route,
       ward: address.ward,
       district: address.district,
-      // City matched to dropdown options
-      city: address.city,
+      // City matched to dropdown options using smart matching
+      city: matchedCity,
+      originalCity: address.city, // Keep original for reference
       zipCode: address.postalCode || address.zipCode,
       fullAddress: address.fullAddress,
       coordinates: {

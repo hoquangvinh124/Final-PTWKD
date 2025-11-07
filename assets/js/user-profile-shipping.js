@@ -46,27 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // Auto-select the exact city/province in dropdown
+            // City is already matched to dropdown options by matchCityToDropdown() in geolocation.js
             if (citySelect && addressData.city) {
-              // The city is already mapped to match dropdown options in geolocation.js
-              const exactMatch = Array.from(citySelect.options).find(
-                opt => opt.value === addressData.city
-              );
+              citySelect.value = addressData.city;
+              console.log('City auto-selected:', addressData.city);
 
-              if (exactMatch) {
-                citySelect.value = addressData.city;
-                console.log('City auto-selected:', addressData.city);
-              } else {
-                // Fallback: try partial match
-                const partialMatch = Array.from(citySelect.options).find(
-                  opt => opt.value.toLowerCase().includes(addressData.city.toLowerCase())
-                );
-                if (partialMatch) {
-                  citySelect.value = partialMatch.value;
-                  console.log('City partial match selected:', partialMatch.value);
-                } else {
-                  console.warn('City not found in dropdown:', addressData.city);
-                  showNotification(`City "${addressData.city}" not found in list. Please select manually.`, 'warning');
-                }
+              // Show warning if original city name was different (for debugging)
+              if (addressData.originalCity && addressData.originalCity !== addressData.city) {
+                console.log(`City matched: "${addressData.originalCity}" → "${addressData.city}"`);
+              }
+
+              // Verify selection worked
+              if (!citySelect.value) {
+                console.warn('City not found in dropdown:', addressData.city);
+                showNotification(`City "${addressData.city}" not found in list. Please select manually.`, 'warning');
               }
             }
 

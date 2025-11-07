@@ -283,10 +283,15 @@ async function fillAddressFromGPS() {
           console.log('Checkout - Detailed address filled:', addressData.detailedStreet);
         }
 
-        // Fill city/province - already matched to Vietnamese standard
+        // Fill city/province - already matched to Vietnamese standard by matchCityToDropdown()
         if (cityInput && addressData.city) {
           cityInput.value = addressData.city;
           console.log('Checkout - City filled:', addressData.city);
+
+          // Show warning if original city name was different (for debugging)
+          if (addressData.originalCity && addressData.originalCity !== addressData.city) {
+            console.log(`City matched: "${addressData.originalCity}" → "${addressData.city}"`);
+          }
         }
 
         // Fill zipcode if available
