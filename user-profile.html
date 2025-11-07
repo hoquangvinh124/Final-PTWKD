@@ -19,6 +19,9 @@
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <link href="assets/css/header-footer.css" rel="stylesheet">
 <link href="assets/css/user-profile.css" rel="stylesheet">
+
+<!-- AWS SDK v2 for Location Service (GPS/Geolocation) -->
+<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1563.0.min.js"></script>
 </head>
 <body>
    <header>
@@ -147,6 +150,7 @@
                 <div class="hero-tabs">
                   <button class="active" data-view="overview">Overview</button>
                   <button data-view="shipping">Shipping Address</button>
+                  <button data-view="orders">Purchased Orders</button>
                 </div>
               </div>
             </div>
@@ -378,14 +382,31 @@
       </article>
     </section>
 
+    <!-- Purchased Orders Section -->
+    <section class="purchased-orders-section" id="purchasedOrdersSection" style="display: none;">
+      <article class="glass-card">
+        <div class="orders-header">
+          <h2>Purchased Orders</h2>
+          <p class="orders-subtitle">View your order history and track deliveries</p>
+        </div>
+        <div class="orders-list" id="ordersList">
+          <!-- Orders will be dynamically loaded here -->
+        </div>
+      </article>
+    </section>
+
     <!-- Shipping Address Section -->
     <section class="shipping-address-section" id="shippingAddressSection">
       <article class="glass-card">
         <div id="shippingAddressPanel">
           <form id="shippingAddressForm" class="shipping-form-modern">
             <h3 class="shipping-form-title">Update Address Information</h3>
-            <p class="shipping-form-subtitle">Use the information below when billing</p>
-            
+
+            <button type="button" class="gps-btn" id="shippingGPSBtn">
+              <i class="fas fa-location-crosshairs"></i>
+              Use GPS
+            </button>
+
             <div class="shipping-form-grid">
               <div class="shipping-row-2">
                 <div class="shipping-field-group">
@@ -640,29 +661,7 @@
     </div>
   </div>
 
-  <!-- Footer -->
-  <div class="footerContainer">
-      <div class="socialIcons">
-          <a href=""><i class="fa-brands fa-facebook"></i></a>
-          <a href=""><i class="fa-brands fa-instagram"></i></a>
-          <a href=""><i class="fa-brands fa-twitter"></i></a>
-          <a href=""><i class="fa-brands fa-google-plus"></i></a>
-          <a href=""><i class="fa-brands fa-youtube"></i></a>
-      </div>
-      <div class="footerNav">
-          <ul>
-              <li><a href="homepage.html">HOME</a></li>
-              <li><a href="news.html">NEWS</a></li>
-              <li><a href="audio-products.html">PRODUCTS</a></li>
-              <li><a href="">CONTACT US</a></li>
-              <li><a href="">OUR TEAM</a></li>
-          </ul>
-      </div>
-      <div class="footerBottom">
-          <p>Copyright &copy;2025; Designed by <span class="designer">Nhóm</span></p>
-      </div>
-  </div>
-
+  <script src="assets/js/learn.js"></script>
   <script src="assets/js/search.js"></script>
   <script src="assets/js/script.js"></script>
   <script src="assets/js/chatbot.js"></script>
@@ -670,8 +669,9 @@
   <script src="assets/js/confirm-modal.js"></script>
   <script type="module" src="assets/js/user-wishlist.js"></script>
   <script type="module" src="assets/js/user-booked-movies.js"></script>
+  <script type="module" src="assets/js/user-purchased-orders.js"></script>
+  <script type="module" src="assets/js/user-profile-shipping.js"></script>
   <script type="module" src="assets/js/user-profile.js"></script>
   <script type="module" src="assets/js/user-auth-handler.js"></script>
-  <script type="module" src="assets/js/wishlist.js"></script>
 </body>
 </html>
