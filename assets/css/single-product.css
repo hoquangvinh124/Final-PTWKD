@@ -1,6 +1,14 @@
 /* Optimized: Reduced from 7 fonts (1.5MB) to essential weights only */
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap');
 
+@font-face {
+    font-family: 'NeuePlak-ExtendedExtraBlack';
+    src: url('../fonts/NeuePlak-ExtendedExtraBlack.woff2') format('woff2');
+    font-style: normal;
+    font-display: swap;
+    font-weight: 900;
+}
+
 :root {
   --main-color: #eceade;
   --white-color: #fff;
@@ -1477,7 +1485,8 @@ i.shopping-bag-icon {
     margin: 0 0 50px 0;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-family: 'GulfsDisplay', sans-serif;
+    font-family: 'NeuePlak-ExtendedExtraBlack', sans-serif;
+    text-shadow: #8d5252 0px 10px 15px;
 }
 
 /* Fix Bootstrap row negative margin causing left alignment issue */

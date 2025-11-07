@@ -654,6 +654,7 @@ body > header {
 /*footer*/
 footer{
     padding: 0;
+    margin-top: 120px;
 }
 .footerContainer {
     background-color: black;

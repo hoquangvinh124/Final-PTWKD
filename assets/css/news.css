@@ -39,6 +39,14 @@
     font-weight: 100;
 }
 
+@font-face {
+    font-family: 'NeuePlak-ExtendedExtraBlack';
+    src: url('../fonts/NeuePlak-ExtendedExtraBlack.woff2') format('woff2');
+    font-style: normal;
+    font-display: swap;
+    font-weight: 900;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -125,12 +133,13 @@ a {
 }
 
 .news-hero h1 {
-    font-family: var(--title-font);
+    font-family: 'NeuePlak-ExtendedExtraBlack', sans-serif;
     font-size: 48px;
     color: var(--secondary);
     margin-bottom: 15px;
     text-transform: uppercase;
     letter-spacing: 2px;
+    text-shadow: #8d5252 0px 10px 15px;
 }
 
 .news-hero .subtitle {
@@ -547,7 +556,7 @@ a {
 }
 
 .newsletter-text h2 {
-    font-family: var(--title-font);
+    font-family: 'NeuePlak-ExtendedExtraBlack', sans-serif;
     font-weight: 700;
     font-size: 36px;
     margin-bottom: 20px;

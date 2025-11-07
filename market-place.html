@@ -414,6 +414,36 @@
     </div>
   </div>
 
+  <!-- Cart Modal -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <div class="cart-modal" id="cartModal">
+    <div class="cart-header">
+      <h3>GIỎ HÀNG CỦA BẠN</h3>
+      <button class="cart-close" id="cartClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <!-- Cart items will be dynamically inserted here -->
+      <div class="cart-empty" id="cartEmpty">
+        <i class="fas fa-shopping-cart"></i>
+        <p>Giỏ hàng của bạn đang trống</p>
+      </div>
+    </div>
+
+    <div class="cart-footer" id="cartFooter" style="display: none;">
+      <div class="cart-total">
+        <span>Tổng cộng:</span>
+        <span id="cartTotalAmount">0</span>
+      </div>
+      <div class="cart-actions">
+        <button class="checkout-btn" id="checkoutBtn">Thanh toán</button>
+        <button class="continue-shopping" id="continueShopping">TIẾP TỤC MUA HÀNG</button>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <div class="footerContainer">
       <div class="socialIcons">

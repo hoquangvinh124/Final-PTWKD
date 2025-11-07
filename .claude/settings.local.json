@@ -3,7 +3,12 @@
     "allow": [
       "Bash(for:*)",
       "Bash(do grep -n \"search.js\" \"$file\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(ren:*)",
+      "Bash(find:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

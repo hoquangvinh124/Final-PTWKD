@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="vi">
-<head>
+<html lang="en">
+
+  <head>
     <!-- DNS Prefetch & Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,19 +11,35 @@
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kết quả tìm kiếm - OLDIE ZONE</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Search Results</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+
+    <link rel="stylesheet" href="assets/css/products.css">
+
     <link rel="stylesheet" href="assets/css/header-footer.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/homepage.css">
-    <script src="assets/js/search.js" defer></script>
-    <script src="assets/js/search-results.js" defer></script>
-    <script src="assets/js/filter-dropdown.js" defer></script>
-</head>
-<body>
+    <link rel="stylesheet" href="assets/css/product-pagination.css">
+
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"></noscript>
+
+<!--TemplateMo 571 Hexashop https://templatemo.com/tm-571-hexashop -->
+    </head>
+
+    <body>
+
+
     <!-- ***** Header Area Start ***** -->
     <header>
         <nav class="navbar section-content">
@@ -99,15 +116,19 @@
     <!-- ***** Header Area End ***** -->
 
     <!-- ***** Products Area Starts ***** -->
-    <section class="section" id="products">
+    <section class="section" id="products" style="margin-top: 30px; padding-top: 0;">
         <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-12 text-center">
+                    <h2 id="searchCount" style="font-family: 'Barlow', sans-serif; font-size: 28px; font-weight: 500; color: #ececec; text-transform: uppercase; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 3px solid rgb(243, 156, 18); display: inline-block;">
+                        Đang tìm kiếm...
+                    </h2>
+                </div>
+            </div>
+
             <div class="row">
                 <!-- ***** Simple Filter Start ***** -->
                 <div class="col-xl-3 col-lg-4 col-md-12">
-                    <h2 class="section-title">SEARCH RESULTS</h2>
-                    <p class="search-subtitle">Searching for: <strong id="searchQuery"></strong></p>
-                    <p class="search-count" id="searchCount">Đang tìm kiếm...</p>
-
                     <h2 class="section-title">CATEGORY</h2>
                     <div class="simple-filter-container">
                         <!-- Type Filter -->
@@ -165,15 +186,18 @@
                         <!-- Product Items will be inserted here -->
                     </div>
 
-                    <!-- Empty State -->
-                    <div class="col-12 product-empty-state" id="noResults" style="display: none;">
+                    <!-- Pagination will be inserted here by ProductPagination -->
+
+                    <!-- Empty State - Hidden -->
+                    <!-- <div class="col-12 product-empty-state" id="noResults" style="display: none;">
                         <div class="empty-card">
                             <i class="fa fa-search"></i>
                             <h4>Không tìm thấy sản phẩm phù hợp</h4>
                             <p>Hãy thử điều chỉnh lại bộ lọc để xem thêm nhiều sản phẩm khác.</p>
                             <button type="button" class="filter-reset-btn" onclick="resetFilters()">Xoá bộ lọc</button>
                         </div>
-                    </div>
+                    </div> -->
+
                 </div>
                 <!-- ***** Products Grid End ***** -->
             </div>
@@ -181,7 +205,99 @@
     </section>
     <!-- ***** Products Area Ends ***** -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="assets/js/user-auth-handler.js"></script>
+    <!-- Chatbot Window -->
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <h3>Chatbot Assistant</h3>
+            <button class="chatbot-close" id="chatbotClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="message-container bot">
+                <div class="message bot">
+                    Hello! How can I help you today?
+                    <div class="timestamp">Just now</div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message...">
+            <button id="chatbotSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ***** Footer Start ***** -->
+        <!-- Cart Modal -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3>GIỎ HÀNG CỦA BẠN</h3>
+            <button class="cart-close" id="cartClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically inserted here -->
+            <div class="cart-empty" id="cartEmpty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Giỏ hàng của bạn đang trống</p>
+            </div>
+        </div>
+
+        <div class="cart-footer" id="cartFooter" style="display: none;">
+            <div class="cart-total">
+                <span>Tổng cộng:</span>
+                <span id="cartTotalAmount">0</span>
+            </div>
+            <div class="cart-actions">
+                <button class="checkout-btn" id="checkoutBtn">Thanh toán</button>
+                <button class="continue-shopping" id="continueShopping">TIẾP TỤC MUA HÀNG</button>
+            </div>
+        </div>
+    </div>
+
+<footer>
+        <div class="footerContainer">
+            <div class="socialIcons">
+                <a href=""><i class="fa-brands fa-facebook"></i></a>
+                <a href=""><i class="fa-brands fa-instagram"></i></a>
+                <a href=""><i class="fa-brands fa-twitter"></i></a>
+                <a href=""><i class="fa-brands fa-google-plus"></i></a>
+                <a href=""><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <div class="footerNav">
+                <ul>
+                    <li><a href="">HOME</a></li>
+                    <li><a href="">NEWS</a></li>
+                    <li><a href="">PRODUCTS</a></li>
+                    <li><a href="">CONTACT US</a></li>
+                    <li><a href="">OUR TEAM</a></li>
+                </ul>
+            </div>
+            <div class="footerBottom">
+                <p>Copyright &copy;2025; Designed by <span class="designer">Nhóm</span></p>
+            </div>
+        </div>
+    </footer>
+    <!-- ***** Footer End ***** -->
+
+
+    <!-- filter-dropdown.js NOT loaded - search-results.js has its own filter logic -->
+    <!-- product-loader.js NOT loaded on search page - it conflicts with search-results.js -->
+
+    <script src="assets/js/search.js" defer></script>
+    <script src="assets/js/search-results.js" defer></script>
+    <script src="assets/js/product-pagination.js" defer></script>
+    <script src="assets/js/script.js"></script>
+    <script src="assets/js/chatbot.js"></script>
+    <script src="assets/js/notification.js"></script>
+    <script src="assets/js/confirm-modal.js"></script>
+<script type="module" src="assets/js/user-auth-handler.js"></script>
+<script type="module" src="assets/js/wishlist.js"></script>
 </body>
+
 </html>

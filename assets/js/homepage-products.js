@@ -73,8 +73,8 @@ class HomepageProducts {
     const tags = ['Sale', 'Vintage', 'Limited', 'New', 'Hot'];
 
     const productsHTML = randomProducts.map((product, index) => {
-      // Assign tag cyclically (skip last card - no tag)
-      const tag = index < 9 ? tags[index % tags.length] : null;
+      // Assign tag cyclically, last card gets 'Hot' tag
+      const tag = index < 9 ? tags[index % tags.length] : 'Hot';
 
       return this.createBestSellerCard(product, tag);
     }).join('');
@@ -179,41 +179,32 @@ class HomepageProducts {
    * Bind Add to Cart and Wishlist functionality
    */
   bindProductActions() {
+    console.log('Binding homepage product actions...');
+    
     // Add to Cart buttons
     const addToCartButtons = document.querySelectorAll('.products-grid .add-to-cart');
+    console.log('Found cart buttons:', addToCartButtons.length);
+    
     addToCartButtons.forEach(button => {
       button.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
 
-        const productId = button.getAttribute('data-product-id');
-        const productName = button.getAttribute('data-product-name');
-        const productPrice = button.getAttribute('data-product-price');
-        const productImage = button.getAttribute('data-product-image');
-
-        // Use existing cart functionality from script.js
+        console.log('Cart button clicked');
+        // Use existing cart functionality from script.js - pass button element
         if (window.cart) {
-          window.cart.addToCart(productId, productName, productPrice, productImage);
+          window.cart.addToCart(button);
+        } else {
+          console.error('window.cart not found!');
         }
       });
     });
 
-    // Wishlist/Heart buttons
+    // Wishlist buttons - NO binding here, let wishlist.js event delegation handle it
     const heartButtons = document.querySelectorAll('.products-grid .heart-btn');
-    heartButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        const productId = button.getAttribute('data-product-id');
-        const productName = button.getAttribute('data-product-name');
-        const productPrice = button.getAttribute('data-product-price');
-        const productImage = button.getAttribute('data-product-image');
-
-        // Use existing wishlist functionality from wishlist.js
-        if (window.wishlist) {
-          window.wishlist.addToWishlist(productId, productName, productPrice, productImage);
-        }
-      });
-    });
+    console.log('Found heart buttons (will be handled by wishlist.js):', heartButtons.length);
+    
+    console.log('Homepage product actions bound successfully');
   }
 }
 
