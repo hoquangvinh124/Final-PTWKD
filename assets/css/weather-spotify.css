@@ -5,14 +5,8 @@
     margin-bottom: 24px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(243, 156, 28, 0.2);
-    transition: all 0.3s ease;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-}
-
-.weather-spotify-widget:hover {
-    border-color: rgba(243, 156, 28, 0.5);
-    box-shadow: 0 15px 35px rgba(243, 156, 28, 0.3);
 }
 
 .weather-info {
@@ -56,12 +50,6 @@
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid rgba(243, 156, 28, 0.15);
-    transition: all 0.3s ease;
-}
-
-.mood-quote:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(243, 156, 28, 0.3);
 }
 
 .mood-quote p {
@@ -83,12 +71,6 @@
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(243, 156, 28, 0.1);
-    transition: all 0.3s ease;
-}
-
-.spotify-container:hover {
-    border-color: rgba(243, 156, 28, 0.3);
-    box-shadow: 0 6px 20px rgba(243, 156, 28, 0.2);
 }
 
 .spotify-container iframe {
@@ -125,12 +107,6 @@
     color: #fff;
     text-align: center;
     border: 1px solid rgba(255, 59, 48, 0.3);
-    transition: all 0.3s ease;
-}
-
-.weather-error:hover {
-    background: rgba(255, 59, 48, 0.15);
-    border-color: rgba(255, 59, 48, 0.5);
 }
 
 .weather-error i {
