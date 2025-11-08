@@ -124,12 +124,12 @@ const mockCustomers = [
 ];
 
 const mockScreenings = [
-    { id: 1, movie: 'The Godfather (1972)', room: 'Phòng 1', time: '08/11/2025 19:00', price: 50000, available: 25, sold: 75, status: 'scheduled' },
-    { id: 2, movie: 'Pulp Fiction (1994)', room: 'Phòng 2', time: '08/11/2025 20:30', price: 50000, available: 40, sold: 60, status: 'scheduled' },
-    { id: 3, movie: 'Casablanca (1942)', room: 'Phòng 1', time: '09/11/2025 18:00', price: 50000, available: 15, sold: 85, status: 'scheduled' },
-    { id: 4, movie: 'Star Wars (1977)', room: 'Phòng 3', time: '09/11/2025 19:30', price: 60000, available: 0, sold: 120, status: 'sold-out' },
-    { id: 5, movie: 'Back to the Future (1985)', room: 'Phòng 2', time: '10/11/2025 17:00', price: 50000, available: 80, sold: 20, status: 'scheduled' },
-    { id: 6, movie: 'The Shawshank Redemption (1994)', room: 'Phòng 1', time: '10/11/2025 21:00', price: 50000, available: 30, sold: 70, status: 'scheduled' },
+    { id: 1, movie: 'The Godfather (1972)', room: 'Phòng 1', time: '08/11/2025 19:00', booked: 75, watching: 12, status: 'playing' },
+    { id: 2, movie: 'Pulp Fiction (1994)', room: 'Phòng 2', time: '08/11/2025 20:30', booked: 60, watching: 8, status: 'scheduled' },
+    { id: 3, movie: 'Casablanca (1942)', room: 'Phòng 1', time: '09/11/2025 18:00', booked: 85, watching: 0, status: 'scheduled' },
+    { id: 4, movie: 'Star Wars (1977)', room: 'Phòng 3', time: '09/11/2025 19:30', booked: 120, watching: 45, status: 'playing' },
+    { id: 5, movie: 'Back to the Future (1985)', room: 'Phòng 2', time: '10/11/2025 17:00', booked: 20, watching: 0, status: 'scheduled' },
+    { id: 6, movie: 'The Shawshank Redemption (1994)', room: 'Phòng 1', time: '10/11/2025 21:00', booked: 95, watching: 24, status: 'playing' },
 ];
 
 // ===== UTILITY FUNCTIONS =====
@@ -618,12 +618,15 @@ function populateScreeningsTable(filters = {}) {
             <td><strong>${screening.movie}</strong></td>
             <td>${screening.room}</td>
             <td>${screening.time}</td>
-            <td><strong>${formatCurrency(screening.price)}</strong></td>
-            <td>${screening.available}</td>
-            <td>${screening.sold}</td>
+            <td>${screening.booked}</td>
             <td>
-                <span class="status-badge ${screening.status === 'sold-out' ? 'cancelled' : 'completed'}">
-                    ${screening.status === 'sold-out' ? 'Hết vé' : 'Còn vé'}
+                <span style="color: ${screening.watching > 0 ? '#4ade80' : '#94a3b8'}; font-weight: 600;">
+                    ${screening.watching}
+                </span>
+            </td>
+            <td>
+                <span class="status-badge ${screening.status === 'playing' ? 'completed' : screening.status === 'scheduled' ? 'pending' : 'cancelled'}">
+                    ${screening.status === 'playing' ? 'Đang chiếu' : screening.status === 'scheduled' ? 'Chưa chiếu' : 'Đã hủy'}
                 </span>
             </td>
             <td>
