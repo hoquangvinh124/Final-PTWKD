@@ -239,12 +239,9 @@ function fillDefaultAddress() {
   // This is already in the correct format (e.g., "TP. Hồ Chí Minh", "Hà Nội")
   document.getElementById('city').value = address.city || '';
 
-  document.getElementById('zipCode').value = address.zipCode || '';
-
   console.log('Filled from saved address:', {
     street: address.street,
-    city: address.city,
-    zipCode: address.zipCode
+    city: address.city
   });
 
   // Update order data
@@ -254,8 +251,7 @@ function fillDefaultAddress() {
     email: userEmail,
     phone: address.phone || '',
     address: address.street || '',
-    city: address.city || '',
-    zipCode: address.zipCode || ''
+    city: address.city || ''
   };
 
   showQuickFillConfirmation('Saved address filled successfully!');
@@ -275,7 +271,6 @@ async function fillAddressFromGPS() {
         // Fill in the form with DETAILED GPS data
         const addressInput = document.getElementById('address');
         const cityInput = document.getElementById('city');
-        const zipCodeInput = document.getElementById('zipCode');
 
         // Use detailedStreet which includes: house number, road, ward, district
         if (addressInput && addressData.detailedStreet) {
@@ -292,11 +287,6 @@ async function fillAddressFromGPS() {
           if (addressData.originalCity && addressData.originalCity !== addressData.city) {
             console.log(`City matched: "${addressData.originalCity}" → "${addressData.city}"`);
           }
-        }
-
-        // Fill zipcode if available
-        if (zipCodeInput && addressData.zipCode) {
-          zipCodeInput.value = addressData.zipCode;
         }
 
         // Show detailed success message
@@ -370,8 +360,7 @@ function fillDefaultInfo() {
     email: 'john.doe@example.com',
     phone: '+1 (555) 123-4567',
     address: '123 Main Street',
-    city: 'San Francisco',
-    zipCode: '94103'
+    city: 'San Francisco'
   };
   document.getElementById('firstName').value = defaultInfo.firstName;
   document.getElementById('lastName').value = defaultInfo.lastName;
@@ -379,7 +368,6 @@ function fillDefaultInfo() {
   document.getElementById('phone').value = defaultInfo.phone;
   document.getElementById('address').value = defaultInfo.address;
   document.getElementById('city').value = defaultInfo.city;
-  document.getElementById('zipCode').value = defaultInfo.zipCode;
   orderData.customer = defaultInfo;
   showQuickFillConfirmation();
 }
@@ -481,11 +469,10 @@ function validateCustomerInfo() {
   const phone = document.getElementById('phone').value.trim();
   const address = document.getElementById('address').value.trim();
   const city = document.getElementById('city').value.trim();
-  const zipCode = document.getElementById('zipCode').value.trim();
-  if (!firstName || !lastName || !email || !phone || !address || !city || !zipCode) {
+  if (!firstName || !lastName || !email || !phone || !address || !city) {
     return false;
   }
-  orderData.customer = { firstName, lastName, email, phone, address, city, zipCode };
+  orderData.customer = { firstName, lastName, email, phone, address, city };
   return true;
 }
 
@@ -664,7 +651,7 @@ function prepareEmailData() {
   // Customer information
   emailData.customer_name = `${orderData.customer.firstName} ${orderData.customer.lastName}`;
   emailData.shipping_name = emailData.customer_name;
-  emailData.shipping_address = `${orderData.customer.address}, ${orderData.customer.city}, ${orderData.customer.zipCode}`;
+  emailData.shipping_address = `${orderData.customer.address}, ${orderData.customer.city}`;
   emailData.shipping_phone = orderData.customer.phone;
   
   // Payment information

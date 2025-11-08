@@ -34,7 +34,7 @@ function showNotification(message, type = 'success') {
       .notification-toast {
         position: fixed;
         top: 20px;
-        right: 20px;
+        left: 20px;
         background: rgba(0, 0, 0, 0.9);
         border: 1px solid rgba(255, 100, 104, 0.3);
         border-radius: 12px;
@@ -42,7 +42,7 @@ function showNotification(message, type = 'success') {
         color: #fff;
         z-index: 100000;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+        animation: slideInLeft 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
                    fadeOut 0.3s ease 2.5s forwards;
         min-width: 300px;
         max-width: 500px;
@@ -94,9 +94,9 @@ function showNotification(message, type = 'success') {
         color: #3b82f6;
       }
       
-      @keyframes slideInRight {
+      @keyframes slideInLeft {
         from { 
-          transform: translateX(120%); 
+          transform: translateX(-120%); 
           opacity: 0; 
         }
         to { 
@@ -108,15 +108,15 @@ function showNotification(message, type = 'success') {
       @keyframes fadeOut {
         to { 
           opacity: 0; 
-          transform: translateX(20px);
+          transform: translateX(-20px);
         }
       }
 
       @media (max-width: 768px) {
         .notification-toast {
           top: 10px;
-          right: 10px;
           left: 10px;
+          right: 10px;
           min-width: auto;
           max-width: none;
         }

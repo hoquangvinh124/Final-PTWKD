@@ -225,7 +225,7 @@
     "category": "Audio",
     "subcategory": "CD",
     "tags": [],
-    "price": "From 402.000₫",
+    "price": "402.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -568,7 +568,7 @@
     "category": "Audio",
     "subcategory": "Vinyl",
     "tags": [],
-    "price": "From 724.000₫",
+    "price": "724.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -593,7 +593,7 @@
     "category": "Audio",
     "subcategory": "Vinyl",
     "tags": [],
-    "price": "From 509.000₫",
+    "price": "509.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
@@ -643,7 +643,7 @@
     "category": "Audio",
     "subcategory": "Vinyl",
     "tags": [],
-    "price": "From 804.000₫",
+    "price": "804.000₫",
     "stock_quantity": 100,
     "is_available": true,
     "brand": {
