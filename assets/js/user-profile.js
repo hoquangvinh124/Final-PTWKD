@@ -506,13 +506,31 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
         firstName: profileData.firstName || '',
         lastName: profileData.lastName || '',
         city: profileData.city || '',
-        birthdate: profileData.birthdate || '',
+        dateOfBirth: profileData.birthdate || '',
         country: profileData.country || '',
         gender: profileData.gender || '',
         avatar: profileData.avatar || ''
       };
+      
+      // Save to localStorage
+      const currentSession = JSON.parse(localStorage.getItem('demo.auth') || '{}');
+      const updatedSession = {
+        ...currentSession,
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        city: payload.city,
+        dateOfBirth: payload.dateOfBirth,
+        country: payload.country,
+        gender: payload.gender,
+        avatar: payload.avatar
+      };
+      localStorage.setItem('demo.auth', JSON.stringify(updatedSession));
+      
+      // Dispatch event
       const eventDetail = { detail: payload };
       document.dispatchEvent(new CustomEvent('profile:save', eventDetail));
+      
+      // Optional: API call
       if(window.fetch){
         try{
           fetch('/api/profile', {
@@ -522,6 +540,12 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
           }).catch(()=>{});
         }catch(e){}
       }
+      
+      // Exit edit mode and return to overview
+      setEditMode(false);
+      
+      // Show success message
+      alert('Profile saved successfully!');
     });
   }
 
