@@ -1,0 +1,204 @@
+.weather-spotify-widget {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.weather-spotify-widget::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: pulse 15s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(-10px, -10px) scale(1.05);
+    }
+}
+
+.weather-info {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    color: #fff;
+}
+
+.weather-icon {
+    font-size: 48px;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.weather-details {
+    flex: 1;
+}
+
+.weather-temp {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.weather-description {
+    font-size: 14px;
+    text-transform: capitalize;
+    opacity: 0.95;
+    margin-top: 4px;
+}
+
+.weather-location {
+    font-size: 12px;
+    opacity: 0.85;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+}
+
+.mood-quote {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mood-quote p {
+    margin: 0;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.6;
+    font-style: italic;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.mood-quote .quote-icon {
+    opacity: 0.7;
+    margin-right: 8px;
+}
+
+.spotify-container {
+    position: relative;
+    z-index: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.spotify-container iframe {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.weather-loading {
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+}
+
+.weather-loading i {
+    font-size: 32px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.weather-error {
+    background: rgba(255, 59, 48, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 16px;
+    color: #fff;
+    text-align: center;
+    border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.weather-error i {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .weather-spotify-widget {
+        padding: 16px;
+    }
+
+    .weather-icon {
+        font-size: 36px;
+    }
+
+    .weather-temp {
+        font-size: 24px;
+    }
+
+    .mood-quote p {
+        font-size: 14px;
+    }
+}
+
+/* Different weather condition themes */
+.weather-spotify-widget.sunny {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+
+.weather-spotify-widget.rainy {
+    background: linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%);
+}
+
+.weather-spotify-widget.cloudy {
+    background: linear-gradient(135deg, #757f9a 0%, #d7dde8 100%);
+}
+
+.weather-spotify-widget.cloudy .weather-info,
+.weather-spotify-widget.cloudy .mood-quote p {
+    color: #2c3e50;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.weather-spotify-widget.night {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+}
+
+.weather-spotify-widget.thunderstorm {
+    background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+}
+
+.weather-spotify-widget.snow {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    color: #2c3e50;
+}
+
+.weather-spotify-widget.snow .weather-info,
+.weather-spotify-widget.snow .mood-quote p {
+    color: #2c3e50;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}

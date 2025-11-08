@@ -27,6 +27,7 @@
 
    <link rel="stylesheet" href="assets/css/header-footer.css">
     <link rel="stylesheet" href="assets/css/product-pagination.css">
+    <link rel="stylesheet" href="assets/css/weather-spotify.css">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"></noscript>
      <header>
@@ -212,16 +213,8 @@ g:hover .image-mapper-shape {
                             </div>
                         </div>
                     </div>
-                    <h2 class="section-title">HOT ALBUM</h2>
-                    <iframe data-testid="embed-iframe" 
-                    style="border-radius:12px" 
-                    src="https://open.spotify.com/embed/album/46MTWlgPkE8f104PdcDn7X?utm_source=generator&theme=0" 
-                    width="100%" 
-                    height="366" 
-                    frameBorder="0" 
-                    allowfullscreen="" 
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                    loading="lazy"></iframe>
+                    <!-- Weather & Spotify Widget -->
+                    <div id="weatherSpotifyWidget"></div>
                 </div>
                 <!-- ***** Simple Filter End ***** -->
 
@@ -340,6 +333,7 @@ g:hover .image-mapper-shape {
     <script src="assets/js/confirm-modal.js"></script>
 <script type="module" src="assets/js/user-auth-handler.js"></script>
 <script type="module" src="assets/js/wishlist.js"></script>
+    <script src="assets/js/weather-spotify.js"></script>
 </body>
 
 </html>
