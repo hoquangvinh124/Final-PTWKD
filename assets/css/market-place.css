@@ -829,12 +829,14 @@ img{display:block;max-width:100%}
 .product-detail-description li::marker{color:var(--accent);}
 .product-detail-modal .catalog-empty{margin:0;}
 .product-detail-contact{
-  margin-top:24px;
-  padding-top:24px;
+  margin-top:32px;
+  padding-top:32px;
   border-top:1px solid var(--border);
+  position: relative;
+  clear: both;
 }
 .product-detail-contact h3{
-  margin:0 0 16px;
+  margin:0 0 20px;
   font-size:18px;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -845,6 +847,8 @@ img{display:block;max-width:100%}
   flex-wrap:wrap;
   gap:12px;
   margin-bottom:16px;
+  position: relative;
+  z-index: 1;
 }
 .contact-icon-link{
   display:flex;
