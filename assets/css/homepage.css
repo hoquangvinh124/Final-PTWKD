@@ -1215,7 +1215,7 @@ audio {
 /* Story Section */
 .story {
     border-radius: 25px;
-    margin: 80px;}
+    margin: 50px;}
 
 .story-content {
     display: grid;
@@ -2144,7 +2144,8 @@ div.pro-gallery.one-row .gallery-horizontal-scroll-inner {
     justify-content: center;
     align-items: center;
     overflow-x: auto;
-    margin-top: -91px;
+    margin-top: -200px;
+    margin-bottom: -91px;
 }
 
 .footer-gallery {

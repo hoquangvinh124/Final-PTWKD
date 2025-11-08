@@ -205,14 +205,14 @@ function initializeAddressButtons() {
 // Fill default address from user profile
 function fillDefaultAddress() {
   if (!isAuthenticated || !isAuthenticated()) {
-    alert('Please login to use your saved address');
+    showNotification('Please login to use your saved address', 'warning');
     return;
   }
 
   const address = getShippingAddress();
 
   if (!address || !address.fullName) {
-    alert('No saved address found. Please set your shipping address in your profile first.');
+    showNotification('No saved address found. Please set your shipping address in your profile first.', 'warning');
     return;
   }
 
@@ -316,20 +316,34 @@ async function fillAddressFromGPS() {
         // Warn if accuracy is low
         if (accuracy > 50) {
           setTimeout(() => {
-            alert(`GPS accuracy is ${accuracy}m. Please verify the address is correct before proceeding.`);
+            showNotification(`GPS accuracy is ${accuracy}m. Please verify the address is correct before proceeding.`, 'warning');
           }, 500);
         }
       },
       // onError
       (errorMessage) => {
         hideLoading();
-        alert(errorMessage);
+        showNotification(errorMessage, 'error');
       }
     );
   } catch (error) {
     hideLoading();
     console.error('GPS Error:', error);
-    alert('Unable to get your location. Please enter address manually.');
+    showNotification('Unable to get your location. Please enter address manually.', 'error');
+  }
+}
+
+// Auto-fill user email if logged in
+function autoFillUserEmail() {
+  if (isAuthenticated && isAuthenticated()) {
+    const currentUser = getCurrentUser && getCurrentUser();
+    if (currentUser && currentUser.email) {
+      const emailInput = document.getElementById('email');
+      if (emailInput && !emailInput.value) {
+        emailInput.value = currentUser.email;
+        console.log('Auto-filled user email:', currentUser.email);
+      }
+    }
   }
 }
 
@@ -345,6 +359,9 @@ document.addEventListener('DOMContentLoaded', function() {
   renderProductsStep();
   updateOrderSummary();
   setupEventListeners();
+
+  // Auto-fill email after a short delay to ensure auth module is loaded
+  setTimeout(autoFillUserEmail, 100);
 });
 
 // Fill default customer information
@@ -524,13 +541,28 @@ function updateOrderSummary() {
   if (totalAmountElement) totalAmountElement.textContent = formatPrice(total);
 }
 
+// Fetch products from product.json
+async function fetchProductsForOrder() {
+  try {
+    const response = await fetch('product.json');
+    if (!response.ok) throw new Error('Failed to fetch products');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
+}
+
 // Complete order
-function completeOrder() {
+async function completeOrder() {
   const loadingScreen = document.getElementById('loadingScreen');
   loadingScreen.classList.add('active');
 
   // Prepare email data
   prepareEmailData();
+
+  // Fetch products to get accurate info
+  const allProducts = await fetchProductsForOrder();
 
   setTimeout(() => {
     loadingScreen.classList.remove('active');
@@ -568,15 +600,42 @@ function completeOrder() {
         'giftcard': 'Gift Card'
       };
 
+      // Map products with accurate data from product.json
+      const productsToSave = orderData.products.map(cartProduct => {
+        const actualProduct = allProducts.find(p => p.id === cartProduct.id);
+
+        if (actualProduct) {
+          // Use accurate data from product.json
+          let price = actualProduct.price;
+          if (typeof price === 'string') {
+            price = parseInt(price.replace(/[₫,.]/g, ''));
+          }
+
+          return {
+            id: actualProduct.id,
+            name: actualProduct.name,
+            price: price,
+            quantity: cartProduct.quantity,
+            image: actualProduct.image_front
+          };
+        } else {
+          // Fallback to cart data if product not found
+          return {
+            id: cartProduct.id,
+            name: cartProduct.name,
+            price: parsePrice(cartProduct.price),
+            quantity: cartProduct.quantity,
+            image: cartProduct.image
+          };
+        }
+      });
+
       const orderToSave = {
         orderId: orderId,
         orderDate: new Date().toISOString(),
         status: 'Processing',
         customer: orderData.customer,
-        products: orderData.products.map(p => ({
-          ...p,
-          price: parsePrice(p.price)
-        })),
+        products: productsToSave,
         shipping: {
           type: orderData.shipping.type,
           price: shipping,

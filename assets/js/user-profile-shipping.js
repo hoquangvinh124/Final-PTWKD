@@ -143,8 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Load shipping address from user data
 function loadShippingAddress() {
   const address = getShippingAddress();
-
-  if (!address) return;
+  const currentUser = getCurrentUser();
 
   // Fill in form fields
   const fullNameInput = document.getElementById('shippingFullName');
@@ -153,19 +152,31 @@ function loadShippingAddress() {
   const streetInput = document.getElementById('shippingStreet');
   const addressTypeRadios = document.querySelectorAll('input[name="addressType"]');
 
-  if (fullNameInput) fullNameInput.value = address.fullName || '';
-  if (phoneInput) phoneInput.value = address.phone || '';
-  if (citySelect) citySelect.value = address.city || '';
-  if (streetInput) streetInput.value = address.street || '';
+  if (address) {
+    // Load saved address data
+    if (fullNameInput) fullNameInput.value = address.fullName || '';
+    if (phoneInput) phoneInput.value = address.phone || '';
+    if (citySelect) citySelect.value = address.city || '';
+    if (streetInput) streetInput.value = address.street || '';
 
-  if (addressTypeRadios && address.addressType) {
-    addressTypeRadios.forEach(radio => {
-      radio.checked = radio.value === address.addressType;
-    });
+    if (addressTypeRadios && address.addressType) {
+      addressTypeRadios.forEach(radio => {
+        radio.checked = radio.value === address.addressType;
+      });
+    }
+
+    // Update display
+    updateShippingDisplay(address);
   }
 
-  // Update display
-  updateShippingDisplay(address);
+  // Auto-fill full name from user profile if empty
+  if (fullNameInput && !fullNameInput.value && currentUser) {
+    const defaultFullName = `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim();
+    if (defaultFullName) {
+      fullNameInput.value = defaultFullName;
+      console.log('Auto-filled full name from user profile:', defaultFullName);
+    }
+  }
 }
 
 // Initialize shipping address display on page load
@@ -178,6 +189,19 @@ function initShippingDisplay() {
   if (hasData && shippingFormPanel && shippingSavedDisplay) {
     shippingFormPanel.style.display = 'none';
     shippingSavedDisplay.classList.remove('d-none');
+    updateShippingDisplay(address);
+  } else {
+    // Form is showing (no saved data), auto-fill full name from user profile
+    const currentUser = getCurrentUser();
+    const fullNameInput = document.getElementById('shippingFullName');
+
+    if (fullNameInput && !fullNameInput.value && currentUser) {
+      const defaultFullName = `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim();
+      if (defaultFullName) {
+        fullNameInput.value = defaultFullName;
+        console.log('Auto-filled full name on page load:', defaultFullName);
+      }
+    }
   }
 }
 

@@ -8,7 +8,8 @@
       "Bash(findstr:*)",
       "Bash(ren:*)",
       "Bash(find:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(del update-cassette-category.js)"
     ],
     "deny": [],
     "ask": []

@@ -5,7 +5,7 @@ const DEFAULT_USERS = [
   {
     username: 'test',
     password: 'test123',
-    email: 'test@example.com',
+    email: 'long@example.com',
     firstName: 'Long',
     lastName: 'Huynh',
     dateOfBirth: '1990-05-15',
@@ -26,7 +26,7 @@ const DEFAULT_USERS = [
     purchasedOrders: [
       {
         orderId: '#LDIE20240001',
-        orderDate: '2024-12-15T10:30:00',
+        orderDate: '2025-08-11T10:30:00',
         status: 'Delivered',
         customer: {
           firstName: 'Long',
@@ -39,18 +39,18 @@ const DEFAULT_USERS = [
         },
         products: [
           {
-            id: 'vinyl001',
-            name: 'The Beatles - Abbey Road Vinyl',
+            id: '12',
+            name: 'Japanese Breakfast - For Melancholy Brunettes (& sad women) LP Frosted Shadow Vinyl Record',
             price: 450000,
             quantity: 1,
-            image: 'assets/images/vinyl/abbey-road.jpg'
+            image: 'assets/images/Audio/Vinyl/1.jpg'
           },
           {
-            id: 'cd002',
-            name: 'Pink Floyd - Dark Side of the Moon CD',
-            price: 250000,
+            id: '1',
+            name: 'Mac Demarco - This Old Dog CD',
+            price: 375000,
             quantity: 2,
-            image: 'assets/images/cd/dark-side.jpg'
+            image: 'assets/images/Audio/CD/1.jpg'
           }
         ],
         shipping: {
@@ -62,14 +62,14 @@ const DEFAULT_USERS = [
           type: 'card',
           method: 'Credit/Debit Card'
         },
-        subtotal: 950000,
+        subtotal: 1200000,
         shippingCost: 50000,
         tax: 0,
-        total: 1000000
+        total: 1250000
       },
       {
         orderId: '#LDIE20240002',
-        orderDate: '2025-01-10T14:20:00',
+        orderDate: '2025-08-10T14:20:00',
         status: 'Shipped',
         customer: {
           firstName: 'Long',
@@ -77,16 +77,15 @@ const DEFAULT_USERS = [
           email: 'test@example.com',
           phone: '+84 787 567 381',
           address: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM',
-          city: 'TP. Hồ Chí Minh',
-          zipCode: '700000'
+          city: 'TP. Hồ Chí Minh'
         },
         products: [
           {
-            id: 'cassette001',
-            name: 'Michael Jackson - Thriller Cassette',
-            price: 180000,
+            id: '45',
+            name: 'Chappell Roan - The Rise & Fall Of A Midwest Princess Cassette Tape',
+            price: 456000,
             quantity: 1,
-            image: 'assets/images/cassette/thriller.jpg'
+            image: 'assets/images/Cassette Tape/1.jpg'
           }
         ],
         shipping: {
@@ -98,10 +97,10 @@ const DEFAULT_USERS = [
           type: 'paypal',
           method: 'PayPal'
         },
-        subtotal: 180000,
+        subtotal: 456000,
         shippingCost: 25000,
         tax: 0,
-        total: 205000
+        total: 481000
       }
     ],
     wishlist: [],

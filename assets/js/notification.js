@@ -50,7 +50,7 @@ function showNotification(message, type = 'success') {
       }
       
       .notification-toast.notification-success {
-        border-color: rgba(34, 197, 94, 0.5);
+        border-color: rgb(255, 179, 71);
       }
       
       .notification-toast.notification-error {
@@ -79,7 +79,7 @@ function showNotification(message, type = 'success') {
       }
       
       .notification-success .notification-content i {
-        color: #4ade80;
+        color: rgb(255, 179, 71);
       }
       
       .notification-error .notification-content i {

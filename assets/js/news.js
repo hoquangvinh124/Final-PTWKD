@@ -16,7 +16,7 @@ const RSS_FEEDS = {
 
     // Life through the Lens - Photography
     'emulsive': {
-        url: 'https://emulsive.org/feed',
+        url: 'https://petapixel.com/feed/',
         category: 'Life through the Lens',
         type: 'Photography',
         icon: 'fa-film'
@@ -39,6 +39,7 @@ const RSS_FEEDS = {
 
 // RSS to JSON API (free CORS proxy for RSS feeds)
 const RSS_TO_JSON_API = 'https://api.rss2json.com/v1/api.json?rss_url=';
+const RSS_API_KEY = '5cpgk5ckkaugpr7xse7fip4iwzdkig5qfacn4sdm';
 
 // State management
 let currentFeed = 'pitchfork-albums';
@@ -111,7 +112,9 @@ async function loadCurrentFeed() {
 // Fetch RSS feed using RSS2JSON API
 async function fetchRSS(feedUrl) {
     try {
-        const response = await fetch(`${RSS_TO_JSON_API}${encodeURIComponent(feedUrl)}`);
+        // Use API key and count parameter
+        const apiUrl = `${RSS_TO_JSON_API}${encodeURIComponent(feedUrl)}&api_key=${RSS_API_KEY}&count=12`;
+        const response = await fetch(apiUrl);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -245,7 +248,7 @@ function getSourceName(feedId) {
     const sourceNames = {
         'pitchfork-albums': 'Pitchfork',
         'pitchfork-tracks': 'Pitchfork',
-        'emulsive': 'Emulsive',
+        'emulsive': 'PetaPixel',
         'analog-cafe': 'Analog Cafe',
         'denofgeek': 'Den of Geek'
     };

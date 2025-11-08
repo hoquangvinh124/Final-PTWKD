@@ -1,6 +1,29 @@
 // Import auth functions
 import { getPurchasedOrderById, getCurrentUser } from './auth.js';
 
+// Cache for products
+let productsCache = null;
+
+// Fetch products from product.json
+async function fetchProducts() {
+  if (productsCache) return productsCache;
+
+  try {
+    const response = await fetch('product.json');
+    if (!response.ok) throw new Error('Failed to fetch products');
+    productsCache = await response.json();
+    return productsCache;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
+}
+
+// Get product by ID from product.json
+function getProductById(products, productId) {
+  return products.find(p => p.id === productId);
+}
+
 // Format price to Vietnamese currency
 function formatPrice(price) {
   if (typeof price === 'string' && price.includes('₫')) return price;
@@ -36,7 +59,7 @@ function getOrderIdFromURL() {
 }
 
 // Render order details
-function renderOrderDetails() {
+async function renderOrderDetails() {
   const orderId = getOrderIdFromURL();
 
   if (!orderId) {
@@ -52,6 +75,9 @@ function renderOrderDetails() {
     window.location.href = 'user-profile.html';
     return;
   }
+
+  // Fetch all products from product.json
+  const allProducts = await fetchProducts();
 
   // Render order header
   document.getElementById('orderIdDisplay').textContent = order.orderId;
@@ -76,23 +102,38 @@ function renderOrderDetails() {
     </div>
   `;
 
-  // Render products
-  document.getElementById('productsList').innerHTML = order.products.map(product => `
-    <div class="product-item">
-      <div class="product-image">
-        <img src="${product.image || 'assets/images/placeholder.jpg'}"
-             alt="${product.name}"
-             onerror="this.src='assets/images/placeholder.jpg'">
-      </div>
-      <div class="product-info">
-        <div class="product-name">${product.name}</div>
-        <div class="product-price-qty">
-          <div class="product-price">${formatPrice(product.price * product.quantity)}</div>
-          <div class="product-qty">Quantity: ${product.quantity}</div>
+  // Render products - get fresh data from product.json
+  document.getElementById('productsList').innerHTML = order.products.map(orderProduct => {
+    // Find the actual product from product.json
+    const actualProduct = getProductById(allProducts, orderProduct.id);
+
+    // Use actual product data if found, otherwise fallback to order data
+    const productImage = actualProduct?.image_front || orderProduct.image || 'assets/images/placeholder.jpg';
+    const productName = actualProduct?.name || orderProduct.name;
+    let productPrice = actualProduct?.price || orderProduct.price;
+
+    // Parse price if it's a string with ₫
+    if (typeof productPrice === 'string') {
+      productPrice = parseInt(productPrice.replace(/[₫,.]/g, ''));
+    }
+
+    return `
+      <a href="single-product.html?id=${orderProduct.id}" class="product-item">
+        <div class="product-image">
+          <img src="${productImage}"
+               alt="${productName}"
+               onerror="this.src='assets/images/placeholder.jpg'">
         </div>
-      </div>
-    </div>
-  `).join('');
+        <div class="product-info">
+          <div class="product-name">${productName}</div>
+          <div class="product-price-qty">
+            <div class="product-price">${formatPrice(productPrice * orderProduct.quantity)}</div>
+            <div class="product-qty">Quantity: ${orderProduct.quantity}</div>
+          </div>
+        </div>
+      </a>
+    `;
+  }).join('');
 
   // Render order summary
   document.getElementById('orderSummary').innerHTML = `
@@ -141,16 +182,12 @@ function renderOrderDetails() {
         <div class="customer-label">City:</div>
         <div class="customer-value">${order.customer.city}</div>
       </div>
-      <div class="customer-info-row">
-        <div class="customer-label">ZIP Code:</div>
-        <div class="customer-value">${order.customer.zipCode || 'N/A'}</div>
-      </div>
     </div>
   `;
 }
 
 // Initialize on DOM load
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Check authentication
   const currentUser = getCurrentUser();
   if (!currentUser) {
@@ -159,5 +196,5 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  renderOrderDetails();
+  await renderOrderDetails();
 });

@@ -190,16 +190,17 @@ document.addEventListener('DOMContentLoaded', async function() {
   let subcategory = null;
   
   // Xác định category và subcategory dựa trên tên trang
-  if (pageName.includes('audio')) {
+  if (pageName.includes('cassette-tape')) {
+    // Cassette is now a main category, not subcategory of Audio
+    category = 'Cassette';
+    subcategory = null;
+  } else if (pageName.includes('audio')) {
     category = 'Audio';
     if (pageName.includes('cd') && !pageName.includes('player')) {
       subcategory = 'CD';
     } else if (pageName.includes('vinyl')) {
       subcategory = 'Vinyl';
     }
-  } else if (pageName.includes('cassette-tape')) {
-    category = 'Audio';
-    subcategory = 'Cassette';
   } else if (pageName.includes('camera')) {
     category = 'Camera';
     subcategory = 'Polaroid';
