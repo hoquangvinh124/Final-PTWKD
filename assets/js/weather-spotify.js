@@ -204,10 +204,6 @@ class WeatherSpotifyWidget {
                     <div class="weather-details">
                         <h3 class="weather-temp">${Math.round(temp)}°C</h3>
                         <p class="weather-description">${description}</p>
-                        <p class="weather-location">
-                            <i class="fas fa-map-marker-alt"></i>
-                            ${WEATHER_CONFIG.CITY}
-                        </p>
                     </div>
                 </div>
 

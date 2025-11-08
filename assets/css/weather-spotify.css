@@ -63,15 +63,6 @@
     margin-top: 4px;
 }
 
-.weather-location {
-    font-size: 12px;
-    opacity: 0.85;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 4px;
-}
-
 .mood-quote {
     position: relative;
     z-index: 1;
