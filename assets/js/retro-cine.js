@@ -99,6 +99,10 @@ function displaySchedule(dayIndex) {
     const button = card.querySelector(".book-btn");
     if (button.textContent.trim() === "WATCH NOW") {
       button.addEventListener("click", () => {
+        if (!isAuthenticated()) {
+          showNotification('Please login to watch movies!', 'info');
+          return;
+        }
         window.location.href = "room.html";
       });
     } else {
@@ -205,12 +209,24 @@ function renderNowNext() {
 
     const posterWrap = container.querySelector('.poster-wrap');
     posterWrap.addEventListener('click', () => {
+      if (overlayText === 'WATCH NOW') {
+        if (!isAuthenticated()) {
+          showNotification('Please login to watch movies!', 'info');
+          return;
+        }
+      }
       window.location.href = 'room.html';
     });
     posterWrap.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') 
         {
             e.preventDefault();
+            if (overlayText === 'WATCH NOW') {
+              if (!isAuthenticated()) {
+                showNotification('Please login to watch movies!', 'info');
+                return;
+              }
+            }
             window.location.href = 'room.html';
       }
     });
@@ -236,10 +252,7 @@ let currentBookingData = null;
 
 function showBookingModal(movie, showtime) {
   if (!isAuthenticated()) {
-    showNotification('Please login to book a movie', 'warning');
-    setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 1500);
+    showNotification('Please login to book movie tickets!', 'info');
     return;
   }
 

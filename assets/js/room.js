@@ -1,3 +1,5 @@
+import { isAuthenticated, getCurrentUser } from './auth.js';
+
 const expandBtn = document.getElementById('expandBtn');
 const video = document.getElementById('movie');
 const chatToggle = document.getElementById('chatToggle');
@@ -8,15 +10,27 @@ const chatMessages = document.getElementById('chatMessages');
 
 // Mở/đóng chat
 chatToggle.addEventListener('click', () => {
+  if (!isAuthenticated()) {
+    showNotification('Please login to use chat feature!', 'info');
+    return;
+  }
   chatBox.classList.toggle('hidden');
 });
 
 // Hàm gửi tin nhắn
 function sendMessage() {
+  if (!isAuthenticated()) {
+    showNotification('Please login to send messages!', 'info');
+    return;
+  }
+
   const message = chatInput.value.trim();
   if (message) {
+    const user = getCurrentUser();
+    const displayName = user?.firstName || user?.username || 'Anonymous';
+    
     const p = document.createElement('p');
-    p.innerHTML = `<strong>Bạn:</strong> ${message}`;
+    p.innerHTML = `<strong>${displayName}:</strong> ${message}`;
     chatMessages.appendChild(p);
     chatInput.value = '';
     chatMessages.scrollTop = chatMessages.scrollHeight;

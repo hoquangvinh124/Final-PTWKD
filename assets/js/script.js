@@ -371,7 +371,7 @@ class Cart {
 
     checkout() {
         if (this.items.length === 0) {
-            alert('Giỏ hàng của bạn đang trống!');
+            showNotification('Your cart is empty!', 'error');
             return;
         }
 

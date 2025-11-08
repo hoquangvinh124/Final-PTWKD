@@ -27,10 +27,7 @@ class Wishlist {
     toggleWishlist(button) {
         // Kiểm tra đăng nhập
         if (!isAuthenticated()) {
-            showNotification('Please login to use wishlist!', 'warning');
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 1500);
+            showNotification('Please login to use wishlist feature!', 'info');
             return;
         }
 
