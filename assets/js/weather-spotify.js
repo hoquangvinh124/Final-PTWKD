@@ -198,7 +198,7 @@ class WeatherSpotifyWidget {
         const spotifyUrl = SPOTIFY_PLAYLISTS[category].embedUrl;
 
         this.container.innerHTML = `
-            <div class="weather-spotify-widget ${category}">
+            <div class="weather-spotify-widget">
                 <div class="weather-info">
                     <div class="weather-icon">${weatherIcon}</div>
                     <div class="weather-details">
