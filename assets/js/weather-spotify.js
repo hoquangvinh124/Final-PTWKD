@@ -1,6 +1,6 @@
 // Weather & Spotify Widget Configuration
 const WEATHER_CONFIG = {
-    API_KEY: 'a0f3c25c680e5af64e2d1de3a5ae16b8', // Thay bằng API key của bạn từ https://openweathermap.org/api
+    API_KEY: 'a0f3c25c680e5af64e2d1de3a5ae16b8', 
     CITY: 'Ho Chi Minh City',
     COUNTRY_CODE: 'VN',
     UNITS: 'metric' // celsius
