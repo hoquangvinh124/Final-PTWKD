@@ -15,25 +15,23 @@ body {
 
 /* Nền rạp phim */
 .cinema-frame {
-  position: relative;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
+  position: relative; 
   overflow: hidden;
-}
-
-.cinema-bg {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  background-image: url('../images/rapphim.png');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 /* Video trong khung màn chiếu */
 .video-frame {
   position: absolute;
-  top: 3.2%;
-  left: 368px;
-  width: 780px;
-  height: 416px;
+  top: 10%;
+  left: 24%;
+  width: 51%;
+  height: 49%;
   background: #0a0a0a;
   border: none;
   overflow: hidden;
