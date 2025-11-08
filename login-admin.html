@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OLDIEZONE — Admin Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/login-admin.css" />
+</head>
+<body>
+  <div class="logo">
+      <img src="assets/images/logo.png" alt="OLDIEZONE Logo">
+    </div>
+  <div class="login-card">
+    <h1>Welcome Admin!<br><span>We are OLDIEZONE</span></h1>
+
+    <form id="loginForm" novalidate>
+      <input id="email" name="email" class="input" type="email" placeholder="Company email" required />
+      <input id="code" name="code" class="input" type="password" placeholder="Admin code" required />
+      <div id="messageArea"></div>
+      <button class="btn" type="submit">LOGIN</button>
+    </form>
+  </div>
+
+  <script>
+  const form = document.getElementById('loginForm');
+  const emailEl = document.getElementById('email');
+  const codeEl = document.getElementById('code');
+  const msg = document.getElementById('messageArea');
+  const DEFAULT_CODE = 'adminzone';
+
+  function showMessage(text, type) {
+    msg.innerHTML = `<div class="${type}">${text}</div>`;
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = emailEl.value.trim();
+    const code = codeEl.value.trim();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showMessage('Please enter a valid email.', 'error');
+      return;
+    }
+
+    if (code === DEFAULT_CODE) {
+      showMessage('Login successful', 'success');
+      setTimeout(() => {
+        window.location.href = 'admin.html';
+      }, 1000);
+    } else {
+      showMessage('Incorrect code. Please try again', 'error');
+    }
+  });
+</script>
+
+</body>
+</html>
