@@ -311,13 +311,11 @@ async function fillAddressFromGPS() {
           city: addressData.city
         });
 
-        showQuickFillConfirmation(message);
-
-        // Warn if accuracy is low
+        // Show GPS accuracy info
         if (accuracy > 50) {
-          setTimeout(() => {
-            showNotification(`GPS accuracy is ${accuracy}m. Please verify the address is correct before proceeding.`, 'warning');
-          }, 500);
+          showNotification(`GPS accuracy is ${accuracy}m. Please verify the address is correct before proceeding.`, 'info');
+        } else {
+          showNotification(`GPS location detected with ${accuracy}m accuracy.`, 'info');
         }
       },
       // onError
