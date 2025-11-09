@@ -508,10 +508,16 @@
                     <h1>Retro Cine - Lịch chiếu phim miễn phí</h1>
                     <p>Quản lý lịch chiếu và phòng chiếu phim</p>
                 </div>
-                <button class="btn btn-primary" id="addScreeningBtn">
-                    <i class="fas fa-plus"></i>
-                    Thêm lịch chiếu
-                </button>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-secondary" id="addMovieBtn">
+                        <i class="fas fa-film"></i>
+                        Thêm phim
+                    </button>
+                    <button class="btn btn-primary" id="addScreeningBtn">
+                        <i class="fas fa-plus"></i>
+                        Thêm lịch chiếu
+                    </button>
+                </div>
             </div>
 
             <!-- Screening Stats -->
@@ -587,15 +593,56 @@
         <div class="page-content" id="analytics-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Analytics & Phân tích</h1>
-                    <p>Phân tích chi tiết về doanh thu và hoạt động kinh doanh</p>
+                    <h1>Analytics & Analysis</h1>
+                    <p>Detailed analysis of revenue and business activities</p>
                 </div>
                 <select id="analyticsTimeFilter" class="filter-select">
-                    <option value="7">7 ngày qua</option>
-                    <option value="30">30 ngày qua</option>
-                    <option value="90">90 ngày qua</option>
-                    <option value="365">1 năm qua</option>
+                    <option value="7">Last 7 days</option>
+                    <option value="30">Last 30 days</option>
+                    <option value="90">Last 90 days</option>
+                    <option value="365">Last year</option>
                 </select>
+            </div>
+
+            <!-- Performance Metrics - MOVED TO TOP -->
+            <div class="table-card" style="margin-bottom: 32px;">
+                <div class="table-header">
+                    <h3>Performance Metrics</h3>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <div class="metric-label">Average Order Value</div>
+                        <div class="metric-value">1,250,000 ₫</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            +12.5%
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Conversion Rate</div>
+                        <div class="metric-value">3.8%</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            +0.5%
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Customer Retention</div>
+                        <div class="metric-value">68%</div>
+                        <div class="metric-change negative">
+                            <i class="fas fa-arrow-down"></i>
+                            -2.1%
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-label">Return Rate</div>
+                        <div class="metric-value">2.4%</div>
+                        <div class="metric-change positive">
+                            <i class="fas fa-arrow-down"></i>
+                            -0.3%
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Analytics Charts -->
@@ -603,8 +650,8 @@
                 <div class="chart-card" style="grid-column: 1 / -1;">
                     <div class="chart-header">
                         <div>
-                            <h3>Xu hướng doanh thu & đơn hàng</h3>
-                            <span>Biểu đồ so sánh theo thời gian</span>
+                            <h3>Revenue & Order Trends</h3>
+                            <span>Comparison chart over time</span>
                         </div>
                     </div>
                     <div class="chart-container" style="height: 400px;">
@@ -617,8 +664,8 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <div>
-                            <h3>Sản phẩm bán chạy</h3>
-                            <span>Top 10 sản phẩm</span>
+                            <h3>Best-Selling Products</h3>
+                            <span>Top 10 products</span>
                         </div>
                     </div>
                     <div class="chart-container">
@@ -629,8 +676,8 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <div>
-                            <h3>Khách hàng theo khu vực</h3>
-                            <span>Phân bố địa lý</span>
+                            <h3>Customers by Region</h3>
+                            <span>Geographic distribution</span>
                         </div>
                     </div>
                     <div class="chart-container">
@@ -638,35 +685,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Performance Metrics -->
-            <div class="table-card">
-                <div class="table-header">
-                    <h3>Chỉ số hiệu suất</h3>
-                </div>
-                <div class="metrics-grid">
-                    <div class="metric-item">
-                        <div class="metric-label">Giá trị đơn hàng trung bình</div>
-                        <div class="metric-value">1,250,000 ₫</div>
-                        <div class="metric-change positive">+5.2%</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Tỷ lệ chuyển đổi</div>
-                        <div class="metric-value">3.8%</div>
-                        <div class="metric-change positive">+0.5%</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Tỷ lệ hoàn hàng</div>
-                        <div class="metric-value">2.1%</div>
-                        <div class="metric-change negative">-0.3%</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Thời gian xử lý TB</div>
-                        <div class="metric-value">1.5 ngày</div>
-                        <div class="metric-change positive">-0.2 ngày</div>
-                    </div>
-                </div>
-            </div>
+        </div>
         </div>
 
         <!-- Reports Page -->
@@ -942,6 +961,231 @@
                 </div>
             </div>
         </aside>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="productModalTitle">Thêm sản phẩm mới</h2>
+                <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            </div>
+            <form id="productForm" class="modal-form">
+                <input type="hidden" id="productId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productName">Tên sản phẩm *</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Danh mục *</label>
+                        <select id="productCategory" required>
+                            <option value="">Chọn danh mục</option>
+                            <option value="CD">CD</option>
+                            <option value="Vinyl">Vinyl</option>
+                            <option value="Cassette">Cassette</option>
+                            <option value="VHS">VHS</option>
+                            <option value="Camera">Camera</option>
+                            <option value="Accessories">Phụ kiện</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPrice">Giá (VNĐ) *</label>
+                        <input type="number" id="productPrice" required min="0" step="1000">
+                    </div>
+                    <div class="form-group">
+                        <label for="productStock">Tồn kho *</label>
+                        <input type="number" id="productStock" required min="0">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productImage">URL hình ảnh *</label>
+                    <input type="text" id="productImage" required placeholder="assets/images/...">
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Mô tả</label>
+                    <textarea id="productDescription" rows="4"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Hủy</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu sản phẩm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Screening Modal -->
+    <div id="screeningModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="screeningModalTitle">Thêm lịch chiếu mới</h2>
+                <button class="modal-close" onclick="closeScreeningModal()">&times;</button>
+            </div>
+            <form id="screeningForm" class="modal-form">
+                <input type="hidden" id="screeningId">
+                
+                <div class="form-group">
+                    <label for="screeningMovie">Tên phim *</label>
+                    <select id="screeningMovie" required>
+                        <option value="">Chọn phim</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="screeningRoom">Phòng chiếu *</label>
+                        <select id="screeningRoom" required>
+                            <option value="">Chọn phòng</option>
+                            <option value="Phòng 1">Phòng 1</option>
+                            <option value="Phòng 2">Phòng 2</option>
+                            <option value="Phòng 3">Phòng 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="screeningDate">Ngày chiếu *</label>
+                        <input type="date" id="screeningDate" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="screeningTime">Giờ chiếu *</label>
+                        <input type="time" id="screeningTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="screeningStatus">Trạng thái</label>
+                        <select id="screeningStatus">
+                            <option value="scheduled">Chưa chiếu</option>
+                            <option value="playing">Đang chiếu</option>
+                            <option value="cancelled">Đã hủy</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeScreeningModal()">Hủy</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu lịch chiếu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Customer Modal -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="customerModalTitle">Thêm khách hàng mới</h2>
+                <button class="modal-close" onclick="closeCustomerModal()">&times;</button>
+            </div>
+            <form id="customerForm" class="modal-form">
+                <input type="hidden" id="customerId">
+                
+                <div class="form-group">
+                    <label for="customerName">Họ và tên *</label>
+                    <input type="text" id="customerName" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerEmail">Email *</label>
+                        <input type="email" id="customerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">Số điện thoại *</label>
+                        <input type="tel" id="customerPhone" required pattern="[0-9]{10}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="customerType">Loại khách hàng</label>
+                    <select id="customerType">
+                        <option value="new">Mới</option>
+                        <option value="regular">Thường</option>
+                        <option value="vip">VIP</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeCustomerModal()">Hủy</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu khách hàng
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Movie Modal -->
+    <div id="movieModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="movieModalTitle">Thêm phim mới</h2>
+                <button class="modal-close" onclick="closeMovieModal()">&times;</button>
+            </div>
+            <form id="movieForm" class="modal-form">
+                <input type="hidden" id="movieId">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="movieTitle">Tên phim *</label>
+                        <input type="text" id="movieTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="movieYear">Năm phát hành *</label>
+                        <input type="number" id="movieYear" required min="1900" max="2025">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="movieDirector">Đạo diễn *</label>
+                    <input type="text" id="movieDirector" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="movieDuration">Thời lượng (phút) *</label>
+                        <input type="number" id="movieDuration" required min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="movieGenre">Thể loại *</label>
+                        <input type="text" id="movieGenre" required placeholder="Drama, Action, ...">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="moviePoster">URL poster *</label>
+                    <input type="text" id="moviePoster" required placeholder="assets/images/...">
+                </div>
+
+                <div class="form-group">
+                    <label for="movieDescription">Mô tả</label>
+                    <textarea id="movieDescription" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="movieRating">Đánh giá (0-10)</label>
+                    <input type="number" id="movieRating" min="0" max="10" step="0.1" value="7.0">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeMovieModal()">Hủy</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Lưu phim
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="assets/js/admin-script.js"></script>

@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "title": "BATMAN FOREVER",
+    "poster": "assets/images/film VHS/BatmanForever.png",
+    "year": 1995,
+    "director": "Joel Schumacher",
+    "description": "Batman faces Two-Face and The Riddler as they threaten Gotham City with chaos and riddles.",
+    "duration": 120,
+    "genre": "Action, Adventure",
+    "rating": "PG-13"
+  },
+  {
+    "id": 2,
+    "title": "TOY STORY 2",
+    "poster": "assets/images/film VHS/toystory.png",
+    "year": 1999,
+    "director": "John Lasseter",
+    "description": "When Woody is stolen by a toy collector, Buzz and his friends embark on a daring rescue mission.",
+    "duration": 120,
+    "genre": "Animation, Adventure",
+    "rating": "G"
+  },
+  {
+    "id": 3,
+    "title": "LIAR LIAR",
+    "poster": "assets/images/film VHS/Liar-Liar.png",
+    "year": 1997,
+    "director": "Tom Shadyac",
+    "description": "A fast-talking lawyer is magically forced to tell the truth for 24 hours after his son's birthday wish.",
+    "duration": 120,
+    "genre": "Comedy",
+    "rating": "PG-13"
+  },
+  {
+    "id": 4,
+    "title": "TITANIC",
+    "poster": "assets/images/film VHS/Titanic.png",
+    "year": 1997,
+    "director": "James Cameron",
+    "description": "A poor artist and a wealthy young woman fall in love aboard the ill-fated RMS Titanic.",
+    "duration": 120,
+    "genre": "Romance, Drama",
+    "rating": "PG-13"
+  },
+  {
+    "id": 5,
+    "title": "MEN IN BLACK",
+    "poster": "assets/images/film VHS/MIB.png",
+    "year": 1997,
+    "director": "Barry Sonnenfeld",
+    "description": "Two secret agents protect Earth from extraterrestrial threats while keeping aliens hidden from the public.",
+    "duration": 120,
+    "genre": "Action, Sci-Fi",
+    "rating": "PG-13"
+  },
+  {
+    "id": 6,
+    "title": "THE LION KING",
+    "poster": "assets/images/film VHS/lionking.png",
+    "year": 1994,
+    "director": "Roger Allers & Rob Minkoff",
+    "description": "A young lion prince flees his kingdom after tragedy, only to return and reclaim his rightful place as king.",
+    "duration": 120,
+    "genre": "Animation, Adventure",
+    "rating": "G"
+  },
+  {
+    "id": 7,
+    "title": "THE MATRIX",
+    "poster": "assets/images/film VHS/matrix.png",
+    "year": 1999,
+    "director": "The Wachowskis",
+    "description": "A hacker discovers the true nature of reality and joins a rebellion against machines.",
+    "duration": 120,
+    "genre": "Sci-Fi, Action",
+    "rating": "R"
+  },
+  {
+    "id": 8,
+    "title": "JURASSIC PARK",
+    "poster": "assets/images/film VHS/jurassic.png",
+    "year": 1993,
+    "director": "Steven Spielberg",
+    "description": "A theme park with cloned dinosaurs goes terribly wrong when the creatures escape.",
+    "duration": 120,
+    "genre": "Adventure, Sci-Fi",
+    "rating": "PG-13"
+  },
+  {
+    "id": 9,
+    "title": "HOME ALONE",
+    "poster": "assets/images/film VHS/homealone.png",
+    "year": 1990,
+    "director": "Chris Columbus",
+    "description": "An eight-year-old boy must defend his home from burglars after being left behind by his family.",
+    "duration": 120,
+    "genre": "Comedy, Family",
+    "rating": "PG"
+  },
+  {
+    "id": 10,
+    "title": "FORREST GUMP",
+    "poster": "assets/images/film VHS/forrestgump.png",
+    "year": 1994,
+    "director": "Robert Zemeckis",
+    "description": "The life story of a simple man who witnesses and influences major historical events.",
+    "duration": 120,
+    "genre": "Drama, Romance",
+    "rating": "PG-13"
+  },
+  {
+    "id": 11,
+    "title": "INDEPENDENCE DAY",
+    "poster": "assets/images/film VHS/independence.png",
+    "year": 1996,
+    "director": "Roland Emmerich",
+    "description": "Earth unites to fight back against an alien invasion on July 4th.",
+    "duration": 120,
+    "genre": "Action, Sci-Fi",
+    "rating": "PG-13"
+  },
+  {
+    "id": 12,
+    "title": "THE MASK",
+    "poster": "assets/images/film VHS/mask.png",
+    "year": 1994,
+    "director": "Chuck Russell",
+    "description": "A bank clerk discovers a magical mask that transforms him into a mischievous superhero.",
+    "duration": 120,
+    "genre": "Comedy, Fantasy",
+    "rating": "PG-13"
+  }
+]

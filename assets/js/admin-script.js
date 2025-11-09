@@ -7,7 +7,10 @@ const state = {
     orders: [],
     products: [],
     customers: [],
-    screenings: []
+    screenings: [],
+    movies: [],
+    productsLoaded: false,
+    moviesLoaded: false
 };
 
 // ===== DOM ELEMENTS =====
@@ -181,6 +184,63 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
+// ===== LOAD PRODUCTS FROM JSON =====
+async function loadProducts() {
+    if (state.productsLoaded) {
+        return state.products;
+    }
+
+    try {
+        const response = await fetch('product.json');
+        if (!response.ok) {
+            throw new Error('Failed to load products');
+        }
+        
+        const data = await response.json();
+        
+        // Transform product.json structure to admin format
+        state.products = data.map((product, index) => {
+            // Parse price (remove ₫ and . then convert to number)
+            // "375.000₫" -> "375000" (already correct, no need to multiply)
+            const priceStr = product.price.replace(/[.₫\s]/g, '');
+            const price = parseFloat(priceStr);
+            
+            // Determine stock status
+            let status = 'in-stock';
+            if (product.stock_quantity === 0) {
+                status = 'out-stock';
+            } else if (product.stock_quantity < 20) {
+                status = 'low-stock';
+            }
+            
+            return {
+                id: product.id || (index + 1),
+                name: product.name,
+                category: product.subcategory || product.category,
+                price: price,
+                stock: product.stock_quantity,
+                sold: Math.floor(Math.random() * 100) + 10, // Random sold count
+                status: status,
+                image: product.image_front,
+                description: product.description,
+                available: product.is_available
+            };
+        });
+        
+        state.productsLoaded = true;
+        console.log(`Loaded ${state.products.length} products from product.json`);
+        return state.products;
+        
+    } catch (error) {
+        console.error('Error loading products:', error);
+        showToast('Không thể tải danh sách sản phẩm', 'error');
+        // Fallback to mock products if JSON fails
+        state.products = mockProducts;
+        state.productsLoaded = true;
+        return state.products;
+    }
+}
+
 // ===== PAGE NAVIGATION =====
 function navigateToPage(pageName) {
     // Hide all pages
@@ -205,7 +265,9 @@ function initializePage(pageName) {
             initDashboard();
             break;
         case 'products':
-            populateProductsTable();
+            loadProducts().then(() => {
+                populateProductsTable();
+            });
             break;
         case 'orders':
             populateOrdersTableFull();
@@ -214,7 +276,9 @@ function initializePage(pageName) {
             populateCustomersTable();
             break;
         case 'screenings':
-            populateScreeningsTable();
+            loadMovies().then(() => {
+                populateScreeningsTable();
+            });
             break;
         case 'analytics':
             initAnalyticsCharts();
@@ -243,7 +307,11 @@ function initDashboard() {
     }, 300);
 
     populateOrdersTable();
-    populateTopProducts();
+    
+    // Load products first, then populate top products
+    loadProducts().then(() => {
+        populateTopProducts();
+    });
 
     setTimeout(() => {
         initCharts();
@@ -290,7 +358,7 @@ function populateTopProducts() {
     const container = document.getElementById('topProductsList');
     if (!container) return;
 
-    const topProducts = mockProducts.slice(0, 5).map((product, index) => ({
+    const topProducts = state.products.slice(0, 5).map((product, index) => ({
         rank: index + 1,
         ...product,
         sales: product.price * product.sold
@@ -301,7 +369,7 @@ function populateTopProducts() {
             <div class="product-rank">${product.rank}</div>
             <img src="${product.image}" alt="${product.name}" class="product-img" onerror="this.src='assets/images/logo.png'">
             <div class="product-info">
-                <strong>${product.name}</strong>
+                <strong style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${product.name}</strong>
                 <span>${product.category} • ${product.sold} đã bán</span>
             </div>
             <div class="product-sales">
@@ -406,7 +474,8 @@ function populateProductsTable(filters = {}) {
     const tbody = document.getElementById('productsTableBody');
     if (!tbody) return;
 
-    let filteredProducts = [...mockProducts];
+    // Use state.products (loaded from JSON) instead of mockProducts
+    let filteredProducts = [...state.products];
 
     // Apply filters
     if (filters.search) {
@@ -428,8 +497,8 @@ function populateProductsTable(filters = {}) {
             <td><input type="checkbox" class="product-checkbox" data-id="${product.id}"></td>
             <td>
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" onerror="this.src='assets/images/logo.png'">
-                    <strong>${product.name}</strong>
+                    <img src="${product.image}" alt="${product.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" onerror="this.src='assets/images/logo.png'">
+                    <strong style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${product.name}</strong>
                 </div>
             </td>
             <td>${product.category}</td>
@@ -454,7 +523,7 @@ function populateProductsTable(filters = {}) {
 }
 
 function editProduct(id) {
-    const product = mockProducts.find(p => p.id === id);
+    const product = state.products.find(p => p.id == id);
     if (product) {
         showToast(`Đang chỉnh sửa sản phẩm: ${product.name}`, 'info');
         // Here you would open a modal to edit the product
@@ -462,10 +531,10 @@ function editProduct(id) {
 }
 
 function deleteProduct(id) {
-    const product = mockProducts.find(p => p.id === id);
+    const product = state.products.find(p => p.id == id);
     if (product && confirm(`Bạn có chắc muốn xóa sản phẩm "${product.name}"?`)) {
-        const index = mockProducts.findIndex(p => p.id === id);
-        mockProducts.splice(index, 1);
+        const index = state.products.findIndex(p => p.id == id);
+        state.products.splice(index, 1);
         populateProductsTable();
         showToast('Đã xóa sản phẩm thành công!');
     }
@@ -718,10 +787,10 @@ function initAnalyticsCharts() {
         new Chart(topProductsCtx, {
             type: 'bar',
             data: {
-                labels: mockProducts.slice(0, 5).map(p => p.name.substring(0, 20) + '...'),
+                labels: state.products.slice(0, 5).map(p => p.name.substring(0, 20) + '...'),
                 datasets: [{
                     label: 'Số lượng bán',
-                    data: mockProducts.slice(0, 5).map(p => p.sold),
+                    data: state.products.slice(0, 5).map(p => p.sold),
                     backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
                 }]
             },
@@ -767,7 +836,7 @@ function populateProductsTable(filters = {}) {
     const tbody = document.getElementById('productsTableBody');
     if (!tbody) return;
 
-    let filteredProducts = [...mockProducts];
+    let filteredProducts = [...state.products];
 
     // Apply filters
     if (filters.search) {
@@ -789,8 +858,8 @@ function populateProductsTable(filters = {}) {
             <td><input type="checkbox" class="product-checkbox" data-id="${product.id}"></td>
             <td>
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" onerror="this.src='assets/images/logo.png'">
-                    <strong>${product.name}</strong>
+                    <img src="${product.image}" alt="${product.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" onerror="this.src='assets/images/logo.png'">
+                    <strong style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${product.name}</strong>
                 </div>
             </td>
             <td>${product.category}</td>
@@ -815,7 +884,7 @@ function populateProductsTable(filters = {}) {
 }
 
 function editProduct(id) {
-    const product = mockProducts.find(p => p.id === id);
+    const product = state.products.find(p => p.id == id);
     if (product) {
         showToast(`Đang chỉnh sửa sản phẩm: ${product.name}`, 'info');
         // Here you would open a modal to edit the product
@@ -823,10 +892,10 @@ function editProduct(id) {
 }
 
 function deleteProduct(id) {
-    const product = mockProducts.find(p => p.id === id);
+    const product = state.products.find(p => p.id == id);
     if (product && confirm(`Bạn có chắc muốn xóa sản phẩm "${product.name}"?`)) {
-        const index = mockProducts.findIndex(p => p.id === id);
-        mockProducts.splice(index, 1);
+        const index = state.products.findIndex(p => p.id == id);
+        state.products.splice(index, 1);
         populateProductsTable();
         showToast('Đã xóa sản phẩm thành công!');
     }
@@ -1079,10 +1148,10 @@ function initAnalyticsCharts() {
         new Chart(topProductsCtx, {
             type: 'bar',
             data: {
-                labels: mockProducts.slice(0, 5).map(p => p.name.substring(0, 20) + '...'),
+                labels: state.products.slice(0, 5).map(p => p.name.substring(0, 20) + '...'),
                 datasets: [{
                     label: 'Số lượng bán',
-                    data: mockProducts.slice(0, 5).map(p => p.sold),
+                    data: state.products.slice(0, 5).map(p => p.sold),
                     backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
                 }]
             },
@@ -1240,11 +1309,6 @@ document.getElementById('stockFilter')?.addEventListener('change', (e) => {
     populateProductsTable({ stock: e.target.value });
 });
 
-// Add New Product Button
-document.getElementById('addNewProductBtn')?.addEventListener('click', () => {
-    showToast('Chức năng thêm sản phẩm mới đang được phát triển!', 'info');
-});
-
 // Orders Page Filters
 document.getElementById('orderSearch')?.addEventListener('input', (e) => {
     populateOrdersTableFull({ search: e.target.value });
@@ -1268,10 +1332,6 @@ document.getElementById('customerTypeFilter')?.addEventListener('change', (e) =>
     populateCustomersTable({ type: e.target.value });
 });
 
-document.getElementById('addCustomerBtn')?.addEventListener('click', () => {
-    showToast('Chức năng thêm khách hàng đang được phát triển!', 'info');
-});
-
 // Screenings Page Filters
 document.getElementById('screeningSearch')?.addEventListener('input', (e) => {
     populateScreeningsTable({ search: e.target.value });
@@ -1279,10 +1339,6 @@ document.getElementById('screeningSearch')?.addEventListener('input', (e) => {
 
 document.getElementById('roomFilter')?.addEventListener('change', (e) => {
     populateScreeningsTable({ room: e.target.value });
-});
-
-document.getElementById('addScreeningBtn')?.addEventListener('click', () => {
-    showToast('Chức năng thêm lịch chiếu đang được phát triển!', 'info');
 });
 
 // ===== ADD TOAST STYLES =====
@@ -1552,6 +1608,422 @@ toastStyles.textContent = `
     .metric-change.negative { color: #ef4444; }
 `;
 document.head.appendChild(toastStyles);
+
+// ===== PRODUCT MODAL FUNCTIONS =====
+let currentEditingProductId = null;
+
+function openProductModal(productId = null) {
+    const modal = document.getElementById('productModal');
+    const modalTitle = document.getElementById('productModalTitle');
+    const form = document.getElementById('productForm');
+    
+    if (productId) {
+        // Edit mode
+        currentEditingProductId = productId;
+        const product = state.products.find(p => p.id == productId);
+        
+        if (product) {
+            modalTitle.textContent = 'Chỉnh sửa sản phẩm';
+            document.getElementById('productId').value = product.id;
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productCategory').value = product.category;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productStock').value = product.stock;
+            document.getElementById('productImage').value = product.image;
+            document.getElementById('productDescription').value = product.description || '';
+        }
+    } else {
+        // Add mode
+        currentEditingProductId = null;
+        modalTitle.textContent = 'Thêm sản phẩm mới';
+        form.reset();
+    }
+    
+    modal.classList.add('show');
+}
+
+function closeProductModal() {
+    const modal = document.getElementById('productModal');
+    modal.classList.remove('show');
+    currentEditingProductId = null;
+}
+
+// Handle product form submission
+document.addEventListener('DOMContentLoaded', () => {
+    const productForm = document.getElementById('productForm');
+    if (productForm) {
+        productForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const productData = {
+                id: currentEditingProductId || Date.now().toString(),
+                name: document.getElementById('productName').value,
+                category: document.getElementById('productCategory').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                stock: parseInt(document.getElementById('productStock').value),
+                image: document.getElementById('productImage').value,
+                description: document.getElementById('productDescription').value,
+                sold: 0
+            };
+            
+            // Determine status
+            if (productData.stock === 0) {
+                productData.status = 'out-stock';
+            } else if (productData.stock < 20) {
+                productData.status = 'low-stock';
+            } else {
+                productData.status = 'in-stock';
+            }
+            
+            if (currentEditingProductId) {
+                // Update existing product
+                const index = state.products.findIndex(p => p.id == currentEditingProductId);
+                if (index !== -1) {
+                    state.products[index] = { ...state.products[index], ...productData };
+                    showToast('Đã cập nhật sản phẩm thành công!', 'success');
+                }
+            } else {
+                // Add new product
+                state.products.unshift(productData);
+                showToast('Đã thêm sản phẩm mới thành công!', 'success');
+            }
+            
+            populateProductsTable();
+            closeProductModal();
+        });
+    }
+});
+
+// Update editProduct function
+function editProduct(id) {
+    openProductModal(id);
+}
+
+// Update Add New Product button
+document.getElementById('addNewProductBtn')?.addEventListener('click', () => {
+    openProductModal();
+});
+
+// ===== SCREENING MODAL FUNCTIONS =====
+let currentEditingScreeningId = null;
+
+// Load movies from movies.json
+async function loadMovies() {
+    if (state.moviesLoaded) {
+        return state.movies;
+    }
+    
+    try {
+        const response = await fetch('movies.json');
+        if (response.ok) {
+            state.movies = await response.json();
+            state.moviesLoaded = true;
+            populateMovieDropdown();
+            console.log(`Loaded ${state.movies.length} movies from movies.json`);
+            return state.movies;
+        }
+    } catch (error) {
+        console.error('Error loading movies:', error);
+        state.movies = [];
+    }
+    return state.movies;
+}
+
+function populateMovieDropdown() {
+    const select = document.getElementById('screeningMovie');
+    if (select && state.movies.length > 0) {
+        select.innerHTML = '<option value="">Chọn phim</option>' +
+            state.movies.map(movie => 
+                `<option value="${movie.title}">${movie.title} (${movie.year})</option>`
+            ).join('');
+    }
+}
+
+function openScreeningModal(screeningId = null) {
+    const modal = document.getElementById('screeningModal');
+    const modalTitle = document.getElementById('screeningModalTitle');
+    const form = document.getElementById('screeningForm');
+    
+    if (screeningId) {
+        // Edit mode
+        currentEditingScreeningId = screeningId;
+        const screening = mockScreenings.find(s => s.id == screeningId);
+        
+        if (screening) {
+            modalTitle.textContent = 'Chỉnh sửa lịch chiếu';
+            document.getElementById('screeningId').value = screening.id;
+            document.getElementById('screeningMovie').value = screening.movie.split(' (')[0]; // Get movie name without year
+            document.getElementById('screeningRoom').value = screening.room;
+            
+            // Parse datetime
+            const [date, time] = screening.time.split(' ');
+            const [day, month, year] = date.split('/');
+            document.getElementById('screeningDate').value = `${year}-${month}-${day}`;
+            document.getElementById('screeningTime').value = time;
+            document.getElementById('screeningStatus').value = screening.status;
+        }
+    } else {
+        // Add mode
+        currentEditingScreeningId = null;
+        modalTitle.textContent = 'Thêm lịch chiếu mới';
+        form.reset();
+        // Set default date to today
+        document.getElementById('screeningDate').value = new Date().toISOString().split('T')[0];
+    }
+    
+    modal.classList.add('show');
+}
+
+function closeScreeningModal() {
+    const modal = document.getElementById('screeningModal');
+    modal.classList.remove('show');
+    currentEditingScreeningId = null;
+}
+
+// Handle screening form submission
+document.addEventListener('DOMContentLoaded', () => {
+    const screeningForm = document.getElementById('screeningForm');
+    if (screeningForm) {
+        screeningForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const date = document.getElementById('screeningDate').value;
+            const time = document.getElementById('screeningTime').value;
+            const [year, month, day] = date.split('-');
+            const formattedDateTime = `${day}/${month}/${year} ${time}`;
+            
+            const screeningData = {
+                id: currentEditingScreeningId || mockScreenings.length + 1,
+                movie: document.getElementById('screeningMovie').value,
+                room: document.getElementById('screeningRoom').value,
+                time: formattedDateTime,
+                booked: 0,
+                watching: 0,
+                status: document.getElementById('screeningStatus').value
+            };
+            
+            if (currentEditingScreeningId) {
+                // Update existing screening
+                const index = mockScreenings.findIndex(s => s.id == currentEditingScreeningId);
+                if (index !== -1) {
+                    mockScreenings[index] = { ...mockScreenings[index], ...screeningData };
+                    showToast('Đã cập nhật lịch chiếu thành công!', 'success');
+                }
+            } else {
+                // Add new screening
+                mockScreenings.push(screeningData);
+                showToast('Đã thêm lịch chiếu mới thành công!', 'success');
+            }
+            
+            populateScreeningsTable();
+            closeScreeningModal();
+        });
+    }
+    
+    // Load movies when page loads
+    loadMovies();
+});
+
+// Update editScreening function
+function editScreening(id) {
+    openScreeningModal(id);
+}
+
+// Update Add Screening button
+document.getElementById('addScreeningBtn')?.addEventListener('click', () => {
+    openScreeningModal();
+});
+
+// ===== CUSTOMER MODAL FUNCTIONS =====
+let currentEditingCustomerId = null;
+
+function openCustomerModal(customerId = null) {
+    const modal = document.getElementById('customerModal');
+    const modalTitle = document.getElementById('customerModalTitle');
+    const form = document.getElementById('customerForm');
+    
+    if (customerId) {
+        // Edit mode
+        currentEditingCustomerId = customerId;
+        const customer = mockCustomers.find(c => c.id == customerId);
+        
+        if (customer) {
+            modalTitle.textContent = 'Chỉnh sửa khách hàng';
+            document.getElementById('customerId').value = customer.id;
+            document.getElementById('customerName').value = customer.name;
+            document.getElementById('customerEmail').value = customer.email;
+            document.getElementById('customerPhone').value = customer.phone;
+            document.getElementById('customerType').value = customer.type;
+        }
+    } else {
+        // Add mode
+        currentEditingCustomerId = null;
+        modalTitle.textContent = 'Thêm khách hàng mới';
+        form.reset();
+        document.getElementById('customerType').value = 'new';
+    }
+    
+    modal.classList.add('show');
+}
+
+function closeCustomerModal() {
+    const modal = document.getElementById('customerModal');
+    modal.classList.remove('show');
+    currentEditingCustomerId = null;
+}
+
+// Handle customer form submission
+document.addEventListener('DOMContentLoaded', () => {
+    const customerForm = document.getElementById('customerForm');
+    if (customerForm) {
+        customerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const customerData = {
+                id: currentEditingCustomerId || mockCustomers.length + 1,
+                name: document.getElementById('customerName').value,
+                email: document.getElementById('customerEmail').value,
+                phone: document.getElementById('customerPhone').value,
+                type: document.getElementById('customerType').value,
+                orders: 0,
+                spent: 0,
+                joinDate: new Date().toLocaleDateString('vi-VN')
+            };
+            
+            if (currentEditingCustomerId) {
+                // Update existing customer
+                const index = mockCustomers.findIndex(c => c.id == currentEditingCustomerId);
+                if (index !== -1) {
+                    mockCustomers[index] = { ...mockCustomers[index], ...customerData };
+                    showToast('Đã cập nhật khách hàng thành công!', 'success');
+                }
+            } else {
+                // Add new customer
+                mockCustomers.push(customerData);
+                showToast('Đã thêm khách hàng mới thành công!', 'success');
+            }
+            
+            populateCustomersTable();
+            closeCustomerModal();
+        });
+    }
+});
+
+// Update editCustomer function
+function editCustomer(id) {
+    openCustomerModal(id);
+}
+
+// Update Add Customer button
+document.getElementById('addCustomerBtn')?.addEventListener('click', () => {
+    openCustomerModal();
+});
+
+// ===== MOVIE MODAL FUNCTIONS =====
+let currentEditingMovieId = null;
+
+function openMovieModal(movieId = null) {
+    const modal = document.getElementById('movieModal');
+    const modalTitle = document.getElementById('movieModalTitle');
+    const form = document.getElementById('movieForm');
+    
+    if (movieId) {
+        // Edit mode
+        currentEditingMovieId = movieId;
+        const movie = state.movies.find(m => m.id == movieId);
+        
+        if (movie) {
+            modalTitle.textContent = 'Chỉnh sửa phim';
+            document.getElementById('movieId').value = movie.id;
+            document.getElementById('movieTitle').value = movie.title;
+            document.getElementById('movieYear').value = movie.year;
+            document.getElementById('movieDirector').value = movie.director;
+            document.getElementById('movieDuration').value = movie.duration;
+            document.getElementById('movieGenre').value = movie.genre;
+            document.getElementById('moviePoster').value = movie.poster;
+            document.getElementById('movieDescription').value = movie.description || '';
+            document.getElementById('movieRating').value = movie.rating || 7.0;
+        }
+    } else {
+        // Add mode
+        currentEditingMovieId = null;
+        modalTitle.textContent = 'Thêm phim mới';
+        form.reset();
+        document.getElementById('movieRating').value = 7.0;
+    }
+    
+    modal.classList.add('show');
+}
+
+function closeMovieModal() {
+    const modal = document.getElementById('movieModal');
+    modal.classList.remove('show');
+    currentEditingMovieId = null;
+}
+
+// Handle movie form submission
+document.addEventListener('DOMContentLoaded', () => {
+    const movieForm = document.getElementById('movieForm');
+    if (movieForm) {
+        movieForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const movieData = {
+                id: currentEditingMovieId || `movie_${Date.now()}`,
+                title: document.getElementById('movieTitle').value,
+                year: parseInt(document.getElementById('movieYear').value),
+                director: document.getElementById('movieDirector').value,
+                duration: parseInt(document.getElementById('movieDuration').value),
+                genre: document.getElementById('movieGenre').value,
+                poster: document.getElementById('moviePoster').value,
+                description: document.getElementById('movieDescription').value,
+                rating: parseFloat(document.getElementById('movieRating').value)
+            };
+            
+            if (currentEditingMovieId) {
+                // Update existing movie
+                const index = state.movies.findIndex(m => m.id == currentEditingMovieId);
+                if (index !== -1) {
+                    state.movies[index] = { ...state.movies[index], ...movieData };
+                    showToast('Đã cập nhật phim thành công!', 'success');
+                }
+            } else {
+                // Add new movie
+                state.movies.push(movieData);
+                showToast('Đã thêm phim mới thành công!', 'success');
+            }
+            
+            populateMovieDropdown();
+            closeMovieModal();
+        });
+    }
+});
+
+// Add Movie button
+document.getElementById('addMovieBtn')?.addEventListener('click', () => {
+    openMovieModal();
+});
+
+// Close modal when clicking outside
+window.addEventListener('click', (e) => {
+    const productModal = document.getElementById('productModal');
+    const screeningModal = document.getElementById('screeningModal');
+    const customerModal = document.getElementById('customerModal');
+    const movieModal = document.getElementById('movieModal');
+    
+    if (e.target === productModal) {
+        closeProductModal();
+    }
+    if (e.target === screeningModal) {
+        closeScreeningModal();
+    }
+    if (e.target === customerModal) {
+        closeCustomerModal();
+    }
+    if (e.target === movieModal) {
+        closeMovieModal();
+    }
+});
 
 // ===== START APP =====
 if (document.readyState === 'loading') {
