@@ -150,8 +150,8 @@ body {
 }
 
 /* ===== FORM CARD ===== */
-/* Giữ mép phải cố định: margin-left:auto + margin-right nhỏ */
-/* Chỉ kéo dãn về bên trái: tăng width (clamp/vw) + tăng padding/gap bên trong */
+/* Keep right edge fixed: margin-left:auto + small margin-right */
+/* Only stretch to the left: increase width (clamp/vw) + increase padding/gap inside */
 .form-card {
 	width: 100%;
 	max-width: clamp(400px, 38vw, 640px);
@@ -169,12 +169,12 @@ body {
 	backdrop-filter: none;
 }
 
-/* Điều chỉnh cho trang signup */
+/* Adjust for signup page */
 .signup-page .form-card {
 	margin-top: -13px;
 }
 
-/* Điều chỉnh cho trang forgot password */
+/* Adjust for forgot password page */
 .forgot-password-page .form-card {
 	margin-top: 0;
 }
@@ -304,7 +304,7 @@ body {
 	left: 3px;
 	right: -3px;
 	bottom: -10px;
-	background: #e44b30; /*chỉnh màu của lớp đổ bóng label email và password */
+	background: #e44b30; /*adjust shadow color of email and password label */
 	border-radius: 22px;
 }
 
@@ -539,7 +539,7 @@ body {
 
 /* ===== RESPONSIVE ===== */
 
-/* Ẩn đĩa vinyl khi màn hình quá nhỏ */
+/* Hide vinyl disc when screen is too small */
 @media (max-width: 900px), (max-height: 600px) {
 	.vinyl {
 		display: none;

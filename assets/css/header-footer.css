@@ -50,17 +50,17 @@
   pointer-events: none;
 }
 
-/* Điều chỉnh kích thước header-top để chứa thêm icon */
+/* Adjust header-top size to contain more icons */
 .header-top {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 100px; /* Tăng padding từ 80px lên 100px để có thêm không gian */
+  padding: 10px 100px; /* Increase padding from 80px to 100px for more space */
   position: relative;
   width: 100%;
 }
 
-/* CSS cho chatbot window - THÊM VÀO CUỐI FILE */
+/* CSS for chatbot window - ADD TO END OF FILE */
 .chatbot-window {
   position: fixed;
   bottom: 20px;
@@ -214,7 +214,7 @@
   max-width: 320px;
 }
 
-/* header không cố định - chỉ apply cho header chính của trang */
+/* header not fixed - only apply to main page header */
 body > header {
   position: relative;
   width: 100%;
@@ -302,14 +302,14 @@ body > header {
 /* Search Bar Styles */
 .search-bar {
     position: fixed;
-    top: 100%; /* Đặt ngay bên dưới header */
+    top: 100%; /* Place right below header */
     left: 0;
     width: 100%;
     background: #000000;
     backdrop-filter: blur(20px);
     padding: 10px 50px;
     z-index: 99;
-    transform: translateY(-100%); /* Ẩn lên trên */
+    transform: translateY(-100%); /* Hide upwards */
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -317,7 +317,7 @@ body > header {
 }
 
 .search-bar.active {
-    transform: translateY(0); /* Hiện ra đúng vị trí */
+    transform: translateY(0); /* Show at correct position */
     opacity: 1;
     display: block;
 }
@@ -507,7 +507,7 @@ body > header {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Menu items chính */
+/* Main menu items */
 .nav-item {
     position: relative;
 }
@@ -549,7 +549,7 @@ body > header {
     z-index: 10000;
 }
 
-/* Hiển thị submenu khi hover */
+/* Display submenu on hover */
 .nav-item:hover .submenu {
     opacity: 1;
     visibility: visible;
@@ -577,7 +577,7 @@ body > header {
     padding-left: 25px;
 }
 
-/* Mũi tên chỉ xuống cho menu có submenu */
+/* Down arrow for menu with submenu */
 .nav-item:has(.submenu) .nav-link::after {
     font-size: 10px;
     margin-left: 8px;
@@ -590,7 +590,7 @@ body > header {
     color: #c89d41;
 }
 
-/* Responsive cơ bản */
+/* Basic responsive */
 @media (max-width: 768px) {
     .header-top {
         padding: 15px 0;

@@ -160,8 +160,8 @@ body {
 }
 
 .cta-btn:hover {
-  transform: translateY(-6px); /* nâng nhẹ */
-  box-shadow: 0 6px 0 #5e3820; /* shadow theo chiều nâng */
+  transform: translateY(-6px); /* lift lightly */
+  box-shadow: 0 6px 0 #5e3820; /* shadow follows lift direction */
 }
 
 .cta-btn .arrow {
@@ -170,7 +170,7 @@ body {
 }
 
 .cta-btn:hover .arrow {
-  transform: translateX(8px); /* arrow di chuyển nhẹ, mượt */
+  transform: translateX(8px); /* arrow moves lightly, smoothly */
 }
 
 
@@ -264,7 +264,7 @@ body {
   letter-spacing: 0.6px;
 }
 
-/* Dòng Year và Director */
+/* Year and Director line */
 .movie-box .info .detail {
   font-size: 1rem;
   color: #3b141c;
@@ -280,7 +280,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Mô tả phim */
+/* Movie description */
 .movie-box .info .description {
   margin-top: 12px;
   font-size: 0.95rem;
@@ -342,7 +342,7 @@ body {
 }
 
 
-/* vé xem phim */
+/* movie ticket */
 .ticket-section {
   display: flex;
   justify-content: center;
@@ -382,7 +382,7 @@ body {
   transform: rotateY(180deg);
 }
 
-/* Animation lắc nhẹ liên tục */
+/* Continuous light shake animation */
 @keyframes wobble {
 
   0%,
@@ -403,7 +403,7 @@ body {
   }
 }
 
-/* Animation lật rõ ràng, đều mặt */
+/* Clear and even flip animation */
 @keyframes flip {
 
   0%,
@@ -421,7 +421,7 @@ body {
   }
 }
 
-/* LỊCH CHIẾU */
+/* SCREENING SCHEDULE */
 .schedule-section {
   background: black;
   color: white;
@@ -544,7 +544,7 @@ body {
 }
 
 
-/* ĐIỀN MAIL */
+/* ENTER EMAIL */
 .email {
   color: #f5f0e1;
   padding: 15px 20px;
@@ -578,7 +578,7 @@ body {
   background-color: #3b141c;
   color: #f6d28a;
   flex: 1; 
-  min-width: 0; /* tránh tràn khi flex */
+  min-width: 0; /* avoid overflow when flex */
 }
 
 .email input[type="email"]::placeholder {

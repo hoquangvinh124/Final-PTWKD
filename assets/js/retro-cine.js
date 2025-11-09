@@ -5,7 +5,7 @@ document.querySelectorAll('.poster-row').forEach(row => {
   row.innerHTML += cloneContent;
 });
 
-// Danh sách phim
+// Movie list
 const movies = 
 [
   {
@@ -56,14 +56,14 @@ const scheduleDiv = document.getElementById("schedule");
 const weekButtons = document.querySelectorAll("#weekBar button");
 const datePicker = document.getElementById("datePicker");
 
-// Khung giờ chiếu phim
+// Movie screening time slots
 const showtimes = [];
 for (let hour = 0; hour < 24; hour += 2) {
   const h = String(hour).padStart(2, "0");
   showtimes.push(`${h}:00`);
 }
 
-// Lịch chiếu trong ngày
+// Daily screening schedule
 function displaySchedule(dayIndex) {
   scheduleDiv.innerHTML = "";
   const now = new Date();
@@ -75,12 +75,12 @@ function displaySchedule(dayIndex) {
     const endMinutes = (startMinutes + 120) % (24 * 60);
     const endTime = getEndTime(time);
 
-    // Kiểm tra phim hiện tại đang chiếu không
+    // Check if current movie is playing
     let isNowPlaying = false;
     if (startMinutes < endMinutes) {
       isNowPlaying = currentMinutes >= startMinutes && currentMinutes < endMinutes;
     } else {
-      // Trường hợp qua 0h (ví dụ 22:00 - 00:00)
+      // Case crossing midnight (e.g. 22:00 - 00:00)
       isNowPlaying = currentMinutes >= startMinutes || currentMinutes < endMinutes;
     }
 
@@ -116,7 +116,7 @@ function displaySchedule(dayIndex) {
 setInterval(() => {
   const activeBtn = document.querySelector(".week-bar button.active");
   if (activeBtn) displaySchedule(activeBtn.dataset.day);
-}, 60 * 1000); // cập nhật mỗi phút
+}, 60 * 1000); // update every minute
 
 
 function getEndTime(start) {

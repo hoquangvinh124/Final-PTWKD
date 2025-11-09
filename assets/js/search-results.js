@@ -41,7 +41,7 @@ async function loadProducts() {
         console.error('Error loading products:', error);
         const searchCount = document.getElementById('searchCount');
         if (searchCount) {
-            searchCount.textContent = 'Lỗi khi tải dữ liệu';
+            searchCount.textContent = 'Error loading data';
         }
     }
 }

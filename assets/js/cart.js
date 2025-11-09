@@ -68,7 +68,7 @@ class Cart {
         });
     }
 
-    // Xử lý tất cả nút continue-shopping (cả trong empty message)
+    // Handle all continue-shopping buttons (including in empty message)
     document.addEventListener('click', (e) => {
         if (e.target.closest('.continue-shopping')) {
             this.closeCart();
@@ -198,7 +198,7 @@ class Cart {
         // Show empty message but keep footer visible
         if (cartEmpty) {
             cartEmpty.style.display = 'block';
-            // Đảm bảo nút continue shopping trong empty message cũng đóng cart
+            // Ensure continue shopping button in empty message also closes cart
             const emptyContinueBtn = cartEmpty.querySelector('.continue-shopping');
             if (emptyContinueBtn) {
                 emptyContinueBtn.onclick = () => this.closeCart();
@@ -238,7 +238,7 @@ class Cart {
                             <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="99" data-id="${item.id}">
                             <button class="quantity-btn plus" data-id="${item.id}" type="button">+</button>
                         </div>
-                        <button class="remove-item" data-id="${item.id}" type="button" title="Xóa sản phẩm">
+                        <button class="remove-item" data-id="${item.id}" type="button" title="Remove product">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         reviewer: "Minh Anh",
                         date: "15/03/2023",
                         rating: "★★★★★",
-                        text: "Âm thanh tuyệt vời! Tôi đã tìm kiếm bản vinyl này rất lâu."
+                        text: "Great sound! I've been looking for this vinyl for a long time."
                     }
                 ]
             },
@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         reviewer: "Tuấn Nguyễn",
                         date: "22/04/2023",
                         rating: "★★★★☆",
-                        text: "Thiết kế đẹp, âm thanh ấm áp đúng chất retro."
+                        text: "Beautiful design, warm sound with true retro quality."
                     }
                 ]
             },
@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         reviewer: "Hương Giang",
                         date: "10/05/2023",
                         rating: "★★★★★",
-                        text: "Bộ sưu tập tuyệt vời! Chất lượng in ấn và vật liệu rất cao cấp."
+                        text: "Wonderful collection! Print quality and materials are very high-end."
                     }
                 ]
             },
@@ -552,7 +552,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         reviewer: "Đức Anh",
                         date: "05/02/2023",
                         rating: "★★★★★",
-                        text: "Đầu tư xứng đáng! Âm thanh chi tiết và chân thực."
+                        text: "Worth the investment! Detailed and authentic sound."
                     },
                     {
                         reviewer: "Joshua B.",
@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         reviewer: "Lan Phương",
                         date: "18/06/2023",
                         rating: "★★★★☆",
-                        text: "Chất áo tốt, form dáng đẹp. Thiết kế độc đáo không đụng hàng."
+                        text: "Good shirt quality, beautiful fit. Unique design that stands out."
                     },
                     {
                         reviewer: "Michelle C.",
@@ -583,14 +583,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        // Xử lý sự kiện khi card được click
+        // Handle event when card is clicked
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', function() {
                 const productType = this.getAttribute('data-product');
                 const product = products[productType];
                 
                 if (product) {
-                    // Ẩn default, hiển thị active
+                    // Hide default, show active
                     document.getElementById('defaultDisplay').style.display = 'none';
                     const activeDisplay = document.getElementById('activeDisplay');
                     activeDisplay.style.display = 'block';
@@ -619,7 +619,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         reviewList.appendChild(reviewItem);
                     });
                     
-                    // Thêm hiệu ứng
+                    // Add effects
                     activeDisplay.style.animation = 'none';
                     setTimeout(() => {
                         activeDisplay.style.animation = 'fadeInUp 0.6s ease';
@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Khởi tạo - hiển thị sản phẩm đầu tiên
+        // Initialize - display first product
         document.addEventListener('DOMContentLoaded', function() {
             const firstCard = document.querySelector('.card');
             if (firstCard) {
@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Xử lý nút hành động
+        // Handle action buttons
         function addToCart() {
             const productTitle = document.getElementById('displayTitle').textContent;
             alert(`✅ Đã thêm "${productTitle}" vào giỏ hàng!`);

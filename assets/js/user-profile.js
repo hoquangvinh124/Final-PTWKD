@@ -545,7 +545,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
       setEditMode(false);
       
       // Show success message
-      alert('Profile saved successfully!');
+      showNotification('Profile saved successfully!', 'success');
     });
   }
 

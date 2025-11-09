@@ -762,6 +762,367 @@ function initAnalyticsCharts() {
     }
 }
 
+// ===== PRODUCTS PAGE =====
+function populateProductsTable(filters = {}) {
+    const tbody = document.getElementById('productsTableBody');
+    if (!tbody) return;
+
+    let filteredProducts = [...mockProducts];
+
+    // Apply filters
+    if (filters.search) {
+        filteredProducts = filteredProducts.filter(p =>
+            p.name.toLowerCase().includes(filters.search.toLowerCase())
+        );
+    }
+    if (filters.category && filters.category !== 'all') {
+        filteredProducts = filteredProducts.filter(p =>
+            p.category.toLowerCase() === filters.category.toLowerCase()
+        );
+    }
+    if (filters.stock && filters.stock !== 'all') {
+        filteredProducts = filteredProducts.filter(p => p.status === filters.stock);
+    }
+
+    tbody.innerHTML = filteredProducts.map(product => `
+        <tr>
+            <td><input type="checkbox" class="product-checkbox" data-id="${product.id}"></td>
+            <td>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${product.image}" alt="${product.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;" onerror="this.src='assets/images/logo.png'">
+                    <strong>${product.name}</strong>
+                </div>
+            </td>
+            <td>${product.category}</td>
+            <td><strong>${formatCurrency(product.price)}</strong></td>
+            <td>${product.stock}</td>
+            <td>${product.sold}</td>
+            <td>
+                <span class="status-badge ${product.status}">
+                    ${product.status === 'in-stock' ? 'Còn hàng' : product.status === 'low-stock' ? 'Sắp hết' : 'Hết hàng'}
+                </span>
+            </td>
+            <td>
+                <button class="icon-btn" onclick="editProduct(${product.id})" title="Sửa">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="icon-btn" onclick="deleteProduct(${product.id})" title="Xóa">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function editProduct(id) {
+    const product = mockProducts.find(p => p.id === id);
+    if (product) {
+        showToast(`Đang chỉnh sửa sản phẩm: ${product.name}`, 'info');
+        // Here you would open a modal to edit the product
+    }
+}
+
+function deleteProduct(id) {
+    const product = mockProducts.find(p => p.id === id);
+    if (product && confirm(`Bạn có chắc muốn xóa sản phẩm "${product.name}"?`)) {
+        const index = mockProducts.findIndex(p => p.id === id);
+        mockProducts.splice(index, 1);
+        populateProductsTable();
+        showToast('Đã xóa sản phẩm thành công!');
+    }
+}
+
+// ===== ORDERS PAGE =====
+function populateOrdersTableFull(filters = {}) {
+    const tbody = document.getElementById('ordersTableFullBody');
+    if (!tbody) return;
+
+    let filteredOrders = [...mockOrders];
+
+    // Apply filters
+    if (filters.search) {
+        filteredOrders = filteredOrders.filter(o =>
+            o.id.toLowerCase().includes(filters.search.toLowerCase()) ||
+            o.customer.toLowerCase().includes(filters.search.toLowerCase())
+        );
+    }
+    if (filters.status && filters.status !== 'all') {
+        filteredOrders = filteredOrders.filter(o => o.status === filters.status);
+    }
+
+    tbody.innerHTML = filteredOrders.map(order => `
+        <tr>
+            <td><strong>${order.id}</strong></td>
+            <td>${order.customer}</td>
+            <td>${order.product}</td>
+            <td>${order.quantity}</td>
+            <td><strong>${formatCurrency(order.amount)}</strong></td>
+            <td>
+                <select class="status-select" onchange="updateOrderStatus('${order.id}', this.value)">
+                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Đang xử lý</option>
+                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Hoàn thành</option>
+                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Đã hủy</option>
+                </select>
+            </td>
+            <td>${order.date}</td>
+            <td>
+                <button class="icon-btn" onclick="viewOrderDetail('${order.id}')" title="Xem chi tiết">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="icon-btn" onclick="printOrder('${order.id}')" title="In hóa đơn">
+                    <i class="fas fa-print"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function updateOrderStatus(orderId, newStatus) {
+    const order = mockOrders.find(o => o.id === orderId);
+    if (order) {
+        order.status = newStatus;
+        showToast(`Đã cập nhật trạng thái đơn hàng ${orderId}`);
+    }
+}
+
+function viewOrderDetail(orderId) {
+    const order = mockOrders.find(o => o.id === orderId);
+    if (order) {
+        showToast(`Xem chi tiết đơn hàng ${orderId}`, 'info');
+        // Here you would open a modal with order details
+    }
+}
+
+function printOrder(orderId) {
+    showToast(`Đang in hóa đơn ${orderId}...`, 'info');
+}
+
+// ===== CUSTOMERS PAGE =====
+function populateCustomersTable(filters = {}) {
+    const tbody = document.getElementById('customersTableBody');
+    if (!tbody) return;
+
+    let filteredCustomers = [...mockCustomers];
+
+    // Apply filters
+    if (filters.search) {
+        filteredCustomers = filteredCustomers.filter(c =>
+            c.name.toLowerCase().includes(filters.search.toLowerCase()) ||
+            c.email.toLowerCase().includes(filters.search.toLowerCase()) ||
+            c.phone.includes(filters.search)
+        );
+    }
+    if (filters.type && filters.type !== 'all') {
+        filteredCustomers = filteredCustomers.filter(c => c.type === filters.type);
+    }
+
+    tbody.innerHTML = filteredCustomers.map(customer => `
+        <tr>
+            <td><strong>${customer.name}</strong></td>
+            <td>${customer.email}</td>
+            <td>${customer.phone}</td>
+            <td>${customer.orders}</td>
+            <td><strong>${formatCurrency(customer.spent)}</strong></td>
+            <td>
+                <span class="badge ${customer.type === 'vip' ? 'badge-warning' : customer.type === 'new' ? 'badge-info' : ''}">
+                    ${customer.type === 'vip' ? 'VIP' : customer.type === 'new' ? 'Mới' : 'Thường'}
+                </span>
+            </td>
+            <td>${customer.joinDate}</td>
+            <td>
+                <button class="icon-btn" onclick="viewCustomerDetail(${customer.id})" title="Xem chi tiết">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="icon-btn" onclick="editCustomer(${customer.id})" title="Sửa">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function viewCustomerDetail(id) {
+    const customer = mockCustomers.find(c => c.id === id);
+    if (customer) {
+        showToast(`Xem chi tiết khách hàng: ${customer.name}`, 'info');
+    }
+}
+
+function editCustomer(id) {
+    const customer = mockCustomers.find(c => c.id === id);
+    if (customer) {
+        showToast(`Đang chỉnh sửa khách hàng: ${customer.name}`, 'info');
+    }
+}
+
+// ===== SCREENINGS PAGE =====
+function populateScreeningsTable(filters = {}) {
+    const tbody = document.getElementById('screeningsTableBody');
+    if (!tbody) return;
+
+    let filteredScreenings = [...mockScreenings];
+
+    // Apply filters
+    if (filters.search) {
+        filteredScreenings = filteredScreenings.filter(s =>
+            s.movie.toLowerCase().includes(filters.search.toLowerCase())
+        );
+    }
+    if (filters.room && filters.room !== 'all') {
+        filteredScreenings = filteredScreenings.filter(s =>
+            s.room.toLowerCase().includes(filters.room.toLowerCase())
+        );
+    }
+
+    tbody.innerHTML = filteredScreenings.map(screening => `
+        <tr>
+            <td><strong>${screening.movie}</strong></td>
+            <td>${screening.room}</td>
+            <td>${screening.time}</td>
+            <td>${screening.booked}</td>
+            <td>
+                <span style="color: ${screening.watching > 0 ? '#4ade80' : '#94a3b8'}; font-weight: 600;">
+                    ${screening.watching}
+                </span>
+            </td>
+            <td>
+                <span class="status-badge ${screening.status === 'playing' ? 'completed' : screening.status === 'scheduled' ? 'pending' : 'cancelled'}">
+                    ${screening.status === 'playing' ? 'Đang chiếu' : screening.status === 'scheduled' ? 'Chưa chiếu' : 'Đã hủy'}
+                </span>
+            </td>
+            <td>
+                <button class="icon-btn" onclick="viewScreeningDetail(${screening.id})" title="Xem chi tiết">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="icon-btn" onclick="editScreening(${screening.id})" title="Sửa">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="icon-btn" onclick="deleteScreening(${screening.id})" title="Xóa">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function viewScreeningDetail(id) {
+    const screening = mockScreenings.find(s => s.id === id);
+    if (screening) {
+        showToast(`Xem chi tiết lịch chiếu: ${screening.movie}`, 'info');
+    }
+}
+
+function editScreening(id) {
+    const screening = mockScreenings.find(s => s.id === id);
+    if (screening) {
+        showToast(`Đang chỉnh sửa lịch chiếu: ${screening.movie}`, 'info');
+    }
+}
+
+function deleteScreening(id) {
+    const screening = mockScreenings.find(s => s.id === id);
+    if (screening && confirm(`Bạn có chắc muốn xóa lịch chiếu "${screening.movie}"?`)) {
+        const index = mockScreenings.findIndex(s => s.id === id);
+        mockScreenings.splice(index, 1);
+        populateScreeningsTable();
+        showToast('Đã xóa lịch chiếu thành công!');
+    }
+}
+
+// ===== ANALYTICS PAGE =====
+function initAnalyticsCharts() {
+    if (typeof Chart === 'undefined') return;
+
+    // Trend Chart
+    const trendCtx = document.getElementById('trendChart');
+    if (trendCtx && !Chart.getChart(trendCtx)) {
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+                datasets: [
+                    {
+                        label: 'Doanh thu',
+                        data: [28000000, 32000000, 30000000, 38000000, 35000000, 42000000, 39000000, 45000000, 43000000, 48000000, 46000000, 52000000],
+                        borderColor: '#6c8fc7',
+                        backgroundColor: 'rgba(108, 143, 199, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Đơn hàng',
+                        data: [85, 92, 88, 105, 98, 112, 108, 125, 118, 132, 128, 145],
+                        borderColor: '#e8b86d',
+                        backgroundColor: 'rgba(232, 184, 109, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: true, position: 'top', labels: { color: '#cbd5e1' } }
+                },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // Top Products Chart
+    const topProductsCtx = document.getElementById('topProductsChart');
+    if (topProductsCtx && !Chart.getChart(topProductsCtx)) {
+        new Chart(topProductsCtx, {
+            type: 'bar',
+            data: {
+                labels: mockProducts.slice(0, 5).map(p => p.name.substring(0, 20) + '...'),
+                datasets: [{
+                    label: 'Số lượng bán',
+                    data: mockProducts.slice(0, 5).map(p => p.sold),
+                    backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
+                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // Region Chart
+    const regionCtx = document.getElementById('regionChart');
+    if (regionCtx && !Chart.getChart(regionCtx)) {
+        new Chart(regionCtx, {
+            type: 'pie',
+            data: {
+                labels: ['TP.HCM', 'Hà Nội', 'Đà Nẵng', 'Cần Thơ', 'Khác'],
+                datasets: [{
+                    data: [45, 25, 15, 10, 5],
+                    backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: '#cbd5e1' } }
+                }
+            }
+        });
+    }
+}
+
 // ===== REPORTS FUNCTIONS =====
 window.generateReport = function(type) {
     showToast(`Đang tạo báo cáo ${type}...`, 'info');

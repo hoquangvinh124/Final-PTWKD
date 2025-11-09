@@ -8,7 +8,7 @@ const sendBtn = document.getElementById('sendBtn');
 const chatInput = document.getElementById('chatInput');
 const chatMessages = document.getElementById('chatMessages');
 
-// Mở/đóng chat
+// Open/close chat
 chatToggle.addEventListener('click', () => {
   if (!isAuthenticated()) {
     showNotification('Please login to use chat feature!', 'info');
@@ -17,7 +17,7 @@ chatToggle.addEventListener('click', () => {
   chatBox.classList.toggle('hidden');
 });
 
-// Hàm gửi tin nhắn
+// Send message function
 function sendMessage() {
   if (!isAuthenticated()) {
     showNotification('Please login to send messages!', 'info');
@@ -37,10 +37,10 @@ function sendMessage() {
   }
 }
 
-// Gửi tin nhắn khi click nút Send
+// Send message when clicking Send button
 sendBtn.addEventListener('click', sendMessage);
 
-// Gửi tin nhắn khi nhấn Enter
+// Send message when pressing Enter
 chatInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     sendMessage();

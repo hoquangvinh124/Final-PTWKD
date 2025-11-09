@@ -1,6 +1,6 @@
 /**
  * Confirm Modal System
- * Modal xác nhận thay thế confirm() và alert()
+ * Confirmation modal to replace confirm() and alert()
  */
 
 function showConfirmModal(options = {}) {

@@ -13,7 +13,7 @@ class Wishlist {
     }
 
     bindEvents() {
-        // Delegate event cho các nút heart icon
+        // Delegate event for heart icon buttons
         document.addEventListener('click', (e) => {
             const heartBtn = e.target.closest('.heart-btn, .icon-btn');
             if (heartBtn && heartBtn.querySelector('.heart-icon')) {
@@ -25,27 +25,27 @@ class Wishlist {
     }
 
     toggleWishlist(button) {
-        // Kiểm tra đăng nhập
+        // Check login
         if (!isAuthenticated()) {
             showNotification('Please login to use wishlist feature!', 'info');
             return;
         }
 
-        // Lấy thông tin sản phẩm từ data attributes hoặc DOM
+        // Get product info from data attributes or DOM
         const product = this.getProductInfo(button);
         
         if (!product) {
-            console.error('Không tìm thấy thông tin sản phẩm');
+            console.error('Product information not found');
             return;
         }
 
         const heartIcon = button.querySelector('.heart-icon');
         const isUserProfilePage = window.location.pathname.includes('user-profile.html');
         
-        // Kiểm tra sản phẩm đã trong wishlist chưa
+        // Check if product is already in wishlist
         if (isInWishlist(product.id)) {
-            // Xóa khỏi wishlist
-            // Chỉ show modal nếu đang ở trang user-profile
+            // Remove from wishlist
+            // Only show modal if on user-profile page
             if (isUserProfilePage) {
                 showConfirmModal({
                     title: 'Remove from Wishlist',
@@ -63,7 +63,7 @@ class Wishlist {
                     }
                 });
             } else {
-                // Xóa trực tiếp không cần modal ở các trang khác
+                // Remove directly without modal on other pages
                 const result = removeFromWishlist(product.id);
                 if (result.success) {
                     heartIcon.classList.remove('active');
@@ -77,7 +77,7 @@ class Wishlist {
                 }
             }
         } else {
-            // Thêm vào wishlist
+            // Add to wishlist
             const result = addToWishlist(product);
             if (result.success) {
                 heartIcon.classList.add('active');
@@ -97,7 +97,7 @@ class Wishlist {
     }
 
     getProductInfo(button) {
-        // Thử lấy từ data attributes trước
+        // Try getting from data attributes first
         const productCard = button.closest('.product-card, .item, .product');
         
         if (button.dataset.productId) {
@@ -109,13 +109,13 @@ class Wishlist {
             };
         }
         
-        // Fallback: parse từ DOM structure
+        // Fallback: parse from DOM structure
         if (productCard) {
             const nameElement = productCard.querySelector('h4, .product-title, .cart-item-name');
             const priceElement = productCard.querySelector('.current-price, .cart-item-price, .price');
             const imageElement = productCard.querySelector('img.main-image, img');
             
-            // Lấy ID từ link detail hoặc data attribute
+            // Get ID from detail link or data attribute
             const linkElement = productCard.querySelector('a[href*="single-product.html"]');
             let productId = null;
             if (linkElement) {
@@ -137,7 +137,7 @@ class Wishlist {
     updateWishlistUI() {
         if (!isAuthenticated()) return;
 
-        // Cập nhật trạng thái active cho các heart icon
+        // Update active status for heart icons
         document.querySelectorAll('.heart-icon').forEach(icon => {
             const button = icon.closest('.heart-btn, .icon-btn, a');
             if (!button) return;

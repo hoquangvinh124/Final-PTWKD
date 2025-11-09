@@ -44,18 +44,18 @@
     <header>
         <nav class="navbar section-content">
             <div class="header-top">
-                <a href="homepage.html" class="nav-logo" aria-label="Trang chủ Retro Sound">
+                <a href="homepage.html" class="nav-logo" aria-label="Retro Sound Home">
                     <img src="assets/images/shopname.jpg" width="150" height="60" alt="Retro Sound Logo">
                 </a>
-                <div class="header-icons" role="group" aria-label="Lối tắt điều hướng">
-                    <button type="button" class="header-icon search-btn" aria-label="Tìm kiếm" title="Tìm kiếm">
+                <div class="header-icons" role="group" aria-label="Navigation shortcuts">
+                    <button type="button" class="header-icon search-btn" aria-label="Search" title="Search">
                         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                     </button>
-                    <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartTabPanel cartModal" title="Giỏ hàng">
+                    <button type="button" class="header-icon cart-btn" id="cartButton" aria-expanded="false" aria-controls="cartTabPanel cartModal" title="Shopping Cart">
                         <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
                         <span class="badge" id="cartBadge"></span>
                     </button>
-                    <button type="button" class="header-icon user-btn" aria-label="Tài khoản" title="Tài khoản">
+                    <button type="button" class="header-icon user-btn" aria-label="Account" title="Account">
                         <i class="fa-regular fa-user" aria-hidden="true"></i>
                         <div class="user-dropdown" id="userDropdown">
                             <div class="user-info">
@@ -105,8 +105,8 @@
         </nav>
         <div class="search-bar" id="searchBar">
             <div class="search-container">
-                <input type="text" placeholder="Tìm kiếm sản phẩm..." class="search-input" id="searchInput">
-                <button class="search-close" id="searchClose" aria-label="Đóng tìm kiếm">
+                <input type="text" placeholder="Search products..." class="search-input" id="searchInput">
+                <button class="search-close" id="searchClose" aria-label="Close search">
                     <i class="fa-solid fa-times"></i>
                 </button>
                 <div class="search-dropdown" id="searchDropdown"></div>
@@ -121,7 +121,7 @@
             <div class="row mb-2">
                 <div class="col-12 text-center">
                     <h2 id="searchCount" style="font-family: 'Barlow', sans-serif; font-size: 28px; font-weight: 500; color: #ececec; text-transform: uppercase; margin-bottom: 30px; padding-bottom: 10px; border-bottom: 3px solid rgb(243, 156, 18); display: inline-block;">
-                        Đang tìm kiếm...
+                        Searching...
                     </h2>
                 </div>
             </div>
@@ -192,9 +192,9 @@
                     <!-- <div class="col-12 product-empty-state" id="noResults" style="display: none;">
                         <div class="empty-card">
                             <i class="fa fa-search"></i>
-                            <h4>Không tìm thấy sản phẩm phù hợp</h4>
-                            <p>Hãy thử điều chỉnh lại bộ lọc để xem thêm nhiều sản phẩm khác.</p>
-                            <button type="button" class="filter-reset-btn" onclick="resetFilters()">Xoá bộ lọc</button>
+                            <h4>No matching products found</h4>
+                            <p>Try adjusting the filters to see more products.</p>
+                            <button type="button" class="filter-reset-btn" onclick="resetFilters()">Clear filters</button>
                         </div>
                     </div> -->
 
@@ -234,7 +234,7 @@
     <div class="cart-overlay" id="cartOverlay"></div>
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
-            <h3>GIỎ HÀNG CỦA BẠN</h3>
+            <h3>YOUR SHOPPING CART</h3>
             <button class="cart-close" id="cartClose">
                 <i class="fas fa-times"></i>
             </button>
@@ -244,18 +244,18 @@
             <!-- Cart items will be dynamically inserted here -->
             <div class="cart-empty" id="cartEmpty">
                 <i class="fas fa-shopping-cart"></i>
-                <p>Giỏ hàng của bạn đang trống</p>
+                <p>Your shopping cart is empty</p>
             </div>
         </div>
 
         <div class="cart-footer" id="cartFooter" style="display: none;">
             <div class="cart-total">
-                <span>Tổng cộng:</span>
+                <span>Total:</span>
                 <span id="cartTotalAmount">0</span>
             </div>
             <div class="cart-actions">
-                <button class="checkout-btn" id="checkoutBtn">Thanh toán</button>
-                <button class="continue-shopping" id="continueShopping">TIẾP TỤC MUA HÀNG</button>
+                <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+                <button class="continue-shopping" id="continueShopping">CONTINUE SHOPPING</button>
             </div>
         </div>
     </div>
@@ -279,7 +279,7 @@
                 </ul>
             </div>
             <div class="footerBottom">
-                <p>Copyright &copy;2025; Designed by <span class="designer">Nhóm</span></p>
+                <p>Copyright &copy;2025; Designed by <span class="designer">Team</span></p>
             </div>
         </div>
     </footer>

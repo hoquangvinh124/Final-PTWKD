@@ -236,7 +236,7 @@ function fillDefaultAddress() {
   document.getElementById('address').value = address.street || '';
 
   // Use the EXACT city value from dropdown that was selected in user profile
-  // This is already in the correct format (e.g., "TP. Hồ Chí Minh", "Hà Nội")
+  // This is already in the correct format (e.g., "Ho Chi Minh City", "Hanoi")
   document.getElementById('city').value = address.city || '';
 
   console.log('Filled from saved address:', {
@@ -339,7 +339,7 @@ function autoFillUserEmail() {
 document.addEventListener('DOMContentLoaded', function() {
   const hasCartData = loadCartData();
   if (!hasCartData || orderData.products.length === 0) {
-    alert('Giỏ hàng của bạn đang trống! Vui lòng thêm sản phẩm trước khi thanh toán.');
+    alert('Your shopping cart is empty! Please add products before checkout.');
     window.location.href = 'homepage.html';
     return;
   }

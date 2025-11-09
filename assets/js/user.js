@@ -117,7 +117,7 @@ export function addToWishlist(product) {
 }
 
 /**
- * Xóa sản phẩm khỏi wishlist.
+ * Remove product khỏi wishlist.
  */
 export function removeFromWishlist(productId) {
   if (!isAuthenticated()) {
@@ -182,7 +182,7 @@ export function addToRecentPurchased(product) {
   users[userIndex].updatedAt = new Date().toISOString();
   saveUsers(users);
 
-  // Xóa sản phẩm khỏi wishlist nếu có
+  // Remove product khỏi wishlist nếu có
   users[userIndex].wishlist = users[userIndex].wishlist.filter(item => item.id !== product.id);
   saveUsers(users);
 

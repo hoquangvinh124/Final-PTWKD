@@ -113,7 +113,7 @@ img {
     cursor: pointer;
 }
 
-/* Hero Section với Video */
+/* Hero Section with Video */
 .hero {
     position: relative;
     height: 106vh;
@@ -351,7 +351,7 @@ img {
 .category-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 120px; /* Tăng khoảng cách giữa 3 elements thêm nữa */
+    gap: 120px; /* Increase spacing between 3 elements more */
     position: relative;
     z-index: 1;
 }
@@ -369,7 +369,7 @@ img {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    min-height: 400px; /* Đảm bảo chiều cao đồng đều */
+    min-height: 400px; /* Ensure uniform height */
 }
 
 .titlemark {
@@ -378,7 +378,7 @@ img {
     font-weight: 700;
     margin-bottom: 20px;
     color: white;
-    flex-shrink: 0; /* Không bị co lại */
+    flex-shrink: 0; /* Do not shrink */
 }
 
 .category-card:hover {
@@ -395,7 +395,7 @@ img {
     height: 5px;
 }
 
-/* Container cho hình ảnh để căn giữa hoàn hảo */
+/* Container for images for perfect centering */
 .category-image-container {
     flex: 1;
     display: flex;
@@ -403,32 +403,32 @@ img {
     justify-content: center;
     width: 100%;
     margin-bottom: 25px;
-    min-height: 300px; /* Tăng chiều cao */
+    min-height: 300px; /* Increase height */
 }
 
 .category-card img {
-    max-width: 100%; /* Tăng từ 80% lên 100% */
-    max-height: 280px; /* Tăng từ 180px lên 280px */
+    max-width: 100%; /* Increase from 80% to 100% */
+    max-height: 280px; /* Increase from 180px to 280px */
     width: auto;
     height: auto;
     object-fit: contain;
     transition: transform 0.5s ease;
 }
 
-/* Điều chỉnh riêng cho từng loại sản phẩm */
+/* Individual adjustment for each product type */
 #artifactz\ vinora img {
-    max-width: 90%; /* Tăng từ 70% lên 90% */
-    max-height: 260px; /* Tăng từ 160px */
+    max-width: 90%; /* Increase from 70% to 90% */
+    max-height: 260px; /* Increase from 160px */
 }
 
 #artifactz\ tapella .cd-container {
-    max-width: 100%; /* Tăng từ 85% lên 100% */
+    max-width: 100%; /* Increase from 85% to 100% */
     max-height: 170px;
 }
 
 #artifactz\ discara img {
-    max-width: 90%; /* Tăng từ 75% lên 90% */
-    max-height: 260px; /* Tăng từ 165px lên 260px */
+    max-width: 90%; /* Increase from 75% to 90% */
+    max-height: 260px; /* Increase from 165px to 260px */
 }
 
 .category-card:hover img {
@@ -438,7 +438,7 @@ img {
 .category-card p {
     color: white;
     margin-bottom: 20px;
-    flex-shrink: 0; /* Không bị co lại */
+    flex-shrink: 0; /* Do not shrink */
     line-height: 1.5;
 }
 
@@ -695,7 +695,7 @@ audio {
    FEATURED PRODUCTS SECTION - Using Product Pages Structure
    =================================== */
 
-/* Product Card - COPY nguyên từ products.css #products .item */
+/* Product Card - COPY entirely from products.css #products .item */
 .featured-products .product-card,
 .products-grid .product-card {
     position: relative;
@@ -735,7 +735,7 @@ audio {
     opacity: 1;
 }
 
-/* Hover content - COPY từ products.css */
+/* Hover content - COPY from products.css */
 .featured-products .product-card .thumb .hover-content,
 .products-grid .product-card .thumb .hover-content {
     position: absolute;
@@ -770,7 +770,7 @@ audio {
     margin: 0 8px;
 }
 
-/* Buttons - COPY từ products.css */
+/* Buttons - COPY from products.css */
 .featured-products .product-card .hover-content ul li button,
 .products-grid .product-card .hover-content ul li button {
     width: 55px;
@@ -1286,7 +1286,7 @@ audio {
 .gallery-slider {
     position: relative;
     width: 100%;
-    overflow: hidden; /* Giới hạn không gian hiển thị của gallery */
+    overflow: hidden; /* Limit gallery display space */
 }
 
 .gallery-track {
@@ -1296,16 +1296,16 @@ audio {
 
 .gallery-item {
     flex: 0 0 auto;
-    margin-right: 30px; /* Tăng khoảng cách giữa các ảnh */
+    margin-right: 30px; /* Increase spacing between images */
     border-radius: 10px;
     overflow: hidden;
 }
 
 .gallery-item img {
-    width: 250px; /* Làm ảnh lớn hơn một chút */
+    width: 250px; /* Make image slightly larger */
     height: auto;
     display: block;
-    object-fit: cover; /* Giữ ảnh luôn phủ đầy khung mà không bị méo */
+    object-fit: cover; /* Keep image always fill frame without distortion */
 }
 
 /* Animation for the top gallery (left to right) */
@@ -1566,25 +1566,25 @@ audio {
     padding: 20px;
     border-bottom: 1px solid var(--border);
     display: flex;
-    justify-content: center; /* Thay space-between bằng center */
+    justify-content: center; /* Replace space-between with center */
     align-items: center;
     background: black;
     text-align: center;
-    position: relative; /* Thêm position relative */
+    position: relative; /* Add position relative */
 }
 
 .cart-header h3 {
     color: var(--secondary);
     margin: 0;
     font-size: 18px;
-    /* Xóa align-items: center; vì không áp dụng cho h3 */
+    /* Remove align-items: center; because it does not apply to h3 */
 }
 
 .cart-close {
-    position: absolute; /* Đặt nút close ở vị trí tuyệt đối */
-    right: 20px; /* Cách mép phải 20px */
-    top: 50%; /* Căn giữa theo chiều dọc */
-    transform: translateY(-50%); /* Căn giữa chính xác */
+    position: absolute; /* Place close button at absolute position */
+    right: 20px; /* 20px from right edge */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Center precisely */
     background: none;
     border: none;
     font-size: 20px;
@@ -1985,7 +1985,7 @@ div.pro-gallery.one-row .gallery-horizontal-scroll-inner {
     animation-delay: calc((22s / var(--quantity)) * (var(--position) - 1) - 22s) !important;
 }
 
-/* Dòng 2 lệch ra để tạo hiệu ứng xéo */
+/* Line 2 shifted to create diagonal effect */
 .slider-offset .list .item {
     animation-delay: calc((22s / var(--quantity)) * (var(--position) - 0.5) - 22s) !important;
 }

@@ -1,6 +1,6 @@
 /**
  * Notification System
- * Tạo thông báo đẹp thay thế alert()
+ * Create beautiful notification to replace alert()
  */
 
 function showNotification(message, type = 'success', position = 'right') {

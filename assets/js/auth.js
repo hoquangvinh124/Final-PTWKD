@@ -11,7 +11,7 @@ const DEFAULT_USERS = [
     dateOfBirth: '1990-05-15',
     gender: 'Male',
     country: 'Vietnam',
-    city: 'Ho Chi Minh City',
+    city: 'TP. Hồ Chí Minh',
     avatar: 'assets/images/default-avatar.jpg',
     memberRank: 'Gold Member',
     shippingAddress: {
@@ -77,7 +77,7 @@ const DEFAULT_USERS = [
           email: 'test@example.com',
           phone: '+84 787 567 381',
           address: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM',
-          city: 'TP. Hồ Chí Minh'
+          city: 'Ho Chi Minh City'
         },
         products: [
           {
@@ -110,7 +110,7 @@ const DEFAULT_USERS = [
   }
 ];
 
-// Tạo user object mặc định cho user mới đăng ký
+// Create default user object for newly registered user
 export function createNewUser(username, password, email = '', firstName = '', lastName = '') {
   return {
     username: username.trim(),
@@ -194,7 +194,7 @@ function cacheSession(user) {
 }
 
 /**
- * Đăng nhập với user/pass. Trả về true nếu đúng.
+ * Login with user/pass. Returns true if correct.
  */
 export function login(username, password) {
   const users = loadUsers();
@@ -231,7 +231,7 @@ export function register(username, password, firstName = '', lastName = '', emai
 }
 
 /**
- * Kiểm tra trạng thái đăng nhập hiện tại.
+ * Check current login status.
  */
 export function isAuthenticated() {
   try {
@@ -248,7 +248,7 @@ export function isAuthenticated() {
 }
  
 /**
- * Lấy thông tin user hiện tại từ session (nếu có).
+ * Get current user information from session (if any).
  */
 export function getCurrentUser() {
   if (!isAuthenticated()) return null;
@@ -256,7 +256,7 @@ export function getCurrentUser() {
 }
 
 /**
- * Đăng xuất và xóa phiên lưu trong localStorage.
+ * Logout and clear session stored in localStorage.
  */
 export function logout() {
   localStorage.removeItem(AUTH_KEY);
@@ -285,7 +285,7 @@ document.addEventListener("DOMContentLoaded", () => {
       toggleButton.setAttribute("aria-pressed", visible ? "true" : "false");
       toggleButton.setAttribute(
         "aria-label",
-        visible ? "Ẩn mật khẩu" : "Hiển thị mật khẩu"
+        visible ? "Ẩn mật khẩu" : "Show password"
       );
       toggleButton.classList.toggle("is-active", visible);
     };

@@ -44,13 +44,13 @@ function renderProductDetails(product) {
     mainImage.setAttribute('data-current-index', '0');
   }
   
-  // Tạo array chứa cả 2 ảnh
+  // Create array containing both images
   const galleryImages = [product.image_front, product.image_back];
   
   if (galleryThumbs) {
     galleryThumbs.innerHTML = galleryImages.map((imageSrc, index) => `
       <button class="thumb ${index === 0 ? 'is-active' : ''}" type="button" data-image="${imageSrc}" data-index="${index}">
-        <img src="${imageSrc}" alt="Ảnh sản phẩm ${index + 1}">
+        <img src="${imageSrc}" alt="Product image ${index + 1}">
       </button>
     `).join('');
   }
@@ -110,7 +110,7 @@ function renderProductDetails(product) {
     const thumbButtons = galleryThumbs.querySelectorAll('.thumb');
     thumbButtons.forEach((btn, index) => {
       btn.addEventListener('click', function() {
-        // Cập nhật ảnh chính
+        // Update main image
         if (mainImage) {
           mainImage.src = galleryImages[index];
           mainImage.setAttribute('data-current-index', index);
@@ -293,7 +293,7 @@ async function loadRelatedProducts(currentProduct) {
       // Loại trừ chính sản phẩm hiện tại
       if (p.id === currentProduct.id) return false;
 
-      // Ưu tiên sản phẩm cùng subcategory
+      // Prioritize products in same subcategory
       if (currentProduct.subcategory && p.subcategory === currentProduct.subcategory) {
         return true;
       }
@@ -324,7 +324,7 @@ async function loadRelatedProducts(currentProduct) {
 
       console.log(`Loaded ${selectedProducts.length} related products`);
     } else if (relatedProductsGrid && selectedProducts.length === 0) {
-      // Ẩn section nếu không có sản phẩm liên quan
+      // Hide section if no related products
       const relatedSection = document.getElementById('relatedProducts');
       if (relatedSection) {
         relatedSection.style.display = 'none';

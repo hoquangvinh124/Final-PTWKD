@@ -150,12 +150,12 @@ function createWishlistCard(item) {
         ? item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + '₫'
         : item.price;
 
-    // Xử lý ảnh - nếu không có hoặc là ảnh default thì dùng placeholder
+    // Handle image - if not available or is default image, use placeholder
     let imageUrl = item.image || '';
     const isDefaultImage = imageUrl.includes('default-product.jpg') || !imageUrl;
     
     if (isDefaultImage) {
-        // Sử dụng placeholder với màu nền thay vì ảnh default
+        // Use placeholder with background color instead of default image
         imageUrl = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect fill='%23f0f0f0' width='300' height='300'/%3E%3Ctext fill='%23999' font-family='Arial' font-size='18' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3ENo Image%3C/text%3E%3C/svg%3E`;
     }
 
