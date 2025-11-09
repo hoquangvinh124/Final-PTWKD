@@ -191,7 +191,7 @@ class HomepageProducts {
         e.stopPropagation();
 
         console.log('Cart button clicked');
-        // Use existing cart functionality from script.js - pass button element
+        // Use existing cart functionality from cart.js - pass button element
         if (window.cart) {
           window.cart.addToCart(button);
         } else {

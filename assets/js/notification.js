@@ -3,13 +3,13 @@
  * Tạo thông báo đẹp thay thế alert()
  */
 
-function showNotification(message, type = 'success') {
+function showNotification(message, type = 'success', position = 'right') {
   // Remove any existing notifications
   const existingNotifications = document.querySelectorAll('.notification-toast');
   existingNotifications.forEach(notif => notif.remove());
 
   const notification = document.createElement('div');
-  notification.className = `notification-toast notification-${type}`;
+  notification.className = `notification-toast notification-${type} notification-${position}`;
   
   const icon = type === 'success' 
     ? '<i class="fas fa-check-circle"></i>'
@@ -34,7 +34,7 @@ function showNotification(message, type = 'success') {
       .notification-toast {
         position: fixed;
         top: 20px;
-        left: 20px;
+        right: 20px;
         background: rgba(0, 0, 0, 0.9);
         border: 1px solid rgba(255, 100, 104, 0.3);
         border-radius: 12px;
@@ -42,11 +42,18 @@ function showNotification(message, type = 'success') {
         color: #fff;
         z-index: 100000;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        animation: slideInLeft 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+        animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
                    fadeOut 0.3s ease 2.5s forwards;
         min-width: 300px;
         max-width: 500px;
         font-family: 'Barlow', sans-serif;
+      }
+      
+      .notification-toast.notification-left {
+        left: 20px;
+        right: auto;
+        animation: slideInLeft 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), 
+                   fadeOutLeft 0.3s ease 2.5s forwards;
       }
       
       .notification-toast.notification-success {
@@ -94,6 +101,17 @@ function showNotification(message, type = 'success') {
         color: #3b82f6;
       }
       
+      @keyframes slideInRight {
+        from { 
+          transform: translateX(120%); 
+          opacity: 0; 
+        }
+        to { 
+          transform: translateX(0); 
+          opacity: 1; 
+        }
+      }
+      
       @keyframes slideInLeft {
         from { 
           transform: translateX(-120%); 
@@ -106,6 +124,13 @@ function showNotification(message, type = 'success') {
       }
       
       @keyframes fadeOut {
+        to { 
+          opacity: 0; 
+          transform: translateX(20px);
+        }
+      }
+      
+      @keyframes fadeOutLeft {
         to { 
           opacity: 0; 
           transform: translateX(-20px);
