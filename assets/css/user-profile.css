@@ -734,7 +734,17 @@ a{text-decoration:none;color:inherit}
   text-align:center;
   color:rgba(255,255,255,.8);
 }
-.artist-hero.blur-active .hero-card{
+.artist-hero.blur-active .hero-front{
+  filter:blur(2.4px);
+  opacity:.85;
+  pointer-events:none;
+}
+.artist-hero.blur-active.card-flipped .hero-front{
+  filter:none;
+  opacity:1;
+  pointer-events:auto;
+}
+.artist-hero.blur-active.card-flipped .hero-back{
   filter:blur(2.4px);
   opacity:.85;
   pointer-events:none;
