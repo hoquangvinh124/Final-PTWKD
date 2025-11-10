@@ -446,82 +446,161 @@ img{display:block;max-width:100%}
 
 .testimonials{
   background:linear-gradient(180deg,rgba(8,0,3,0.3),rgba(32,0,10,0.75));
+  padding:90px 0;
+}
+.testimonials .section-tag{
+  background:rgba(6, 0, 4, .9);
+  border:1px solid rgb(255, 179, 71, 0.3);
+  color:rgb(255, 179, 71);
+  padding:6px 14px;
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.testimonials .section-heading h2{
+  font-size:clamp(30px,5vw,46px);
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:#fff;
 }
 .testimonial-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
   gap:32px;
 }
 .testimonial-card{
-  background:var(--surface);
-  border:1px solid var(--accent-soft);
-  border-radius:24px;
-  padding:28px;
+  background:rgba(6, 0, 4, .85);
+  border:2px solid rgb(255, 179, 71, 0.4);
+  border-radius:20px;
+  padding:32px;
   display:flex;
   flex-direction:column;
-  gap:12px;
-  box-shadow:0 28px 70px rgba(0,0,0,.4);
+  gap:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.testimonial-card:hover{
+  border-color:rgb(255, 179, 71, 0.7);
+  box-shadow:0 25px 70px rgba(255,179,71,0.15);
+  transform:translateY(-4px);
 }
 .avatar{
-  width:64px;
-  height:64px;
+  width:72px;
+  height:72px;
   border-radius:50%;
   overflow:hidden;
-  border:2px solid var(--accent);
+  border:3px solid rgb(255, 179, 71);
+  box-shadow:0 4px 12px rgba(255,179,71,0.3);
 }
 .testimonial-card h3{
   margin:0;
-  font-size:18px;
+  font-size:19px;
   font-weight:700;
   letter-spacing:.12em;
   text-transform:uppercase;
+  color:rgba(255,255,255,0.95);
 }
 .testimonial-card p{
   margin:0;
-  color:var(--text-muted);
-  line-height:1.6;
+  color:rgba(255,255,255,0.75);
+  line-height:1.7;
+  font-size:15px;
+  letter-spacing:0.03em;
 }
 .rating{
-  font-size:18px;
+  font-size:20px;
   letter-spacing:4px;
-  color:var(--highlight);
+  color:rgb(255, 179, 71);
+  text-shadow:0 0 10px rgba(255,179,71,0.4);
 }
 
 .faq{
   padding-bottom:120px;
 }
+.faq .section-heading{
+  max-width:100%;
+}
+.faq .section-tag{
+  background:rgba(6, 0, 4, .9);
+  border:1px solid rgb(255, 179, 71, 0.3);
+  color:rgb(255, 179, 71);
+  padding:6px 14px;
+  font-size:12px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  border-radius:999px;
+}
+.faq .section-heading h2{
+  font-size:28px;
+  font-weight:700;
+  color:rgb(255, 179, 71);
+  text-transform:uppercase;
+  letter-spacing:0.05em;
+  margin:18px 0 16px;
+}
 .faq-list{
   display:flex;
   flex-direction:column;
-  gap:18px;
-  max-width:720px;
+  gap:20px;
+  max-width:900px;
   margin:0 auto;
 }
 .faq-list details{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px 22px;
-  transition:background .2s ease, border .2s ease;
+  background: rgba(6, 0, 4, .9);
+  border:2px solid rgb(255, 179, 71, 0.3);
+  border-radius:16px;
+  padding:0;
+  overflow:hidden;
+  transition:border-color .2s ease, box-shadow .2s ease;
+}
+.faq-list details:hover{
+  border-color:rgb(255, 179, 71, 0.5);
+}
+.faq-list details[open]{
+  border-color:rgb(255, 179, 71);
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
 }
 .faq-list summary{
   cursor:pointer;
   font-weight:700;
   text-transform:uppercase;
   letter-spacing:.12em;
-  font-size:14px;
-  color:var(--text);
+  font-size:15px;
+  color:rgba(255,255,255,0.9);
   list-style:none;
+  padding:20px 24px;
+  transition:background .2s ease, color .2s ease;
+  position:relative;
+}
+.faq-list summary::after{
+  content:"+";
+  position:absolute;
+  right:24px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:28px;
+  color:rgb(255, 179, 71);
+  font-weight:400;
+  transition:transform .3s ease, color .2s ease;
+}
+.faq-list details[open] summary::after{
+  content:"−";
+  transform:translateY(-50%) rotate(180deg);
 }
 .faq-list summary::-webkit-details-marker{display:none}
-.faq-list details[open]{
-  background:var(--surface-strong);
-  border-color:var(--accent-soft);
+.faq-list summary:hover{
+  background:rgba(255,179,71,0.05);
+  color:rgb(255, 179, 71);
 }
 .faq-list details p{
-  margin:14px 0 0;
-  color:var(--text-muted);
-  line-height:1.6;
+  margin:0;
+  padding:0 24px 24px 24px;
+  color:rgba(255,255,255,0.7);
+  line-height:1.7;
+  font-size:14px;
+  letter-spacing:0.03em;
+  background:rgba(0,0,0,0.2);
 }
 
 .market-footer{
