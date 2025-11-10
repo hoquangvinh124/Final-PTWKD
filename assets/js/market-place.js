@@ -428,122 +428,118 @@ function openProductDetail(item) {
   const contactThreads = document.getElementById("contactThreads");
   const contactPhone = document.getElementById("contactPhone");
   
+  // Check if user is authenticated
+  const userLoggedIn = isAuthenticated();
+  
+  // Function to handle contact icon clicks
+  const handleContactClick = (e, url) => {
+    e.preventDefault();
+    if (!userLoggedIn) {
+      showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+      return false;
+    }
+    if (url && url !== "#") {
+      window.open(url, '_blank');
+    }
+  };
+  
   if (item.contact && detailContactSection && detailContactLinks) {
-    // Update icon links - always show icons, just update href
-    if (item.contact.messenger && contactFacebook) {
-      contactFacebook.href = item.contact.messenger;
-    } else if (contactFacebook) {
+    // Update icon links - check login before allowing access
+    if (contactFacebook) {
+      const messengerUrl = item.contact.messenger || "#";
       contactFacebook.href = "#";
-      contactFacebook.onclick = (e) => e.preventDefault();
+      contactFacebook.onclick = (e) => handleContactClick(e, messengerUrl);
     }
     
-    if (item.contact.instagram && contactInstagram) {
-      contactInstagram.href = `https://instagram.com/${item.contact.instagram.replace('@', '')}`;
-    } else if (contactInstagram) {
+    if (contactInstagram) {
+      const instagramUrl = item.contact.instagram 
+        ? `https://instagram.com/${item.contact.instagram.replace('@', '')}` 
+        : "#";
       contactInstagram.href = "#";
-      contactInstagram.onclick = (e) => e.preventDefault();
+      contactInstagram.onclick = (e) => handleContactClick(e, instagramUrl);
     }
     
-    if (item.contact.zalo && contactZalo) {
-      contactZalo.href = `https://zalo.me/${item.contact.zalo}`;
-    } else if (contactZalo) {
+    if (contactZalo) {
+      const zaloUrl = item.contact.zalo 
+        ? `https://zalo.me/${item.contact.zalo}` 
+        : "#";
       contactZalo.href = "#";
-      contactZalo.onclick = (e) => e.preventDefault();
+      contactZalo.onclick = (e) => handleContactClick(e, zaloUrl);
     }
     
-    if (item.contact.threads && contactThreads) {
-      contactThreads.href = `https://threads.net/${item.contact.threads.replace('@', '')}`;
-    } else if (contactThreads) {
+    if (contactThreads) {
+      const threadsUrl = item.contact.threads 
+        ? `https://threads.net/${item.contact.threads.replace('@', '')}` 
+        : "#";
       contactThreads.href = "#";
-      contactThreads.onclick = (e) => e.preventDefault();
+      contactThreads.onclick = (e) => handleContactClick(e, threadsUrl);
     }
     
-    if (item.contact.phone && contactPhone) {
-      contactPhone.href = `tel:${item.contact.phone}`;
-    } else if (contactPhone) {
+    if (contactPhone) {
+      const phoneUrl = item.contact.phone ? `tel:${item.contact.phone}` : "#";
       contactPhone.href = "#";
-      contactPhone.onclick = (e) => e.preventDefault();
+      contactPhone.onclick = (e) => handleContactClick(e, phoneUrl);
     }
     
-    const contacts = [];
-    
-    if (item.contact.phone) {
-      contacts.push(`<a href="tel:${item.contact.phone}" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-        </svg>
-        ${item.contact.phone}
-      </a>`);
-    }
-    
-    if (item.contact.zalo) {
-      contacts.push(`<a href="https://zalo.me/${item.contact.zalo}" target="_blank" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2.546 20.2A1 1 0 0 0 3.8 21.454l3.032-.892A9.957 9.957 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm3.5 13h-7a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0-3h-7a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zm0-3h-7a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1z"/>
-        </svg>
-        Zalo
-      </a>`);
-    }
-    
-    if (item.contact.messenger) {
-      contacts.push(`<a href="${item.contact.messenger}" target="_blank" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.477 2 2 6.145 2 11.243c0 2.912 1.447 5.506 3.712 7.199V22l3.466-1.902a10.157 10.157 0 0 0 2.822.388c5.523 0 10-4.145 10-9.243S17.523 2 12 2zm.993 12.416l-2.548-2.72-4.974 2.72 5.47-5.804 2.61 2.72 4.912-2.72-5.47 5.804z"/>
-        </svg>
-        Messenger
-      </a>`);
-    }
-    
-    if (item.contact.instagram) {
-      contacts.push(`<a href="https://instagram.com/${item.contact.instagram.replace('@', '')}" target="_blank" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-        </svg>
-        ${item.contact.instagram}
-      </a>`);
-    }
-    
-    if (item.contact.threads) {
-      contacts.push(`<a href="https://threads.net/${item.contact.threads.replace('@', '')}" target="_blank" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12.186 3.998a8.99 8.99 0 0 0-8.188 5.28c-.104.232.023.505.254.609.232.104.505-.023.609-.254a7.99 7.99 0 0 1 14.678 0c.104.232.377.358.609.254.232-.104.358-.377.254-.609a8.99 8.99 0 0 0-8.216-5.28zM12 8a4 4 0 0 0-4 4c0 .34.042.67.121.985A4.002 4.002 0 0 0 12 16a4.002 4.002 0 0 0 3.879-3.015A4.002 4.002 0 0 0 12 8z"/>
-        </svg>
-        ${item.contact.threads}
-      </a>`);
-    }
-    
-    if (contacts.length > 0) {
-      detailContactLinks.innerHTML = contacts.join('');
-    } else {
-      detailContactLinks.innerHTML = '<p style="color: rgba(255,244,245,0.6); font-size: 14px; margin: 0;">No contact information available. Please check back later.</p>';
+    // Hide the text contact links section (we only use icons)
+    if (detailContactLinks) {
+      detailContactLinks.style.display = 'none';
     }
   } else {
-    // Reset all icon links if no contact info - icons still visible but not functional
+    // Reset all icon links if no contact info - require login
     if (contactFacebook) {
       contactFacebook.href = "#";
-      contactFacebook.onclick = (e) => e.preventDefault();
+      contactFacebook.onclick = (e) => {
+        e.preventDefault();
+        if (!userLoggedIn) {
+          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+        }
+      };
     }
     if (contactInstagram) {
       contactInstagram.href = "#";
-      contactInstagram.onclick = (e) => e.preventDefault();
+      contactInstagram.onclick = (e) => {
+        e.preventDefault();
+        if (!userLoggedIn) {
+          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+        }
+      };
     }
     if (contactZalo) {
       contactZalo.href = "#";
-      contactZalo.onclick = (e) => e.preventDefault();
+      contactZalo.onclick = (e) => {
+        e.preventDefault();
+        if (!userLoggedIn) {
+          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+        }
+      };
     }
     if (contactThreads) {
       contactThreads.href = "#";
-      contactThreads.onclick = (e) => e.preventDefault();
+      contactThreads.onclick = (e) => {
+        e.preventDefault();
+        if (!userLoggedIn) {
+          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+        }
+      };
     }
     if (contactPhone) {
       contactPhone.href = "#";
-      contactPhone.onclick = (e) => e.preventDefault();
+      contactPhone.onclick = (e) => {
+        e.preventDefault();
+        if (!userLoggedIn) {
+          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+        }
+      };
     }
     
     if (detailContactLinks) {
-      detailContactLinks.innerHTML = '<p style="color: rgba(255,244,245,0.6); font-size: 14px; margin: 0;">No contact information available. Please check back later.</p>';
+      if (!userLoggedIn) {
+        detailContactLinks.innerHTML = '<p style="color: rgba(255,244,245,0.6); font-size: 14px; margin: 0;">🔒 Vui lòng <a href="login.html" style="color: rgb(255, 179, 71); text-decoration: underline;">đăng nhập</a> để xem thông tin liên hệ.</p>';
+      } else {
+        // Hide text links, only show icons
+        detailContactLinks.style.display = 'none';
+      }
     }
   }
   
@@ -596,6 +592,22 @@ function closeAddProductModal() {
     const existingImg = imagePreview.querySelector("img");
     if (existingImg) existingImg.remove();
   }
+  
+  // Reset format select state
+  const productFormatSelect = document.getElementById("productFormat");
+  if (productFormatSelect) {
+    productFormatSelect.disabled = true;
+    productFormatSelect.required = false;
+    
+    // Show all format options again
+    const cdOption = productFormatSelect.querySelector('option[value="CD"]');
+    const vinylOption = productFormatSelect.querySelector('option[value="Vinyl"]');
+    const deviceOption = productFormatSelect.querySelector('option[value="Device"]');
+    
+    if (cdOption) cdOption.style.display = "block";
+    if (vinylOption) vinylOption.style.display = "block";
+    if (deviceOption) deviceOption.style.display = "block";
+  }
 }
 
 // Image upload handling
@@ -625,6 +637,50 @@ productImageInput?.addEventListener("change", (e) => {
       imagePreview.classList.add("has-image");
     };
     reader.readAsDataURL(file);
+  }
+});
+
+// Category and Format dependency logic
+const productCategorySelect = document.getElementById("productCategory");
+const productFormatSelect = document.getElementById("productFormat");
+
+productCategorySelect?.addEventListener("change", (e) => {
+  const category = e.target.value;
+  
+  // Reset format selection
+  productFormatSelect.value = "";
+  
+  // Enable/disable and update format options based on category
+  const cdOption = productFormatSelect.querySelector('option[value="CD"]');
+  const vinylOption = productFormatSelect.querySelector('option[value="Vinyl"]');
+  const deviceOption = productFormatSelect.querySelector('option[value="Device"]');
+  
+  // Reset all options visibility
+  if (cdOption) cdOption.style.display = "none";
+  if (vinylOption) vinylOption.style.display = "none";
+  if (deviceOption) deviceOption.style.display = "none";
+  
+  if (category === "Audio") {
+    // Audio: only CD and Vinyl
+    if (cdOption) cdOption.style.display = "block";
+    if (vinylOption) vinylOption.style.display = "block";
+    productFormatSelect.disabled = false;
+    productFormatSelect.required = true;
+  } else if (category === "Accessories") {
+    // Accessories: only Device
+    if (deviceOption) deviceOption.style.display = "block";
+    productFormatSelect.disabled = false;
+    productFormatSelect.required = true;
+    // Auto-select Device for Accessories
+    productFormatSelect.value = "Device";
+  } else if (category === "Cassette Tape" || category === "VHS" || category === "Pola Camera") {
+    // These categories don't need format selection
+    productFormatSelect.disabled = true;
+    productFormatSelect.required = false;
+  } else {
+    // No category selected
+    productFormatSelect.disabled = true;
+    productFormatSelect.required = false;
   }
 });
 
@@ -660,14 +716,25 @@ addProductForm?.addEventListener("submit", (event) => {
   
   const formData = new FormData(addProductForm);
   const price = Number(formData.get("productPrice"));
+  const category = formData.get("productCategory");
+  let format = formData.get("productFormat");
+  
+  // For categories that don't need format, set default format based on category
+  if (category === "Cassette Tape") {
+    format = "Cassette";
+  } else if (category === "VHS" || category === "Pola Camera") {
+    format = "Device";
+  } else if (category === "Accessories") {
+    format = "Device"; // Already set by auto-select, but ensure it
+  }
   
   // Generate unique ID for the new product
   const productId = `user-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   
   const newProduct = {
     id: productId,
-    category: formData.get("productCategory"),
-    format: formData.get("productFormat"),
+    category: category,
+    format: format,
     name: formData.get("productName"),
     price: `${price.toLocaleString('vi-VN')}₫`,
     priceValue: price,
