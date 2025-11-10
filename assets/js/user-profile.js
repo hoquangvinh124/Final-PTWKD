@@ -232,6 +232,7 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
   const hero = document.querySelector('.artist-hero');
   const player = document.getElementById('spotifyPlayer');
   const buttons = Array.from(document.querySelectorAll('.spotify-track-btn'));
+  const heroCard = document.getElementById('heroCard');
 
   if(!toggle || !panel || !hero || !player) return;
 
@@ -239,6 +240,14 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
     panel.classList.toggle('is-open', open);
     panel.setAttribute('aria-hidden', open ? 'false' : 'true');
     hero.classList.toggle('blur-active', open);
+    
+    // Check if card is flipped to determine which face to blur
+    if(heroCard && heroCard.classList.contains('is-flipped')){
+      hero.classList.add('card-flipped');
+    }else{
+      hero.classList.remove('card-flipped');
+    }
+    
     toggle.classList.toggle('is-spinning', open);
   };
 
