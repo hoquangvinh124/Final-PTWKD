@@ -55,8 +55,8 @@ function loadProducts() {
     if (!stored) return [...DEFAULT_PRODUCTS];
     
     const userProducts = JSON.parse(stored);
-    // Merge: default products + user-created products
-    return [...DEFAULT_PRODUCTS, ...userProducts];
+    // Merge: user-created products first (newest first), then default products
+    return [...userProducts, ...DEFAULT_PRODUCTS];
   } catch (err) {
     console.warn('Failed to load marketplace products:', err);
     return [...DEFAULT_PRODUCTS];
@@ -690,14 +690,14 @@ addProductForm?.addEventListener("submit", (event) => {
     createdAt: new Date().toISOString()
   };
   
-  // Add to products array
-  products.push(newProduct);
+  // Add to products array at the beginning (so it appears first)
+  products.unshift(newProduct);
   
   // Save to localStorage
   saveProducts(products);
   
-  // Re-render current page
-  goToPage(currentPage);
+  // Go to page 1 to show the newly added product
+  goToPage(1);
   
   // Close modal and show success message
   closeAddProductModal();
