@@ -849,6 +849,18 @@ img{display:block;max-width:100%}
 }
 .product-detail-description li::marker{color:var(--accent);}
 .product-detail-modal .catalog-empty{margin:0;}
+.catalog-empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 244, 245, 0.7);
+  font-size: 18px;
+  grid-column: 1 / -1;
+  width: 100%;
+}
+.catalog-empty p {
+  white-space: nowrap;
+  margin: 0;
+}
 .product-detail-contact{
   margin-top:32px;
   padding-top:32px;
@@ -1071,6 +1083,14 @@ body.modal-open{overflow:hidden;}
 .form-group textarea{
   resize:vertical;
   min-height:100px;
+}
+.form-group select option {
+  background: #1a1a1a;
+  color: #fff4f5;
+  padding: 8px;
+}
+.form-group select option:hover {
+  background: #2a2a2a;
 }
 .image-upload-wrapper{
   display:flex;

@@ -327,6 +327,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-left: auto;
 }
 
 .icon-btn {
@@ -561,6 +562,7 @@ body {
 
 .stat-info {
     flex: 1;
+    min-width: 0;
 }
 
 .stat-label {
@@ -571,6 +573,7 @@ body {
     margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 .stat-value {
@@ -579,6 +582,9 @@ body {
     color: var(--text-primary);
     line-height: 1;
     margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .stat-change {
@@ -589,6 +595,11 @@ body {
     font-weight: 600;
     padding: 4px 8px;
     border-radius: 6px;
+    white-space: nowrap;
+}
+
+.stat-change span {
+    white-space: nowrap;
 }
 
 .stat-change.positive {
@@ -869,6 +880,8 @@ tbody tr:hover {
 
 .product-info {
     flex: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .product-info strong {
@@ -876,6 +889,9 @@ tbody tr:hover {
     font-size: 14px;
     color: var(--text-primary);
     margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .product-info span {
@@ -885,6 +901,7 @@ tbody tr:hover {
 
 .product-sales {
     text-align: right;
+    white-space: nowrap;
 }
 
 .product-sales strong {
@@ -893,6 +910,7 @@ tbody tr:hover {
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 4px;
+    white-space: nowrap;
 }
 
 .product-sales span {
@@ -1263,6 +1281,110 @@ tbody tr:hover {
     }
 }
 
+/* ===== IMAGE PREVIEW STYLES ===== */
+.image-preview {
+    width: 100%;
+    max-width: 300px;
+    height: 200px;
+    border: 2px dashed rgba(243, 156, 28, 0.3);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba(15, 23, 42, 0.5);
+    transition: all 0.3s ease;
+}
+
+.image-preview:hover {
+    border-color: rgba(243, 156, 28, 0.5);
+    background: rgba(15, 23, 42, 0.7);
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.preview-placeholder {
+    color: #94a3b8;
+    font-size: 14px;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ===== CUSTOMER AVATAR STYLES ===== */
+.customer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(243, 156, 28, 0.3);
+    transition: all 0.3s ease;
+}
+
+.customer-avatar:hover {
+    border-color: var(--primary);
+    transform: scale(1.1);
+}
+
+/* ===== MEMBER RANK STYLES ===== */
+.member-rank {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.member-rank[data-rank="bronze"] {
+    color: #cd7f32 !important;
+    background: rgba(205, 127, 50, 0.1);
+    text-shadow: 0 0 10px rgba(205, 127, 50, 0.3);
+}
+
+.member-rank[data-rank="silver"] {
+    color: #c0c0c0 !important;
+    background: rgba(192, 192, 192, 0.1);
+    text-shadow: 0 0 10px rgba(192, 192, 192, 0.3);
+}
+
+.member-rank[data-rank="gold"] {
+    color: #ffd700 !important;
+    background: rgba(255, 215, 0, 0.1);
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.member-rank[data-rank="platinum"] {
+    color: #e5e4e2 !important;
+    background: rgba(229, 228, 226, 0.1);
+    text-shadow: 0 0 10px rgba(229, 228, 226, 0.3);
+}
+
+.member-rank[data-rank="diamond"] {
+    color: #b9f2ff !important;
+    background: rgba(185, 242, 255, 0.1);
+    text-shadow: 0 0 10px rgba(185, 242, 255, 0.3);
+}
+
+.member-rank[data-rank="elite"] {
+    color: #ff6b9d !important;
+    background: rgba(255, 107, 157, 0.1);
+    text-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+}
+
+.member-rank[data-rank="vip"] {
+    background: linear-gradient(90deg, #ffd700, #ff6b9d, #b9f2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 4px 12px;
+    font-weight: 700;
+}
+
 @media (max-width: 768px) {
     .form-row {
         grid-template-columns: 1fr;
@@ -1280,4 +1402,67 @@ tbody tr:hover {
     .modal-form {
         padding: 16px;
     }
+}
+
+/* ===== CUSTOM SCROLLBAR (Marketplace Style) ===== */
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 179, 71, 0.5) rgba(0, 0, 0, 0.3);
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ffd082, #ff9d6f);
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffe0a3, #ffb088);
+    box-shadow: 0 0 8px rgba(255, 179, 71, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(180deg, #ffb347, #ff8c42);
+}
+
+/* Scrollbar corner (where horizontal and vertical meet) */
+::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Table wrapper scrollbar */
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #ffd082, #ff9d6f);
+}
+
+/* Sidebar scrollbar */
+.sidebar-nav::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 179, 71, 0.3);
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 179, 71, 0.5);
 }

@@ -1,114 +1,29 @@
 const AUTH_KEY = 'demo.auth';
 export const USERS_KEY = 'demo.users';
 
-const DEFAULT_USERS = [
-  {
-    username: 'test',
-    password: 'test123',
-    email: 'long@example.com',
-    firstName: 'Long',
-    lastName: 'Huynh',
-    dateOfBirth: '1990-05-15',
-    gender: 'Male',
-    country: 'Vietnam',
-    city: 'TP. Hồ Chí Minh',
-    avatar: 'assets/images/default-avatar.jpg',
-    memberRank: 'Gold Member',
-    shippingAddress: {
-      fullName: 'Huynh Quoc Long',
-      phone: '+84 787 567 381',
-      street: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM, Tô Vĩnh Diện',
-      city: 'TP. Hồ Chí Minh',
-      zipCode: '700000',
-      addressType: 'home'
-    },
-    recentPurchased: [],
-    purchasedOrders: [
-      {
-        orderId: '#LDIE20240001',
-        orderDate: '2025-08-11T10:30:00',
-        status: 'Delivered',
-        customer: {
-          firstName: 'Long',
-          lastName: 'Huynh',
-          email: 'test@example.com',
-          phone: '+84 787 567 381',
-          address: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM',
-          city: 'TP. Hồ Chí Minh',
-          zipCode: '700000'
-        },
-        products: [
-          {
-            id: '12',
-            name: 'Japanese Breakfast - For Melancholy Brunettes (& sad women) LP Frosted Shadow Vinyl Record',
-            price: 450000,
-            quantity: 1,
-            image: 'assets/images/Audio/Vinyl/1.jpg'
-          },
-          {
-            id: '1',
-            name: 'Mac Demarco - This Old Dog CD',
-            price: 375000,
-            quantity: 2,
-            image: 'assets/images/Audio/CD/1.jpg'
-          }
-        ],
-        shipping: {
-          type: 'express',
-          price: 50000,
-          method: 'Express Shipping'
-        },
-        payment: {
-          type: 'card',
-          method: 'Credit/Debit Card'
-        },
-        subtotal: 1200000,
-        shippingCost: 50000,
-        tax: 0,
-        total: 1250000
-      },
-      {
-        orderId: '#LDIE20240002',
-        orderDate: '2025-08-10T14:20:00',
-        status: 'Shipped',
-        customer: {
-          firstName: 'Long',
-          lastName: 'Huynh',
-          email: 'test@example.com',
-          phone: '+84 787 567 381',
-          address: 'Ký túc xá Khu B - Đại học Quốc gia TP.HCM',
-          city: 'Ho Chi Minh City'
-        },
-        products: [
-          {
-            id: '45',
-            name: 'Chappell Roan - The Rise & Fall Of A Midwest Princess Cassette Tape',
-            price: 456000,
-            quantity: 1,
-            image: 'assets/images/Cassette Tape/1.jpg'
-          }
-        ],
-        shipping: {
-          type: 'standard',
-          price: 25000,
-          method: 'Standard Shipping'
-        },
-        payment: {
-          type: 'paypal',
-          method: 'PayPal'
-        },
-        subtotal: 456000,
-        shippingCost: 25000,
-        tax: 0,
-        total: 481000
-      }
-    ],
-    wishlist: [],
-    bookedMovies: [],
-    createdAt: '2024-01-01',
-    updatedAt: '2025-01-20'
+// DEFAULT_USERS will be loaded from users.json
+let DEFAULT_USERS = [];
+let usersLoaded = false;
+
+// Load default users from JSON file
+async function loadDefaultUsers() {
+  try {
+    const response = await fetch('users.json');
+    if (!response.ok) {
+      throw new Error('Failed to load users.json');
+    }
+    DEFAULT_USERS = await response.json();
+    usersLoaded = true;
+    console.log('Default users loaded successfully from users.json');
+    return DEFAULT_USERS;
+  } catch (error) {
+    console.error('Error loading default users:', error);
+    // Fallback to empty array if fetch fails
+    DEFAULT_USERS = [];
+    usersLoaded = true;
+    return DEFAULT_USERS;
   }
-];
+}
 
 // Create default user object for newly registered user
 export function createNewUser(username, password, email = '', firstName = '', lastName = '') {
@@ -263,7 +178,10 @@ export function logout() {
 }
 
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // Load default users from JSON first
+  await loadDefaultUsers();
+
   const vinylButton = document.querySelector(".vinyl");
   const audio = document.getElementById("vinyl-audio");
 

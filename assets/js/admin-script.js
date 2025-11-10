@@ -117,24 +117,6 @@ const mockProducts = [
     },
 ];
 
-const mockCustomers = [
-    { id: 1, name: 'Nguyễn Văn A', email: 'nguyenvana@email.com', phone: '0901234567', orders: 15, spent: 18750000, type: 'vip', joinDate: '15/01/2024' },
-    { id: 2, name: 'Trần Thị B', email: 'tranthib@email.com', phone: '0912345678', orders: 8, spent: 6800000, type: 'regular', joinDate: '20/03/2024' },
-    { id: 3, name: 'Lê Minh C', email: 'leminhc@email.com', phone: '0923456789', orders: 22, spent: 27500000, type: 'vip', joinDate: '10/12/2023' },
-    { id: 4, name: 'Phạm Anh D', email: 'phamanhd@email.com', phone: '0934567890', orders: 3, spent: 2040000, type: 'new', joinDate: '05/10/2025' },
-    { id: 5, name: 'Hoàng Thị E', email: 'hoangthie@email.com', phone: '0945678901', orders: 12, spent: 16200000, type: 'vip', joinDate: '22/06/2024' },
-    { id: 6, name: 'Đặng Văn F', email: 'dangvanf@email.com', phone: '0956789012', orders: 5, spent: 10500000, type: 'regular', joinDate: '18/08/2024' },
-];
-
-const mockScreenings = [
-    { id: 1, movie: 'The Godfather (1972)', room: 'Phòng 1', time: '08/11/2025 19:00', booked: 75, watching: 12, status: 'playing' },
-    { id: 2, movie: 'Pulp Fiction (1994)', room: 'Phòng 2', time: '08/11/2025 20:30', booked: 60, watching: 8, status: 'scheduled' },
-    { id: 3, movie: 'Casablanca (1942)', room: 'Phòng 1', time: '09/11/2025 18:00', booked: 85, watching: 0, status: 'scheduled' },
-    { id: 4, movie: 'Star Wars (1977)', room: 'Phòng 3', time: '09/11/2025 19:30', booked: 120, watching: 45, status: 'playing' },
-    { id: 5, movie: 'Back to the Future (1985)', room: 'Phòng 2', time: '10/11/2025 17:00', booked: 20, watching: 0, status: 'scheduled' },
-    { id: 6, movie: 'The Shawshank Redemption (1994)', room: 'Phòng 1', time: '10/11/2025 21:00', booked: 95, watching: 24, status: 'playing' },
-];
-
 // ===== UTILITY FUNCTIONS =====
 function formatCurrency(amount) {
     return new Intl.NumberFormat('vi-VN', {
@@ -143,8 +125,20 @@ function formatCurrency(amount) {
     }).format(amount);
 }
 
+function formatCurrencyShort(amount) {
+    if (amount >= 1000000000) {
+        return (amount / 1000000000).toFixed(1) + 'B₫';
+    } else if (amount >= 1000000) {
+        return (amount / 1000000).toFixed(1) + 'M₫';
+    } else if (amount >= 1000) {
+        return (amount / 1000).toFixed(0) + 'K₫';
+    }
+    return amount.toLocaleString('vi-VN') + '₫';
+}
+
 function animateValue(element, start, end, duration) {
     const isCurrency = element.classList.contains('currency');
+    const isShort = element.classList.contains('currency-short');
     const range = end - start;
     const increment = range / (duration / 16);
     let current = start;
@@ -156,7 +150,9 @@ function animateValue(element, start, end, duration) {
             clearInterval(timer);
         }
 
-        if (isCurrency) {
+        if (isShort) {
+            element.textContent = formatCurrencyShort(Math.floor(current));
+        } else if (isCurrency) {
             element.textContent = formatCurrency(Math.floor(current));
         } else {
             element.textContent = Math.floor(current).toLocaleString('vi-VN');
@@ -295,27 +291,92 @@ function initializePage(pageName) {
 // ===== DASHBOARD FUNCTIONS =====
 function initDashboard() {
     updateWelcomeMessage();
-
-    setTimeout(() => {
-        const statValues = document.querySelectorAll('.stat-value');
-        statValues.forEach(stat => {
-            const target = parseInt(stat.dataset.target);
-            if (target) {
-                animateValue(stat, 0, target, 2000);
-            }
-        });
-    }, 300);
+    updateDashboardStats();
+    updateSidebarBadges();
 
     populateOrdersTable();
     
     // Load products first, then populate top products
     loadProducts().then(() => {
         populateTopProducts();
+        updateSidebarBadges();
     });
 
     setTimeout(() => {
         initCharts();
     }, 500);
+}
+
+function updateSidebarBadges() {
+    // Update badges in sidebar
+    const productsBadge = document.getElementById('productsBadge');
+    const ordersBadge = document.getElementById('ordersBadge');
+    const customersBadge = document.getElementById('customersBadge');
+    const moviesBadge = document.getElementById('moviesBadge');
+    
+    if (productsBadge) productsBadge.textContent = state.products.length;
+    if (ordersBadge) ordersBadge.textContent = loadOrdersFromLocalStorage().length;
+    if (customersBadge) customersBadge.textContent = loadCustomersFromLocalStorage().length;
+    if (moviesBadge) moviesBadge.textContent = state.movies.length;
+}
+
+function updateDashboardStats() {
+    // Get real data
+    const customers = loadCustomersFromLocalStorage();
+    const orders = loadOrdersFromLocalStorage();
+    
+    // Load products if not loaded
+    if (!state.productsLoaded) {
+        loadProducts().then(() => {
+            updateStatsWithData(customers, orders);
+        });
+    } else {
+        updateStatsWithData(customers, orders);
+    }
+}
+
+function updateStatsWithData(customers, orders) {
+    const products = state.products;
+    
+    // Calculate total revenue from orders
+    const totalRevenue = orders.reduce((sum, order) => sum + order.amount, 0);
+    
+    // Update stat cards
+    setTimeout(() => {
+        const stats = {
+            orders: orders.length,
+            revenue: totalRevenue,
+            customers: customers.length,
+            products: products.length
+        };
+        
+        console.log('Dashboard Stats:', stats);
+        
+        // Animate values
+        const ordersStat = document.querySelector('.stat-value[data-target="1247"]');
+        if (ordersStat) {
+            ordersStat.dataset.target = stats.orders;
+            animateValue(ordersStat, 0, stats.orders, 2000);
+        }
+        
+        const revenueStat = document.querySelector('.stat-value.currency-short[data-target="45820000"]');
+        if (revenueStat) {
+            revenueStat.dataset.target = stats.revenue;
+            animateValue(revenueStat, 0, stats.revenue, 2000);
+        }
+        
+        const customersStat = document.querySelector('.stat-value[data-target="892"]');
+        if (customersStat) {
+            customersStat.dataset.target = stats.customers;
+            animateValue(customersStat, 0, stats.customers, 2000);
+        }
+        
+        const productsStat = document.querySelector('.stat-value[data-target="142"]');
+        if (productsStat) {
+            productsStat.dataset.target = stats.products;
+            animateValue(productsStat, 0, stats.products, 2000);
+        }
+    }, 300);
 }
 
 function updateWelcomeMessage() {
@@ -338,7 +399,15 @@ function populateOrdersTable() {
     const tbody = document.querySelector('#ordersTable tbody');
     if (!tbody) return;
 
-    tbody.innerHTML = mockOrders.slice(0, 6).map(order => `
+    const orders = loadOrdersFromLocalStorage();
+    const recentOrders = orders.slice(0, 6);
+    
+    if (recentOrders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có đơn hàng nào</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = recentOrders.map(order => `
         <tr>
             <td><strong>${order.id}</strong></td>
             <td>${order.customer}</td>
@@ -373,7 +442,7 @@ function populateTopProducts() {
                 <span>${product.category} • ${product.sold} đã bán</span>
             </div>
             <div class="product-sales">
-                <strong>${formatCurrency(product.sales)}</strong>
+                <strong>${formatCurrencyShort(product.sales)}</strong>
             </div>
         </div>
     `).join('');
@@ -541,11 +610,118 @@ function deleteProduct(id) {
 }
 
 // ===== ORDERS PAGE =====
+function loadOrdersFromLocalStorage() {
+    const orders = [];
+    
+    console.log('=== Loading Orders ===');
+    
+    // Iterate through all localStorage keys
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        
+        // Skip cart and wishlist
+        if (key === 'cart' || key === 'wishlist') {
+            continue;
+        }
+        
+        try {
+            const userData = JSON.parse(localStorage.getItem(key));
+            
+            // Check if it's a valid user with orders
+            if (userData && (userData.email || userData.username) && 
+                (userData.firstName || userData.lastName || userData.shippingAddress)) {
+                
+                const customerName = `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || userData.username || 'Unknown';
+                
+                console.log('Checking user:', customerName);
+                
+                // Get purchasedOrders from user
+                if (userData.purchasedOrders && Array.isArray(userData.purchasedOrders)) {
+                    console.log('Found', userData.purchasedOrders.length, 'orders for', customerName);
+                    
+                    userData.purchasedOrders.forEach(order => {
+                        // Get product names
+                        const productNames = order.products?.map(p => p.name).join(', ') || 
+                                           order.items?.map(item => item.name).join(', ') || 'N/A';
+                        
+                        // Get total quantity
+                        const totalQty = order.products?.reduce((sum, p) => sum + (p.quantity || 0), 0) ||
+                                       order.items?.reduce((sum, item) => sum + (item.quantity || 0), 0) || 0;
+                        
+                        // Format date
+                        let formattedDate = 'N/A';
+                        if (order.orderDate) {
+                            const dateObj = new Date(order.orderDate);
+                            formattedDate = dateObj.toLocaleDateString('vi-VN');
+                        } else if (order.date) {
+                            const dateObj = new Date(order.date);
+                            formattedDate = dateObj.toLocaleDateString('vi-VN');
+                        }
+                        
+                        // Create order entry
+                        orders.push({
+                            id: order.orderId || `ORD${Date.now()}`,
+                            customer: customerName,
+                            product: productNames,
+                            quantity: totalQty,
+                            amount: order.total || 0,
+                            status: order.status?.toLowerCase() || 'completed',
+                            date: formattedDate,
+                            userId: key,
+                            rawDate: order.orderDate || order.date
+                        });
+                    });
+                }
+            }
+        } catch (error) {
+            // Not JSON or invalid data, skip
+            console.log('Skipped key:', key);
+        }
+    }
+    
+    // Sort by date (newest first)
+    orders.sort((a, b) => {
+        if (a.rawDate && b.rawDate) {
+            return new Date(b.rawDate) - new Date(a.rawDate);
+        }
+        return 0;
+    });
+    
+    console.log('Total orders loaded:', orders.length);
+    console.log('Orders:', orders);
+    
+    return orders;
+}
+
+function updateOrdersPageStats(orders) {
+    const totalEl = document.getElementById('ordersTotal');
+    const pendingEl = document.getElementById('ordersPending');
+    const completedEl = document.getElementById('ordersCompleted');
+    const cancelledEl = document.getElementById('ordersCancelled');
+    
+    if (!totalEl) return;
+    
+    const stats = {
+        total: orders.length,
+        pending: orders.filter(o => o.status === 'pending' || o.status === 'shipped').length,
+        completed: orders.filter(o => o.status === 'completed' || o.status === 'delivered').length,
+        cancelled: orders.filter(o => o.status === 'cancelled').length
+    };
+    
+    totalEl.textContent = stats.total;
+    if (pendingEl) pendingEl.textContent = stats.pending;
+    if (completedEl) completedEl.textContent = stats.completed;
+    if (cancelledEl) cancelledEl.textContent = stats.cancelled;
+}
+
 function populateOrdersTableFull(filters = {}) {
     const tbody = document.getElementById('ordersTableFullBody');
     if (!tbody) return;
 
-    let filteredOrders = [...mockOrders];
+    let filteredOrders = loadOrdersFromLocalStorage();
+    
+    // Update Orders page stats
+    updateOrdersPageStats(filteredOrders);
 
     // Apply filters
     if (filters.search) {
@@ -558,6 +734,11 @@ function populateOrdersTableFull(filters = {}) {
         filteredOrders = filteredOrders.filter(o => o.status === filters.status);
     }
 
+    if (filteredOrders.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có đơn hàng nào</td></tr>';
+        return;
+    }
+
     tbody.innerHTML = filteredOrders.map(order => `
         <tr>
             <td><strong>${order.id}</strong></td>
@@ -566,7 +747,7 @@ function populateOrdersTableFull(filters = {}) {
             <td>${order.quantity}</td>
             <td><strong>${formatCurrency(order.amount)}</strong></td>
             <td>
-                <select class="status-select" onchange="updateOrderStatus('${order.id}', this.value)">
+                <select class="status-select" onchange="updateOrderStatus('${order.id}', '${order.userId}', this.value)">
                     <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Đang xử lý</option>
                     <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Hoàn thành</option>
                     <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Đã hủy</option>
@@ -585,16 +766,26 @@ function populateOrdersTableFull(filters = {}) {
     `).join('');
 }
 
-function updateOrderStatus(orderId, newStatus) {
-    const order = mockOrders.find(o => o.id === orderId);
-    if (order) {
-        order.status = newStatus;
-        showToast(`Đã cập nhật trạng thái đơn hàng ${orderId}`);
+function updateOrderStatus(orderId, userId, newStatus) {
+    try {
+        const userData = JSON.parse(localStorage.getItem(userId));
+        if (userData && userData.purchasedOrders) {
+            const order = userData.purchasedOrders.find(o => o.orderId === orderId);
+            if (order) {
+                order.status = newStatus;
+                localStorage.setItem(userId, JSON.stringify(userData));
+                showToast(`Đã cập nhật trạng thái đơn hàng ${orderId}`);
+            }
+        }
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        showToast('Không thể cập nhật trạng thái', 'error');
     }
 }
 
 function viewOrderDetail(orderId) {
-    const order = mockOrders.find(o => o.id === orderId);
+    const orders = loadOrdersFromLocalStorage();
+    const order = orders.find(o => o.id === orderId);
     if (order) {
         showToast(`Xem chi tiết đơn hàng ${orderId}`, 'info');
         // Here you would open a modal with order details
@@ -606,11 +797,144 @@ function printOrder(orderId) {
 }
 
 // ===== CUSTOMERS PAGE =====
+
+// Calculate member rank based on total spending
+function calculateMemberRank(totalSpent) {
+    if (totalSpent > 100000000) return 'vip';          // > 100M
+    if (totalSpent > 50000000) return 'elite';          // 50M - 100M
+    if (totalSpent > 20000000) return 'diamond';        // 20M - 50M
+    if (totalSpent > 10000000) return 'platinum';       // 10M - 20M
+    if (totalSpent > 5000000) return 'gold';            // 5M - 10M
+    if (totalSpent > 1000000) return 'silver';          // 1M - 5M
+    return 'bronze';                                     // 0 - 1M
+}
+
+// Get rank display name
+function getRankDisplayName(rank) {
+    const rankNames = {
+        'bronze': 'Bronze',
+        'silver': 'Silver',
+        'gold': 'Gold',
+        'platinum': 'Platinum',
+        'diamond': 'Diamond',
+        'elite': 'Elite',
+        'vip': 'VIP'
+    };
+    return rankNames[rank] || 'Member';
+}
+
+// Load customers from localStorage
+function loadCustomersFromLocalStorage() {
+    const customers = [];
+    
+    console.log('=== Loading Customers ===');
+    console.log('Total localStorage items:', localStorage.length);
+
+    // Iterate through all localStorage keys
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        console.log('Checking key:', key);
+
+        // Skip cart and wishlist, but check all other keys
+        if (key === 'cart' || key === 'wishlist') {
+            console.log('Skipping system key:', key);
+            continue;
+        }
+
+        try {
+            const userData = JSON.parse(localStorage.getItem(key));
+            console.log('Parsed data for key:', key);
+
+            // Check if it's a valid user object (has email or username AND other user properties)
+            if (userData && (userData.email || userData.username) && 
+                (userData.firstName || userData.lastName || userData.shippingAddress)) {
+                
+                console.log('✅ Found valid user:', key);
+                
+                // Calculate total spent from purchasedOrders
+                let totalSpent = 0;
+                if (userData.purchasedOrders && Array.isArray(userData.purchasedOrders)) {
+                    totalSpent = userData.purchasedOrders.reduce((sum, order) => {
+                        return sum + (order.total || 0);
+                    }, 0);
+                }
+
+                // Calculate rank
+                const rank = calculateMemberRank(totalSpent);
+
+                // Create customer object
+                const customer = {
+                    id: key,
+                    name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || userData.username || 'Unknown',
+                    email: userData.email || 'N/A',
+                    phone: userData.shippingAddress?.phone || userData.phone || 'N/A',
+                    orders: userData.purchasedOrders?.length || 0,
+                    spent: totalSpent,
+                    rank: rank,
+                    avatar: userData.avatar || 'assets/images/default-avatar.jpg',
+                    joinDate: userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('vi-VN') : 'N/A'
+                };
+
+                customers.push(customer);
+                console.log('Added customer:', customer);
+            }
+        } catch (error) {
+            // Not JSON or invalid data, skip
+            console.log('Skipped key (not valid JSON or user):', key);
+        }
+    }
+
+    // Sort by spent (highest first)
+    customers.sort((a, b) => b.spent - a.spent);
+    
+    console.log('Total customers loaded:', customers.length);
+    console.log('Customers:', customers);
+
+    return customers;
+}
+
+function updateCustomersPageStats(customers) {
+    const totalEl = document.getElementById('customersTotal');
+    const regularEl = document.getElementById('customersRegular');
+    const vipEl = document.getElementById('customersVIP');
+    
+    if (!totalEl) return;
+    
+    const vipRanks = ['diamond', 'elite', 'vip', 'platinum', 'gold'];
+    const stats = {
+        total: customers.length,
+        vip: customers.filter(c => vipRanks.includes(c.rank)).length,
+        regular: customers.filter(c => !vipRanks.includes(c.rank)).length
+    };
+    
+    totalEl.textContent = stats.total;
+    if (regularEl) regularEl.textContent = stats.regular;
+    if (vipEl) vipEl.textContent = stats.vip;
+}
+
+function updateScreeningsPageStats() {
+    const screeningsTotalEl = document.getElementById('screeningsTotal');
+    
+    if (!screeningsTotalEl) return;
+    
+    // Update total screenings to match number of movies available
+    const totalScreenings = state.movies ? state.movies.length : 0;
+    screeningsTotalEl.textContent = totalScreenings;
+    
+    console.log('Screenings stats updated - Total:', totalScreenings);
+}
+
 function populateCustomersTable(filters = {}) {
     const tbody = document.getElementById('customersTableBody');
     if (!tbody) return;
 
-    let filteredCustomers = [...mockCustomers];
+    // Load customers from localStorage
+    let filteredCustomers = loadCustomersFromLocalStorage();
+    
+    console.log('Total customers loaded:', filteredCustomers.length);
+    
+    // Update Customers page stats
+    updateCustomersPageStats(filteredCustomers);
 
     // Apply filters
     if (filters.search) {
@@ -621,27 +945,36 @@ function populateCustomersTable(filters = {}) {
         );
     }
     if (filters.type && filters.type !== 'all') {
-        filteredCustomers = filteredCustomers.filter(c => c.type === filters.type);
+        filteredCustomers = filteredCustomers.filter(c => c.rank === filters.type);
+    }
+
+    if (filteredCustomers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có khách hàng nào</td></tr>';
+        return;
     }
 
     tbody.innerHTML = filteredCustomers.map(customer => `
         <tr>
+            <td>
+                <img src="${customer.avatar}" alt="${customer.name}" class="customer-avatar"
+                     onerror="this.src='assets/images/default-avatar.jpg'">
+            </td>
             <td><strong>${customer.name}</strong></td>
             <td>${customer.email}</td>
             <td>${customer.phone}</td>
             <td>${customer.orders}</td>
             <td><strong>${formatCurrency(customer.spent)}</strong></td>
             <td>
-                <span class="badge ${customer.type === 'vip' ? 'badge-warning' : customer.type === 'new' ? 'badge-info' : ''}">
-                    ${customer.type === 'vip' ? 'VIP' : customer.type === 'new' ? 'Mới' : 'Thường'}
+                <span class="member-rank" data-rank="${customer.rank}">
+                    ${getRankDisplayName(customer.rank)}
                 </span>
             </td>
             <td>${customer.joinDate}</td>
             <td>
-                <button class="icon-btn" onclick="viewCustomerDetail(${customer.id})" title="Xem chi tiết">
+                <button class="icon-btn" onclick="viewCustomerDetail('${customer.id}')" title="Xem chi tiết">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button class="icon-btn" onclick="editCustomer(${customer.id})" title="Sửa">
+                <button class="icon-btn" onclick="editCustomer('${customer.id}')" title="Sửa">
                     <i class="fas fa-edit"></i>
                 </button>
             </td>
@@ -650,17 +983,15 @@ function populateCustomersTable(filters = {}) {
 }
 
 function viewCustomerDetail(id) {
-    const customer = mockCustomers.find(c => c.id === id);
-    if (customer) {
-        showToast(`Xem chi tiết khách hàng: ${customer.name}`, 'info');
+    const userData = localStorage.getItem(id);
+    if (userData) {
+        const user = JSON.parse(userData);
+        showToast(`Xem chi tiết khách hàng: ${user.firstName} ${user.lastName}`, 'info');
     }
 }
 
 function editCustomer(id) {
-    const customer = mockCustomers.find(c => c.id === id);
-    if (customer) {
-        showToast(`Đang chỉnh sửa khách hàng: ${customer.name}`, 'info');
-    }
+    openCustomerModal(id);
 }
 
 // ===== SCREENINGS PAGE =====
@@ -668,214 +999,58 @@ function populateScreeningsTable(filters = {}) {
     const tbody = document.getElementById('screeningsTableBody');
     if (!tbody) return;
 
-    let filteredScreenings = [...mockScreenings];
+    // Use state.movies loaded from movies.json
+    if (!state.movies || state.movies.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Đang tải phim...</td></tr>';
+        return;
+    }
+
+    // Update screenings page stats
+    updateScreeningsPageStats();
+
+    let filteredMovies = [...state.movies];
 
     // Apply filters
     if (filters.search) {
-        filteredScreenings = filteredScreenings.filter(s =>
-            s.movie.toLowerCase().includes(filters.search.toLowerCase())
-        );
-    }
-    if (filters.room && filters.room !== 'all') {
-        filteredScreenings = filteredScreenings.filter(s =>
-            s.room.toLowerCase().includes(filters.room.toLowerCase())
+        filteredMovies = filteredMovies.filter(m =>
+            m.title.toLowerCase().includes(filters.search.toLowerCase())
         );
     }
 
-    tbody.innerHTML = filteredScreenings.map(screening => `
+    if (filteredMovies.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Không tìm thấy phim nào</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = filteredMovies.map((movie, index) => `
         <tr>
-            <td><strong>${screening.movie}</strong></td>
-            <td>${screening.room}</td>
-            <td>${screening.time}</td>
-            <td>${screening.booked}</td>
-            <td>
-                <span style="color: ${screening.watching > 0 ? '#4ade80' : '#94a3b8'}; font-weight: 600;">
-                    ${screening.watching}
-                </span>
-            </td>
-            <td>
-                <span class="status-badge ${screening.status === 'playing' ? 'completed' : screening.status === 'scheduled' ? 'pending' : 'cancelled'}">
-                    ${screening.status === 'playing' ? 'Đang chiếu' : screening.status === 'scheduled' ? 'Chưa chiếu' : 'Đã hủy'}
-                </span>
-            </td>
-            <td>
-                <button class="icon-btn" onclick="viewScreeningDetail(${screening.id})" title="Xem chi tiết">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="icon-btn" onclick="editScreening(${screening.id})" title="Sửa">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="icon-btn" onclick="deleteScreening(${screening.id})" title="Xóa">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function viewScreeningDetail(id) {
-    const screening = mockScreenings.find(s => s.id === id);
-    if (screening) {
-        showToast(`Xem chi tiết lịch chiếu: ${screening.movie}`, 'info');
-    }
-}
-
-function editScreening(id) {
-    const screening = mockScreenings.find(s => s.id === id);
-    if (screening) {
-        showToast(`Đang chỉnh sửa lịch chiếu: ${screening.movie}`, 'info');
-    }
-}
-
-function deleteScreening(id) {
-    const screening = mockScreenings.find(s => s.id === id);
-    if (screening && confirm(`Bạn có chắc muốn xóa lịch chiếu "${screening.movie}"?`)) {
-        const index = mockScreenings.findIndex(s => s.id === id);
-        mockScreenings.splice(index, 1);
-        populateScreeningsTable();
-        showToast('Đã xóa lịch chiếu thành công!');
-    }
-}
-
-// ===== ANALYTICS PAGE =====
-function initAnalyticsCharts() {
-    if (typeof Chart === 'undefined') return;
-
-    // Trend Chart
-    const trendCtx = document.getElementById('trendChart');
-    if (trendCtx && !Chart.getChart(trendCtx)) {
-        new Chart(trendCtx, {
-            type: 'line',
-            data: {
-                labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
-                datasets: [
-                    {
-                        label: 'Doanh thu',
-                        data: [28000000, 32000000, 30000000, 38000000, 35000000, 42000000, 39000000, 45000000, 43000000, 48000000, 46000000, 52000000],
-                        borderColor: '#6c8fc7',
-                        backgroundColor: 'rgba(108, 143, 199, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    },
-                    {
-                        label: 'Đơn hàng',
-                        data: [85, 92, 88, 105, 98, 112, 108, 125, 118, 132, 128, 145],
-                        borderColor: '#e8b86d',
-                        backgroundColor: 'rgba(232, 184, 109, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: true, position: 'top', labels: { color: '#cbd5e1' } }
-                },
-                scales: {
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
-                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
-                }
-            }
-        });
-    }
-
-    // Top Products Chart
-    const topProductsCtx = document.getElementById('topProductsChart');
-    if (topProductsCtx && !Chart.getChart(topProductsCtx)) {
-        new Chart(topProductsCtx, {
-            type: 'bar',
-            data: {
-                labels: state.products.slice(0, 5).map(p => p.name.substring(0, 20) + '...'),
-                datasets: [{
-                    label: 'Số lượng bán',
-                    data: state.products.slice(0, 5).map(p => p.sold),
-                    backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false }
-                },
-                scales: {
-                    y: { ticks: { color: '#94a3b8' }, grid: { color: '#334155' } },
-                    x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
-                }
-            }
-        });
-    }
-
-    // Region Chart
-    const regionCtx = document.getElementById('regionChart');
-    if (regionCtx && !Chart.getChart(regionCtx)) {
-        new Chart(regionCtx, {
-            type: 'pie',
-            data: {
-                labels: ['TP.HCM', 'Hà Nội', 'Đà Nẵng', 'Cần Thơ', 'Khác'],
-                datasets: [{
-                    data: [45, 25, 15, 10, 5],
-                    backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom', labels: { color: '#cbd5e1' } }
-                }
-            }
-        });
-    }
-}
-
-// ===== PRODUCTS PAGE =====
-function populateProductsTable(filters = {}) {
-    const tbody = document.getElementById('productsTableBody');
-    if (!tbody) return;
-
-    let filteredProducts = [...state.products];
-
-    // Apply filters
-    if (filters.search) {
-        filteredProducts = filteredProducts.filter(p =>
-            p.name.toLowerCase().includes(filters.search.toLowerCase())
-        );
-    }
-    if (filters.category && filters.category !== 'all') {
-        filteredProducts = filteredProducts.filter(p =>
-            p.category.toLowerCase() === filters.category.toLowerCase()
-        );
-    }
-    if (filters.stock && filters.stock !== 'all') {
-        filteredProducts = filteredProducts.filter(p => p.status === filters.stock);
-    }
-
-    tbody.innerHTML = filteredProducts.map(product => `
-        <tr>
-            <td><input type="checkbox" class="product-checkbox" data-id="${product.id}"></td>
             <td>
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <img src="${product.image}" alt="${product.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" onerror="this.src='assets/images/logo.png'">
-                    <strong style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${product.name}</strong>
+                    <img src="${movie.poster}" alt="${movie.title}" 
+                         style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;"
+                         onerror="this.src='assets/images/logo.png'">
+                    <div>
+                        <strong>${movie.title}</strong>
+                        <div style="font-size: 12px; color: #94a3b8;">${movie.year} • ${movie.genre}</div>
+                    </div>
                 </div>
             </td>
-            <td>${product.category}</td>
-            <td><strong>${formatCurrency(product.price)}</strong></td>
-            <td>${product.stock}</td>
-            <td>${product.sold}</td>
+            <td>${movie.director}</td>
+            <td>${movie.duration} phút</td>
+            <td>${movie.rating}</td>
             <td>
-                <span class="status-badge ${product.status}">
-                    ${product.status === 'in-stock' ? 'Còn hàng' : product.status === 'low-stock' ? 'Sắp hết' : 'Hết hàng'}
+                <span class="status-badge pending">
+                    Đang phát sóng
                 </span>
             </td>
             <td>
-                <button class="icon-btn" onclick="editProduct(${product.id})" title="Sửa">
+                <button class="icon-btn" onclick="viewMovieDetail(${movie.id})" title="Xem chi tiết">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="icon-btn" onclick="editMovie(${movie.id})" title="Sửa">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="icon-btn" onclick="deleteProduct(${product.id})" title="Xóa">
+                <button class="icon-btn" onclick="deleteMovie(${movie.id})" title="Xóa">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
@@ -883,218 +1058,24 @@ function populateProductsTable(filters = {}) {
     `).join('');
 }
 
-function editProduct(id) {
-    const product = state.products.find(p => p.id == id);
-    if (product) {
-        showToast(`Đang chỉnh sửa sản phẩm: ${product.name}`, 'info');
-        // Here you would open a modal to edit the product
+function viewMovieDetail(id) {
+    const movie = state.movies.find(m => m.id === id);
+    if (movie) {
+        showToast(`Xem chi tiết phim: ${movie.title}`, 'info');
     }
 }
 
-function deleteProduct(id) {
-    const product = state.products.find(p => p.id == id);
-    if (product && confirm(`Bạn có chắc muốn xóa sản phẩm "${product.name}"?`)) {
-        const index = state.products.findIndex(p => p.id == id);
-        state.products.splice(index, 1);
-        populateProductsTable();
-        showToast('Đã xóa sản phẩm thành công!');
-    }
+function editMovie(id) {
+    openMovieModal(id);
 }
 
-// ===== ORDERS PAGE =====
-function populateOrdersTableFull(filters = {}) {
-    const tbody = document.getElementById('ordersTableFullBody');
-    if (!tbody) return;
-
-    let filteredOrders = [...mockOrders];
-
-    // Apply filters
-    if (filters.search) {
-        filteredOrders = filteredOrders.filter(o =>
-            o.id.toLowerCase().includes(filters.search.toLowerCase()) ||
-            o.customer.toLowerCase().includes(filters.search.toLowerCase())
-        );
-    }
-    if (filters.status && filters.status !== 'all') {
-        filteredOrders = filteredOrders.filter(o => o.status === filters.status);
-    }
-
-    tbody.innerHTML = filteredOrders.map(order => `
-        <tr>
-            <td><strong>${order.id}</strong></td>
-            <td>${order.customer}</td>
-            <td>${order.product}</td>
-            <td>${order.quantity}</td>
-            <td><strong>${formatCurrency(order.amount)}</strong></td>
-            <td>
-                <select class="status-select" onchange="updateOrderStatus('${order.id}', this.value)">
-                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Đang xử lý</option>
-                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Hoàn thành</option>
-                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Đã hủy</option>
-                </select>
-            </td>
-            <td>${order.date}</td>
-            <td>
-                <button class="icon-btn" onclick="viewOrderDetail('${order.id}')" title="Xem chi tiết">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="icon-btn" onclick="printOrder('${order.id}')" title="In hóa đơn">
-                    <i class="fas fa-print"></i>
-                </button>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function updateOrderStatus(orderId, newStatus) {
-    const order = mockOrders.find(o => o.id === orderId);
-    if (order) {
-        order.status = newStatus;
-        showToast(`Đã cập nhật trạng thái đơn hàng ${orderId}`);
-    }
-}
-
-function viewOrderDetail(orderId) {
-    const order = mockOrders.find(o => o.id === orderId);
-    if (order) {
-        showToast(`Xem chi tiết đơn hàng ${orderId}`, 'info');
-        // Here you would open a modal with order details
-    }
-}
-
-function printOrder(orderId) {
-    showToast(`Đang in hóa đơn ${orderId}...`, 'info');
-}
-
-// ===== CUSTOMERS PAGE =====
-function populateCustomersTable(filters = {}) {
-    const tbody = document.getElementById('customersTableBody');
-    if (!tbody) return;
-
-    let filteredCustomers = [...mockCustomers];
-
-    // Apply filters
-    if (filters.search) {
-        filteredCustomers = filteredCustomers.filter(c =>
-            c.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-            c.email.toLowerCase().includes(filters.search.toLowerCase()) ||
-            c.phone.includes(filters.search)
-        );
-    }
-    if (filters.type && filters.type !== 'all') {
-        filteredCustomers = filteredCustomers.filter(c => c.type === filters.type);
-    }
-
-    tbody.innerHTML = filteredCustomers.map(customer => `
-        <tr>
-            <td><strong>${customer.name}</strong></td>
-            <td>${customer.email}</td>
-            <td>${customer.phone}</td>
-            <td>${customer.orders}</td>
-            <td><strong>${formatCurrency(customer.spent)}</strong></td>
-            <td>
-                <span class="badge ${customer.type === 'vip' ? 'badge-warning' : customer.type === 'new' ? 'badge-info' : ''}">
-                    ${customer.type === 'vip' ? 'VIP' : customer.type === 'new' ? 'Mới' : 'Thường'}
-                </span>
-            </td>
-            <td>${customer.joinDate}</td>
-            <td>
-                <button class="icon-btn" onclick="viewCustomerDetail(${customer.id})" title="Xem chi tiết">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="icon-btn" onclick="editCustomer(${customer.id})" title="Sửa">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function viewCustomerDetail(id) {
-    const customer = mockCustomers.find(c => c.id === id);
-    if (customer) {
-        showToast(`Xem chi tiết khách hàng: ${customer.name}`, 'info');
-    }
-}
-
-function editCustomer(id) {
-    const customer = mockCustomers.find(c => c.id === id);
-    if (customer) {
-        showToast(`Đang chỉnh sửa khách hàng: ${customer.name}`, 'info');
-    }
-}
-
-// ===== SCREENINGS PAGE =====
-function populateScreeningsTable(filters = {}) {
-    const tbody = document.getElementById('screeningsTableBody');
-    if (!tbody) return;
-
-    let filteredScreenings = [...mockScreenings];
-
-    // Apply filters
-    if (filters.search) {
-        filteredScreenings = filteredScreenings.filter(s =>
-            s.movie.toLowerCase().includes(filters.search.toLowerCase())
-        );
-    }
-    if (filters.room && filters.room !== 'all') {
-        filteredScreenings = filteredScreenings.filter(s =>
-            s.room.toLowerCase().includes(filters.room.toLowerCase())
-        );
-    }
-
-    tbody.innerHTML = filteredScreenings.map(screening => `
-        <tr>
-            <td><strong>${screening.movie}</strong></td>
-            <td>${screening.room}</td>
-            <td>${screening.time}</td>
-            <td>${screening.booked}</td>
-            <td>
-                <span style="color: ${screening.watching > 0 ? '#4ade80' : '#94a3b8'}; font-weight: 600;">
-                    ${screening.watching}
-                </span>
-            </td>
-            <td>
-                <span class="status-badge ${screening.status === 'playing' ? 'completed' : screening.status === 'scheduled' ? 'pending' : 'cancelled'}">
-                    ${screening.status === 'playing' ? 'Đang chiếu' : screening.status === 'scheduled' ? 'Chưa chiếu' : 'Đã hủy'}
-                </span>
-            </td>
-            <td>
-                <button class="icon-btn" onclick="viewScreeningDetail(${screening.id})" title="Xem chi tiết">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="icon-btn" onclick="editScreening(${screening.id})" title="Sửa">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="icon-btn" onclick="deleteScreening(${screening.id})" title="Xóa">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        </tr>
-    `).join('');
-}
-
-function viewScreeningDetail(id) {
-    const screening = mockScreenings.find(s => s.id === id);
-    if (screening) {
-        showToast(`Xem chi tiết lịch chiếu: ${screening.movie}`, 'info');
-    }
-}
-
-function editScreening(id) {
-    const screening = mockScreenings.find(s => s.id === id);
-    if (screening) {
-        showToast(`Đang chỉnh sửa lịch chiếu: ${screening.movie}`, 'info');
-    }
-}
-
-function deleteScreening(id) {
-    const screening = mockScreenings.find(s => s.id === id);
-    if (screening && confirm(`Bạn có chắc muốn xóa lịch chiếu "${screening.movie}"?`)) {
-        const index = mockScreenings.findIndex(s => s.id === id);
-        mockScreenings.splice(index, 1);
+function deleteMovie(id) {
+    const movie = state.movies.find(m => m.id === id);
+    if (movie && confirm(`Bạn có chắc muốn xóa phim "${movie.title}"?`)) {
+        const index = state.movies.findIndex(m => m.id === id);
+        state.movies.splice(index, 1);
         populateScreeningsTable();
-        showToast('Đã xóa lịch chiếu thành công!');
+        showToast('Đã xóa phim thành công!');
     }
 }
 
@@ -1616,12 +1597,17 @@ function openProductModal(productId = null) {
     const modal = document.getElementById('productModal');
     const modalTitle = document.getElementById('productModalTitle');
     const form = document.getElementById('productForm');
-    
+    const previewImg = document.getElementById('productPreviewImg');
+    const placeholder = document.querySelector('#productImagePreview .preview-placeholder');
+
+    // Reset product image
+    productImageBase64 = null;
+
     if (productId) {
         // Edit mode
         currentEditingProductId = productId;
         const product = state.products.find(p => p.id == productId);
-        
+
         if (product) {
             modalTitle.textContent = 'Chỉnh sửa sản phẩm';
             document.getElementById('productId').value = product.id;
@@ -1629,16 +1615,28 @@ function openProductModal(productId = null) {
             document.getElementById('productCategory').value = product.category;
             document.getElementById('productPrice').value = product.price;
             document.getElementById('productStock').value = product.stock;
-            document.getElementById('productImage').value = product.image;
             document.getElementById('productDescription').value = product.description || '';
+
+            // Load existing image
+            if (product.image) {
+                productImageBase64 = product.image;
+                previewImg.src = product.image;
+                previewImg.style.display = 'block';
+                if (placeholder) placeholder.style.display = 'none';
+            }
         }
     } else {
         // Add mode
         currentEditingProductId = null;
         modalTitle.textContent = 'Thêm sản phẩm mới';
         form.reset();
+
+        // Reset preview
+        previewImg.style.display = 'none';
+        previewImg.src = '';
+        if (placeholder) placeholder.style.display = 'block';
     }
-    
+
     modal.classList.add('show');
 }
 
@@ -1654,18 +1652,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (productForm) {
         productForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
+            // Validate image
+            if (!productImageBase64) {
+                showToast('Vui lòng chọn ảnh sản phẩm', 'error');
+                return;
+            }
+
             const productData = {
                 id: currentEditingProductId || Date.now().toString(),
                 name: document.getElementById('productName').value,
                 category: document.getElementById('productCategory').value,
                 price: parseFloat(document.getElementById('productPrice').value),
                 stock: parseInt(document.getElementById('productStock').value),
-                image: document.getElementById('productImage').value,
+                image: productImageBase64,
                 description: document.getElementById('productDescription').value,
                 sold: 0
             };
-            
+
             // Determine status
             if (productData.stock === 0) {
                 productData.status = 'out-stock';
@@ -1674,7 +1678,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 productData.status = 'in-stock';
             }
-            
+
             if (currentEditingProductId) {
                 // Update existing product
                 const index = state.products.findIndex(p => p.id == currentEditingProductId);
@@ -1687,9 +1691,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 state.products.unshift(productData);
                 showToast('Đã thêm sản phẩm mới thành công!', 'success');
             }
-            
+
             populateProductsTable();
             closeProductModal();
+        });
+    }
+
+    // Product image file upload handler
+    const productImageInput = document.getElementById('productImageFile');
+    if (productImageInput) {
+        productImageInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                convertImageToBase64(file, (base64) => {
+                    productImageBase64 = base64;
+                    const previewImg = document.getElementById('productPreviewImg');
+                    const placeholder = document.querySelector('#productImagePreview .preview-placeholder');
+
+                    previewImg.src = base64;
+                    previewImg.style.display = 'block';
+                    if (placeholder) placeholder.style.display = 'none';
+                });
+            }
         });
     }
 });
@@ -1743,18 +1766,18 @@ function openScreeningModal(screeningId = null) {
     const modal = document.getElementById('screeningModal');
     const modalTitle = document.getElementById('screeningModalTitle');
     const form = document.getElementById('screeningForm');
-    
+
     if (screeningId) {
         // Edit mode
         currentEditingScreeningId = screeningId;
         const screening = mockScreenings.find(s => s.id == screeningId);
-        
+
         if (screening) {
             modalTitle.textContent = 'Chỉnh sửa lịch chiếu';
             document.getElementById('screeningId').value = screening.id;
             document.getElementById('screeningMovie').value = screening.movie.split(' (')[0]; // Get movie name without year
-            document.getElementById('screeningRoom').value = screening.room;
-            
+            document.getElementById('screeningStreamUrl').value = screening.streamUrl || '';
+
             // Parse datetime
             const [date, time] = screening.time.split(' ');
             const [day, month, year] = date.split('/');
@@ -1770,7 +1793,7 @@ function openScreeningModal(screeningId = null) {
         // Set default date to today
         document.getElementById('screeningDate').value = new Date().toISOString().split('T')[0];
     }
-    
+
     modal.classList.add('show');
 }
 
@@ -1786,22 +1809,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (screeningForm) {
         screeningForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const date = document.getElementById('screeningDate').value;
             const time = document.getElementById('screeningTime').value;
             const [year, month, day] = date.split('-');
             const formattedDateTime = `${day}/${month}/${year} ${time}`;
-            
+
             const screeningData = {
                 id: currentEditingScreeningId || mockScreenings.length + 1,
                 movie: document.getElementById('screeningMovie').value,
-                room: document.getElementById('screeningRoom').value,
+                streamUrl: document.getElementById('screeningStreamUrl').value,
                 time: formattedDateTime,
                 booked: 0,
                 watching: 0,
                 status: document.getElementById('screeningStatus').value
             };
-            
+
             if (currentEditingScreeningId) {
                 // Update existing screening
                 const index = mockScreenings.findIndex(s => s.id == currentEditingScreeningId);
@@ -1814,12 +1837,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 mockScreenings.push(screeningData);
                 showToast('Đã thêm lịch chiếu mới thành công!', 'success');
             }
-            
+
             populateScreeningsTable();
             closeScreeningModal();
         });
     }
-    
+
     // Load movies when page loads
     loadMovies();
 });
@@ -1919,6 +1942,35 @@ document.getElementById('addCustomerBtn')?.addEventListener('click', () => {
     openCustomerModal();
 });
 
+// ===== IMAGE UPLOAD HELPERS =====
+let moviePosterBase64 = null;
+let productImageBase64 = null;
+
+function convertImageToBase64(file, callback) {
+    // Validate file size (max 2MB)
+    const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+    if (file.size > maxSize) {
+        showToast('Ảnh quá lớn! Vui lòng chọn ảnh nhỏ hơn 2MB', 'error');
+        return;
+    }
+
+    // Validate file type
+    const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+    if (!validTypes.includes(file.type)) {
+        showToast('Chỉ hỗ trợ file ảnh (JPG, PNG, WEBP)', 'error');
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        callback(e.target.result);
+    };
+    reader.onerror = function() {
+        showToast('Lỗi khi đọc file ảnh', 'error');
+    };
+    reader.readAsDataURL(file);
+}
+
 // ===== MOVIE MODAL FUNCTIONS =====
 let currentEditingMovieId = null;
 
@@ -1926,12 +1978,17 @@ function openMovieModal(movieId = null) {
     const modal = document.getElementById('movieModal');
     const modalTitle = document.getElementById('movieModalTitle');
     const form = document.getElementById('movieForm');
-    
+    const previewImg = document.getElementById('moviePosterPreviewImg');
+    const placeholder = document.querySelector('#moviePosterPreview .preview-placeholder');
+
+    // Reset poster
+    moviePosterBase64 = null;
+
     if (movieId) {
         // Edit mode
         currentEditingMovieId = movieId;
         const movie = state.movies.find(m => m.id == movieId);
-        
+
         if (movie) {
             modalTitle.textContent = 'Chỉnh sửa phim';
             document.getElementById('movieId').value = movie.id;
@@ -1940,9 +1997,17 @@ function openMovieModal(movieId = null) {
             document.getElementById('movieDirector').value = movie.director;
             document.getElementById('movieDuration').value = movie.duration;
             document.getElementById('movieGenre').value = movie.genre;
-            document.getElementById('moviePoster').value = movie.poster;
+            document.getElementById('movieStreamUrl').value = movie.streamUrl || '';
             document.getElementById('movieDescription').value = movie.description || '';
             document.getElementById('movieRating').value = movie.rating || 7.0;
+
+            // Load existing poster
+            if (movie.poster) {
+                moviePosterBase64 = movie.poster;
+                previewImg.src = movie.poster;
+                previewImg.style.display = 'block';
+                if (placeholder) placeholder.style.display = 'none';
+            }
         }
     } else {
         // Add mode
@@ -1950,8 +2015,13 @@ function openMovieModal(movieId = null) {
         modalTitle.textContent = 'Thêm phim mới';
         form.reset();
         document.getElementById('movieRating').value = 7.0;
+
+        // Reset preview
+        previewImg.style.display = 'none';
+        previewImg.src = '';
+        if (placeholder) placeholder.style.display = 'block';
     }
-    
+
     modal.classList.add('show');
 }
 
@@ -1967,7 +2037,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (movieForm) {
         movieForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
+            // Validate poster
+            if (!moviePosterBase64) {
+                showToast('Vui lòng chọn poster phim', 'error');
+                return;
+            }
+
             const movieData = {
                 id: currentEditingMovieId || `movie_${Date.now()}`,
                 title: document.getElementById('movieTitle').value,
@@ -1975,11 +2051,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 director: document.getElementById('movieDirector').value,
                 duration: parseInt(document.getElementById('movieDuration').value),
                 genre: document.getElementById('movieGenre').value,
-                poster: document.getElementById('moviePoster').value,
+                poster: moviePosterBase64,
+                streamUrl: document.getElementById('movieStreamUrl').value,
                 description: document.getElementById('movieDescription').value,
                 rating: parseFloat(document.getElementById('movieRating').value)
             };
-            
+
             if (currentEditingMovieId) {
                 // Update existing movie
                 const index = state.movies.findIndex(m => m.id == currentEditingMovieId);
@@ -1992,9 +2069,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 state.movies.push(movieData);
                 showToast('Đã thêm phim mới thành công!', 'success');
             }
-            
+
             populateMovieDropdown();
             closeMovieModal();
+        });
+    }
+
+    // Movie poster file upload handler
+    const moviePosterInput = document.getElementById('moviePosterFile');
+    if (moviePosterInput) {
+        moviePosterInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                convertImageToBase64(file, (base64) => {
+                    moviePosterBase64 = base64;
+                    const previewImg = document.getElementById('moviePosterPreviewImg');
+                    const placeholder = document.querySelector('#moviePosterPreview .preview-placeholder');
+
+                    previewImg.src = base64;
+                    previewImg.style.display = 'block';
+                    if (placeholder) placeholder.style.display = 'none';
+                });
+            }
         });
     }
 });

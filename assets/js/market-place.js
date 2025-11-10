@@ -380,7 +380,7 @@ function getFeatureList(item) {
 }
 
 function handleBuyProduct(item) {
-  alert(`Added "${item.name}" to cart!\nPrice: ${item.price}`);
+  showNotification(`Added "${item.name}" to cart!`, 'success');
   
   console.log("Product added to cart:", item);
 }
@@ -398,10 +398,10 @@ function handleBuyNow(item) {
 
     if (!item.contact.phone && !item.contact.zalo && !item.contact.messenger && 
         !item.contact.instagram && !item.contact.threads) {
-      alert(`To purchase "${item.name}", please contact the seller.\n\nContact information not available for this product.`);
+      showNotification(`To purchase "${item.name}", please contact the seller. Contact information not available.`, 'info');
     }
   } else {
-    alert(`To purchase "${item.name}", please contact the seller.\n\nContact: District 7, HCMC\nPrice: ${item.price}`);
+    showNotification(`To purchase "${item.name}", please contact the seller at District 7, HCMC.`, 'info');
   }
   
   console.log("Buy now - showing contact info:", item);
@@ -643,18 +643,18 @@ addProductForm?.addEventListener("submit", (event) => {
   
   // Check if user is authenticated
   if (!isAuthenticated()) {
-    alert("Please login to add products!");
+    showNotification("Please login to add products!", 'warning');
     return;
   }
   
   const currentUser = getCurrentUser();
   if (!currentUser) {
-    alert("Please login to add products!");
+    showNotification("Please login to add products!", 'warning');
     return;
   }
   
   if (!uploadedImageData) {
-    alert("Please upload a product image!");
+    showNotification("Please upload a product image!", 'error');
     return;
   }
   
@@ -701,7 +701,7 @@ addProductForm?.addEventListener("submit", (event) => {
   
   // Close modal and show success message
   closeAddProductModal();
-  alert(`Product "${newProduct.name}" added successfully!`);
+  showNotification(`Product "${newProduct.name}" added successfully!`, 'success');
   
   console.log("New product added:", newProduct);
   console.log("Total products:", products.length);
@@ -740,14 +740,14 @@ confirmDeleteBtn?.addEventListener("click", () => {
 
   // Check if user is authenticated and has permission to delete
   if (!isAuthenticated()) {
-    alert("Please login to delete products!");
+    showNotification("Please login to delete products!", 'warning');
     closeDeleteConfirm();
     return;
   }
 
   const productIndex = products.findIndex(p => p.id === productToDelete);
   if (productIndex === -1) {
-    alert("Product not found!");
+    showNotification("Product not found!", 'error');
     closeDeleteConfirm();
     return;
   }
@@ -756,7 +756,7 @@ confirmDeleteBtn?.addEventListener("click", () => {
   
   // Check if user has permission to delete
   if (!canDeleteProduct(product)) {
-    alert("You don't have permission to delete this product!");
+    showNotification("You don't have permission to delete this product!", 'error');
     closeDeleteConfirm();
     return;
   }
@@ -773,7 +773,7 @@ confirmDeleteBtn?.addEventListener("click", () => {
   // Re-render
   goToPage(currentPage);
   
-  alert(`Product "${deletedProduct.name}" has been deleted successfully!`);
+  showNotification(`Product "${deletedProduct.name}" has been deleted successfully!`, 'success');
 });
 
 document.addEventListener("keydown", event => {

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oldie Zone — Admin Dashboard</title>
+    <title>Oldie Zone - Admin Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
@@ -31,41 +31,43 @@
                 </a>
                 <a href="#products" class="nav-link" data-page="products">
                     <i class="fas fa-box"></i>
-                    <span>Sản phẩm</span>
-                    <span class="badge">142</span>
+                    <span>Products</span>
+                    <span class="badge" id="productsBadge">0</span>
                 </a>
                 <a href="#orders" class="nav-link" data-page="orders">
                     <i class="fas fa-shopping-cart"></i>
-                    <span>Đơn hàng</span>
-                    <span class="badge badge-warning">12</span>
+                    <span>Orders</span>
+                    <span class="badge badge-warning" id="ordersBadge">0</span>
                 </a>
                 <a href="#customers" class="nav-link" data-page="customers">
                     <i class="fas fa-users"></i>
-                    <span>Khách hàng</span>
+                    <span>Customers</span>
+                    <span class="badge" id="customersBadge">0</span>
                 </a>
                 <a href="#screenings" class="nav-link" data-page="screenings">
                     <i class="fas fa-film"></i>
                     <span>Retro Cine</span>
+                    <span class="badge" id="moviesBadge">0</span>
                 </a>
             </div>
 
             <div class="nav-section">
-                <span class="nav-title">PHÂN TÍCH</span>
+                <span class="nav-title">ANALYTICS</span>
                 <a href="#analytics" class="nav-link" data-page="analytics">
                     <i class="fas fa-chart-line"></i>
                     <span>Analytics</span>
                 </a>
                 <a href="#reports" class="nav-link" data-page="reports">
                     <i class="fas fa-file-alt"></i>
-                    <span>Báo cáo</span>
+                    <span>Reports</span>
                 </a>
             </div>
 
             <div class="nav-section">
-                <span class="nav-title">CÀI ĐẶT</span>
+                <span class="nav-title">SETTINGS</span>
                 <a href="#settings" class="nav-link" data-page="settings">
                     <i class="fas fa-cog"></i>
-                    <span>Cài đặt</span>
+                    <span>Settings</span>
                 </a>
             </div>
         </nav>
@@ -94,7 +96,7 @@
             
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search sản phẩm, đơn hàng, khách hàng...">
+                <input type="text" id="searchInput" placeholder="Search products, orders, customers...">
             </div>
 
             <div class="header-actions">
@@ -119,17 +121,17 @@
             <!-- Welcome Section -->
             <div class="welcome-section">
                 <div class="welcome-text">
-                    <h1 id="welcomeText">Hello buổi sáng, Long! 👋</h1>
-                    <p>Doanh thu hôm nay đang tăng <strong id="revenueGrowth">+12%</strong> so với hôm qua</p>
+                    <h1 id="welcomeText">Good morning, Long! 👋</h1>
+                    <p>Today's revenue is up <strong id="revenueGrowth">+12%</strong> compared to yesterday</p>
                 </div>
                 <div class="welcome-actions">
                     <button class="btn btn-primary" id="addProductBtn">
                         <i class="fas fa-plus"></i>
-                        Thêm sản phẩm
+                        Add Product
                     </button>
                     <button class="btn btn-outline" id="exportBtn">
                         <i class="fas fa-download"></i>
-                        Xuất báo cáo
+                        Export Report
                     </button>
                 </div>
             </div>
@@ -141,11 +143,11 @@
                         <i class="fas fa-shopping-cart"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Tổng đơn hàng</span>
+                        <span class="stat-label">Total Orders</span>
                         <h3 class="stat-value" data-target="1247">0</h3>
                         <div class="stat-change positive">
                             <i class="fas fa-arrow-up"></i>
-                            <span>+12% so với tháng trước</span>
+                            <span>+12%</span>
                         </div>
                     </div>
                 </div>
@@ -155,11 +157,11 @@
                         <i class="fas fa-dollar-sign"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Doanh thu</span>
-                        <h3 class="stat-value currency" data-target="45820000">0</h3>
+                        <span class="stat-label">Revenue</span>
+                        <h3 class="stat-value currency-short" data-target="45820000">0</h3>
                         <div class="stat-change positive">
                             <i class="fas fa-arrow-up"></i>
-                            <span>+8.5% so với tháng trước</span>
+                            <span>+8.5%</span>
                         </div>
                     </div>
                 </div>
@@ -169,11 +171,11 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Khách hàng mới</span>
+                        <span class="stat-label">New Customers</span>
                         <h3 class="stat-value" data-target="892">0</h3>
                         <div class="stat-change positive">
                             <i class="fas fa-arrow-up"></i>
-                            <span>+15% so với tháng trước</span>
+                            <span>+15%</span>
                         </div>
                     </div>
                 </div>
@@ -183,11 +185,11 @@
                         <i class="fas fa-box"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Sản phẩm</span>
+                        <span class="stat-label">Products</span>
                         <h3 class="stat-value" data-target="142">0</h3>
                         <div class="stat-change negative">
                             <i class="fas fa-arrow-down"></i>
-                            <span>6 sản phẩm hết hàng</span>
+                            <span>6 out of stock</span>
                         </div>
                     </div>
                 </div>
@@ -198,13 +200,13 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <div>
-                            <h3>Doanh thu theo tháng</h3>
-                            <span>Biểu đồ doanh thu 6 tháng gần nhất</span>
+                            <h3>Monthly Revenue</h3>
+                            <span>Revenue chart for the last 6 months</span>
                         </div>
                         <select id="revenueFilter" class="filter-select">
-                            <option value="6">6 tháng</option>
-                            <option value="12">12 tháng</option>
-                            <option value="24">24 tháng</option>
+                            <option value="6">6 months</option>
+                            <option value="12">12 months</option>
+                            <option value="24">24 months</option>
                         </select>
                     </div>
                     <div class="chart-container">
@@ -215,8 +217,8 @@
                 <div class="chart-card">
                     <div class="chart-header">
                         <div>
-                            <h3>Phân loại sản phẩm</h3>
-                            <span>Tỷ lệ doanh thu theo danh mục</span>
+                            <h3>Product Categories</h3>
+                            <span>Revenue ratio by category</span>
                         </div>
                     </div>
                     <div class="chart-container">
@@ -229,19 +231,19 @@
             <div class="bottom-grid">
                 <div class="table-card">
                     <div class="table-header">
-                        <h3>Đơn hàng gần đây</h3>
-                        <button class="btn-text" id="viewAllOrders">Xem tất cả <i class="fas fa-arrow-right"></i></button>
+                        <h3>Recent Orders</h3>
+                        <button class="btn-text" id="viewAllOrders">View all <i class="fas fa-arrow-right"></i></button>
                     </div>
                     <div class="table-wrapper">
                         <table id="ordersTable">
                             <thead>
                                 <tr>
-                                    <th>Mã đơn</th>
-                                    <th>Khách hàng</th>
-                                    <th>Sản phẩm</th>
-                                    <th>Tổng tiền</th>
-                                    <th>Trạng thái</th>
-                                    <th>Ngày đặt</th>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -253,8 +255,8 @@
 
                 <div class="top-products-card">
                     <div class="table-header">
-                        <h3>Sản phẩm bán chạy</h3>
-                        <button class="btn-text" id="viewAllProducts">Xem tất cả <i class="fas fa-arrow-right"></i></button>
+                        <h3>Top Selling Products</h3>
+                        <button class="btn-text" id="viewAllProducts">View all <i class="fas fa-arrow-right"></i></button>
                     </div>
                     <div class="products-list" id="topProductsList">
                         <!-- Will be populated by JS -->
@@ -267,12 +269,12 @@
         <div class="page-content" id="products-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Quản lý Sản phẩm</h1>
-                    <p>Quản lý toàn bộ sản phẩm trong cửa hàng</p>
+                    <h1>Product Management</h1>
+                    <p>Manage all products in the store</p>
                 </div>
                 <button class="btn btn-primary" id="addNewProductBtn">
                     <i class="fas fa-plus"></i>
-                    Thêm sản phẩm mới
+                    Add New Product
                 </button>
             </div>
 
@@ -280,22 +282,22 @@
             <div class="filters-bar">
                 <div class="search-filter">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="productSearch" placeholder="Tìm kiếm sản phẩm...">
+                    <input type="text" id="productSearch" placeholder="Search products...">
                 </div>
                 <select id="categoryFilter" class="filter-select">
-                    <option value="all">Tất cả danh mục</option>
+                    <option value="all">All categories</option>
                     <option value="vinyl">Vinyl</option>
                     <option value="cd">CD</option>
                     <option value="cassette">Cassette</option>
                     <option value="vhs">VHS</option>
-                    <option value="accessories">Phụ kiện</option>
+                    <option value="accessories">Accessories</option>
                     <option value="camera">Camera</option>
                 </select>
                 <select id="stockFilter" class="filter-select">
-                    <option value="all">Tất cả trạng thái</option>
-                    <option value="in-stock">Còn hàng</option>
-                    <option value="low-stock">Sắp hết</option>
-                    <option value="out-stock">Hết hàng</option>
+                    <option value="all">All status</option>
+                    <option value="in-stock">In Stock</option>
+                    <option value="low-stock">Low Stock</option>
+                    <option value="out-stock">Out of Stock</option>
                 </select>
             </div>
 
@@ -308,13 +310,13 @@
                                 <th>
                                     <input type="checkbox" id="selectAll">
                                 </th>
-                                <th>Sản phẩm</th>
-                                <th>Danh mục</th>
-                                <th>Giá</th>
-                                <th>Tồn kho</th>
-                                <th>Đã bán</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Sold</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="productsTableBody">
@@ -329,13 +331,13 @@
         <div class="page-content" id="orders-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Quản lý Đơn hàng</h1>
-                    <p>Theo dõi và quản lý tất cả đơn hàng</p>
+                    <h1>Order Management</h1>
+                    <p>Track and manage all orders</p>
                 </div>
                 <div class="header-actions">
                     <button class="btn btn-outline" id="exportOrdersBtn">
                         <i class="fas fa-download"></i>
-                        Xuất dữ liệu
+                        Export Data
                     </button>
                 </div>
             </div>
@@ -347,8 +349,8 @@
                         <i class="fas fa-shopping-cart"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Tổng đơn hàng</span>
-                        <h3 class="stat-value">1,247</h3>
+                        <span class="stat-label">Total Orders</span>
+                        <h3 class="stat-value" id="ordersTotal">0</h3>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -356,8 +358,8 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Đang xử lý</span>
-                        <h3 class="stat-value">24</h3>
+                        <span class="stat-label">Processing</span>
+                        <h3 class="stat-value" id="ordersPending">0</h3>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -365,8 +367,8 @@
                         <i class="fas fa-check-circle"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Hoàn thành</span>
-                        <h3 class="stat-value">1,198</h3>
+                        <span class="stat-label">Completed</span>
+                        <h3 class="stat-value" id="ordersCompleted">0</h3>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -374,8 +376,8 @@
                         <i class="fas fa-times-circle"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Đã hủy</span>
-                        <h3 class="stat-value">25</h3>
+                        <span class="stat-label">Cancelled</span>
+                        <h3 class="stat-value" id="ordersCancelled">0</h3>
                     </div>
                 </div>
             </div>
@@ -384,13 +386,13 @@
             <div class="filters-bar">
                 <div class="search-filter">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="orderSearch" placeholder="Tìm mã đơn, khách hàng...">
+                    <input type="text" id="orderSearch" placeholder="Search order ID, customer...">
                 </div>
                 <select id="orderStatusFilter" class="filter-select">
-                    <option value="all">Tất cả trạng thái</option>
-                    <option value="pending">Đang xử lý</option>
-                    <option value="completed">Hoàn thành</option>
-                    <option value="cancelled">Đã hủy</option>
+                    <option value="all">All status</option>
+                    <option value="pending">Processing</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
                 </select>
                 <input type="date" id="orderDateFilter" class="filter-select">
             </div>
@@ -401,14 +403,14 @@
                     <table id="ordersTableFull">
                         <thead>
                             <tr>
-                                <th>Mã đơn</th>
-                                <th>Khách hàng</th>
-                                <th>Sản phẩm</th>
-                                <th>Số lượng</th>
-                                <th>Tổng tiền</th>
-                                <th>Trạng thái</th>
-                                <th>Ngày đặt</th>
-                                <th>Thao tác</th>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="ordersTableFullBody">
@@ -423,12 +425,12 @@
         <div class="page-content" id="customers-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Quản lý Khách hàng</h1>
-                    <p>Thông tin và lịch sử mua hàng của khách hàng</p>
+                    <h1>Customer Management</h1>
+                    <p>Customer information and purchase history</p>
                 </div>
                 <button class="btn btn-primary" id="addCustomerBtn">
                     <i class="fas fa-user-plus"></i>
-                    Thêm khách hàng
+                    Add Customer
                 </button>
             </div>
 
@@ -439,8 +441,8 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Tổng khách hàng</span>
-                        <h3 class="stat-value">2,458</h3>
+                        <span class="stat-label">Total Customers</span>
+                        <h3 class="stat-value" id="customersTotal">0</h3>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -448,8 +450,8 @@
                         <i class="fas fa-user-plus"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Khách mới (tháng)</span>
-                        <h3 class="stat-value">156</h3>
+                        <span class="stat-label">Regular</span>
+                        <h3 class="stat-value" id="customersRegular">0</h3>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -457,8 +459,8 @@
                         <i class="fas fa-star"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Khách VIP</span>
-                        <h3 class="stat-value">342</h3>
+                        <span class="stat-label">VIP</span>
+                        <h3 class="stat-value" id="customersVIP">0</h3>
                     </div>
                 </div>
             </div>
@@ -467,13 +469,13 @@
             <div class="filters-bar">
                 <div class="search-filter">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="customerSearch" placeholder="Tìm tên, email, SĐT...">
+                    <input type="text" id="customerSearch" placeholder="Search name, email, phone...">
                 </div>
                 <select id="customerTypeFilter" class="filter-select">
-                    <option value="all">Tất cả loại</option>
-                    <option value="vip">Khách VIP</option>
-                    <option value="regular">Khách thường</option>
-                    <option value="new">Khách mới</option>
+                    <option value="all">All types</option>
+                    <option value="vip">VIP</option>
+                    <option value="regular">Regular</option>
+                    <option value="new">New</option>
                 </select>
             </div>
 
@@ -483,14 +485,15 @@
                     <table id="customersTable">
                         <thead>
                             <tr>
-                                <th>Khách hàng</th>
+                                <th>Avatar</th>
+                                <th>Customer</th>
                                 <th>Email</th>
-                                <th>Số điện thoại</th>
-                                <th>Tổng đơn</th>
-                                <th>Tổng chi tiêu</th>
-                                <th>Loại</th>
-                                <th>Ngày tham gia</th>
-                                <th>Thao tác</th>
+                                <th>Phone</th>
+                                <th>Orders</th>
+                                <th>Total Spent</th>
+                                <th>Rank</th>
+                                <th>Join Date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="customersTableBody">
@@ -505,17 +508,17 @@
         <div class="page-content" id="screenings-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Retro Cine - Lịch chiếu phim miễn phí</h1>
-                    <p>Quản lý lịch chiếu và phòng chiếu phim</p>
+                    <h1>Retro Cine - Free Movie Screenings</h1>
+                    <p>Manage screening schedules and theaters</p>
                 </div>
                 <div style="display: flex; gap: 12px;">
                     <button class="btn btn-secondary" id="addMovieBtn">
                         <i class="fas fa-film"></i>
-                        Thêm phim
+                        Add Movie
                     </button>
                     <button class="btn btn-primary" id="addScreeningBtn">
                         <i class="fas fa-plus"></i>
-                        Thêm lịch chiếu
+                        Add Screening
                     </button>
                 </div>
             </div>
@@ -527,8 +530,8 @@
                         <i class="fas fa-film"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Tổng suất chiếu</span>
-                        <h3 class="stat-value">156</h3>
+                        <span class="stat-label">Total Screenings</span>
+                        <h3 class="stat-value" id="screeningsTotal">0</h3>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -536,7 +539,7 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Số người đã book</span>
+                        <span class="stat-label">Total Bookings</span>
                         <h3 class="stat-value">1,247</h3>
                     </div>
                 </div>
@@ -545,7 +548,7 @@
                         <i class="fas fa-eye"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-label">Đang xem</span>
+                        <span class="stat-label">Now Watching</span>
                         <h3 class="stat-value">89</h3>
                     </div>
                 </div>
@@ -555,13 +558,13 @@
             <div class="filters-bar">
                 <div class="search-filter">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="screeningSearch" placeholder="Tìm tên phim...">
+                    <input type="text" id="screeningSearch" placeholder="Search movie title...">
                 </div>
                 <select id="roomFilter" class="filter-select">
-                    <option value="all">Tất cả phòng</option>
-                    <option value="room1">Phòng 1</option>
-                    <option value="room2">Phòng 2</option>
-                    <option value="room3">Phòng 3</option>
+                    <option value="all">All rooms</option>
+                    <option value="room1">Room 1</option>
+                    <option value="room2">Room 2</option>
+                    <option value="room3">Room 3</option>
                 </select>
                 <input type="date" id="screeningDateFilter" class="filter-select">
             </div>
@@ -572,13 +575,12 @@
                     <table id="screeningsTable">
                         <thead>
                             <tr>
-                                <th>Phim</th>
-                                <th>Phòng chiếu</th>
-                                <th>Thời gian</th>
-                                <th>Đã book</th>
-                                <th>Đang xem</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
+                                <th>Movie</th>
+                                <th>Director</th>
+                                <th>Duration</th>
+                                <th>Rating</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="screeningsTableBody">
@@ -692,8 +694,8 @@
         <div class="page-content" id="reports-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Báo cáo</h1>
-                    <p>Tạo và xuất các loại báo cáo</p>
+                    <h1>Reports</h1>
+                    <p>Generate and export various types of reports</p>
                 </div>
             </div>
 
@@ -703,11 +705,11 @@
                     <div class="report-icon blue">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3>Báo cáo doanh thu</h3>
-                    <p>Tổng hợp doanh thu theo thời gian, sản phẩm, danh mục</p>
+                    <h3>Revenue Report</h3>
+                    <p>Revenue summary by time, products, categories</p>
                     <button class="btn btn-outline" onclick="generateReport('revenue')">
                         <i class="fas fa-download"></i>
-                        Tạo báo cáo
+                        Generate Report
                     </button>
                 </div>
 
@@ -715,11 +717,11 @@
                     <div class="report-icon green">
                         <i class="fas fa-box"></i>
                     </div>
-                    <h3>Báo cáo tồn kho</h3>
-                    <p>Thống kê tồn kho, nhập xuất, sản phẩm sắp hết</p>
+                    <h3>Inventory Report</h3>
+                    <p>Stock statistics, imports/exports, low stock items</p>
                     <button class="btn btn-outline" onclick="generateReport('inventory')">
                         <i class="fas fa-download"></i>
-                        Tạo báo cáo
+                        Generate Report
                     </button>
                 </div>
 
@@ -727,11 +729,11 @@
                     <div class="report-icon purple">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Báo cáo khách hàng</h3>
-                    <p>Phân tích khách hàng, hành vi mua hàng</p>
+                    <h3>Customer Report</h3>
+                    <p>Customer analysis, purchasing behavior</p>
                     <button class="btn btn-outline" onclick="generateReport('customers')">
                         <i class="fas fa-download"></i>
-                        Tạo báo cáo
+                        Generate Report
                     </button>
                 </div>
 
@@ -739,11 +741,11 @@
                     <div class="report-icon orange">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <h3>Báo cáo đơn hàng</h3>
-                    <p>Chi tiết đơn hàng, trạng thái, thanh toán</p>
+                    <h3>Orders Report</h3>
+                    <p>Order details, status, payments</p>
                     <button class="btn btn-outline" onclick="generateReport('orders')">
                         <i class="fas fa-download"></i>
-                        Tạo báo cáo
+                        Generate Report
                     </button>
                 </div>
 
@@ -751,11 +753,11 @@
                     <div class="report-icon red">
                         <i class="fas fa-film"></i>
                     </div>
-                    <h3>Báo cáo Retro Cine</h3>
-                    <p>Thống kê lịch chiếu, số người book, người đang xem</p>
+                    <h3>Retro Cine Report</h3>
+                    <p>Screening statistics, bookings, viewers</p>
                     <button class="btn btn-outline" onclick="generateReport('screenings')">
                         <i class="fas fa-download"></i>
-                        Tạo báo cáo
+                        Generate Report
                     </button>
                 </div>
 
@@ -763,11 +765,11 @@
                     <div class="report-icon teal">
                         <i class="fas fa-file-alt"></i>
                     </div>
-                    <h3>Báo cáo tổng hợp</h3>
-                    <p>Tổng quan toàn bộ hoạt động kinh doanh</p>
+                    <h3>General Report</h3>
+                    <p>Overall business activities summary</p>
                     <button class="btn btn-outline" onclick="generateReport('general')">
                         <i class="fas fa-download"></i>
-                        Tạo báo cáo
+                        Generate Report
                     </button>
                 </div>
             </div>
@@ -775,32 +777,32 @@
             <!-- Recent Reports -->
             <div class="table-card" style="margin-top: 2rem;">
                 <div class="table-header">
-                    <h3>Báo cáo gần đây</h3>
+                    <h3>Recent Reports</h3>
                 </div>
                 <div class="table-wrapper">
                     <table id="reportsTable">
                         <thead>
                             <tr>
-                                <th>Tên báo cáo</th>
-                                <th>Loại</th>
-                                <th>Khoảng thời gian</th>
-                                <th>Ngày tạo</th>
-                                <th>Kích thước</th>
-                                <th>Thao tác</th>
+                                <th>Report Name</th>
+                                <th>Type</th>
+                                <th>Period</th>
+                                <th>Created Date</th>
+                                <th>Size</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="reportsTableBody">
                             <tr>
-                                <td>Báo cáo doanh thu tháng 11</td>
-                                <td><span class="badge badge-info">Doanh thu</span></td>
+                                <td>November Revenue Report</td>
+                                <td><span class="badge badge-info">Revenue</span></td>
                                 <td>01/11/2025 - 08/11/2025</td>
                                 <td>08/11/2025</td>
                                 <td>245 KB</td>
                                 <td>
-                                    <button class="icon-btn" title="Tải xuống">
+                                    <button class="icon-btn" title="Download">
                                         <i class="fas fa-download"></i>
                                     </button>
-                                    <button class="icon-btn" title="Xem">
+                                    <button class="icon-btn" title="View">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </td>
@@ -815,18 +817,18 @@
         <div class="page-content" id="settings-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Cài đặt</h1>
-                    <p>Cấu hình hệ thống và thông tin cá nhân</p>
+                    <h1>Settings</h1>
+                    <p>System configuration and personal information</p>
                 </div>
             </div>
 
             <div class="settings-container">
                 <!-- Profile Settings -->
                 <div class="settings-card">
-                    <h3><i class="fas fa-user"></i> Thông tin cá nhân</h3>
+                    <h3><i class="fas fa-user"></i> Personal Information</h3>
                     <div class="settings-form">
                         <div class="form-group">
-                            <label>Họ và tên</label>
+                            <label>Full Name</label>
                             <input type="text" class="form-control" value="Long Huynh">
                         </div>
                         <div class="form-group">
@@ -834,87 +836,87 @@
                             <input type="email" class="form-control" value="long@oldiezone.com">
                         </div>
                         <div class="form-group">
-                            <label>Số điện thoại</label>
+                            <label>Phone Number</label>
                             <input type="tel" class="form-control" value="0123456789">
                         </div>
                         <div class="form-group">
-                            <label>Ảnh đại diện</label>
+                            <label>Avatar</label>
                             <input type="file" class="form-control" accept="image/*">
                         </div>
-                        <button class="btn btn-primary">Cập nhật thông tin</button>
+                        <button class="btn btn-primary">Update Information</button>
                     </div>
                 </div>
 
                 <!-- Security Settings -->
                 <div class="settings-card">
-                    <h3><i class="fas fa-lock"></i> Bảo mật</h3>
+                    <h3><i class="fas fa-lock"></i> Security</h3>
                     <div class="settings-form">
                         <div class="form-group">
-                            <label>Mật khẩu hiện tại</label>
+                            <label>Current Password</label>
                             <input type="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Mật khẩu mới</label>
+                            <label>New Password</label>
                             <input type="password" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Xác nhận mật khẩu mới</label>
+                            <label>Confirm New Password</label>
                             <input type="password" class="form-control">
                         </div>
-                        <button class="btn btn-primary">Đổi mật khẩu</button>
+                        <button class="btn btn-primary">Change Password</button>
                     </div>
                 </div>
 
                 <!-- Store Settings -->
                 <div class="settings-card">
-                    <h3><i class="fas fa-store"></i> Cài đặt cửa hàng</h3>
+                    <h3><i class="fas fa-store"></i> Store Settings</h3>
                     <div class="settings-form">
                         <div class="form-group">
-                            <label>Tên cửa hàng</label>
+                            <label>Store Name</label>
                             <input type="text" class="form-control" value="Oldie Zone">
                         </div>
                         <div class="form-group">
-                            <label>Địa chỉ</label>
-                            <input type="text" class="form-control" value="123 Nguyễn Huệ, Q.1, TP.HCM">
+                            <label>Address</label>
+                            <input type="text" class="form-control" value="123 Nguyen Hue, Q.1, HCMC">
                         </div>
                         <div class="form-group">
                             <label>Hotline</label>
                             <input type="tel" class="form-control" value="1900-xxxx">
                         </div>
                         <div class="form-group">
-                            <label>Email liên hệ</label>
+                            <label>Contact Email</label>
                             <input type="email" class="form-control" value="contact@oldiezone.com">
                         </div>
-                        <button class="btn btn-primary">Lưu thay đổi</button>
+                        <button class="btn btn-primary">Save Changes</button>
                     </div>
                 </div>
 
                 <!-- Notification Settings -->
                 <div class="settings-card">
-                    <h3><i class="fas fa-bell"></i> Thông báo</h3>
+                    <h3><i class="fas fa-bell"></i> Notifications</h3>
                     <div class="settings-form">
                         <div class="form-group">
                             <label class="switch-label">
                                 <input type="checkbox" checked>
-                                <span>Thông báo đơn hàng mới</span>
+                                <span>New order notifications</span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="switch-label">
                                 <input type="checkbox" checked>
-                                <span>Cảnh báo tồn kho thấp</span>
+                                <span>Low stock alerts</span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="switch-label">
                                 <input type="checkbox">
-                                <span>Báo cáo hàng ngày qua email</span>
+                                <span>Daily report via email</span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label class="switch-label">
                                 <input type="checkbox" checked>
-                                <span>Thông báo đánh giá sản phẩm</span>
+                                <span>Product review notifications</span>
                             </label>
                         </div>
                     </div>
@@ -926,8 +928,8 @@
     <!-- Notification Dropdown -->
     <div class="notification-dropdown" id="notificationDropdown">
         <div class="notification-header">
-            <h4>Thông báo</h4>
-            <button class="mark-all-read">Đánh dấu tất cả đã đọc</button>
+            <h4>Notifications</h4>
+            <button class="mark-all-read">Mark all as read</button>
         </div>
         <div class="notification-list">
             <div class="notification-item unread">
@@ -935,9 +937,9 @@
                     <i class="fas fa-shopping-cart"></i>
                 </div>
                 <div class="notification-content">
-                    <p><strong>Đơn hàng mới #1234</strong></p>
-                    <span>Khách hàng Nguyễn Văn A vừa đặt 1 đơn hàng mới</span>
-                    <time>5 phút trước</time>
+                    <p><strong>New order #1234</strong></p>
+                    <span>Customer Nguyen Van A just placed a new order</span>
+                    <time>5 minutes ago</time>
                 </div>
             </div>
             <div class="notification-item unread">
@@ -945,9 +947,9 @@
                     <i class="fas fa-exclamation-triangle"></i>
                 </div>
                 <div class="notification-content">
-                    <p><strong>Cảnh báo tồn kho</strong></p>
-                    <span>Sản phẩm "Vinyl The Beatles" sắp hết hàng</span>
-                    <time>1 giờ trước</time>
+                    <p><strong>Stock warning</strong></p>
+                    <span>Product "Vinyl The Beatles" is running low on stock</span>
+                    <time>1 hour ago</time>
                 </div>
             </div>
             <div class="notification-item">
@@ -955,19 +957,19 @@
                     <i class="fas fa-check-circle"></i>
                 </div>
                 <div class="notification-content">
-                    <p><strong>Checkout thành công</strong></p>
-                    <span>Đơn hàng #1230 đã được thanh toán</span>
-                    <time>3 giờ trước</time>
+                    <p><strong>Checkout successful</strong></p>
+                    <span>Order #1230 has been paid</span>
+                    <time>3 hours ago</time>
                 </div>
             </div>
-        </aside>
+        </div>
     </div>
 
     <!-- Product Modal -->
     <div id="productModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="productModalTitle">Thêm sản phẩm mới</h2>
+                <h2 id="productModalTitle">Add New Product</h2>
                 <button class="modal-close" onclick="closeProductModal()">&times;</button>
             </div>
             <form id="productForm" class="modal-form">
@@ -975,48 +977,52 @@
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="productName">Tên sản phẩm *</label>
+                        <label for="productName">Product Name *</label>
                         <input type="text" id="productName" required>
                     </div>
                     <div class="form-group">
-                        <label for="productCategory">Danh mục *</label>
+                        <label for="productCategory">Category *</label>
                         <select id="productCategory" required>
-                            <option value="">Chọn danh mục</option>
+                            <option value="">Select category</option>
                             <option value="CD">CD</option>
                             <option value="Vinyl">Vinyl</option>
                             <option value="Cassette">Cassette</option>
                             <option value="VHS">VHS</option>
                             <option value="Camera">Camera</option>
-                            <option value="Accessories">Phụ kiện</option>
+                            <option value="Accessories">Accessories</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="productPrice">Giá (VNĐ) *</label>
+                        <label for="productPrice">Price (VND) *</label>
                         <input type="number" id="productPrice" required min="0" step="1000">
                     </div>
                     <div class="form-group">
-                        <label for="productStock">Tồn kho *</label>
+                        <label for="productStock">Stock *</label>
                         <input type="number" id="productStock" required min="0">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="productImage">URL hình ảnh *</label>
-                    <input type="text" id="productImage" required placeholder="assets/images/...">
+                    <label for="productImageFile">Product Image * (max 2MB)</label>
+                    <input type="file" id="productImageFile" accept="image/jpeg,image/png,image/jpg,image/webp">
+                    <div id="productImagePreview" class="image-preview" style="margin-top: 12px;">
+                        <img id="productPreviewImg" style="display:none;">
+                        <span class="preview-placeholder">Select product image</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="productDescription">Mô tả</label>
+                    <label for="productDescription">Description</label>
                     <textarea id="productDescription" rows="4"></textarea>
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Hủy</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeProductModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Lưu sản phẩm
+                        <i class="fas fa-save"></i> Save Product
                     </button>
                 </div>
             </form>
@@ -1027,54 +1033,48 @@
     <div id="screeningModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="screeningModalTitle">Thêm lịch chiếu mới</h2>
+                <h2 id="screeningModalTitle">Add New Screening</h2>
                 <button class="modal-close" onclick="closeScreeningModal()">&times;</button>
             </div>
             <form id="screeningForm" class="modal-form">
                 <input type="hidden" id="screeningId">
                 
                 <div class="form-group">
-                    <label for="screeningMovie">Tên phim *</label>
+                    <label for="screeningMovie">Movie Title *</label>
                     <select id="screeningMovie" required>
-                        <option value="">Chọn phim</option>
+                        <option value="">Select movie</option>
                     </select>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="screeningRoom">Phòng chiếu *</label>
-                        <select id="screeningRoom" required>
-                            <option value="">Chọn phòng</option>
-                            <option value="Phòng 1">Phòng 1</option>
-                            <option value="Phòng 2">Phòng 2</option>
-                            <option value="Phòng 3">Phòng 3</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="screeningDate">Ngày chiếu *</label>
-                        <input type="date" id="screeningDate" required>
-                    </div>
+                <div class="form-group">
+                    <label for="screeningStreamUrl">Streaming Link *</label>
+                    <input type="url" id="screeningStreamUrl" required placeholder="https://...">
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="screeningTime">Giờ chiếu *</label>
-                        <input type="time" id="screeningTime" required>
+                        <label for="screeningDate">Date *</label>
+                        <input type="date" id="screeningDate" required>
                     </div>
                     <div class="form-group">
-                        <label for="screeningStatus">Trạng thái</label>
-                        <select id="screeningStatus">
-                            <option value="scheduled">Chưa chiếu</option>
-                            <option value="playing">Đang chiếu</option>
-                            <option value="cancelled">Đã hủy</option>
-                        </select>
+                        <label for="screeningTime">Time *</label>
+                        <input type="time" id="screeningTime" required>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="screeningStatus">Status</label>
+                    <select id="screeningStatus">
+                        <option value="scheduled">Scheduled</option>
+                        <option value="playing">Playing</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeScreeningModal()">Hủy</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeScreeningModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Lưu lịch chiếu
+                        <i class="fas fa-save"></i> Save Screening
                     </button>
                 </div>
             </form>
@@ -1085,14 +1085,14 @@
     <div id="customerModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="customerModalTitle">Thêm khách hàng mới</h2>
+                <h2 id="customerModalTitle">Add New Customer</h2>
                 <button class="modal-close" onclick="closeCustomerModal()">&times;</button>
             </div>
             <form id="customerForm" class="modal-form">
                 <input type="hidden" id="customerId">
                 
                 <div class="form-group">
-                    <label for="customerName">Họ và tên *</label>
+                    <label for="customerName">Full Name *</label>
                     <input type="text" id="customerName" required>
                 </div>
 
@@ -1102,24 +1102,24 @@
                         <input type="email" id="customerEmail" required>
                     </div>
                     <div class="form-group">
-                        <label for="customerPhone">Số điện thoại *</label>
+                        <label for="customerPhone">Phone Number *</label>
                         <input type="tel" id="customerPhone" required pattern="[0-9]{10}">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="customerType">Loại khách hàng</label>
+                    <label for="customerType">Customer Type</label>
                     <select id="customerType">
-                        <option value="new">Mới</option>
-                        <option value="regular">Thường</option>
+                        <option value="new">New</option>
+                        <option value="regular">Regular</option>
                         <option value="vip">VIP</option>
                     </select>
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeCustomerModal()">Hủy</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeCustomerModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Lưu khách hàng
+                        <i class="fas fa-save"></i> Save Customer
                     </button>
                 </div>
             </form>
@@ -1130,7 +1130,7 @@
     <div id="movieModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="movieModalTitle">Thêm phim mới</h2>
+                <h2 id="movieModalTitle">Add New Movie</h2>
                 <button class="modal-close" onclick="closeMovieModal()">&times;</button>
             </div>
             <form id="movieForm" class="modal-form">
@@ -1138,50 +1138,59 @@
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="movieTitle">Tên phim *</label>
+                        <label for="movieTitle">Movie Title *</label>
                         <input type="text" id="movieTitle" required>
                     </div>
                     <div class="form-group">
-                        <label for="movieYear">Năm phát hành *</label>
+                        <label for="movieYear">Release Year *</label>
                         <input type="number" id="movieYear" required min="1900" max="2025">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="movieDirector">Đạo diễn *</label>
+                    <label for="movieDirector">Director *</label>
                     <input type="text" id="movieDirector" required>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="movieDuration">Thời lượng (phút) *</label>
+                        <label for="movieDuration">Duration (minutes) *</label>
                         <input type="number" id="movieDuration" required min="1">
                     </div>
                     <div class="form-group">
-                        <label for="movieGenre">Thể loại *</label>
+                        <label for="movieGenre">Genre *</label>
                         <input type="text" id="movieGenre" required placeholder="Drama, Action, ...">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="moviePoster">URL poster *</label>
-                    <input type="text" id="moviePoster" required placeholder="assets/images/...">
+                    <label for="moviePosterFile">Movie Poster * (max 2MB)</label>
+                    <input type="file" id="moviePosterFile" accept="image/jpeg,image/png,image/jpg,image/webp">
+                    <div id="moviePosterPreview" class="image-preview" style="margin-top: 12px;">
+                        <img id="moviePosterPreviewImg" style="display:none;">
+                        <span class="preview-placeholder">Select movie poster</span>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="movieDescription">Mô tả</label>
+                    <label for="movieStreamUrl">Streaming Link *</label>
+                    <input type="url" id="movieStreamUrl" required placeholder="https://...">
+                </div>
+
+                <div class="form-group">
+                    <label for="movieDescription">Description</label>
                     <textarea id="movieDescription" rows="3"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="movieRating">Đánh giá (0-10)</label>
+                    <label for="movieRating">Rating (0-10)</label>
                     <input type="number" id="movieRating" min="0" max="10" step="0.1" value="7.0">
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeMovieModal()">Hủy</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeMovieModal()">Cancel</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Lưu phim
+                        <i class="fas fa-save"></i> Save Movie
                     </button>
                 </div>
             </form>
