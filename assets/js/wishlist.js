@@ -12,6 +12,39 @@ class Wishlist {
         this.updateWishlistUI();
     }
 
+    // Create floating hearts animation
+    createFloatingHearts(button) {
+        const rect = button.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        // Create 5-8 floating hearts
+        const numHearts = 5 + Math.floor(Math.random() * 4);
+
+        for (let i = 0; i < numHearts; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+
+            // Random horizontal offset
+            const randomX = (Math.random() - 0.5) * 80; // -40px to 40px
+            heart.style.setProperty('--float-x', `${randomX}px`);
+
+            // Position at button center
+            heart.style.left = `${centerX}px`;
+            heart.style.top = `${centerY}px`;
+
+            // Random delay for staggered effect
+            heart.style.animationDelay = `${i * 0.1}s`;
+
+            document.body.appendChild(heart);
+
+            // Remove heart after animation completes
+            setTimeout(() => {
+                heart.remove();
+            }, 1500 + (i * 100));
+        }
+    }
+
     bindEvents() {
         // Delegate event for heart icon buttons
         document.addEventListener('click', (e) => {
@@ -82,8 +115,11 @@ class Wishlist {
             if (result.success) {
                 heartIcon.classList.add('active');
                 showNotification(`Added "${product.name}" to wishlist`, 'success');
-                
-                // Animation
+
+                // Create floating hearts animation
+                this.createFloatingHearts(button);
+
+                // Animation for the icon itself
                 heartIcon.style.transform = 'scale(1.3)';
                 setTimeout(() => {
                     heartIcon.style.transform = 'scale(1)';

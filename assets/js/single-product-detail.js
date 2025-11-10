@@ -1,3 +1,6 @@
+// Import functions to check wishlist status
+import { isInWishlist } from './user.js';
+
 // ===== PHẦN 1: LẤY ID TỪ URL =====
 function getProductIdFromURL() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -240,6 +243,15 @@ function renderProductDetails(product) {
       iconBtn.setAttribute('data-product-category', product.category || '');
       iconBtn.setAttribute('data-product-subcategory', product.subcategory || '');
       iconBtn.classList.add('heart-btn');
+
+      // Check if product is in wishlist and update UI
+      setTimeout(() => {
+        if (isInWishlist(product.id)) {
+          heartBtn.classList.add('active');
+        } else {
+          heartBtn.classList.remove('active');
+        }
+      }, 100);
     }
   }
 }
