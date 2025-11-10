@@ -469,6 +469,36 @@ i.heart-icon:hover {
   transform: scale(1.2);
 }
 
+/* Floating hearts animation */
+@keyframes floatHeart {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) translateX(var(--float-x)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) translateX(var(--float-x)) scale(0.5);
+  }
+}
+
+.floating-heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url('../images/heart-icon.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) hue-rotate(346deg) brightness(95%) contrast(93%);
+  pointer-events: none;
+  animation: floatHeart 1.5s ease-out forwards;
+  z-index: 1000;
+}
+
 i.shopping-bag-icon {
   background-image: url('../images/shopping-bag-icon.svg');
   background-size: contain;
