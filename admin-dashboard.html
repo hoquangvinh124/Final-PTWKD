@@ -57,6 +57,10 @@
                     <i class="fas fa-chart-line"></i>
                     <span>Analytics</span>
                 </a>
+                <a href="#ai-analytics" class="nav-link" data-page="ai-analytics">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Analytics</span>
+                </a>
                 <a href="#reports" class="nav-link" data-page="reports">
                     <i class="fas fa-file-alt"></i>
                     <span>Reports</span>
@@ -240,7 +244,6 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Customer</th>
-                                    <th>Product</th>
                                     <th>Total</th>
                                     <th>Status</th>
                                     <th>Date</th>
@@ -688,6 +691,105 @@
                 </div>
             </div>
         </div>
+        </div>
+
+        <!-- AI Analytics Page -->
+        <div class="page-content" id="ai-analytics-page" style="display: none;">
+            <div class="page-header">
+                <div>
+                    <h1>AI Analytics Assistant</h1>
+                    <p>Get intelligent insights and analysis powered by AI</p>
+                </div>
+            </div>
+
+            <!-- AI Chat Container -->
+            <div class="ai-chat-container">
+                <!-- Chat Messages Area -->
+                <div class="ai-chat-messages" id="aiChatMessages">
+                    <!-- Welcome Message -->
+                    <div class="ai-welcome-message">
+                        <div class="ai-welcome-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h2>Hello! I'm your AI Analytics Assistant</h2>
+                        <p>I can help you analyze your business data and provide insights. Choose a suggestion below or ask me anything!</p>
+                    </div>
+
+                    <!-- Suggestion Cards -->
+                    <div class="ai-suggestions">
+                        <div class="ai-suggestion-card" data-prompt="Analyze revenue trends for the last 30 days">
+                            <div class="suggestion-icon purple">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Revenue Analysis</h3>
+                            <p>Analyze revenue trends and patterns</p>
+                        </div>
+
+                        <div class="ai-suggestion-card" data-prompt="Show me customer behavior insights">
+                            <div class="suggestion-icon blue">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Customer Behavior</h3>
+                            <p>Understand customer purchasing patterns</p>
+                        </div>
+
+                        <div class="ai-suggestion-card" data-prompt="Which products are performing best?">
+                            <div class="suggestion-icon green">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <h3>Product Performance</h3>
+                            <p>Identify top and underperforming products</p>
+                        </div>
+
+                        <div class="ai-suggestion-card" data-prompt="Analyze inventory and stock levels">
+                            <div class="suggestion-icon orange">
+                                <i class="fas fa-warehouse"></i>
+                            </div>
+                            <h3>Inventory Analysis</h3>
+                            <p>Optimize stock levels and reduce waste</p>
+                        </div>
+
+                        <div class="ai-suggestion-card" data-prompt="Show me sales forecasts for next month">
+                            <div class="suggestion-icon red">
+                                <i class="fas fa-chart-area"></i>
+                            </div>
+                            <h3>Sales Forecast</h3>
+                            <p>Predict future sales trends</p>
+                        </div>
+
+                        <div class="ai-suggestion-card" data-prompt="Analyze Retro Cine screening performance">
+                            <div class="suggestion-icon teal">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <h3>Retro Cine Insights</h3>
+                            <p>Evaluate movie screening success</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Area -->
+                <div class="ai-chat-input-wrapper">
+                    <div class="ai-chat-input-container">
+                        <button class="ai-attach-btn" id="aiAttachBtn" title="Attach file">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <input
+                            type="text"
+                            class="ai-chat-input"
+                            id="aiChatInput"
+                            placeholder="Ask me anything about your business data..."
+                            autocomplete="off"
+                        >
+                        <button class="ai-send-btn" id="aiSendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="ai-input-hint">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>Tip: Be specific with your questions for better insights</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Reports Page -->

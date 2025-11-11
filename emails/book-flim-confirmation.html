@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screening Confirmation - Oldiezone Cinema</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0a0a0a;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      color: #e5e5e5;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .email-wrapper {
+      width: 100%;
+      background-color: #0a0a0a;
+      padding: 20px 0;
+    }
+    .email-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .email-header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #ffffff;
+      padding: 30px 40px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 179, 71, 0.2);
+      position: relative;
+    }
+    .email-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.5), transparent);
+    }
+    .email-header img {
+      max-width: 160px;
+      height: auto;
+      margin-bottom: 20px;
+      filter: brightness(1.1) contrast(1.1);
+    }
+    .email-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+    .email-header p {
+      font-size: 15px;
+      opacity: 0.8;
+      margin: 0;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 400;
+    }
+    .email-body {
+      padding: 35px 40px;
+      background: transparent;
+    }
+    .greeting {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #ffb347;
+      letter-spacing: -0.3px;
+    }
+    .message {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 25px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+    .ticket-card {
+      background: rgba(30, 30, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .movie-poster {
+      max-width: 200px;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin: 0 auto 20px;
+      display: block;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .movie-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+    .screening-time {
+      font-size: 15px;
+      color: #ffb347;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .datetime-highlight {
+      background: linear-gradient(135deg, rgba(255, 179, 71, 0.15) 0%, rgba(255, 140, 66, 0.15) 100%);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 179, 71, 0.4);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(255, 179, 71, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+    .datetime-highlight::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 179, 71, 0.1) 0%, transparent 70%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .datetime-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 179, 71, 0.8);
+      margin-bottom: 8px;
+    }
+    .datetime-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 8px rgba(255, 179, 71, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+    .datetime-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 2px 8px rgba(255, 179, 71, 0.4));
+    }
+    .ticket-code {
+      background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(45, 45, 45, 0.8) 100%);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 179, 71, 0.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin: 20px 0;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .ticket-code-label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 5px;
+      font-weight: 400;
+    }
+    .ticket-code-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffb347;
+      letter-spacing: 2px;
+    }
+    .info-box {
+      background: rgba(30, 30, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border-left: 3px solid #ffb347;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin: 20px 0;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+    .info-box p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+    .info-box p strong {
+      color: #ffb347;
+    }
+    .button-container {
+      text-align: center;
+      margin: 30px 0 20px;
+    }
+    .button {
+      display: inline-block;
+      background: linear-gradient(135deg, #ffb347 0%, #ff8c42 100%);
+      color: #ffffff;
+      padding: 14px 32px;
+      border-radius: 25px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      box-shadow: 0 6px 20px rgba(255, 179, 71, 0.25);
+    }
+    .email-footer {
+      background: rgba(15, 15, 15, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 25px 40px;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .email-footer p {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 5px 0;
+      line-height: 1.6;
+    }
+
+    /* Mobile Responsive */
+    @media only screen and (max-width: 600px) {
+      .email-wrapper {
+        padding: 10px 0;
+      }
+      .email-container {
+        border-radius: 0;
+        margin: 0;
+      }
+      .email-header {
+        padding: 25px 20px;
+      }
+      .email-header h1 {
+        font-size: 24px;
+      }
+      .email-header img {
+        max-width: 140px;
+      }
+      .email-body {
+        padding: 25px 20px;
+      }
+      .greeting {
+        font-size: 16px;
+      }
+      .message {
+        font-size: 14px;
+      }
+      .ticket-card {
+        padding: 20px 15px;
+      }
+      .movie-poster {
+        max-width: 160px;
+      }
+      .movie-title {
+        font-size: 20px;
+      }
+      .screening-time {
+        font-size: 14px;
+      }
+      .datetime-value {
+        font-size: 18px;
+      }
+      .datetime-icon {
+        font-size: 28px;
+      }
+      .ticket-code-value {
+        font-size: 20px;
+      }
+      .info-box {
+        padding: 15px;
+      }
+      .button {
+        display: block;
+        width: 100%;
+        padding: 16px 20px;
+      }
+      .email-footer {
+        padding: 20px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-container">
+      <!-- Header -->
+      <div class="email-header">
+        <img src="{{logo_url}}" alt="Oldiezone">
+        <h1>Screening Confirmed</h1>
+        <p>Your movie ticket is ready</p>
+      </div>
+
+      <!-- Body -->
+      <div class="email-body">
+        <div class="greeting">Hello {{customer_name}},</div>
+        <p class="message">
+          Your screening reservation at Oldiezone Cinema has been confirmed! Please arrive 15 minutes before showtime for check-in.
+        </p>
+
+        <!-- Ticket Card -->
+        <div class="ticket-card">
+          <img src="{{poster_url}}" alt="{{movie_title}}" class="movie-poster">
+
+          <div class="movie-title">{{movie_title}}</div>
+          <div class="screening-time">{{screening_time_range}}</div>
+
+          <!-- Ticket Code -->
+          <div class="ticket-code">
+            <div class="ticket-code-label">Your Ticket Code</div>
+            <div class="ticket-code-value">{{ticket_code}}</div>
+          </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+          <p>
+            <strong>Tip:</strong> Want to bring more friends? Share this screening by forwarding this email. For any questions, contact hotline <strong>1900 9779</strong>.  
+          </p>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="button-container">
+          <a href="https://oldiezone.studio/cinema" class="button">View E-Ticket</a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="email-footer">
+        <p><strong>Oldiezone Cine Room</strong></p>
+        <p>UEL, Ho Chi Minh City</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -384,15 +384,15 @@ function updateWelcomeMessage() {
     if (!welcomeText) return;
 
     const hour = new Date().getHours();
-    let greeting = 'Chào buổi sáng';
+    let greeting = 'Good morning';
 
     if (hour >= 12 && hour < 18) {
-        greeting = 'Chào buổi chiều';
+        greeting = 'Good afternoon';
     } else if (hour >= 18) {
-        greeting = 'Chào buổi tối';
+        greeting = 'Good evening';
     }
 
-    welcomeText.textContent = `${greeting}, Long! 👋`;
+    welcomeText.textContent = `${greeting}, Long!`;
 }
 
 function populateOrdersTable() {
@@ -403,7 +403,7 @@ function populateOrdersTable() {
     const recentOrders = orders.slice(0, 6);
     
     if (recentOrders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có đơn hàng nào</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có đơn hàng nào</td></tr>';
         return;
     }
 
@@ -411,7 +411,6 @@ function populateOrdersTable() {
         <tr>
             <td><strong>${order.id}</strong></td>
             <td>${order.customer}</td>
-            <td>${order.product}</td>
             <td><strong>${formatCurrency(order.amount)}</strong></td>
             <td><span class="status-badge ${order.status}">${
                 order.status === 'completed' ? 'Hoàn thành' :
@@ -2119,6 +2118,364 @@ window.addEventListener('click', (e) => {
     if (e.target === movieModal) {
         closeMovieModal();
     }
+});
+
+// ===== AI ANALYTICS FUNCTIONALITY =====
+
+// AI Analytics State
+const aiState = {
+    conversationStarted: false,
+    insights: {
+        'revenue': {
+            title: 'Revenue Analysis',
+            content: `<strong>Revenue Trends Analysis (Last 30 Days)</strong>
+
+Based on your sales data, here are the key insights:
+
+<ul>
+<li><strong>Total Revenue:</strong> 45,820,000 VND (+8.5% from previous period)</li>
+<li><strong>Peak Day:</strong> Friday typically shows 35% higher revenue than weekdays</li>
+<li><strong>Best Performing Category:</strong> Vinyl records account for 42% of total revenue</li>
+<li><strong>Growth Rate:</strong> Steady 12% month-over-month growth</li>
+<li><strong>Average Order Value:</strong> 1,250,000 VND (up 15% from last month)</li>
+</ul>
+
+<strong>Recommendations:</strong>
+<ul>
+<li>Focus marketing efforts on Thursday-Saturday for maximum impact</li>
+<li>Consider bundle deals for vinyl products to increase AOV further</li>
+<li>Stock up on popular vinyl titles before weekend rushes</li>
+</ul>`,
+        },
+        'customer': {
+            title: 'Customer Behavior Insights',
+            content: `<strong>Customer Behavior Analysis</strong>
+
+Your customer data reveals interesting patterns:
+
+<ul>
+<li><strong>Total Active Customers:</strong> 892 (15% growth this month)</li>
+<li><strong>Customer Retention Rate:</strong> 68% - Good, but improvable</li>
+<li><strong>VIP Customers:</strong> Generate 45% of total revenue while being only 12% of customer base</li>
+<li><strong>Average Purchase Frequency:</strong> 2.3 times per month for regular customers</li>
+<li><strong>Most Popular Product Type:</strong> Vintage vinyl from 70s-80s era</li>
+</ul>
+
+<strong>Key Findings:</strong>
+<ul>
+<li>Customers aged 25-35 are your primary demographic (58%)</li>
+<li>Weekend shoppers spend 40% more on average</li>
+<li>Customers who attend Retro Cine events are 3x more likely to make purchases</li>
+</ul>
+
+<strong>Action Items:</strong>
+<ul>
+<li>Create a loyalty program to improve retention from 68% to 75%</li>
+<li>Host more Retro Cine events to drive engagement and sales</li>
+<li>Send personalized recommendations based on past purchases</li>
+</ul>`,
+        },
+        'product': {
+            title: 'Product Performance Analysis',
+            content: `<strong>Product Performance Overview</strong>
+
+Detailed analysis of your product inventory:
+
+<ul>
+<li><strong>Total Products:</strong> 142 SKUs</li>
+<li><strong>Top Performer:</strong> The Beatles - Abbey Road Vinyl (87 units sold)</li>
+<li><strong>Underperforming:</strong> 23 products with less than 2 sales in 30 days</li>
+<li><strong>Out of Stock:</strong> 6 products need immediate restocking</li>
+<li><strong>Best Category:</strong> Vinyl (42% of revenue)</li>
+</ul>
+
+<strong>Sales by Category:</strong>
+<ul>
+<li>Vinyl: 42% of revenue</li>
+<li>CD: 28% of revenue</li>
+<li>Cameras: 15% of revenue</li>
+<li>VHS: 10% of revenue</li>
+<li>Accessories: 5% of revenue</li>
+</ul>
+
+<strong>Recommendations:</strong>
+<ul>
+<li>Discontinue or discount the 23 slow-moving products</li>
+<li>Restock popular vinyl records immediately to prevent lost sales</li>
+<li>Expand vinyl collection based on customer preferences</li>
+<li>Bundle slow-moving items with bestsellers</li>
+</ul>`,
+        },
+        'inventory': {
+            title: 'Inventory & Stock Analysis',
+            content: `<strong>Inventory Management Insights</strong>
+
+Current inventory status and optimization opportunities:
+
+<ul>
+<li><strong>Total Inventory Value:</strong> 127,500,000 VND</li>
+<li><strong>Low Stock Items:</strong> 18 products below safety threshold</li>
+<li><strong>Overstock Items:</strong> 12 products with >6 months of supply</li>
+<li><strong>Stock Turnover Rate:</strong> 4.2x per year (Industry avg: 3.8x)</li>
+<li><strong>Out of Stock Rate:</strong> 2.4% (Target: <2%)</li>
+</ul>
+
+<strong>Critical Actions Needed:</strong>
+<ul>
+<li>Reorder immediately: Beatles vinyl, Pink Floyd vinyl, Polaroid cameras</li>
+<li>Reduce orders: Generic cassettes, blank VHS tapes</li>
+<li>Phase out: Outdated accessories with no sales in 90 days</li>
+</ul>
+
+<strong>Optimization Tips:</strong>
+<ul>
+<li>Implement just-in-time ordering for fast-moving vinyl</li>
+<li>Create clearance bundles for overstock items</li>
+<li>Set up automated reorder alerts at 20% stock level</li>
+</ul>`,
+        },
+        'forecast': {
+            title: 'Sales Forecast',
+            content: `<strong>Sales Forecast - Next 30 Days</strong>
+
+Based on historical data and current trends:
+
+<ul>
+<li><strong>Projected Revenue:</strong> 52,400,000 VND (+14% from this month)</li>
+<li><strong>Expected Orders:</strong> 1,385 orders (avg: 46 orders/day)</li>
+<li><strong>Peak Days:</strong> Weekends and paydays (1st, 15th of month)</li>
+<li><strong>Confidence Level:</strong> 87% accuracy based on historical patterns</li>
+</ul>
+
+<strong>Growth Drivers:</strong>
+<ul>
+<li>Upcoming holidays and payday cycles</li>
+<li>Successful email marketing campaigns</li>
+<li>New vintage vinyl arrivals attracting collectors</li>
+<li>Retro Cine events driving foot traffic</li>
+</ul>
+
+<strong>Risk Factors:</strong>
+<ul>
+<li>Stock shortages on popular items could limit growth</li>
+<li>Competition from online marketplaces</li>
+<li>Seasonal variations in customer spending</li>
+</ul>
+
+<strong>Strategic Actions:</strong>
+<ul>
+<li>Ensure adequate stock for forecasted demand</li>
+<li>Prepare promotional campaigns for peak days</li>
+<li>Staff accordingly for expected order volume</li>
+</ul>`,
+        },
+        'retrocine': {
+            title: 'Retro Cine Performance',
+            content: `<strong>Retro Cine Screening Analysis</strong>
+
+Performance metrics for your free movie screening program:
+
+<ul>
+<li><strong>Total Screenings:</strong> 24 events this month</li>
+<li><strong>Total Bookings:</strong> 1,247 attendees</li>
+<li><strong>Average Attendance:</strong> 52 people per screening (capacity: 75)</li>
+<li><strong>Most Popular Genre:</strong> Classic Drama (78% full)</li>
+<li><strong>Conversion to Sales:</strong> 34% of attendees make purchases</li>
+</ul>
+
+<strong>Top Performing Movies:</strong>
+<ul>
+<li>The Godfather (1972) - 72 attendees, 95% satisfaction</li>
+<li>Casablanca (1942) - 68 attendees, 92% satisfaction</li>
+<li>Breakfast at Tiffany's (1961) - 65 attendees, 89% satisfaction</li>
+</ul>
+
+<strong>Business Impact:</strong>
+<ul>
+<li>Events generate an average of 2,850,000 VND in product sales per screening</li>
+<li>Customers who attend screenings spend 3x more than average</li>
+<li>45% of event attendees become repeat customers</li>
+</ul>
+
+<strong>Recommendations:</strong>
+<ul>
+<li>Schedule more classic drama screenings (highest attendance)</li>
+<li>Offer exclusive product bundles for event attendees</li>
+<li>Create a movie club membership for regular attendees</li>
+<li>Partner with local film societies for special events</li>
+</ul>`,
+        }
+    }
+};
+
+// Initialize AI Analytics when page loads
+function initAIAnalytics() {
+    const aiChatInput = document.getElementById('aiChatInput');
+    const aiSendBtn = document.getElementById('aiSendBtn');
+    const suggestionCards = document.querySelectorAll('.ai-suggestion-card');
+
+    // Handle suggestion card clicks
+    suggestionCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const prompt = card.getAttribute('data-prompt');
+            handleAIMessage(prompt);
+        });
+    });
+
+    // Handle send button click
+    if (aiSendBtn) {
+        aiSendBtn.addEventListener('click', () => {
+            const message = aiChatInput.value.trim();
+            if (message) {
+                handleAIMessage(message);
+                aiChatInput.value = '';
+            }
+        });
+    }
+
+    // Handle Enter key press
+    if (aiChatInput) {
+        aiChatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const message = aiChatInput.value.trim();
+                if (message) {
+                    handleAIMessage(message);
+                    aiChatInput.value = '';
+                }
+            }
+        });
+    }
+}
+
+// Handle AI message
+function handleAIMessage(userMessage) {
+    const messagesContainer = document.getElementById('aiChatMessages');
+
+    // If first message, hide welcome and suggestions, enable scrolling
+    if (!aiState.conversationStarted) {
+        const welcomeMsg = messagesContainer.querySelector('.ai-welcome-message');
+        const suggestions = messagesContainer.querySelector('.ai-suggestions');
+        if (welcomeMsg) welcomeMsg.style.display = 'none';
+        if (suggestions) suggestions.style.display = 'none';
+
+        // Enable scrolling when chat starts
+        messagesContainer.style.overflowY = 'auto';
+
+        aiState.conversationStarted = true;
+    }
+
+    // Add user message
+    addMessage('user', userMessage);
+
+    // Show typing indicator
+    showTypingIndicator();
+
+    // Simulate AI response delay
+    setTimeout(() => {
+        hideTypingIndicator();
+        const response = generateAIResponse(userMessage);
+        addMessage('assistant', response);
+
+        // Scroll to bottom
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 1500);
+}
+
+// Add message to chat
+function addMessage(type, content) {
+    const messagesContainer = document.getElementById('aiChatMessages');
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `ai-message ${type}`;
+
+    const avatar = document.createElement('div');
+    avatar.className = 'ai-message-avatar';
+    avatar.innerHTML = type === 'user' ? '<i class="fas fa-user"></i>' : '<i class="fas fa-brain"></i>';
+
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'ai-message-content';
+    contentDiv.innerHTML = content;
+
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(contentDiv);
+    messagesContainer.appendChild(messageDiv);
+
+    // Scroll to bottom
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Show typing indicator
+function showTypingIndicator() {
+    const messagesContainer = document.getElementById('aiChatMessages');
+
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'ai-message assistant ai-typing-indicator';
+    typingDiv.id = 'typingIndicator';
+
+    typingDiv.innerHTML = `
+        <div class="ai-message-avatar">
+            <i class="fas fa-brain"></i>
+        </div>
+        <div class="ai-message-content">
+            <div class="ai-typing-dots">
+                <span class="ai-typing-dot"></span>
+                <span class="ai-typing-dot"></span>
+                <span class="ai-typing-dot"></span>
+            </div>
+        </div>
+    `;
+
+    messagesContainer.appendChild(typingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Hide typing indicator
+function hideTypingIndicator() {
+    const indicator = document.getElementById('typingIndicator');
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+// Generate AI response based on user input
+function generateAIResponse(userMessage) {
+    const lowerMessage = userMessage.toLowerCase();
+
+    // Detect intent from message
+    if (lowerMessage.includes('revenue') || lowerMessage.includes('sales') || lowerMessage.includes('earning')) {
+        return aiState.insights.revenue.content;
+    } else if (lowerMessage.includes('customer') || lowerMessage.includes('behavior') || lowerMessage.includes('buyer')) {
+        return aiState.insights.customer.content;
+    } else if (lowerMessage.includes('product') || lowerMessage.includes('perform') || lowerMessage.includes('selling')) {
+        return aiState.insights.product.content;
+    } else if (lowerMessage.includes('inventory') || lowerMessage.includes('stock') || lowerMessage.includes('warehouse')) {
+        return aiState.insights.inventory.content;
+    } else if (lowerMessage.includes('forecast') || lowerMessage.includes('predict') || lowerMessage.includes('future')) {
+        return aiState.insights.forecast.content;
+    } else if (lowerMessage.includes('retro cine') || lowerMessage.includes('screening') || lowerMessage.includes('movie')) {
+        return aiState.insights.retrocine.content;
+    } else {
+        // Default response with options
+        return `<strong>I can help you with various analytics!</strong>
+
+I specialize in analyzing your business data. Here are some areas I can help with:
+
+<ul>
+<li><strong>Revenue Analysis:</strong> Trends, growth patterns, and revenue optimization</li>
+<li><strong>Customer Insights:</strong> Behavior patterns, retention, and demographics</li>
+<li><strong>Product Performance:</strong> Best sellers, underperformers, and inventory turnover</li>
+<li><strong>Inventory Management:</strong> Stock levels, reorder points, and optimization</li>
+<li><strong>Sales Forecasting:</strong> Future projections and trend predictions</li>
+<li><strong>Retro Cine Analytics:</strong> Screening performance and customer engagement</li>
+</ul>
+
+What would you like to know more about?`;
+    }
+}
+
+// Initialize AI Analytics when on AI Analytics page
+document.addEventListener('DOMContentLoaded', () => {
+    initAIAnalytics();
 });
 
 // ===== START APP =====
