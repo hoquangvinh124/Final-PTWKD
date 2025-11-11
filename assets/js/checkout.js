@@ -31,7 +31,7 @@ let currentStep = 1;
 let orderData = {
   customer: {},
   products: [],
-  shipping: { type: 'standard', price: 9.99 },
+  shipping: { type: 'standard', price: 0 },
   payment: { type: 'card' },
   taxRate: 0
 };
