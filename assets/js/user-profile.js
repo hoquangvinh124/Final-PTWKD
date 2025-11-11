@@ -305,8 +305,18 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
   const initialAvatar = heroAvatar ? heroAvatar.getAttribute('src') : '';
   const editSaveBtn = document.getElementById('editProfileSaveBtn');
 
-  // Load profile data from session
+  // Load profile data from session and sync with database
   const sessionData = JSON.parse(localStorage.getItem('demo.auth') || '{}');
+  
+  // Sync memberRank from database to ensure it's up to date
+  const users = loadUsers();
+  const currentUser = users.find(u => u.username === sessionData.username);
+  if (currentUser && currentUser.memberRank) {
+    sessionData.memberRank = currentUser.memberRank;
+    // Update session storage with latest memberRank
+    localStorage.setItem('demo.auth', JSON.stringify(sessionData));
+  }
+  
   const profileData = {
     firstName: sessionData.firstName || '',
     lastName: sessionData.lastName || '',
@@ -347,6 +357,9 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
     if(field === 'fullName'){
       return value;
     }
+    if(field === 'memberRank'){
+      return value;
+    }
     return value;
   };
 
@@ -358,6 +371,17 @@ function setupFilter(filterGroup, items = [], { getStatus, onFilterChange } = {}
       const rawValue = profileData[field] || '';
       el.textContent = formatValue(field, rawValue);
       el.dataset.state = rawValue ? 'filled' : 'empty';
+      
+      // Update data-rank attribute for member rank styling
+      if(field === 'memberRank' && rawValue){
+        const rankValue = rawValue.toLowerCase().split(' ')[0]; // 'VIP Member' -> 'vip', 'Gold Member' -> 'gold'
+        el.setAttribute('data-rank', rankValue);
+        console.log('Member Rank Updated:', {
+          rawValue: rawValue,
+          rankValue: rankValue,
+          element: el
+        });
+      }
     });
     updateAvatarDisplays(profileData.avatar);
   };

@@ -25,6 +25,26 @@ async function loadDefaultUsers() {
   }
 }
 
+// Initialize users in localStorage from users.json if not exists
+export async function initializeUsers() {
+  // Check if users already exist in localStorage
+  const existingUsers = localStorage.getItem(USERS_KEY);
+  
+  if (!existingUsers) {
+    console.log('No users in localStorage, loading from users.json...');
+    await loadDefaultUsers();
+    
+    if (DEFAULT_USERS.length > 0) {
+      localStorage.setItem(USERS_KEY, JSON.stringify(DEFAULT_USERS));
+      console.log(`Initialized ${DEFAULT_USERS.length} users in localStorage`);
+    }
+  } else {
+    console.log('Users already exist in localStorage');
+    // Still load DEFAULT_USERS for fallback
+    await loadDefaultUsers();
+  }
+}
+
 // Create default user object for newly registered user
 export function createNewUser(username, password, email = '', firstName = '', lastName = '') {
   return {

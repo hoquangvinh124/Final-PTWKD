@@ -8,7 +8,8 @@
     "description": "Batman faces Two-Face and The Riddler as they threaten Gotham City with chaos and riddles.",
     "duration": 120,
     "genre": "Action, Adventure",
-    "rating": "PG-13"
+    "rating": "PG-13",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/batman-forever/master.m3u8"
   },
   {
     "id": 2,
@@ -19,7 +20,8 @@
     "description": "When Woody is stolen by a toy collector, Buzz and his friends embark on a daring rescue mission.",
     "duration": 120,
     "genre": "Animation, Adventure",
-    "rating": "G"
+    "rating": "G",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/toy-story-2/master.m3u8"
   },
   {
     "id": 3,
@@ -30,7 +32,8 @@
     "description": "A fast-talking lawyer is magically forced to tell the truth for 24 hours after his son's birthday wish.",
     "duration": 120,
     "genre": "Comedy",
-    "rating": "PG-13"
+    "rating": "PG-13",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/liar-liar/master.m3u8"
   },
   {
     "id": 4,
@@ -41,7 +44,8 @@
     "description": "A poor artist and a wealthy young woman fall in love aboard the ill-fated RMS Titanic.",
     "duration": 120,
     "genre": "Romance, Drama",
-    "rating": "PG-13"
+    "rating": "PG-13",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/titanic/master.m3u8"
   },
   {
     "id": 5,
@@ -52,7 +56,8 @@
     "description": "Two secret agents protect Earth from extraterrestrial threats while keeping aliens hidden from the public.",
     "duration": 120,
     "genre": "Action, Sci-Fi",
-    "rating": "PG-13"
+    "rating": "PG-13",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/men-in-black/master.m3u8"
   },
   {
     "id": 6,
@@ -63,7 +68,8 @@
     "description": "A young lion prince flees his kingdom after tragedy, only to return and reclaim his rightful place as king.",
     "duration": 120,
     "genre": "Animation, Adventure",
-    "rating": "G"
+    "rating": "G",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/lion-king/master.m3u8"
   },
   {
     "id": 7,
@@ -74,7 +80,8 @@
     "description": "A young hobbit embarks on a perilous journey to destroy a powerful ring and save Middle-earth.",
     "duration": 178,
     "genre": "Fantasy, Adventure",
-    "rating": "PG-13"
+    "rating": "PG-13",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/ring/master.m3u8"
 },
 {
     "id": 8,
@@ -85,7 +92,8 @@
     "description": "A disillusioned knight teams up with the last living dragon to stop a tyrant king.",
     "duration": 103,
     "genre": "Fantasy, Adventure",
-    "rating": "PG-13"
+    "rating": "PG-13",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/dragon-heart/master.m3u8"
 },
 {
     "id": 9,
@@ -96,7 +104,8 @@
     "description": "The true story of NASA's ill-fated Apollo 13 mission and the astronauts' struggle to return home.",
     "duration": 140,
     "genre": "Drama, History",
-    "rating": "PG"
+    "rating": "PG",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/titanic/master.m3u8"
 },
 {
     "id": 10,
@@ -107,7 +116,8 @@
     "description": "A timid clownfish sets out on a daring adventure to rescue his son who has been captured by divers.",
     "duration": 100,
     "genre": "Animation, Adventure, Comedy",
-    "rating": "G"
+    "rating": "G",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/finding-nemo/master.m3u8"
 },
 {
     "id": 11,
@@ -118,7 +128,8 @@
     "description": "Two Jedi knights discover a young boy who may be the chosen one to bring balance to the Force.",
     "duration": 136,
     "genre": "Action, Adventure, Sci-Fi",
-    "rating": "PG"
+    "rating": "PG",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/star-wars-1/master.m3u8"
 },
 {
     "id": 12,
@@ -129,6 +140,7 @@
     "description": "Adventurer Lara Croft races against time and villains to recover powerful ancient artifacts.",
     "duration": 100,
     "genre": "Action, Adventure, Fantasy",
-    "rating": "PG-13"
+    "rating": "PG-13",
+    "streamUrl": "https://d38fd6uu3uo59n.cloudfront.net/NSFW/lara-croft/master.m3u8"
 }
 ]

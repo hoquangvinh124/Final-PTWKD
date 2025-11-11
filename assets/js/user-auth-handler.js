@@ -5,7 +5,12 @@
  * - Đã đăng nhập: Hiển thị thông tin user từ DB + View Profile / Sign Out
  */
 
-import { isAuthenticated, getCurrentUser, logout } from './auth.js';
+import { isAuthenticated, getCurrentUser, logout, initializeUsers } from './auth.js';
+
+// Initialize users from users.json on app load
+initializeUsers().then(() => {
+  console.log('Users initialized from users.json');
+});
 
 function renderUserDropdown() {
   const userDropdown = document.getElementById('userDropdown');
@@ -39,6 +44,9 @@ function renderUserDropdown() {
       }
     }
 
+    // Extract rank value for data-rank attribute (e.g., "VIP Member" -> "vip")
+    const rankValue = rank.toLowerCase().split(' ')[0];
+
     // Cập nhật user info
     userInfo.innerHTML = `
       <div class="user-avatar">
@@ -46,7 +54,7 @@ function renderUserDropdown() {
       </div>
       <div class="user-details">
         <div class="user-name">${userData.firstName} ${userData.lastName}</div>
-        <div class="user-rank">${rank}</div>
+        <div class="user-rank" data-rank="${rankValue}">${rank}</div>
       </div>
     `;
 

@@ -1,56 +1,37 @@
-import { isAuthenticated, addBookedMovie } from './auth.js';
+import { isAuthenticated, addBookedMovie, getCurrentUser } from './auth.js';
 
 document.querySelectorAll('.poster-row').forEach(row => {
   const cloneContent = row.innerHTML;
   row.innerHTML += cloneContent;
 });
 
-// Movie list
-const movies = 
-[
-  {
-    "title": "BATMAN FOREVER",
-    "poster": "assets/images/film VHS/BatmanForever.png",
-    "year": 1995,
-    "director": "Joel Schumacher",
-    "description": "Batman faces Two-Face and The Riddler as they threaten Gotham City with chaos and riddles."
-  },
-  {
-    "title": "TOY STORY 2",
-    "poster": "assets/images/film VHS/toystory.png",
-    "year": 1999,
-    "director": "John Lasseter",
-    "description": "When Woody is stolen by a toy collector, Buzz and his friends embark on a daring rescue mission."
-  },
-  {
-    "title": "LIAR LIAR",
-    "poster": "assets/images/film VHS/Liar-Liar.png",
-    "year": 1997,
-    "director": "Tom Shadyac",
-    "description": "A fast-talking lawyer is magically forced to tell the truth for 24 hours after his son's birthday wish."
-  },
-  {
-    "title": "TITANIC",
-    "poster": "assets/images/film VHS/Titanic.png",
-    "year": 1997,
-    "director": "James Cameron",
-    "description": "A poor artist and a wealthy young woman fall in love aboard the ill-fated RMS Titanic."
-  },
-  {
-    "title": "MEN IN BLACK",
-    "poster": "assets/images/film VHS/MIB.png",
-    "year": 1997,
-    "director": "Barry Sonnenfeld",
-    "description": "Two secret agents protect Earth from extraterrestrial threats while keeping aliens hidden from the public."
-  },
-  {
-    "title": "THE LION KING",
-    "poster": "assets/images/film VHS/lionking.png",
-    "year": 1994,
-    "director": "Roger Allers & Rob Minkoff",
-    "description": "A young lion prince flees his kingdom after tragedy, only to return and reclaim his rightful place as king."
+// Movie list - Load from JSON
+let movies = [];
+
+// Fetch movies from JSON file
+async function loadMovies() {
+  try {
+    const response = await fetch('movies.json');
+    const data = await response.json();
+    movies = data;
+    // Initialize the page after movies are loaded
+    initializePage();
+  } catch (error) {
+    console.error('Error loading movies:', error);
+    // Fallback to empty array if loading fails
+    movies = [];
   }
-];
+}
+
+// Initialize page after movies are loaded
+function initializePage() {
+  const today = new Date();
+  const todayIndex = (today.getDay() + 6) % 7;
+  weekButtons[todayIndex].classList.add("active");
+  displaySchedule(todayIndex);
+  renderNowNext();
+  scheduleAutoUpdate();
+}
 
 const scheduleDiv = document.getElementById("schedule");
 const weekButtons = document.querySelectorAll("#weekBar button");
@@ -139,10 +120,7 @@ datePicker.addEventListener("change", () => {
   weekButtons[day].click();
 });
 
-const today = new Date();
-const todayIndex = (today.getDay() + 6) % 7;
-weekButtons[todayIndex].classList.add("active");
-displaySchedule(todayIndex);
+// Removed - now handled in initializePage() after movies are loaded
 
 // Now & Next movie section
 function toMinutes(hm) {
@@ -214,11 +192,13 @@ function renderNowNext() {
           showNotification('Please login to watch movies!', 'info');
           return;
         }
+        window.location.href = 'room.html';
+      } else if (overlayText === 'BOOK NOW') {
+        showBookingModal(slot.movie, slot.timeLabel);
       }
-      window.location.href = 'room.html';
     });
     posterWrap.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') 
+      if (e.key === 'Enter' || e.key === ' ')
         {
             e.preventDefault();
             if (overlayText === 'WATCH NOW') {
@@ -226,25 +206,16 @@ function renderNowNext() {
                 showNotification('Please login to watch movies!', 'info');
                 return;
               }
+              window.location.href = 'room.html';
+            } else if (overlayText === 'BOOK NOW') {
+              showBookingModal(slot.movie, slot.timeLabel);
             }
-            window.location.href = 'room.html';
       }
     });
   }
 
   renderBox(currentBox, currentSlot, 'WATCH NOW');
   renderBox(nextBox, nextSlot, 'BOOK NOW');
-
-  // Add booking functionality to "BOOK NOW" button
-  const nextPosterWrap = nextBox.querySelector('.poster-wrap');
-  nextPosterWrap.removeEventListener('click', gotoRoom);
-  nextPosterWrap.addEventListener('click', () => {
-    showBookingModal(nextSlot.movie, nextSlot.timeLabel);
-  });
-}
-
-function gotoRoom() {
-  window.location.href = 'room.html';
 }
 
 // Booking Modal Functions
@@ -281,13 +252,66 @@ function hideBookingModal() {
   currentBookingData = null;
 }
 
-function confirmBooking() {
+/**
+ * Send booking confirmation email to customer
+ */
+async function sendBookingConfirmationEmail(customerEmail, screeningData) {
+  try {
+    const response = await fetch(' https://b3ct0lx849.execute-api.ap-southeast-2.amazonaws.com/default/Booking-Confirmation', {
+      method: 'POST',
+      headers: {
+        'x-api-key': 'oldiezone',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        customer_email: customerEmail,
+        screening_data: screeningData
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('Booking confirmation email sent successfully:', result);
+    return true;
+  } catch (error) {
+    console.error('Failed to send booking confirmation email:', error);
+    return false;
+  }
+}
+
+async function confirmBooking() {
   if (!currentBookingData) return;
 
+  const currentUser = getCurrentUser();
+  if (!currentUser || !currentUser.email) {
+    showNotification('Unable to get user email. Please ensure you are logged in.', 'error');
+    return;
+  }
+
+  // Add booking to user's booked movies
   const success = addBookedMovie(currentBookingData);
 
   if (success) {
+    // Show success notification immediately
     showNotification(`Successfully booked "${currentBookingData.title}"! Showtime: ${currentBookingData.showtime}`, 'success');
+    
+    // Prepare screening data for email (send silently in background)
+    const screeningData = {
+      customer_name: currentUser.firstName || currentUser.username || 'Valued Customer',
+      poster_url: currentBookingData.poster,
+      movie_title: currentBookingData.title,
+      screening_time_range: currentBookingData.showtime
+    };
+
+    // Send booking confirmation email in background (no notification)
+    sendBookingConfirmationEmail(currentUser.email, screeningData).catch(error => {
+      console.error('Email sending failed:', error);
+      // Silently fail - user already got success notification
+    });
+
     hideBookingModal();
   } else {
     showNotification('Failed to book movie. Please try again.', 'error');
@@ -305,9 +329,8 @@ document.getElementById('bookingModal').addEventListener('click', (e) => {
   }
 });
 
-renderNowNext();
-(function scheduleAutoUpdate()
-{
+// Schedule auto update function
+function scheduleAutoUpdate() {
   const now = new Date();
   const nextCheck = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 1, 2);
   const delay = nextCheck - now;
@@ -315,4 +338,7 @@ renderNowNext();
     renderNowNext();
     setInterval(renderNowNext, 60 * 1000);
   }, delay);
-})();
+}
+
+// Load movies and initialize the page
+loadMovies();

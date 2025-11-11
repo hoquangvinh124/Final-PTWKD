@@ -1,3 +1,77 @@
+// ===== INITIALIZE USERS FROM JSON =====
+async function initializeUsersForAdmin() {
+    const existingUsers = localStorage.getItem('demo.users');
+    
+    if (!existingUsers) {
+        console.log('⚠️ No demo.users found, loading from users.json...');
+        try {
+            const response = await fetch('users.json');
+            if (response.ok) {
+                const users = await response.json();
+                localStorage.setItem('demo.users', JSON.stringify(users));
+                console.log(`✅ Initialized ${users.length} users in demo.users`);
+            }
+        } catch (error) {
+            console.error('Error loading users.json:', error);
+        }
+    } else {
+        console.log('✅ demo.users already exists in localStorage');
+    }
+}
+
+// ===== REFRESH DATA FROM LOCALSTORAGE =====
+function refreshDashboardData() {
+    console.log('🔄 Refreshing dashboard data...');
+    
+    // Refresh current page based on state
+    switch(state.currentPage) {
+        case 'dashboard':
+            updateDashboardStats();
+            populateOrdersTable();
+            populateTopProducts();
+            break;
+        case 'orders':
+            populateOrdersTableFull();
+            break;
+        case 'customers':
+            populateCustomersTable();
+            break;
+        case 'products':
+            populateProductsTable();
+            break;
+        case 'screenings':
+            populateScreeningsTable();
+            break;
+    }
+    
+    // Update sidebar badges
+    updateSidebarBadges();
+    
+    console.log('✅ Dashboard data refreshed');
+}
+
+// Auto-refresh every 30 seconds
+let autoRefreshInterval;
+function startAutoRefresh() {
+    // Clear existing interval if any
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+    }
+    
+    // Refresh every 30 seconds
+    autoRefreshInterval = setInterval(() => {
+        refreshDashboardData();
+        console.log('⏰ Auto-refresh triggered');
+    }, 30000); // 30 seconds
+}
+
+function stopAutoRefresh() {
+    if (autoRefreshInterval) {
+        clearInterval(autoRefreshInterval);
+        autoRefreshInterval = null;
+    }
+}
+
 // ===== GLOBAL STATE =====
 const state = {
     sidebarActive: false,
@@ -612,70 +686,73 @@ function deleteProduct(id) {
 function loadOrdersFromLocalStorage() {
     const orders = [];
     
-    console.log('=== Loading Orders ===');
+    console.log('=== Loading Orders from demo.users ===');
     
-    // Iterate through all localStorage keys
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
+    try {
+        // Load from demo.users instead of iterating through all keys
+        const usersData = localStorage.getItem('demo.users');
         
-        // Skip cart and wishlist
-        if (key === 'cart' || key === 'wishlist') {
-            continue;
+        if (!usersData) {
+            console.warn('⚠️ No demo.users found in localStorage');
+            return orders;
         }
+
+        const users = JSON.parse(usersData);
         
-        try {
-            const userData = JSON.parse(localStorage.getItem(key));
+        if (!Array.isArray(users)) {
+            console.warn('⚠️ demo.users is not an array');
+            return orders;
+        }
+
+        console.log(`Found ${users.length} users in demo.users`);
+
+        // Process each user's orders
+        users.forEach(userData => {
+            const customerName = `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || userData.username || 'Unknown';
             
-            // Check if it's a valid user with orders
-            if (userData && (userData.email || userData.username) && 
-                (userData.firstName || userData.lastName || userData.shippingAddress)) {
+            console.log('Checking orders for user:', customerName);
+            
+            // Get purchasedOrders from user
+            if (userData.purchasedOrders && Array.isArray(userData.purchasedOrders)) {
+                console.log('Found', userData.purchasedOrders.length, 'orders for', customerName);
                 
-                const customerName = `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || userData.username || 'Unknown';
-                
-                console.log('Checking user:', customerName);
-                
-                // Get purchasedOrders from user
-                if (userData.purchasedOrders && Array.isArray(userData.purchasedOrders)) {
-                    console.log('Found', userData.purchasedOrders.length, 'orders for', customerName);
+                userData.purchasedOrders.forEach(order => {
+                    // Get product names
+                    const productNames = order.products?.map(p => p.name).join(', ') || 
+                                       order.items?.map(item => item.name).join(', ') || 'N/A';
                     
-                    userData.purchasedOrders.forEach(order => {
-                        // Get product names
-                        const productNames = order.products?.map(p => p.name).join(', ') || 
-                                           order.items?.map(item => item.name).join(', ') || 'N/A';
-                        
-                        // Get total quantity
-                        const totalQty = order.products?.reduce((sum, p) => sum + (p.quantity || 0), 0) ||
-                                       order.items?.reduce((sum, item) => sum + (item.quantity || 0), 0) || 0;
-                        
-                        // Format date
-                        let formattedDate = 'N/A';
-                        if (order.orderDate) {
-                            const dateObj = new Date(order.orderDate);
-                            formattedDate = dateObj.toLocaleDateString('vi-VN');
-                        } else if (order.date) {
-                            const dateObj = new Date(order.date);
-                            formattedDate = dateObj.toLocaleDateString('vi-VN');
-                        }
-                        
-                        // Create order entry
-                        orders.push({
-                            id: order.orderId || `ORD${Date.now()}`,
-                            customer: customerName,
-                            product: productNames,
-                            quantity: totalQty,
-                            amount: order.total || 0,
-                            status: order.status?.toLowerCase() || 'completed',
-                            date: formattedDate,
-                            userId: key,
-                            rawDate: order.orderDate || order.date
-                        });
+                    // Get total quantity
+                    const totalQty = order.products?.reduce((sum, p) => sum + (p.quantity || 0), 0) ||
+                                   order.items?.reduce((sum, item) => sum + (item.quantity || 0), 0) || 0;
+                    
+                    // Format date
+                    let formattedDate = 'N/A';
+                    if (order.orderDate) {
+                        const dateObj = new Date(order.orderDate);
+                        formattedDate = dateObj.toLocaleDateString('vi-VN');
+                    } else if (order.date) {
+                        const dateObj = new Date(order.date);
+                        formattedDate = dateObj.toLocaleDateString('vi-VN');
+                    }
+                    
+                    // Create order entry
+                    orders.push({
+                        id: order.orderId || `ORD${Date.now()}`,
+                        customer: customerName,
+                        product: productNames,
+                        quantity: totalQty,
+                        amount: order.total || 0,
+                        status: order.status?.toLowerCase() || 'completed',
+                        date: formattedDate,
+                        userId: userData.username, // Use username as ID
+                        rawDate: order.orderDate || order.date
                     });
-                }
+                });
             }
-        } catch (error) {
-            // Not JSON or invalid data, skip
-            console.log('Skipped key:', key);
-        }
+        });
+
+    } catch (error) {
+        console.error('Error loading orders from demo.users:', error);
     }
     
     // Sort by date (newest first)
@@ -688,7 +765,7 @@ function loadOrdersFromLocalStorage() {
     
     console.log('Total orders loaded:', orders.length);
     console.log('Orders:', orders);
-    
+
     return orders;
 }
 
@@ -767,13 +844,36 @@ function populateOrdersTableFull(filters = {}) {
 
 function updateOrderStatus(orderId, userId, newStatus) {
     try {
-        const userData = JSON.parse(localStorage.getItem(userId));
-        if (userData && userData.purchasedOrders) {
-            const order = userData.purchasedOrders.find(o => o.orderId === orderId);
+        // Load demo.users
+        const usersData = localStorage.getItem('demo.users');
+        if (!usersData) {
+            showToast('Không tìm thấy demo.users', 'error');
+            return;
+        }
+
+        const users = JSON.parse(usersData);
+        
+        // Find user by username (userId)
+        const userIndex = users.findIndex(u => u.username === userId);
+        
+        if (userIndex === -1) {
+            showToast('Không tìm thấy user', 'error');
+            return;
+        }
+
+        // Find and update order
+        if (users[userIndex].purchasedOrders) {
+            const order = users[userIndex].purchasedOrders.find(o => o.orderId === orderId);
             if (order) {
                 order.status = newStatus;
-                localStorage.setItem(userId, JSON.stringify(userData));
+                
+                // Save back to demo.users
+                localStorage.setItem('demo.users', JSON.stringify(users));
+                
                 showToast(`Đã cập nhật trạng thái đơn hàng ${orderId}`);
+                
+                // Refresh orders table
+                populateOrdersTableFull();
             }
         }
     } catch (error) {
@@ -826,61 +926,60 @@ function getRankDisplayName(rank) {
 function loadCustomersFromLocalStorage() {
     const customers = [];
     
-    console.log('=== Loading Customers ===');
-    console.log('Total localStorage items:', localStorage.length);
+    console.log('=== Loading Customers from demo.users ===');
 
-    // Iterate through all localStorage keys
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        console.log('Checking key:', key);
-
-        // Skip cart and wishlist, but check all other keys
-        if (key === 'cart' || key === 'wishlist') {
-            console.log('Skipping system key:', key);
-            continue;
+    try {
+        // Load from demo.users instead of iterating through all keys
+        const usersData = localStorage.getItem('demo.users');
+        
+        if (!usersData) {
+            console.warn('⚠️ No demo.users found in localStorage');
+            return customers;
         }
 
-        try {
-            const userData = JSON.parse(localStorage.getItem(key));
-            console.log('Parsed data for key:', key);
+        const users = JSON.parse(usersData);
+        
+        if (!Array.isArray(users)) {
+            console.warn('⚠️ demo.users is not an array');
+            return customers;
+        }
 
-            // Check if it's a valid user object (has email or username AND other user properties)
-            if (userData && (userData.email || userData.username) && 
-                (userData.firstName || userData.lastName || userData.shippingAddress)) {
-                
-                console.log('✅ Found valid user:', key);
-                
-                // Calculate total spent from purchasedOrders
-                let totalSpent = 0;
-                if (userData.purchasedOrders && Array.isArray(userData.purchasedOrders)) {
-                    totalSpent = userData.purchasedOrders.reduce((sum, order) => {
-                        return sum + (order.total || 0);
-                    }, 0);
-                }
+        console.log(`Found ${users.length} users in demo.users`);
 
-                // Calculate rank
-                const rank = calculateMemberRank(totalSpent);
+        // Process each user
+        users.forEach((userData, index) => {
+            console.log(`Processing user ${index + 1}:`, userData.username);
 
-                // Create customer object
-                const customer = {
-                    id: key,
-                    name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || userData.username || 'Unknown',
-                    email: userData.email || 'N/A',
-                    phone: userData.shippingAddress?.phone || userData.phone || 'N/A',
-                    orders: userData.purchasedOrders?.length || 0,
-                    spent: totalSpent,
-                    rank: rank,
-                    avatar: userData.avatar || 'assets/images/default-avatar.jpg',
-                    joinDate: userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('vi-VN') : 'N/A'
-                };
-
-                customers.push(customer);
-                console.log('Added customer:', customer);
+            // Calculate total spent from purchasedOrders
+            let totalSpent = 0;
+            if (userData.purchasedOrders && Array.isArray(userData.purchasedOrders)) {
+                totalSpent = userData.purchasedOrders.reduce((sum, order) => {
+                    return sum + (order.total || 0);
+                }, 0);
             }
-        } catch (error) {
-            // Not JSON or invalid data, skip
-            console.log('Skipped key (not valid JSON or user):', key);
-        }
+
+            // Calculate rank
+            const rank = calculateMemberRank(totalSpent);
+
+            // Create customer object
+            const customer = {
+                id: userData.username, // Use username as unique ID
+                name: `${userData.firstName || ''} ${userData.lastName || ''}`.trim() || userData.username || 'Unknown',
+                email: userData.email || 'N/A',
+                phone: userData.shippingAddress?.phone || userData.phone || 'N/A',
+                orders: userData.purchasedOrders?.length || 0,
+                spent: totalSpent,
+                rank: rank,
+                avatar: userData.avatar || 'assets/images/default-avatar.jpg',
+                joinDate: userData.createdAt ? new Date(userData.createdAt).toLocaleDateString('vi-VN') : 'N/A'
+            };
+
+            customers.push(customer);
+            console.log('✅ Added customer:', customer.name, '- Rank:', rank);
+        });
+
+    } catch (error) {
+        console.error('Error loading customers from demo.users:', error);
     }
 
     // Sort by spent (highest first)
@@ -982,10 +1081,15 @@ function populateCustomersTable(filters = {}) {
 }
 
 function viewCustomerDetail(id) {
-    const userData = localStorage.getItem(id);
-    if (userData) {
-        const user = JSON.parse(userData);
-        showToast(`Xem chi tiết khách hàng: ${user.firstName} ${user.lastName}`, 'info');
+    // Load from demo.users using username as id
+    const usersData = localStorage.getItem('demo.users');
+    if (usersData) {
+        const users = JSON.parse(usersData);
+        const user = users.find(u => u.username === id);
+        
+        if (user) {
+            showToast(`Xem chi tiết khách hàng: ${user.firstName} ${user.lastName}`, 'info');
+        }
     }
 }
 
@@ -1299,8 +1403,9 @@ document.getElementById('orderStatusFilter')?.addEventListener('change', (e) => 
 });
 
 document.getElementById('exportOrdersBtn')?.addEventListener('click', () => {
-    showToast('Đang xuất dữ liệu đơn hàng...', 'info');
-    setTimeout(() => showToast('Dữ liệu đã được xuất!', 'success'), 2000);
+    // Change to refresh button functionality
+    refreshDashboardData();
+    showToast('✅ Đã làm mới dữ liệu!', 'success');
 });
 
 // Customers Page Filters
@@ -2480,18 +2585,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ===== START APP =====
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Initialize users first
+        await initializeUsersForAdmin();
+        
+        // Then init dashboard
         initDashboard();
+        
+        // Start auto-refresh
+        startAutoRefresh();
+        
         setTimeout(() => {
             showToast('Chào mừng trở lại, Long! 🎉', 'success');
         }, 1000);
     });
 } else {
-    initDashboard();
-    setTimeout(() => {
-        showToast('Chào mừng trở lại, Long! 🎉', 'success');
-    }, 1000);
+    // Initialize users first, then dashboard
+    initializeUsersForAdmin().then(() => {
+        initDashboard();
+        
+        // Start auto-refresh
+        startAutoRefresh();
+        
+        setTimeout(() => {
+            showToast('Chào mừng trở lại, Long! 🎉', 'success');
+        }, 1000);
+    });
 }
+
+// ===== EXPOSE REFRESH FUNCTION TO GLOBAL SCOPE =====
+// Admin can call refreshDashboard() from browser console to manually refresh
+window.refreshDashboard = refreshDashboardData;
+
+// Log info for admin
+console.log('📊 Admin Dashboard loaded');
+console.log('💡 Tip: Call refreshDashboard() in console to manually refresh data');
+console.log('⏰ Auto-refresh: Every 30 seconds');
 
 // ===== PAGINATION FOR PRODUCTS AND SCREENINGS =====
 const paginationState = {

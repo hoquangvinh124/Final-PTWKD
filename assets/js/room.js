@@ -9,46 +9,88 @@ const chatInput = document.getElementById('chatInput');
 const chatMessages = document.getElementById('chatMessages');
 const backBtn = document.getElementById('backBtn');
 
-// Initialize HLS.js for video streaming
-const videoSrc = 'https://d38fd6uu3uo59n.cloudfront.net/NSFW/titanic/master.m3u8';
+// Load movies and get current playing movie
+let movies = [];
+let currentMovie = null;
 
-if (Hls.isSupported()) {
-  const hls = new Hls({
-    enableWorker: true,
-    lowLatencyMode: true,
-    backBufferLength: 90
-  });
-  
-  hls.loadSource(videoSrc);
-  hls.attachMedia(video);
-  
-  hls.on(Hls.Events.MANIFEST_PARSED, function() {
-    console.log('Video loaded successfully');
-    // Video will autoplay due to autoplay attribute in HTML
-  });
-  
-  hls.on(Hls.Events.ERROR, function(event, data) {
-    if (data.fatal) {
-      switch(data.type) {
-        case Hls.ErrorTypes.NETWORK_ERROR:
-          console.error('Network error, trying to recover...');
-          hls.startLoad();
-          break;
-        case Hls.ErrorTypes.MEDIA_ERROR:
-          console.error('Media error, trying to recover...');
-          hls.recoverMediaError();
-          break;
-        default:
-          console.error('Fatal error, cannot recover');
-          hls.destroy();
-          break;
-      }
-    }
-  });
-} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-  // For Safari which has native HLS support
-  video.src = videoSrc;
+// Function to determine which movie is currently playing
+function getCurrentPlayingMovie() {
+  const now = new Date();
+  const currentHour = now.getHours();
+  const timeSlotIndex = Math.floor(currentHour / 2); // Every 2 hours
+
+  if (movies.length === 0) {
+    return null;
+  }
+
+  // Get movie based on time slot (cycles through all movies)
+  const movieIndex = timeSlotIndex % movies.length;
+  return movies[movieIndex];
 }
+
+// Load movies from JSON and initialize video
+async function loadMoviesAndInitializeVideo() {
+  try {
+    const response = await fetch('movies.json');
+    movies = await response.json();
+
+    currentMovie = getCurrentPlayingMovie();
+
+    if (!currentMovie || !currentMovie.streamUrl) {
+      console.error('No movie stream available');
+      return;
+    }
+
+    const videoSrc = currentMovie.streamUrl;
+    console.log(`Now playing: ${currentMovie.title}`);
+    console.log(`Stream URL: ${videoSrc}`);
+
+    // Initialize HLS.js for video streaming
+    if (Hls.isSupported()) {
+      const hls = new Hls({
+        enableWorker: true,
+        lowLatencyMode: true,
+        backBufferLength: 90
+      });
+
+      hls.loadSource(videoSrc);
+      hls.attachMedia(video);
+
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        console.log('Video loaded successfully');
+        // Video will autoplay due to autoplay attribute in HTML
+      });
+
+      hls.on(Hls.Events.ERROR, function(event, data) {
+        if (data.fatal) {
+          switch(data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              console.error('Network error, trying to recover...');
+              hls.startLoad();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              console.error('Media error, trying to recover...');
+              hls.recoverMediaError();
+              break;
+            default:
+              console.error('Fatal error, cannot recover');
+              hls.destroy();
+              break;
+          }
+        }
+      });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      // For Safari which has native HLS support
+      video.src = videoSrc;
+    }
+
+  } catch (error) {
+    console.error('Error loading movies:', error);
+  }
+}
+
+// Initialize video when page loads
+loadMoviesAndInitializeVideo();
 
 // Open/close chat
 chatToggle.addEventListener('click', () => {
