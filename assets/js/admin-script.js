@@ -2492,3 +2492,314 @@ if (document.readyState === 'loading') {
         showToast('Chào mừng trở lại, Long! 🎉', 'success');
     }, 1000);
 }
+
+// ===== PAGINATION FOR PRODUCTS AND SCREENINGS =====
+const paginationState = {
+    products: {
+        currentPage: 1,
+        itemsPerPage: 10,
+        totalItems: 0,
+        totalPages: 0,
+        filteredData: []
+    },
+    screenings: {
+        currentPage: 1,
+        itemsPerPage: 10,
+        totalItems: 0,
+        totalPages: 0,
+        filteredData: []
+    }
+};
+
+// Update populateProductsTable to support pagination
+const originalPopulateProductsTable = populateProductsTable;
+populateProductsTable = function(filters = {}) {
+    const tbody = document.getElementById('productsTableBody');
+    if (!tbody) return;
+
+    // Use state.products (loaded from JSON) instead of mockProducts
+    let filteredProducts = [...state.products];
+
+    // Apply filters
+    if (filters.search) {
+        filteredProducts = filteredProducts.filter(p =>
+            p.name.toLowerCase().includes(filters.search.toLowerCase())
+        );
+    }
+    if (filters.category && filters.category !== 'all') {
+        filteredProducts = filteredProducts.filter(p =>
+            p.category.toLowerCase() === filters.category.toLowerCase()
+        );
+    }
+    if (filters.stock && filters.stock !== 'all') {
+        filteredProducts = filteredProducts.filter(p => p.status === filters.stock);
+    }
+
+    // Update pagination state
+    paginationState.products.filteredData = filteredProducts;
+    paginationState.products.totalItems = filteredProducts.length;
+    paginationState.products.totalPages = Math.ceil(filteredProducts.length / paginationState.products.itemsPerPage);
+
+    // Get paginated data
+    const startIndex = (paginationState.products.currentPage - 1) * paginationState.products.itemsPerPage;
+    const endIndex = startIndex + paginationState.products.itemsPerPage;
+    const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+    // Render table
+    tbody.innerHTML = paginatedProducts.map(product => `
+        <tr>
+            <td><input type="checkbox" class="product-checkbox" data-id="${product.id}"></td>
+            <td>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${product.image}" alt="${product.name}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.3);" onerror="this.src='assets/images/logo.png'">
+                    <strong style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${product.name}</strong>
+                </div>
+            </td>
+            <td>${product.category}</td>
+            <td><strong>${formatCurrency(product.price)}</strong></td>
+            <td>${product.stock}</td>
+            <td>${product.sold}</td>
+            <td>
+                <span class="status-badge ${product.status}">
+                    ${product.status === 'in-stock' ? 'Còn hàng' : product.status === 'low-stock' ? 'Sắp hết' : 'Hết hàng'}
+                </span>
+            </td>
+            <td>
+                <button class="icon-btn" onclick="editProduct(${product.id})" title="Sửa">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="icon-btn" onclick="deleteProduct(${product.id})" title="Xóa">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+
+    // Update pagination UI
+    updateProductsPagination();
+};
+
+function updateProductsPagination() {
+    const pagination = document.getElementById('productsPagination');
+    const pageButtons = document.getElementById('productsPageButtons');
+    
+    if (!pagination || !pageButtons) return;
+
+    const { currentPage, totalPages } = paginationState.products;
+
+    // Show/hide pagination
+    if (totalPages <= 1) {
+        pagination.classList.remove('show');
+        return;
+    }
+    pagination.classList.add('show');
+
+    // Generate page buttons
+    const maxButtons = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+    if (endPage - startPage + 1 < maxButtons) {
+        startPage = Math.max(1, endPage - maxButtons + 1);
+    }
+
+    let buttonsHTML = '';
+    for (let i = startPage; i <= endPage; i++) {
+        buttonsHTML += `
+            <button class="page-btn ${i === currentPage ? 'is-active' : ''}" 
+                    onclick="goToProductsPage(${i})">
+                ${i}
+            </button>
+        `;
+    }
+    pageButtons.innerHTML = buttonsHTML;
+
+    // Update control buttons
+    document.getElementById('productsFirstPage').disabled = currentPage === 1;
+    document.getElementById('productsPrevPage').disabled = currentPage === 1;
+    document.getElementById('productsNextPage').disabled = currentPage === totalPages;
+    document.getElementById('productsLastPage').disabled = currentPage === totalPages;
+}
+
+function goToProductsPage(page) {
+    paginationState.products.currentPage = page;
+    populateProductsTable();
+    
+    // Scroll to top of table
+    const tableCard = document.querySelector('#products-page .table-card');
+    if (tableCard) {
+        tableCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// Control button handlers for products
+document.addEventListener('DOMContentLoaded', () => {
+    const firstBtn = document.getElementById('productsFirstPage');
+    const prevBtn = document.getElementById('productsPrevPage');
+    const nextBtn = document.getElementById('productsNextPage');
+    const lastBtn = document.getElementById('productsLastPage');
+
+    if (firstBtn) firstBtn.addEventListener('click', () => goToProductsPage(1));
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+        if (paginationState.products.currentPage > 1) {
+            goToProductsPage(paginationState.products.currentPage - 1);
+        }
+    });
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+        if (paginationState.products.currentPage < paginationState.products.totalPages) {
+            goToProductsPage(paginationState.products.currentPage + 1);
+        }
+    });
+    if (lastBtn) lastBtn.addEventListener('click', () => {
+        goToProductsPage(paginationState.products.totalPages);
+    });
+});
+
+// Update populateScreeningsTable to support pagination
+const originalPopulateScreeningsTable = populateScreeningsTable;
+populateScreeningsTable = function(filters = {}) {
+    const tbody = document.getElementById('screeningsTableBody');
+    if (!tbody) return;
+
+    let filteredMovies = [...state.movies];
+
+    // Apply filters
+    if (filters.search) {
+        filteredMovies = filteredMovies.filter(m =>
+            m.title.toLowerCase().includes(filters.search.toLowerCase())
+        );
+    }
+    if (filters.room && filters.room !== 'all') {
+        // Room filter logic if needed
+    }
+
+    // Update pagination state
+    paginationState.screenings.filteredData = filteredMovies;
+    paginationState.screenings.totalItems = filteredMovies.length;
+    paginationState.screenings.totalPages = Math.ceil(filteredMovies.length / paginationState.screenings.itemsPerPage);
+
+    // Get paginated data
+    const startIndex = (paginationState.screenings.currentPage - 1) * paginationState.screenings.itemsPerPage;
+    const endIndex = startIndex + paginationState.screenings.itemsPerPage;
+    const paginatedMovies = filteredMovies.slice(startIndex, endIndex);
+
+    // Render table
+    tbody.innerHTML = paginatedMovies.map(movie => `
+        <tr>
+            <td>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <img src="${movie.posterUrl}" alt="${movie.title}" 
+                         style="width: 50px; height: 70px; object-fit: cover; border-radius: 6px;"
+                         onerror="this.src='assets/images/logo.png'">
+                    <div>
+                        <strong style="display: block; margin-bottom: 4px;">${movie.title}</strong>
+                        <span style="color: rgba(255,255,255,0.6); font-size: 0.9em;">${movie.year}</span>
+                    </div>
+                </div>
+            </td>
+            <td>${movie.director}</td>
+            <td>${movie.duration} phút</td>
+            <td>
+                <div style="display: flex; align-items: center; gap: 6px;">
+                    <i class="fas fa-star" style="color: #ffc107;"></i>
+                    <span>${movie.rating}/10</span>
+                </div>
+            </td>
+            <td>
+                <span class="status-badge ${movie.status || 'in-stock'}">
+                    ${movie.status === 'playing' ? 'Đang chiếu' : movie.status === 'scheduled' ? 'Sắp chiếu' : 'Kết thúc'}
+                </span>
+            </td>
+            <td>
+                <button class="icon-btn" onclick="viewMovie(${movie.id})" title="Xem">
+                    <i class="fas fa-eye"></i>
+                </button>
+                <button class="icon-btn" onclick="editMovie(${movie.id})" title="Sửa">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="icon-btn" onclick="deleteMovie(${movie.id})" title="Xóa">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+
+    // Update pagination UI
+    updateScreeningsPagination();
+};
+
+function updateScreeningsPagination() {
+    const pagination = document.getElementById('screeningsPagination');
+    const pageButtons = document.getElementById('screeningsPageButtons');
+    
+    if (!pagination || !pageButtons) return;
+
+    const { currentPage, totalPages } = paginationState.screenings;
+
+    // Show/hide pagination
+    if (totalPages <= 1) {
+        pagination.classList.remove('show');
+        return;
+    }
+    pagination.classList.add('show');
+
+    // Generate page buttons
+    const maxButtons = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+
+    if (endPage - startPage + 1 < maxButtons) {
+        startPage = Math.max(1, endPage - maxButtons + 1);
+    }
+
+    let buttonsHTML = '';
+    for (let i = startPage; i <= endPage; i++) {
+        buttonsHTML += `
+            <button class="page-btn ${i === currentPage ? 'is-active' : ''}" 
+                    onclick="goToScreeningsPage(${i})">
+                ${i}
+            </button>
+        `;
+    }
+    pageButtons.innerHTML = buttonsHTML;
+
+    // Update control buttons
+    document.getElementById('screeningsFirstPage').disabled = currentPage === 1;
+    document.getElementById('screeningsPrevPage').disabled = currentPage === 1;
+    document.getElementById('screeningsNextPage').disabled = currentPage === totalPages;
+    document.getElementById('screeningsLastPage').disabled = currentPage === totalPages;
+}
+
+function goToScreeningsPage(page) {
+    paginationState.screenings.currentPage = page;
+    populateScreeningsTable();
+    
+    // Scroll to top of table
+    const tableCard = document.querySelector('#screenings-page .table-card');
+    if (tableCard) {
+        tableCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
+
+// Control button handlers for screenings
+document.addEventListener('DOMContentLoaded', () => {
+    const firstBtn = document.getElementById('screeningsFirstPage');
+    const prevBtn = document.getElementById('screeningsPrevPage');
+    const nextBtn = document.getElementById('screeningsNextPage');
+    const lastBtn = document.getElementById('screeningsLastPage');
+
+    if (firstBtn) firstBtn.addEventListener('click', () => goToScreeningsPage(1));
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+        if (paginationState.screenings.currentPage > 1) {
+            goToScreeningsPage(paginationState.screenings.currentPage - 1);
+        }
+    });
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+        if (paginationState.screenings.currentPage < paginationState.screenings.totalPages) {
+            goToScreeningsPage(paginationState.screenings.currentPage + 1);
+        }
+    });
+    if (lastBtn) lastBtn.addEventListener('click', () => {
+        goToScreeningsPage(paginationState.screenings.totalPages);
+    });
+});
