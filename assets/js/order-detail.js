@@ -94,7 +94,7 @@ async function renderOrderDetails() {
     </div>
     <div class="order-info-item">
       <div class="order-info-label">Payment Method</div>
-      <div class="order-info-value">${order.payment.method || 'Credit/Debit Card'}</div>
+      <div class="order-info-value">${order.payment.method || 'Cash on Delivery (COD)'}</div>
     </div>
     <div class="order-info-item">
       <div class="order-info-label">Shipping Method</div>

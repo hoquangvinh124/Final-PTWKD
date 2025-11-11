@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Oldiezone - Welcome Aboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f2efe9;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #2f2528;
+      }
+      .wrapper {
+        width: 100%;
+        padding: 32px 0;
+      }
+      .container {
+        max-width: 640px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(59, 20, 28, 0.08);
+        box-shadow: 0 26px 58px rgba(59, 20, 28, 0.12);
+      }
+      .hero {
+        position: relative;
+        text-align: center;
+        padding: 44px 32px 36px;
+        background: #000000;
+        color: #fff8ee;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 16px;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        pointer-events: none;
+      }
+      .brand {
+        margin-bottom: 26px;
+        position: relative;
+        z-index: 1;
+      }
+      .brand img {
+        display: block;
+        margin: 0 auto;
+        max-width: 170px;
+        width: 100%;
+        height: auto;
+        filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.32));
+      }
+      .hero h1 {
+        position: relative;
+        z-index: 1;
+        margin: 0 0 14px;
+        font-size: 32px;
+        letter-spacing: 0.6px;
+      }
+      .hero p {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        font-size: 16px;
+        color: rgba(255, 248, 238, 0.85);
+      }
+      .content {
+        padding: 36px 42px 28px;
+        background: linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
+        line-height: 1.7;
+        font-size: 16px;
+      }
+      .content h2 {
+        margin: 0 0 18px;
+        font-size: 22px;
+        color: #3b141c;
+      }
+      .cta {
+        display: inline-block;
+        margin: 30px 0 8px;
+        padding: 16px 38px;
+        border-radius: 999px;
+        background: linear-gradient(120deg, #3b141c, #f3961c);
+        color: #fff6eb;
+        text-decoration: none;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        box-shadow: 0 18px 36px rgba(59, 20, 28, 0.28);
+      }
+      .footer {
+        padding: 20px 36px 34px;
+        font-size: 13px;
+        text-align: center;
+        color: #8d787d;
+        background: #ffffff;
+      }
+      .footer p {
+        margin: 0;
+      }
+      .socials {
+        margin: 18px 0;
+      }
+      .socials a {
+        display: inline-block;
+        margin: 0 6px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 50%;
+        background: rgba(59, 20, 28, 0.08);
+        color: #3b141c;
+        font-size: 14px;
+        text-decoration: none;
+      }
+      @media screen and (max-width: 680px) {
+        .container {
+          margin: 0 16px;
+        }
+        .hero {
+          padding: 38px 24px 30px;
+        }
+        .content {
+          padding: 30px 26px 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <table role="presentation" class="wrapper" width="100%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+          <table role="presentation" class="container" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td class="hero">
+                <div class="brand">
+                  <img src="https://res.cloudinary.com/dnsreukjc/image/upload/v1761124007/logodaxoaphong2_iyjbwb.png" alt="Oldiezone" />
+                </div>
+                <h1>Welcome to Oldiezone</h1>
+              </td>
+            </tr>
+            <tr>
+              <td class="content">
+                <h2>Hi {{customer_name}},</h2>
+                <p>
+                  Thank you for opening an account with <strong>Oldiezone</strong>. We are delighted to welcome you into our community of retro lovers.
+                </p>
+                <p>
+                  Your profile is ready, our shelves are stocked, and we hope every visit brings you a little joy. May you have a wonderful time shopping for vintage gems with us.
+                </p>
+                <p>
+                  Take a look around, have fun shopping, and if you ever need a hand, just drop us a message at <strong>support@oldiezone.com</strong> and we will be glad to help.
+                </p>
+                <a class="cta" href="https://oldiezone.s3.ap-southeast-2.amazonaws.com/main-web/audio-products.html" target="_blank">Start shopping</a>
+              </td>
+            </tr>
+            <tr>
+              <td class="footer">
+                <p>Oldiezone • UEL, Ho Chi Minh City</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

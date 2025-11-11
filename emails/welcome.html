@@ -4,304 +4,129 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Welcome to Oldiezone</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #0a0a0a;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      color: #e5e5e5;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-    .email-wrapper {
-      width: 100%;
-      background-color: #0a0a0a;
-      padding: 20px 0;
-    }
-    .email-container {
-      max-width: 600px;
-      margin: 0 auto;
-      background: rgba(20, 20, 20, 0.95);
-      backdrop-filter: blur(20px);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .email-header {
-      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-      color: #ffffff;
-      padding: 40px 40px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255, 179, 71, 0.2);
-      position: relative;
-    }
-    .email-header::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 179, 71, 0.5), transparent);
-    }
-    .email-header img {
-      max-width: 180px;
-      height: auto;
-      margin-bottom: 0;
-      filter: brightness(1.1) contrast(1.1);
-    }
-    .email-body {
-      padding: 40px 40px;
-      background: transparent;
-    }
-    .welcome-title {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: #ffffff;
-      text-align: center;
-      letter-spacing: -0.5px;
-    }
-    .welcome-message {
-      font-size: 15px;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 18px;
-      line-height: 1.7;
-      text-align: center;
-      font-weight: 400;
-    }
-    .welcome-message strong {
-      color: #ffb347;
-    }
-    .feature-grid {
-      display: table;
-      width: 100%;
-      margin: 30px 0;
-    }
-    .feature-row {
-      display: table-row;
-    }
-    .feature-item {
-      display: table-cell;
-      width: 33.33%;
-      padding: 20px 15px;
-      text-align: center;
-      vertical-align: top;
-    }
-    .feature-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 15px;
-      background: rgba(30, 30, 30, 0.6);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 179, 71, 0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-    .feature-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #ffb347;
-      margin-bottom: 8px;
-      letter-spacing: -0.2px;
-    }
-    .feature-description {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.6);
-      line-height: 1.5;
-      font-weight: 400;
-    }
-    .info-box {
-      background: rgba(30, 30, 30, 0.6);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      padding: 25px;
-      margin: 25px 0;
-      text-align: center;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-    }
-    .info-box h3 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #ffb347;
-      margin-bottom: 12px;
-      letter-spacing: -0.3px;
-    }
-    .info-box p {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.8);
-      line-height: 1.6;
-      margin: 0;
-      font-weight: 400;
-    }
-    .info-box p strong {
-      color: #ffb347;
-    }
-    .button-container {
-      text-align: center;
-      margin: 30px 0 20px;
-    }
-    .button {
-      display: inline-block;
-      background: linear-gradient(135deg, #ffb347 0%, #ff8c42 100%);
-      color: #ffffff;
-      padding: 14px 40px;
-      border-radius: 25px;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      letter-spacing: 0.3px;
-      box-shadow: 0 6px 20px rgba(255, 179, 71, 0.25);
-    }
-    .email-footer {
-      background: rgba(15, 15, 15, 0.8);
-      backdrop-filter: blur(10px);
-      padding: 25px 40px;
-      text-align: center;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    .email-footer p {
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.5);
-      margin: 5px 0;
-      line-height: 1.6;
-    }
-
-    /* Mobile Responsive */
-    @media only screen and (max-width: 600px) {
-      .email-wrapper {
-        padding: 10px 0;
-      }
-      .email-container {
-        border-radius: 0;
-        margin: 0;
-      }
-      .email-header {
-        padding: 30px 20px;
-      }
-      .email-header img {
-        max-width: 150px;
-      }
-      .email-body {
-        padding: 30px 20px;
-      }
-      .welcome-title {
-        font-size: 22px;
-      }
-      .welcome-message {
-        font-size: 14px;
-      }
-      .feature-grid {
-        display: block;
-      }
-      .feature-row {
-        display: block;
-      }
-      .feature-item {
-        display: block;
-        width: 100%;
-        padding: 20px 10px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-      .feature-item:last-child {
-        border-bottom: none;
-      }
-      .info-box {
-        padding: 20px 15px;
-      }
-      .info-box h3 {
-        font-size: 16px;
-      }
-      .button {
-        display: block;
-        width: 100%;
-        padding: 16px 20px;
-      }
-      .email-footer {
-        padding: 20px 20px;
-      }
-    }
-  </style>
 </head>
-<body>
-  <div class="email-wrapper">
-    <div class="email-container">
-      <!-- Header -->
-      <div class="email-header">
-        <img src="https://res.cloudinary.com/dnsreukjc/image/upload/v1761124007/logodaxoaphong2_iyjbwb.png" alt="Oldiezone">
-      </div>
+<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff;">
+    <tr>
+      <td align="center" style="padding: 20px 0;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; background-color: rgba(20, 20, 20, 0.95); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 255, 255, 0.05);">
+          
+          <!-- Header -->
+          <tr>
+            <td align="center" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 40px 20px; border-bottom: 2px solid rgba(255, 179, 71, 0.2);">
+              <img src="https://oldiezone.studio/assets/images/logodaxoaphong2.png" alt="Oldiezone" width="180" style="display: block; max-width: 180px; height: auto;">
+            </td>
+          </tr>
 
-      <!-- Body -->
-      <div class="email-body">
-        <h1 class="welcome-title">Welcome to Oldiezone!</h1>
+          <!-- Body -->
+          <tr>
+            <td style="padding: 40px 30px; background-color: rgba(20, 20, 20, 0.95);">
+              
+              <!-- Welcome Title -->
+              <h1 style="margin: 0 0 20px; font-size: 26px; font-weight: 700; color: #ffffff; text-align: center; letter-spacing: -0.5px;">Welcome to Oldiezone!</h1>
 
-        <p class="welcome-message">
-          Hi <strong>{{customer_name}}</strong>,
-        </p>
+              <!-- Greeting -->
+              <p style="margin: 0 0 15px; font-size: 15px; color: rgba(255, 255, 255, 0.8); text-align: center; line-height: 1.7;">
+                Hi <strong style="color: #ffb347;">{{{customer_name}}}</strong>,
+              </p>
 
-        <p class="welcome-message">
-          Thank you for joining <strong>Oldiezone</strong>! We're excited to have you as part of our community of retro enthusiasts. Your account is now ready, and you can start exploring our collection of vintage treasures.
-        </p>
+              <!-- Message -->
+              <p style="margin: 0 0 30px; font-size: 15px; color: rgba(255, 255, 255, 0.8); text-align: center; line-height: 1.7;">
+                Thank you for joining <strong style="color: #ffb347;">Oldiezone</strong>! We're excited to have you as part of our community of retro enthusiasts. Your account is now ready, and you can start exploring our collection of vintage treasures.
+              </p>
 
-        <!-- Features -->
-        <div class="feature-grid">
-          <div class="feature-row">
-            <div class="feature-item">
-              <div class="feature-icon">📀</div>
-              <div class="feature-title">Vintage Collection</div>
-              <div class="feature-description">Browse rare vinyl, cassettes, VHS tapes and more</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon">🎬</div>
-              <div class="feature-title">Retro Cinema</div>
-              <div class="feature-description">Book free classic movie screenings</div>
-            </div>
-            <div class="feature-item">
-              <div class="feature-icon">🛒</div>
-              <div class="feature-title">Easy Shopping</div>
-              <div class="feature-description">Secure checkout & fast delivery</div>
-            </div>
-          </div>
-        </div>
+              <!-- Features -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 30px 0;">
+                <tr>
+                  <!-- Feature 1 -->
+                  <td width="33.33%" align="center" valign="top" style="padding: 15px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td align="center" style="padding-bottom: 15px; font-size: 48px; line-height: 1;">
+                          💿
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center">
+                          <p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #ffb347;">Vintage Collection</p>
+                          <p style="margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.6); line-height: 1.5;">Browse rare vinyl, cassettes, VHS tapes</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
 
-        <!-- Info Box -->
-        <div class="info-box">
-          <h3>Need Help?</h3>
-          <p>
-            Our team is here to assist you. If you have any questions or need support, feel free to reach out to us at <strong>support@oldiezone.com</strong>. Happy shopping!
-          </p>
-        </div>
+                  <!-- Feature 2 -->
+                  <td width="33.33%" align="center" valign="top" style="padding: 15px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td align="center" style="padding-bottom: 15px; font-size: 48px; line-height: 1;">
+                          🎞️
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center">
+                          <p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #ffb347;">Retro Cinema</p>
+                          <p style="margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.6); line-height: 1.5;">Book free classic movie screenings</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
 
-        <!-- CTA Button -->
-        <div class="button-container">
-          <a href="https://oldiezone.studio" class="button">Start Shopping</a>
-        </div>
-      </div>
+                  <!-- Feature 3 -->
+                  <td width="33.33%" align="center" valign="top" style="padding: 15px;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td align="center" style="padding-bottom: 15px; font-size: 48px; line-height: 1;">
+                          🛍️
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="center">
+                          <p style="margin: 0 0 8px; font-size: 15px; font-weight: 600; color: #ffb347;">Easy Shopping</p>
+                          <p style="margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.6); line-height: 1.5;">Secure checkout & fast delivery</p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
 
-      <!-- Footer -->
-      <div class="email-footer">
-        <p><strong>Oldiezone</strong></p>
-        <p>UEL, Ho Chi Minh City</p>
-        <p>Questions? Email us at support@oldiezone.com</p>
-      </div>
-    </div>
-  </div>
+              <!-- Info Box -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 25px 0;">
+                <tr>
+                  <td style="background-color: rgba(30, 30, 30, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 25px;">
+                    <p style="margin: 0 0 10px; font-size: 18px; font-weight: 600; color: #ffb347; text-align: center;">Need Help?</p>
+                    <p style="margin: 0; font-size: 14px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; text-align: center;">
+                      Our team is here to assist you. If you have any questions or need support, feel free to reach out to us at <strong style="color: #ffb347;">support@oldiezone.com</strong>. Happy shopping!
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA Button -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin: 30px 0 20px;">
+                <tr>
+                  <td align="center">
+                    <a href="https://oldiezone.studio" style="display: inline-block; background: linear-gradient(135deg, #ffb347 0%, #ff8c42 100%); color: #ffffff; padding: 14px 40px; border-radius: 25px; font-size: 15px; font-weight: 600; text-decoration: none; box-shadow: 0 6px 20px rgba(255, 179, 71, 0.25);">Start Shopping</a>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: rgba(15, 15, 15, 0.8); padding: 25px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+              <p style="margin: 0 0 5px; font-size: 13px; color: rgba(255, 255, 255, 0.5);"><strong style="color: #ccc;">Oldiezone</strong></p>
+              <p style="margin: 0 0 5px; font-size: 13px; color: rgba(255, 255, 255, 0.5);">UEL, Ho Chi Minh City</p>
+              <p style="margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.5);">Questions? Email us at support@oldiezone.com</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
 </body>
 </html>

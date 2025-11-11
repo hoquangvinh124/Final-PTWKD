@@ -13,7 +13,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #0a0a0a;
+      background-color: #ffffff;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       color: #e5e5e5;
       line-height: 1.6;
@@ -26,14 +26,13 @@
     }
     .email-wrapper {
       width: 100%;
-      background-color: #0a0a0a;
+      background-color: #ffffff;
       padding: 20px 0;
     }
     .email-container {
       max-width: 600px;
       margin: 0 auto;
       background: rgba(20, 20, 20, 0.95);
-      backdrop-filter: blur(20px);
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -344,12 +343,12 @@
       <div class="email-header">
         <img src="https://res.cloudinary.com/dnsreukjc/image/upload/v1761124007/logodaxoaphong2_iyjbwb.png" alt="Oldiezone">
         <h1>Order Confirmed</h1>
-        <p>Order #{{order_number}}</p>
+        <p>Order #{{{order_number}}}</p>
       </div>
 
       <!-- Body -->
       <div class="email-body">
-        <div class="greeting">Hello {{customer_name}},</div>
+        <div class="greeting">Hello {{{customer_name}}},</div>
         <p class="message">
           Thank you for your order at Oldiezone! We have received your order and are preparing your items for shipment. You will receive a notification once your package is on its way.
         </p>
@@ -357,36 +356,36 @@
         <!-- Order Items -->
         <div class="info-card">
           <h2>Order Details</h2>
-          {{#each items}}
+          {{{#each items}}}
           <div class="order-item">
             <div class="item-image">
-              <img src="{{this.image}}" alt="{{this.name}}">
+              <img src="{{{this.image}}}" alt="{{{this.name}}}">
             </div>
             <div class="item-details">
-              <div class="item-name">{{this.name}}</div>
-              <div class="item-meta">Variant: {{this.variant}} • Quantity: {{this.quantity}}</div>
-              <div class="item-price">{{this.price}}</div>
+              <div class="item-name">{{{this.name}}}</div>
+              <div class="item-meta">Variant: {{{this.variant}}} • Quantity: {{{this.quantity}}}</div>
+              <div class="item-price">{{{this.price}}}</div>
             </div>
           </div>
-          {{/each}}
+          {{{/each}}}
 
           <!-- Order Summary -->
           <div class="order-summary">
             <div class="summary-row">
               <div class="summary-label">Subtotal</div>
-              <div class="summary-value">{{subtotal}}</div>
+              <div class="summary-value">{{{subtotal}}}</div>
             </div>
             <div class="summary-row">
               <div class="summary-label">Shipping Fee</div>
-              <div class="summary-value">{{shipping_fee}}</div>
+              <div class="summary-value">{{{shipping_fee}}}</div>
             </div>
             <div class="summary-row">
               <div class="summary-label">Discount</div>
-              <div class="summary-value">-{{discount}}</div>
+              <div class="summary-value">-{{{discount}}}</div>
             </div>
             <div class="summary-row summary-total">
               <div class="summary-label">Total</div>
-              <div class="summary-value">{{grand_total}}</div>
+              <div class="summary-value">{{{grand_total}}}</div>
             </div>
           </div>
         </div>
@@ -396,13 +395,13 @@
           <div class="address-col">
             <div class="address-block">
               <h3>Shipping Address</h3>
-              <p>{{shipping_name}}<br>{{shipping_address}}<br>{{shipping_phone}}</p>
+              <p>{{{shipping_name}}}<br>{{{shipping_address}}}<br>{{{shipping_phone}}}</p>
             </div>
           </div>
           <div class="address-col">
             <div class="address-block">
               <h3>Payment Method</h3>
-              <p>{{payment_method}}<br>Status: {{payment_status}}</p>
+              <p>{{{payment_method}}}<br>Status: {{{payment_status}}}</p>
             </div>
           </div>
         </div>

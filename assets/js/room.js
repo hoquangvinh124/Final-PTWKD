@@ -7,6 +7,7 @@ const chatBox = document.getElementById('chatBox');
 const sendBtn = document.getElementById('sendBtn');
 const chatInput = document.getElementById('chatInput');
 const chatMessages = document.getElementById('chatMessages');
+const backBtn = document.getElementById('backBtn');
 
 // Initialize HLS.js for video streaming
 const videoSrc = 'https://d38fd6uu3uo59n.cloudfront.net/NSFW/titanic/master.m3u8';
@@ -86,4 +87,9 @@ chatInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     sendMessage();
   }
+});
+
+// Back button - go to previous page
+backBtn.addEventListener('click', () => {
+  window.history.back();
 });

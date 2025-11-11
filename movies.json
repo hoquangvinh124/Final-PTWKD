@@ -67,68 +67,68 @@
   },
   {
     "id": 7,
-    "title": "THE MATRIX",
-    "poster": "assets/images/film VHS/matrix.png",
-    "year": 1999,
-    "director": "The Wachowskis",
-    "description": "A hacker discovers the true nature of reality and joins a rebellion against machines.",
-    "duration": 120,
-    "genre": "Sci-Fi, Action",
-    "rating": "R"
-  },
-  {
+    "title": "The Lord of the Rings",
+    "poster": "assets/images/film VHS/thelordoftherings.png",
+    "year": 2001,
+    "director": "Peter Jackson",
+    "description": "A young hobbit embarks on a perilous journey to destroy a powerful ring and save Middle-earth.",
+    "duration": 178,
+    "genre": "Fantasy, Adventure",
+    "rating": "PG-13"
+},
+{
     "id": 8,
-    "title": "JURASSIC PARK",
-    "poster": "assets/images/film VHS/jurassic.png",
-    "year": 1993,
-    "director": "Steven Spielberg",
-    "description": "A theme park with cloned dinosaurs goes terribly wrong when the creatures escape.",
-    "duration": 120,
-    "genre": "Adventure, Sci-Fi",
-    "rating": "PG-13"
-  },
-  {
-    "id": 9,
-    "title": "HOME ALONE",
-    "poster": "assets/images/film VHS/homealone.png",
-    "year": 1990,
-    "director": "Chris Columbus",
-    "description": "An eight-year-old boy must defend his home from burglars after being left behind by his family.",
-    "duration": 120,
-    "genre": "Comedy, Family",
-    "rating": "PG"
-  },
-  {
-    "id": 10,
-    "title": "FORREST GUMP",
-    "poster": "assets/images/film VHS/forrestgump.png",
-    "year": 1994,
-    "director": "Robert Zemeckis",
-    "description": "The life story of a simple man who witnesses and influences major historical events.",
-    "duration": 120,
-    "genre": "Drama, Romance",
-    "rating": "PG-13"
-  },
-  {
-    "id": 11,
-    "title": "INDEPENDENCE DAY",
-    "poster": "assets/images/film VHS/independence.png",
+    "title": "DragonHeart",
+    "poster": "assets/images/film VHS/dragonheart.png",
     "year": 1996,
-    "director": "Roland Emmerich",
-    "description": "Earth unites to fight back against an alien invasion on July 4th.",
-    "duration": 120,
-    "genre": "Action, Sci-Fi",
+    "director": "Rob Cohen",
+    "description": "A disillusioned knight teams up with the last living dragon to stop a tyrant king.",
+    "duration": 103,
+    "genre": "Fantasy, Adventure",
     "rating": "PG-13"
-  },
-  {
+},
+{
+    "id": 9,
+    "title": "Apollo 13",
+    "poster": "assets/images/film VHS/apollo13.png",
+    "year": 1995,
+    "director": "Ron Howard",
+    "description": "The true story of NASA's ill-fated Apollo 13 mission and the astronauts' struggle to return home.",
+    "duration": 140,
+    "genre": "Drama, History",
+    "rating": "PG"
+},
+{
+    "id": 10,
+    "title": "Finding Nemo",
+    "poster": "assets/images/film VHS/findingnemo.png",
+    "year": 2003,
+    "director": "Andrew Stanton",
+    "description": "A timid clownfish sets out on a daring adventure to rescue his son who has been captured by divers.",
+    "duration": 100,
+    "genre": "Animation, Adventure, Comedy",
+    "rating": "G"
+},
+{
+    "id": 11,
+    "title": "Star Wars: Episode I – The Phantom Menace",
+    "poster": "assets/images/film VHS/starwars1.png",
+    "year": 1999,
+    "director": "George Lucas",
+    "description": "Two Jedi knights discover a young boy who may be the chosen one to bring balance to the Force.",
+    "duration": 136,
+    "genre": "Action, Adventure, Sci-Fi",
+    "rating": "PG"
+},
+{
     "id": 12,
-    "title": "THE MASK",
-    "poster": "assets/images/film VHS/mask.png",
-    "year": 1994,
-    "director": "Chuck Russell",
-    "description": "A bank clerk discovers a magical mask that transforms him into a mischievous superhero.",
-    "duration": 120,
-    "genre": "Comedy, Fantasy",
+    "title": "Lara Croft: Tomb Raider",
+    "poster": "assets/images/film VHS/laracroft.png",
+    "year": 2001,
+    "director": "Simon West",
+    "description": "Adventurer Lara Croft races against time and villains to recover powerful ancient artifacts.",
+    "duration": 100,
+    "genre": "Action, Adventure, Fantasy",
     "rating": "PG-13"
-  }
+}
 ]

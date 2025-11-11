@@ -31,8 +31,8 @@ let currentStep = 1;
 let orderData = {
   customer: {},
   products: [],
-  shipping: { type: 'standard', price: 9.99 },
-  payment: { type: 'card' },
+  shipping: { type: 'standard', price: 9000 },
+  payment: { type: 'cod' },  
   taxRate: 0
 };
 
@@ -575,7 +575,7 @@ async function completeOrder() {
 
   setTimeout(() => {
     loadingScreen.classList.remove('active');
-    const orderId = `#LDIE${new Date().getFullYear()}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
+    const orderId = `LDIE${new Date().getFullYear()}${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
     document.getElementById('orderId').textContent = orderId;
 
     // Store email data with order ID
@@ -604,9 +604,9 @@ async function completeOrder() {
       };
 
       const paymentMethods = {
-        'card': 'Credit/Debit Card',
-        'paypal': 'PayPal',
-        'giftcard': 'Gift Card'
+        'cod': 'Cash on Delivery (COD)',
+        'banking': 'Internet Banking',
+        'momo': 'MoMo e-Wallet'
       };
 
       // Map products with accurate data from product.json
@@ -652,7 +652,7 @@ async function completeOrder() {
         },
         payment: {
           type: orderData.payment.type,
-          method: paymentMethods[orderData.payment.type] || 'Credit/Debit Card'
+          method: paymentMethods[orderData.payment.type] || 'Cash on Delivery (COD)'
         },
         subtotal: subtotal,
         shippingCost: shipping,
@@ -678,13 +678,13 @@ function prepareEmailData() {
   emailData.shipping_address = `${orderData.customer.address}, ${orderData.customer.city}`;
   emailData.shipping_phone = orderData.customer.phone;
   
-  // Payment information
+  // Payment information - Updated mapping for new payment options
   const paymentMethods = {
-    'card': 'Credit/Debit Card',
-    'paypal': 'PayPal',
-    'giftcard': 'Gift Card'
+    'cod': 'Cash on Delivery (COD)',
+    'banking': 'Internet Banking',
+    'momo': 'MoMo e-Wallet'
   };
-  emailData.payment_method = paymentMethods[orderData.payment.type] || 'Credit/Debit Card';
+  emailData.payment_method = paymentMethods[orderData.payment.type] || 'Cash on Delivery (COD)';
   emailData.payment_status = 'Confirmed';
   
   // Product items for email

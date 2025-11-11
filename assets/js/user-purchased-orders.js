@@ -75,7 +75,7 @@ function renderOrders() {
             </div>
             <div class="order-info-row">
               <span class="order-info-label">Payment:</span>
-              <span class="order-info-value">${order.payment.method || 'Credit/Debit Card'}</span>
+              <span class="order-info-value">${order.payment.method || 'Cash on Delivery (COD)'}</span>
             </div>
             <div class="order-info-row">
               <span class="order-info-label">Address:</span>

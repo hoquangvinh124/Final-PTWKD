@@ -13,7 +13,7 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #0a0a0a;
+      background-color: #ffffff;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       color: #e5e5e5;
       line-height: 1.6;
@@ -25,14 +25,13 @@
     }
     .email-wrapper {
       width: 100%;
-      background-color: #0a0a0a;
+      background-color: #ffffff;
       padding: 20px 0;
     }
     .email-container {
       max-width: 600px;
       margin: 0 auto;
       background: rgba(20, 20, 20, 0.95);
-      backdrop-filter: blur(20px);
       border-radius: 16px;
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
@@ -313,29 +312,36 @@
     <div class="email-container">
       <!-- Header -->
       <div class="email-header">
-        <img src="{{logo_url}}" alt="Oldiezone">
+        <img src="{{{logo_url}}}" alt="Oldiezone">
         <h1>Screening Confirmed</h1>
         <p>Your movie ticket is ready</p>
       </div>
 
       <!-- Body -->
       <div class="email-body">
-        <div class="greeting">Hello {{customer_name}},</div>
+        <div class="greeting">Hello {{{customer_name}}},</div>
         <p class="message">
           Your screening reservation at Oldiezone Cinema has been confirmed! Please arrive 15 minutes before showtime for check-in.
         </p>
 
         <!-- Ticket Card -->
         <div class="ticket-card">
-          <img src="{{poster_url}}" alt="{{movie_title}}" class="movie-poster">
+          <img src="{{{poster_url}}}" alt="{{{movie_title}}}" class="movie-poster">
 
-          <div class="movie-title">{{movie_title}}</div>
-          <div class="screening-time">{{screening_time_range}}</div>
+          <div class="movie-title">{{{movie_title}}}</div>
+          <div class="screening-time">{{{screening_time_range}}}</div>
+
+          <!-- Date & Time Highlight -->
+          <div class="datetime-highlight">
+            <div class="datetime-icon">🎬</div>
+            <div class="datetime-label">Screening Date & Time</div>
+            <div class="datetime-value">{{{screening_datetime}}}</div>
+          </div>
 
           <!-- Ticket Code -->
           <div class="ticket-code">
             <div class="ticket-code-label">Your Ticket Code</div>
-            <div class="ticket-code-value">{{ticket_code}}</div>
+            <div class="ticket-code-value">{{{ticket_code}}}</div>
           </div>
         </div>
 

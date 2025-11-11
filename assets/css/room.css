@@ -189,3 +189,35 @@ body {
   background: #f6d28a;
 }
 
+/* ===== Back Button ===== */
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(30, 15, 15, 0.85);
+  border: 2px solid #d4a373;
+  color: #f6d28a;
+  font-size: 16px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  z-index: 9999;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-button:hover {
+  transform: scale(1.05);
+  background: rgba(50, 25, 25, 0.9);
+  box-shadow: 0 0 15px rgba(212, 163, 115, 0.4);
+}
+
+.back-button i {
+  font-size: 18px;
+}
+
