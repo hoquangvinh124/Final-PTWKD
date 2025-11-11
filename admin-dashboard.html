@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <link rel="stylesheet" href="assets/css/admin-style.css">
+    <link rel="stylesheet" href="assets/css/product-pagination.css">
 </head>
 <body>
     <!-- Sidebar -->
@@ -327,6 +328,25 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <!-- Pagination -->
+                <div class="product-pagination-container">
+                    <div class="product-pagination" id="productsPagination">
+                        <button class="page-btn page-control" id="productsFirstPage" title="First page">
+                            «
+                        </button>
+                        <button class="page-btn page-control" id="productsPrevPage" title="Previous page">
+                            ‹
+                        </button>
+                        <div id="productsPageButtons"></div>
+                        <button class="page-btn page-control" id="productsNextPage" title="Next page">
+                            ›
+                        </button>
+                        <button class="page-btn page-control" id="productsLastPage" title="Last page">
+                            »
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -590,6 +610,25 @@
                             <!-- Will be populated by JS -->
                         </tbody>
                     </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="product-pagination-container">
+                    <div class="product-pagination" id="screeningsPagination">
+                        <button class="page-btn page-control" id="screeningsFirstPage" title="First page">
+                            «
+                        </button>
+                        <button class="page-btn page-control" id="screeningsPrevPage" title="Previous page">
+                            ‹
+                        </button>
+                        <div id="screeningsPageButtons"></div>
+                        <button class="page-btn page-control" id="screeningsNextPage" title="Next page">
+                            ›
+                        </button>
+                        <button class="page-btn page-control" id="screeningsLastPage" title="Last page">
+                            »
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
