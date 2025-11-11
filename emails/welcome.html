@@ -192,17 +192,17 @@
       .email-container {
         border-radius: 0;
         margin: 0;
-        font-size: 16px;
-        color: rgba(255, 248, 238, 0.85);
       }
-      .content {
-        padding: 36px 42px 28px;
-        background: linear-gradient(180deg, #ffffff 0%, #fffaf1 100%);
-        line-height: 1.7;
-        font-size: 16px;
+      .email-header {
+        padding: 30px 20px;
       }
-      .content h2 {
-        margin: 0 0 18px;
+      .email-header img {
+        max-width: 150px;
+      }
+      .email-body {
+        padding: 30px 20px;
+      }
+      .welcome-title {
         font-size: 22px;
       }
       .welcome-message {
@@ -211,43 +211,97 @@
       .feature-grid {
         display: block;
       }
-    </style>
-  </head>
-  <body>
-    <table role="presentation" class="wrapper" width="100%" cellspacing="0" cellpadding="0">
-      <tr>
-        <td>
-          <table role="presentation" class="container" width="100%" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="hero">
-                <div class="brand">
-                  <img src="https://res.cloudinary.com/dnsreukjc/image/upload/v1761124007/logodaxoaphong2_iyjbwb.png" alt="Oldiezone" />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="content">
-                <h2>Hi {{customer_name}},</h2>
-                <p>
-                  Thank you for opening an account with <strong>Oldiezone</strong>. We are delighted to welcome you into our community of retro lovers.
-                </p>
-                <p>
-                  Your profile is ready, our shelves are stocked, and we hope every visit brings you a little joy. May you have a wonderful time shopping for vintage gems with us.
-                </p>
-                <p>
-                  Take a look around, have fun shopping, and if you ever need a hand, just drop us a message at <strong>support@oldiezone.com</strong> and we will be glad to help.
-                </p>
-                <a class="cta" href="https://oldiezone.studio" target="_blank">Start shopping</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="footer">
-                <p>Oldiezone • UEL, Ho Chi Minh City</p>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-  </body>
+      .feature-row {
+        display: block;
+      }
+      .feature-item {
+        display: block;
+        width: 100%;
+        padding: 20px 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .feature-item:last-child {
+        border-bottom: none;
+      }
+      .info-box {
+        padding: 20px 15px;
+      }
+      .info-box h3 {
+        font-size: 16px;
+      }
+      .button {
+        display: block;
+        width: 100%;
+        padding: 16px 20px;
+      }
+      .email-footer {
+        padding: 20px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="email-wrapper">
+    <div class="email-container">
+      <!-- Header -->
+      <div class="email-header">
+        <img src="https://res.cloudinary.com/dnsreukjc/image/upload/v1761124007/logodaxoaphong2_iyjbwb.png" alt="Oldiezone">
+      </div>
+
+      <!-- Body -->
+      <div class="email-body">
+        <h1 class="welcome-title">Welcome to Oldiezone!</h1>
+
+        <p class="welcome-message">
+          Hi <strong>{{customer_name}}</strong>,
+        </p>
+
+        <p class="welcome-message">
+          Thank you for joining <strong>Oldiezone</strong>! We're excited to have you as part of our community of retro enthusiasts. Your account is now ready, and you can start exploring our collection of vintage treasures.
+        </p>
+
+        <!-- Features -->
+        <div class="feature-grid">
+          <div class="feature-row">
+            <div class="feature-item">
+              <div class="feature-icon">📀</div>
+              <div class="feature-title">Vintage Collection</div>
+              <div class="feature-description">Browse rare vinyl, cassettes, VHS tapes and more</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🎬</div>
+              <div class="feature-title">Retro Cinema</div>
+              <div class="feature-description">Book free classic movie screenings</div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🛒</div>
+              <div class="feature-title">Easy Shopping</div>
+              <div class="feature-description">Secure checkout & fast delivery</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+          <h3>Need Help?</h3>
+          <p>
+            Our team is here to assist you. If you have any questions or need support, feel free to reach out to us at <strong>support@oldiezone.com</strong>. Happy shopping!
+          </p>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="button-container">
+          <a href="https://oldiezone.studio" class="button">Start Shopping</a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="email-footer">
+        <p><strong>Oldiezone</strong></p>
+        <p>UEL, Ho Chi Minh City</p>
+        <p>Questions? Email us at support@oldiezone.com</p>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
