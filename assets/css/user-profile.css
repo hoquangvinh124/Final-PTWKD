@@ -432,11 +432,16 @@ a{text-decoration:none;color:inherit}
 }
 
 .member-rank[data-rank="vip"] {
-  background: linear-gradient(90deg, #ffd700, #ff6b9d, #b9f2ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: none;
+  position: relative !important;
+  color: transparent !important;
+  background: linear-gradient(90deg, #ffffff, #ff6b9d, #b9f2ff) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: none !important;
+  /* Force hardware acceleration for smooth rendering */
+  transform: translateZ(0) !important;
+  -webkit-transform: translateZ(0) !important;
 }
 
 .hero-meta{
