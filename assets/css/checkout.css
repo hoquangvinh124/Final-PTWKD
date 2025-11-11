@@ -106,6 +106,7 @@ body::before {
 
 .checkout-content {
   background: url('../images/disco.png') no-repeat center center / cover;
+  background-attachment: fixed;
   border-radius: 20px;
   padding: 40px;
   margin-top: 20px;
