@@ -1065,8 +1065,8 @@ audio {
 }
 
 .heart-icon.active {
-    filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) hue-rotate(346deg) brightness(95%) contrast(93%);
-    transform: scale(1.1);
+    filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) brightness(95%);
+    transform: translateY(-2px);
 }
 
 .heart-icon:hover {
@@ -2435,15 +2435,34 @@ input:checked + label .description {
 
 
 /* ===== WISHLIST STYLES ===== */
-.heart-icon.active,
-.wishlist-like.active {
-    color: #e74c3c !important;
-    background-image: none !important;
+/* Floating hearts animation */
+@keyframes floatHeart {
+  0% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) scale(0);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(-20px) translateX(var(--float-x)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) translateX(var(--float-x)) scale(0.5);
+  }
 }
 
-.heart-icon.active::before,
-.wishlist-like.active::before {
-    content: "" !important;
+.floating-heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url('../images/heart-icon.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) brightness(95%);
+  pointer-events: none;
+  animation: floatHeart 1.5s ease-out forwards;
+  z-index: 1000;
 }
 
 /* Wishlist notification */

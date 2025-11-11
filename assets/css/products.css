@@ -562,8 +562,8 @@ p {
 }
 
 #products i.heart-icon.active {
-  filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) hue-rotate(346deg) brightness(95%) contrast(93%);
-  transform: scale(1.1);
+  filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) brightness(95%);
+  transform: translateY(-2px);
 }
 
 #products i.heart-icon:hover {

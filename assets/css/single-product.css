@@ -461,8 +461,8 @@ i.heart-icon {
 }
 
 i.heart-icon.active {
-  filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) hue-rotate(346deg) brightness(95%) contrast(93%);
-  transform: scale(1.1);
+  filter: brightness(0) saturate(100%) invert(28%) sepia(91%) saturate(2817%) brightness(95%);
+  transform: translateY(-2px);
 }
 
 i.heart-icon:hover {
@@ -1478,17 +1478,6 @@ i.shopping-bag-icon {
 
 
 /* ===== WISHLIST STYLES FOR SINGLE PRODUCT ===== */
-.heart-icon.active,
-.wishlist-like.active {
-    color: #e74c3c !important;
-    background-image: none !important;
-}
-
-.heart-icon.active::before,
-.wishlist-like.active::before {
-    content: "" !important;
-}
-
 .icon-btn.heart-btn,
 .wishlist-like {
     cursor: pointer;
@@ -1498,7 +1487,7 @@ i.shopping-bag-icon {
 
 .icon-btn.heart-btn:hover,
 .wishlist-like:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 /* ===== RELATED PRODUCTS SECTION STYLES ===== */

@@ -15,8 +15,9 @@ class Wishlist {
     // Create floating hearts animation
     createFloatingHearts(button) {
         const rect = button.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+        // Add scroll offset to get absolute position
+        const centerX = rect.left + rect.width / 2 + window.scrollX;
+        const centerY = rect.top + rect.height / 2 + window.scrollY;
 
         // Create 5-8 floating hearts
         const numHearts = 5 + Math.floor(Math.random() * 4);
