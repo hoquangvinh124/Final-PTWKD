@@ -255,34 +255,50 @@
                     <div class="checkout-form" id="step4">
                         <div class="form-title">Payment Method</div>
                         <div class="form-section">
-                            <div class="payment-option selected" data-payment="card">
+                            <div class="payment-option selected" data-payment="cod">
                                 <div class="payment-icon">
-                                    <i class="fa-solid fa-credit-card"></i>
+                                    <i class="fa-solid fa-money-bill-wave"></i>
                                 </div>
                                 <div class="payment-info">
-                                    <div class="payment-name">Credit/Debit Card</div>
-                                    <div class="payment-description">Pay with Visa, Mastercard, or American Express</div>
+                                    <div class="payment-name">COD</div>
+                                    <div class="payment-description">Cash on Delivery</div>
                                 </div>
                             </div>
-                            <div class="payment-option" data-payment="paypal">
+                            <div class="payment-option" data-payment="banking">
                                 <div class="payment-icon">
-                                    <i class="fa-brands fa-paypal"></i>
+                                    <i class="fa-solid fa-building-columns"></i>
                                 </div>
                                 <div class="payment-info">
-                                    <div class="payment-name">PayPal</div>
-                                    <div class="payment-description">Pay with your PayPal account</div>
+                                    <div class="payment-name">Internet Banking</div>
+                                    <div class="payment-description">Transfer via bank account</div>
                                 </div>
                             </div>
-                            <div class="payment-option" data-payment="giftcard">
+                            <div class="payment-option" data-payment="momo">
                                 <div class="payment-icon">
-                                    <i class="fa-solid fa-gift"></i>
+                                    <i class="fa-solid fa-wallet"></i>
                                 </div>
                                 <div class="payment-info">
-                                    <div class="payment-name">Gift Card</div>
-                                    <div class="payment-description">Use your LDIE Zone gift card</div>
+                                    <div class="payment-name">MoMo</div>
+                                    <div class="payment-description">Pay with MoMo e-wallet</div>
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- QR Code Section (Hidden by default) -->
+                        <div class="qr-code-section" id="qrCodeSection" style="display: none;">
+                            <div class="qr-code-container">
+                                <h3 class="qr-title">Scan QR Code to Pay</h3>
+                                <div class="qr-code-image" id="qrCodeImage">
+                                    <!-- QR Code will be displayed here -->
+                                </div>
+                                <p class="qr-instructions">Scan this QR code with your <span id="paymentAppName">banking</span> app to complete payment</p>
+                                <div class="qr-amount">
+                                    <span>Amount to pay:</span>
+                                    <strong id="qrAmount">0₫</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="checkout-navigation">
                             <button class="nav-btn" onclick="prevStep(4)">Back</button>
                             <button class="nav-btn primary" onclick="completeOrder()">Complete Order</button>

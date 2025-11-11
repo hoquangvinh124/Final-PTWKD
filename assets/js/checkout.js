@@ -177,6 +177,30 @@ function setupEventListeners() {
       });
       this.classList.add('selected');
       orderData.payment.type = this.dataset.payment;
+      
+      // Show/hide QR code based on payment method
+      const qrSection = document.getElementById('qrCodeSection');
+      const qrCodeImage = document.getElementById('qrCodeImage');
+      const paymentAppName = document.getElementById('paymentAppName');
+      const qrAmount = document.getElementById('qrAmount');
+      
+      if (this.dataset.payment === 'banking' || this.dataset.payment === 'momo') {
+        // Show QR code section
+        qrSection.style.display = 'block';
+        
+        // Update payment app name
+        paymentAppName.textContent = this.dataset.payment === 'momo' ? 'MoMo' : 'banking';
+        
+        // Update amount
+        const total = calculateTotal();
+        qrAmount.textContent = formatCurrency(total);
+        
+        // Generate QR code
+        generateQRCode(this.dataset.payment, total);
+      } else {
+        // Hide QR code section for COD
+        qrSection.style.display = 'none';
+      }
     });
   });
 }
@@ -741,4 +765,41 @@ function sendOrderConfirmationEmail(data) {
 // Go to home page
 function goHome() {
   window.location.href = 'homepage.html';
+}
+
+// Generate QR Code
+function generateQRCode(paymentType, amount) {
+  const qrCodeImage = document.getElementById('qrCodeImage');
+  
+  // QR Code information
+  let qrContent = '';
+  
+  if (paymentType === 'momo') {
+    // MoMo QR format
+    qrContent = `https://nhantien.momo.vn/0123456789?amount=${amount}&note=OLDIEZONE-ORDER`;
+  } else if (paymentType === 'banking') {
+    // Banking QR format (VietQR)
+    qrContent = `https://img.vietqr.io/image/MB-0123456789-compact2.png?amount=${amount}&addInfo=OLDIEZONE-ORDER`;
+  }
+  
+  // Use QR Code API to generate QR
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrContent)}`;
+  
+  qrCodeImage.innerHTML = `<img src="${qrCodeUrl}" alt="QR Code" />`;
+}
+
+// Calculate total (helper function)
+function calculateTotal() {
+  const subtotal = orderData.products.reduce((sum, product) => {
+    const productPrice = parsePrice(product.price);
+    return sum + (productPrice * product.quantity);
+  }, 0);
+  const shipping = orderData.shipping.price;
+  const tax = subtotal * orderData.taxRate;
+  return subtotal + shipping + tax;
+}
+
+// Format currency (helper function)
+function formatCurrency(amount) {
+  return amount.toLocaleString('vi-VN') + '₫';
 }
