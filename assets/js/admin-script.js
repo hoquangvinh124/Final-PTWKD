@@ -1000,10 +1000,25 @@ function updateScreeningsPageStats() {
     if (!screeningsTotalEl) return;
     
     // Update total screenings to match number of movies available
-    const totalScreenings = state.movies ? state.movies.length : 0;
+    const totalScreenings = state.movies && state.movies.length ? state.movies.length : 0;
     screeningsTotalEl.textContent = totalScreenings;
     
-    console.log('Screenings stats updated - Total:', totalScreenings);
+    // Update other stats if needed
+    const totalBookingsEl = document.getElementById('screeningsBookings');
+    const nowWatchingEl = document.getElementById('screeningsNowWatching');
+    
+    if (totalBookingsEl) {
+        // Count from booked movies
+        const totalBookings = state.movies.reduce((sum, movie) => sum + (movie.bookings || 0), 0);
+        totalBookingsEl.textContent = totalBookings || '1,247';
+    }
+    
+    if (nowWatchingEl) {
+        // Random active viewers
+        nowWatchingEl.textContent = Math.floor(Math.random() * 100) + 50;
+    }
+    
+    console.log('📊 Screenings stats updated - Total movies:', totalScreenings);
 }
 
 function populateCustomersTable(filters = {}) {
@@ -1083,21 +1098,28 @@ function editCustomer(id) {
 
 // ===== SCREENINGS PAGE =====
 function populateScreeningsTable(filters = {}) {
+    console.log('🎬 populateScreeningsTable called');
+    
     const tbody = document.getElementById('screeningsTableBody');
-    if (!tbody) return;
-
-    // Use state.movies loaded from movies.json
-    if (!state.movies || state.movies.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Loading movies...</td></tr>';
+    if (!tbody) {
+        console.error('❌ screeningsTableBody not found');
         return;
     }
 
-    // Update screenings page stats
+    // Check if movies are loaded
+    if (!state.movies || state.movies.length === 0) {
+        console.warn('⚠️ No movies loaded yet');
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Đang tải phim...</td></tr>';
+        return;
+    }
+
+    console.log('✅ Found', state.movies.length, 'movies in state');
+
+    // Update stats
     updateScreeningsPageStats();
 
-    let filteredMovies = [...state.movies];
-
     // Apply filters
+    let filteredMovies = [...state.movies];
     if (filters.search) {
         filteredMovies = filteredMovies.filter(m =>
             m.title.toLowerCase().includes(filters.search.toLowerCase())
@@ -1105,17 +1127,39 @@ function populateScreeningsTable(filters = {}) {
     }
 
     if (filteredMovies.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">No movies found</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Không tìm thấy phim</td></tr>';
         return;
     }
 
-    tbody.innerHTML = filteredMovies.map((movie, index) => `
+    // Build table HTML
+    const tableHTML = filteredMovies.map((movie, index) => {
+        // Get poster URL - handle both file path and base64
+        let posterUrl = '';
+        
+        if (movie.poster) {
+            if (typeof movie.poster === 'string' && movie.poster.trim() !== '' && movie.poster !== 'undefined') {
+                posterUrl = movie.poster;
+            } else {
+                console.warn('⚠️ Invalid poster for:', movie.title, '| poster:', movie.poster);
+                posterUrl = 'assets/images/logo.png';
+            }
+        } else {
+            console.warn('⚠️ No poster for:', movie.title);
+            posterUrl = 'assets/images/logo.png';
+        }
+
+        console.log(`Movie ${index + 1}: ${movie.title} | Poster: ${posterUrl.substring(0, 50)}...`);
+
+        return `
         <tr>
             <td>
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <img src="${movie.poster}" alt="${movie.title}" 
-                         style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px;"
-                         onerror="this.src='assets/images/logo.png'">
+                    <img 
+                        src="${posterUrl}" 
+                        alt="${movie.title}" 
+                        style="width: 50px; height: 70px; object-fit: cover; border-radius: 4px; background: #1e293b;"
+                        onerror="this.onerror=null; this.src='assets/images/logo.png'; this.style.padding='8px';"
+                    >
                     <div>
                         <strong>${movie.title}</strong>
                         <div style="font-size: 12px; color: #94a3b8;">${movie.year} • ${movie.genre}</div>
@@ -1126,23 +1170,24 @@ function populateScreeningsTable(filters = {}) {
             <td>${movie.duration} phút</td>
             <td>${movie.rating}</td>
             <td>
-                <span class="status-badge pending">
-                    On Air
-                </span>
+                <span class="status-badge pending">Đang Chiếu</span>
             </td>
             <td>
-                <button class="icon-btn" onclick="viewMovieDetail(${movie.id})" title="View Details">
+                <button class="icon-btn" onclick="viewMovieDetail(${movie.id})" title="Xem chi tiết">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button class="icon-btn" onclick="editMovie(${movie.id})" title="Edit">
+                <button class="icon-btn" onclick="editMovie(${movie.id})" title="Chỉnh sửa">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="icon-btn" onclick="deleteMovie(${movie.id})" title="Delete">
+                <button class="icon-btn" onclick="deleteMovie(${movie.id})" title="Xóa">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
-        </tr>
-    `).join('');
+        </tr>`;
+    }).join('');
+
+    tbody.innerHTML = tableHTML;
+    console.log('✅ Table rendered with', filteredMovies.length, 'movies');
 }
 
 function viewMovieDetail(id) {
@@ -1814,9 +1859,20 @@ function editProduct(id) {
     openProductModal(id);
 }
 
-// Update Add New Product button
+// Add Product buttons (both dashboard and products page)
+document.getElementById('addProductBtn')?.addEventListener('click', () => {
+    openProductModal();
+});
+
 document.getElementById('addNewProductBtn')?.addEventListener('click', () => {
     openProductModal();
+});
+
+// Export Report button
+document.getElementById('exportBtn')?.addEventListener('click', () => {
+    showNotification('📊 Export Report feature is under development!', 'info');
+    console.log('Export report clicked');
+    // TODO: Implement export functionality
 });
 
 // ===== SCREENING MODAL FUNCTIONS =====
@@ -1829,16 +1885,26 @@ async function loadMovies() {
     }
     
     try {
+        console.log('📥 Loading movies from movies.json...');
         const response = await fetch('movies.json');
         if (response.ok) {
             state.movies = await response.json();
             state.moviesLoaded = true;
+            
+            // Log first movie to check poster path
+            if (state.movies.length > 0) {
+                console.log('✅ Loaded', state.movies.length, 'movies');
+                console.log('🎬 First movie:', state.movies[0].title);
+                console.log('🖼️ First poster path:', state.movies[0].poster);
+            }
+            
             populateMovieDropdown();
-            console.log(`Loaded ${state.movies.length} movies from movies.json`);
             return state.movies;
+        } else {
+            console.error('❌ Failed to fetch movies.json - Status:', response.status);
         }
     } catch (error) {
-        console.error('Error loading movies:', error);
+        console.error('❌ Error loading movies:', error);
         state.movies = [];
     }
     return state.movies;
@@ -1865,7 +1931,7 @@ function openScreeningModal(screeningId = null) {
         const screening = mockScreenings.find(s => s.id == screeningId);
 
         if (screening) {
-            modalTitle.textContent = 'Edit Screening';
+            modalTitle.textContent = 'Chỉnh Sửa Lịch Chiếu';
             document.getElementById('screeningId').value = screening.id;
             document.getElementById('screeningMovie').value = screening.movie.split(' (')[0]; // Get movie name without year
             document.getElementById('screeningStreamUrl').value = screening.streamUrl || '';
@@ -1880,7 +1946,7 @@ function openScreeningModal(screeningId = null) {
     } else {
         // Add mode
         currentEditingScreeningId = null;
-        modalTitle.textContent = 'Add New Screening';
+        modalTitle.textContent = 'Thêm Lịch Chiếu Mới';
         form.reset();
         // Set default date to today
         document.getElementById('screeningDate').value = new Date().toISOString().split('T')[0];
@@ -2772,79 +2838,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Update populateScreeningsTable to support pagination
-const originalPopulateScreeningsTable = populateScreeningsTable;
-populateScreeningsTable = function(filters = {}) {
-    const tbody = document.getElementById('screeningsTableBody');
-    if (!tbody) return;
-
-    let filteredMovies = [...state.movies];
-
-    // Apply filters
-    if (filters.search) {
-        filteredMovies = filteredMovies.filter(m =>
-            m.title.toLowerCase().includes(filters.search.toLowerCase())
-        );
-    }
-    if (filters.room && filters.room !== 'all') {
-        // Room filter logic if needed
-    }
-
-    // Update pagination state
-    paginationState.screenings.filteredData = filteredMovies;
-    paginationState.screenings.totalItems = filteredMovies.length;
-    paginationState.screenings.totalPages = Math.ceil(filteredMovies.length / paginationState.screenings.itemsPerPage);
-
-    // Get paginated data
-    const startIndex = (paginationState.screenings.currentPage - 1) * paginationState.screenings.itemsPerPage;
-    const endIndex = startIndex + paginationState.screenings.itemsPerPage;
-    const paginatedMovies = filteredMovies.slice(startIndex, endIndex);
-
-    // Render table
-    tbody.innerHTML = paginatedMovies.map(movie => `
-        <tr>
-            <td>
-                <div style="display: flex; align-items: center; gap: 12px;">
-                    <img src="${movie.posterUrl}" alt="${movie.title}" 
-                         style="width: 50px; height: 70px; object-fit: cover; border-radius: 6px;"
-                         onerror="this.src='assets/images/logo.png'">
-                    <div>
-                        <strong style="display: block; margin-bottom: 4px;">${movie.title}</strong>
-                        <span style="color: rgba(255,255,255,0.6); font-size: 0.9em;">${movie.year}</span>
-                    </div>
-                </div>
-            </td>
-            <td>${movie.director}</td>
-            <td>${movie.duration} phút</td>
-            <td>
-                <div style="display: flex; align-items: center; gap: 6px;">
-                    <i class="fas fa-star" style="color: #ffc107;"></i>
-                    <span>${movie.rating}/10</span>
-                </div>
-            </td>
-            <td>
-                <span class="status-badge ${movie.status || 'in-stock'}">
-                    ${movie.status === 'playing' ? 'Đang chiếu' : movie.status === 'scheduled' ? 'Sắp chiếu' : 'Kết thúc'}
-                </span>
-            </td>
-            <td>
-                <button class="icon-btn" onclick="viewMovie(${movie.id})" title="Xem">
-                    <i class="fas fa-eye"></i>
-                </button>
-                <button class="icon-btn" onclick="editMovie(${movie.id})" title="Sửa">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="icon-btn" onclick="deleteMovie(${movie.id})" title="Xóa">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        </tr>
-    `).join('');
-
-    // Update pagination UI
-    updateScreeningsPagination();
-};
-
+// ===== SCREENINGS PAGINATION =====
 function updateScreeningsPagination() {
     const pagination = document.getElementById('screeningsPagination');
     const pageButtons = document.getElementById('screeningsPageButtons');

@@ -181,7 +181,8 @@
           return;
         }
 
-        const result = register(email, password, firstName, lastName);
+        // Register with email as username, and also pass email as the 5th parameter
+        const result = register(email, password, firstName, lastName, email);
         if (!result.success) {
           if (result.reason === 'USER_EXISTS') {
             showMessage('Email or phone number already in use.', 'error');

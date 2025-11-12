@@ -80,7 +80,7 @@
 
         <div class="sidebar-footer">
             <div class="user-profile">
-                <img src="assets/images/Tranduythanhanhdaidien.jpg" alt="Admin">
+                <img src="assets/images/shiki.jpg" alt="Admin">
                 <div class="user-info">
                     <strong>Long Huynh</strong>
                     <span>Admin</span>
@@ -116,7 +116,7 @@
                 </button>
                 
                 <div class="header-profile">
-                    <img src="assets/images/Tranduythanhanhdaidien.jpg" alt="Admin">
+                    <img src="assets/images/shiki.jpg" alt="Admin">
                     <span>Long Huynh</span>
                 </div>
             </div>
@@ -532,17 +532,17 @@
         <div class="page-content" id="screenings-page" style="display: none;">
             <div class="page-header">
                 <div>
-                    <h1>Retro Cine - Free Movie Screenings</h1>
-                    <p>Manage screening schedules and theaters</p>
+                    <h1>Retro Cine - Chiếu Phim Miễn Phí</h1>
+                    <p>Quản lý lịch chiếu và rạp phim</p>
                 </div>
                 <div style="display: flex; gap: 12px;">
                     <button class="btn btn-secondary" id="addMovieBtn">
                         <i class="fas fa-film"></i>
-                        Add Movie
+                        Thêm Phim Mới
                     </button>
                     <button class="btn btn-primary" id="addScreeningBtn">
                         <i class="fas fa-plus"></i>
-                        Add Screening
+                        Thêm Lịch Chiếu
                     </button>
                 </div>
             </div>
@@ -1175,16 +1175,16 @@
     <div id="screeningModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="screeningModalTitle">Add New Screening</h2>
+                <h2 id="screeningModalTitle">Thêm Lịch Chiếu Mới</h2>
                 <button class="modal-close" onclick="closeScreeningModal()">&times;</button>
             </div>
             <form id="screeningForm" class="modal-form">
                 <input type="hidden" id="screeningId">
                 
                 <div class="form-group">
-                    <label for="screeningMovie">Movie Title *</label>
+                    <label for="screeningMovie">Tên Phim *</label>
                     <select id="screeningMovie" required>
-                        <option value="">Select movie</option>
+                        <option value="">Chọn phim</option>
                     </select>
                 </div>
 
@@ -1272,7 +1272,7 @@
     <div id="movieModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="movieModalTitle">Add New Movie</h2>
+                <h2 id="movieModalTitle">Thêm Phim Mới</h2>
                 <button class="modal-close" onclick="closeMovieModal()">&times;</button>
             </div>
             <form id="movieForm" class="modal-form">
@@ -1280,59 +1280,59 @@
                 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="movieTitle">Movie Title *</label>
-                        <input type="text" id="movieTitle" required>
+                        <label for="movieTitle">Tên Phim *</label>
+                        <input type="text" id="movieTitle" required placeholder="Nhập tên phim">
                     </div>
                     <div class="form-group">
-                        <label for="movieYear">Release Year *</label>
+                        <label for="movieYear">Năm Phát Hành *</label>
                         <input type="number" id="movieYear" required min="1900" max="2025">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="movieDirector">Director *</label>
-                    <input type="text" id="movieDirector" required>
+                    <label for="movieDirector">Đạo Diễn *</label>
+                    <input type="text" id="movieDirector" required placeholder="Tên đạo diễn">
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="movieDuration">Duration (minutes) *</label>
+                        <label for="movieDuration">Thời Lượng (phút) *</label>
                         <input type="number" id="movieDuration" required min="1">
                     </div>
                     <div class="form-group">
-                        <label for="movieGenre">Genre *</label>
+                        <label for="movieGenre">Thể Loại *</label>
                         <input type="text" id="movieGenre" required placeholder="Drama, Action, ...">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="moviePosterFile">Movie Poster * (max 2MB)</label>
+                    <label for="moviePosterFile">Poster Phim * (tối đa 2MB)</label>
                     <input type="file" id="moviePosterFile" accept="image/jpeg,image/png,image/jpg,image/webp">
                     <div id="moviePosterPreview" class="image-preview" style="margin-top: 12px;">
-                        <img id="moviePosterPreviewImg" style="display:none;">
-                        <span class="preview-placeholder">Select movie poster</span>
+                        <img id="moviePosterPreviewImg" style="display:none; max-width: 200px; border-radius: 8px;">
+                        <span class="preview-placeholder">Chọn hình ảnh poster</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="movieStreamUrl">Streaming Link *</label>
+                    <label for="movieStreamUrl">Link Streaming *</label>
                     <input type="url" id="movieStreamUrl" required placeholder="https://...">
                 </div>
 
                 <div class="form-group">
-                    <label for="movieDescription">Description</label>
-                    <textarea id="movieDescription" rows="3"></textarea>
+                    <label for="movieDescription">Mô Tả</label>
+                    <textarea id="movieDescription" rows="3" placeholder="Mô tả ngắn về phim"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="movieRating">Rating (0-10)</label>
+                    <label for="movieRating">Đánh Giá (0-10)</label>
                     <input type="number" id="movieRating" min="0" max="10" step="0.1" value="7.0">
                 </div>
 
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeMovieModal()">Cancel</button>
+                    <button type="button" class="btn btn-secondary" onclick="closeMovieModal()">Hủy</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Save Movie
+                        <i class="fas fa-save"></i> Lưu Phim
                     </button>
                 </div>
             </form>
