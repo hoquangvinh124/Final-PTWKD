@@ -55,12 +55,16 @@
   - [🎬 Chi tiết các chức năng](#-chi-tiết-các-chức-năng)
     - [1. Hệ thống xác thực (Authentication)](#1-hệ-thống-xác-thực-authentication)
     - [2. Quản lý giỏ hàng (Shopping Cart)](#2-quản-lý-giỏ-hàng-shopping-cart)
-    - [3. Thanh toán (Checkout)](#3-thanh-toán-checkout)
-    - [4. Tìm kiếm sản phẩm](#4-tìm-kiếm-sản-phẩm)
-    - [5. Retro Cine Room](#5-retro-cine-room)
-    - [6. Market Place (Thread)](#6-market-place-thread)
-    - [7. Chatbot](#7-chatbot)
-    - [8. Email Notifications](#8-email-notifications)
+    - [3. Wishlist (Danh sách yêu thích)](#3-wishlist-danh-sách-yêu-thích)
+    - [4. Thanh toán (Checkout)](#4-thanh-toán-checkout)
+    - [5. GPS Auto-fill địa chỉ](#5-gps-auto-fill-địa-chỉ)
+    - [6. Tìm kiếm sản phẩm](#6-tìm-kiếm-sản-phẩm)
+    - [7. News Reader](#7-news-reader)
+    - [8. Retro Cine Room](#8-retro-cine-room)
+    - [9. Market Place (Thread)](#9-market-place-thread)
+    - [10. Chatbot](#10-chatbot)
+    - [11. Email Notifications](#11-email-notifications)
+    - [12. AI Analytics (Admin)](#12-ai-analytics-admin)
   - [📦 LocalStorage Data Structure](#-localstorage-data-structure)
   - [🎨 Theme \& Styling](#-theme--styling)
   - [☁️ Deployment \& Infrastructure](#️-deployment--infrastructure)
@@ -110,14 +114,16 @@
 - 📦 Chi tiết sản phẩm với hình ảnh front/back
 - ⭐ Đánh giá và review sản phẩm
 - 🛍️ Thêm vào giỏ hàng với quản lý số lượng
+- ❤️ Wishlist - Lưu sản phẩm yêu thích
 - 💳 Checkout với nhiều phương thức thanh toán
-- 📍 Quản lý địa chỉ giao hàng
+- 📍 Quản lý địa chỉ giao hàng với GPS auto-fill
 
 #### Tính năng giải trí
 - 🎬 **Retro Cine Room** - Xem phim cổ điển
 - 🎵 Spotify integration cho âm nhạc
 - 🌤️ Weather widget
 - 💬 Chatbot hỗ trợ 24/7
+- 📰 **News Reader** - Đọc tin tức và bài viết về retro culture
 
 #### Cộng đồng
 - 📝 **Market Place (Thread)** - Diễn đàn thảo luận
@@ -127,6 +133,12 @@
 ### 👨‍💼 Tính năng quản trị
 
 - 📊 Dashboard quản trị với thống kê tổng quan
+- 🤖 **AI Analytics** - Phân tích dữ liệu thông minh
+  - Phân tích xu hướng mua hàng
+  - Dự đoán nhu cầu sản phẩm
+  - Phân tích hành vi khách hàng
+  - Gợi ý tối ưu kho hàng
+  - Báo cáo insights tự động
 - 📦 Quản lý sản phẩm (CRUD operations)
 - 👥 Quản lý người dùng
 - 📈 Quản lý đơn hàng
@@ -624,7 +636,35 @@ Cấu trúc thư mục images được tổ chức theo danh mục sản phẩm,
 }
 ```
 
-### 3. Thanh toán (Checkout)
+### 3. Wishlist (Danh sách yêu thích)
+
+**File liên quan:** `assets/js/cart.js` (hoặc module riêng)
+
+**Chức năng:**
+- ❤️ Thêm/xóa sản phẩm khỏi wishlist
+- 👁️ Xem danh sách sản phẩm yêu thích
+- 🛒 Chuyển sản phẩm từ wishlist vào giỏ hàng
+- 🔔 Thông báo khi sản phẩm giảm giá
+- 📊 Theo dõi lịch sử sản phẩm đã xem
+
+**LocalStorage Keys:**
+- `wishlist`: Mảng product IDs được yêu thích
+- `recentlyViewed`: Lịch sử sản phẩm đã xem
+
+**Wishlist Structure:**
+```javascript
+{
+  wishlist: ["1", "5", "12", "23"],
+  recentlyViewed: [
+    {
+      id: "1",
+      timestamp: "2024-01-01T10:00:00Z"
+    }
+  ]
+}
+```
+
+### 4. Thanh toán (Checkout)
 
 **File liên quan:** `assets/js/checkout.js`, `checkout.html`
 
@@ -643,7 +683,45 @@ Cấu trúc thư mục images được tổ chức theo danh mục sản phẩm,
 - ✅ Phone number format
 - ✅ Address completeness
 
-### 4. Tìm kiếm sản phẩm
+### 5. GPS Auto-fill địa chỉ
+
+**File liên quan:** `assets/js/geolocation.js`
+
+**Tính năng:**
+- 📍 Tự động phát hiện vị trí hiện tại của người dùng
+- 🗺️ Reverse geocoding - chuyển tọa độ thành địa chỉ
+- ✍️ Auto-fill form địa chỉ giao hàng
+- 🎯 Tính khoảng cách và phí vận chuyển
+- 🔒 Xin phép người dùng trước khi truy cập vị trí
+
+**Geolocation API Flow:**
+```javascript
+// 1. Request user permission
+navigator.geolocation.getCurrentPosition(success, error);
+
+// 2. Get coordinates
+const { latitude, longitude } = position.coords;
+
+// 3. Reverse geocoding using Google Maps API
+fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}`)
+  .then(response => response.json())
+  .then(data => {
+    // Parse address components
+    const address = parseAddressComponents(data.results[0]);
+
+    // Auto-fill form
+    fillAddressForm(address);
+  });
+```
+
+**Address Components:**
+- Street/số nhà
+- Ward (Phường/Xã)
+- District (Quận/Huyện)
+- City/Province (Thành phố/Tỉnh)
+- Postal code
+
+### 6. Tìm kiếm sản phẩm
 
 **File liên quan:** `assets/js/search.js`
 
@@ -664,7 +742,44 @@ products.filter(product =>
 )
 ```
 
-### 5. Retro Cine Room
+### 7. News Reader
+
+**File liên quan:** `assets/js/news.js`, `news.html`
+
+**Tính năng:**
+- 📰 Đọc tin tức về retro culture và vintage lifestyle
+- 🔖 Bookmark bài viết yêu thích
+- 💬 Comment và thảo luận
+- 🏷️ Filter theo categories (Music, Film, Technology, Fashion)
+- 🔍 Search bài viết
+- 📱 Responsive reading experience
+
+**News Categories:**
+- 🎵 Music - Tin tức về nhạc retro, vinyl, cassette
+- 🎬 Film - Điện ảnh cổ điển, VHS culture
+- 📷 Photography - Analog photography, Polaroid
+- 👕 Fashion - Vintage fashion trends
+- 🎮 Gaming - Retro gaming culture
+- 🎨 Art & Design - Retro aesthetics
+
+**Article Structure:**
+```javascript
+{
+  id: "article_1",
+  title: "Article Title",
+  excerpt: "Short description...",
+  content: "Full article content...",
+  category: "Music",
+  author: "Author Name",
+  published_date: "2024-01-01",
+  thumbnail: "path/to/image.jpg",
+  tags: ["vinyl", "retro", "music"],
+  views: 1250,
+  likes: 45
+}
+```
+
+### 8. Retro Cine Room
 
 **File liên quan:** `assets/js/retro-cine.js`, `retro-cine.html`
 
@@ -676,7 +791,7 @@ products.filter(product =>
 - 📝 Movie information
 - ⭐ Rating system
 
-### 6. Market Place (Thread)
+### 9. Market Place (Thread)
 
 **File liên quan:** `assets/js/market-place.js`, `market-place.html`
 
@@ -688,7 +803,7 @@ products.filter(product =>
 - 🏷️ Tags và categories
 - 🔍 Search posts
 
-### 7. Chatbot
+### 10. Chatbot
 
 **File liên quan:** `assets/js/chatbot.js`
 
@@ -699,7 +814,7 @@ products.filter(product =>
 - ❓ FAQs
 - 👤 User info lookup
 
-### 8. Email Notifications
+### 11. Email Notifications
 
 **Backend:** AWS Lambda + Resend API
 
@@ -721,6 +836,68 @@ products.filter(product =>
 - POST `/api/send-email` - Gửi email thông báo
 - Validation: Email format, required fields
 - Rate limiting để tránh spam
+
+### 12. AI Analytics (Admin)
+
+**Backend:** AWS Lambda + AI/ML Services
+
+**Tính năng:**
+- 📊 **Phân tích xu hướng mua hàng**
+  - Sản phẩm bán chạy nhất theo thời gian
+  - Phân tích theo danh mục, giá, thời điểm
+  - Xu hướng theo mùa (seasonal trends)
+
+- 🔮 **Dự đoán nhu cầu sản phẩm**
+  - Machine learning model dự đoán nhu cầu
+  - Forecast sales cho 30-90 ngày tới
+  - Alert khi sắp hết hàng
+
+- 👥 **Phân tích hành vi khách hàng**
+  - Customer segmentation (RFM analysis)
+  - Purchase pattern recognition
+  - Churn prediction
+  - Customer lifetime value (CLV)
+
+- 📦 **Gợi ý tối ưu kho hàng**
+  - Optimal stock levels
+  - Reorder point calculations
+  - Dead stock identification
+  - ABC analysis
+
+- 📈 **Báo cáo insights tự động**
+  - Daily/Weekly/Monthly reports
+  - Anomaly detection
+  - Performance metrics dashboard
+  - Export reports (PDF, Excel)
+
+**AI/ML Stack:**
+```javascript
+// Example: Sales prediction
+const predictionData = {
+  historical_sales: [...],
+  seasonality: true,
+  external_factors: [...]
+};
+
+// Call Lambda AI endpoint
+fetch('https://api.oldidezone.com/ai/predict-sales', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(predictionData)
+})
+.then(res => res.json())
+.then(prediction => {
+  // Display forecast chart
+  renderForecastChart(prediction.next_30_days);
+});
+```
+
+**Analytics Dashboard:**
+- Real-time metrics
+- Interactive charts (Chart.js, D3.js)
+- Customizable date ranges
+- Export functionality
+- Mobile-responsive
 
 ---
 
@@ -748,6 +925,19 @@ localStorage.setItem('cart', JSON.stringify([
 
 // User Session
 localStorage.setItem('isLoggedIn', 'true');
+
+// Wishlist
+localStorage.setItem('wishlist', JSON.stringify([
+  "1", "5", "12", "23"
+]));
+
+// Recently Viewed Products
+localStorage.setItem('recentlyViewed', JSON.stringify([
+  {
+    id: "1",
+    timestamp: "2024-01-01T10:00:00Z"
+  }
+]));
 
 // Search History (Optional)
 localStorage.setItem('searchHistory', JSON.stringify([
