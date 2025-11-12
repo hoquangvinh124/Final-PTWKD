@@ -435,7 +435,7 @@ function openProductDetail(item) {
   const handleContactClick = (e, url) => {
     e.preventDefault();
     if (!userLoggedIn) {
-      showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+      showNotification('Please login to view contact information!', 'warning');
       return false;
     }
     if (url && url !== "#") {
@@ -447,38 +447,68 @@ function openProductDetail(item) {
     // Update icon links - check login before allowing access
     if (contactFacebook) {
       const messengerUrl = item.contact.messenger || "#";
-      contactFacebook.href = "#";
-      contactFacebook.onclick = (e) => handleContactClick(e, messengerUrl);
+      contactFacebook.href = messengerUrl;
+      contactFacebook.onclick = (e) => {
+        if (!userLoggedIn) {
+          e.preventDefault();
+          showNotification('Please login to view contact information!', 'warning');
+          return false;
+        }
+      };
     }
     
     if (contactInstagram) {
       const instagramUrl = item.contact.instagram 
         ? `https://instagram.com/${item.contact.instagram.replace('@', '')}` 
         : "#";
-      contactInstagram.href = "#";
-      contactInstagram.onclick = (e) => handleContactClick(e, instagramUrl);
+      contactInstagram.href = instagramUrl;
+      contactInstagram.onclick = (e) => {
+        if (!userLoggedIn) {
+          e.preventDefault();
+          showNotification('Please login to view contact information!', 'warning');
+          return false;
+        }
+      };
     }
     
     if (contactZalo) {
       const zaloUrl = item.contact.zalo 
         ? `https://zalo.me/${item.contact.zalo}` 
         : "#";
-      contactZalo.href = "#";
-      contactZalo.onclick = (e) => handleContactClick(e, zaloUrl);
+      contactZalo.href = zaloUrl;
+      contactZalo.onclick = (e) => {
+        if (!userLoggedIn) {
+          e.preventDefault();
+          showNotification('Please login to view contact information!', 'warning');
+          return false;
+        }
+      };
     }
     
     if (contactThreads) {
       const threadsUrl = item.contact.threads 
         ? `https://threads.net/${item.contact.threads.replace('@', '')}` 
         : "#";
-      contactThreads.href = "#";
-      contactThreads.onclick = (e) => handleContactClick(e, threadsUrl);
+      contactThreads.href = threadsUrl;
+      contactThreads.onclick = (e) => {
+        if (!userLoggedIn) {
+          e.preventDefault();
+          showNotification('Please login to view contact information!', 'warning');
+          return false;
+        }
+      };
     }
     
     if (contactPhone) {
       const phoneUrl = item.contact.phone ? `tel:${item.contact.phone}` : "#";
-      contactPhone.href = "#";
-      contactPhone.onclick = (e) => handleContactClick(e, phoneUrl);
+      contactPhone.href = phoneUrl;
+      contactPhone.onclick = (e) => {
+        if (!userLoggedIn) {
+          e.preventDefault();
+          showNotification('Please login to view contact information!', 'warning');
+          return false;
+        }
+      };
     }
     
     // Hide the text contact links section (we only use icons)
@@ -492,7 +522,7 @@ function openProductDetail(item) {
       contactFacebook.onclick = (e) => {
         e.preventDefault();
         if (!userLoggedIn) {
-          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+          showNotification('Please login to view contact information!', 'warning');
         }
       };
     }
@@ -501,7 +531,7 @@ function openProductDetail(item) {
       contactInstagram.onclick = (e) => {
         e.preventDefault();
         if (!userLoggedIn) {
-          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+          showNotification('Please login to view contact information!', 'warning');
         }
       };
     }
@@ -510,7 +540,7 @@ function openProductDetail(item) {
       contactZalo.onclick = (e) => {
         e.preventDefault();
         if (!userLoggedIn) {
-          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+          showNotification('Please login to view contact information!', 'warning');
         }
       };
     }
@@ -519,7 +549,7 @@ function openProductDetail(item) {
       contactThreads.onclick = (e) => {
         e.preventDefault();
         if (!userLoggedIn) {
-          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+          showNotification('Please login to view contact information!', 'warning');
         }
       };
     }
@@ -528,14 +558,14 @@ function openProductDetail(item) {
       contactPhone.onclick = (e) => {
         e.preventDefault();
         if (!userLoggedIn) {
-          showNotification('Vui lòng đăng nhập để xem thông tin liên hệ!', 'warning');
+          showNotification('Please login to view contact information!', 'warning');
         }
       };
     }
     
     if (detailContactLinks) {
       if (!userLoggedIn) {
-        detailContactLinks.innerHTML = '<p style="color: rgba(255,244,245,0.6); font-size: 14px; margin: 0;">🔒 Vui lòng <a href="login.html" style="color: rgb(255, 179, 71); text-decoration: underline;">đăng nhập</a> để xem thông tin liên hệ.</p>';
+        detailContactLinks.innerHTML = '<p style="color: rgba(255,244,245,0.6); font-size: 14px; margin: 0;">🔒 Please <a href="login.html" style="color: rgb(255, 179, 71); text-decoration: underline;">login</a> to view contact information.</p>';
       } else {
         // Hide text links, only show icons
         detailContactLinks.style.display = 'none';
@@ -684,7 +714,18 @@ productCategorySelect?.addEventListener("change", (e) => {
   }
 });
 
-addProductBtn?.addEventListener("click", openAddProductModal);
+addProductBtn?.addEventListener("click", () => {
+  // Check if user is authenticated before opening modal
+  if (!isAuthenticated()) {
+    showNotification("Please login to add products!", 'warning');
+    // Redirect to login page after a short delay
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 1000);
+    return;
+  }
+  openAddProductModal();
+});
 
 closeAddTargets.forEach(btn => btn.addEventListener("click", closeAddProductModal));
 
