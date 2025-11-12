@@ -234,26 +234,6 @@ function animateValue(element, start, end, duration) {
     }, 16);
 }
 
-function showToast(message, type = 'success') {
-    const toast = document.createElement('div');
-    toast.className = `toast toast-${type}`;
-    toast.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
-        <span>${message}</span>
-    `;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.style.animation = 'slideIn 0.3s ease forwards';
-    }, 10);
-
-    setTimeout(() => {
-        toast.style.animation = 'slideOut 0.3s ease forwards';
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
 // ===== LOAD PRODUCTS FROM JSON =====
 async function loadProducts() {
     if (state.productsLoaded) {
@@ -303,7 +283,7 @@ async function loadProducts() {
         
     } catch (error) {
         console.error('Error loading products:', error);
-        showToast('Không thể tải danh sách sản phẩm', 'error');
+        showNotification('Failed to load product list', 'error');
         // Fallback to mock products if JSON fails
         state.products = mockProducts;
         state.productsLoaded = true;
@@ -477,7 +457,7 @@ function populateOrdersTable() {
     const recentOrders = orders.slice(0, 6);
     
     if (recentOrders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có đơn hàng nào</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 2rem; color: #94a3b8;">No orders yet</td></tr>';
         return;
     }
 
@@ -487,9 +467,9 @@ function populateOrdersTable() {
             <td>${order.customer}</td>
             <td><strong>${formatCurrency(order.amount)}</strong></td>
             <td><span class="status-badge ${order.status}">${
-                order.status === 'completed' ? 'Hoàn thành' :
-                order.status === 'pending' ? 'Đang xử lý' :
-                'Đã hủy'
+                order.status === 'completed' ? 'Completed' :
+                order.status === 'pending' ? 'Processing' :
+                'Cancelled'
             }</span></td>
             <td>${order.date}</td>
         </tr>
@@ -649,14 +629,14 @@ function populateProductsTable(filters = {}) {
             <td>${product.sold}</td>
             <td>
                 <span class="status-badge ${product.status}">
-                    ${product.status === 'in-stock' ? 'Còn hàng' : product.status === 'low-stock' ? 'Sắp hết' : 'Hết hàng'}
+                    ${product.status === 'in-stock' ? 'In Stock' : product.status === 'low-stock' ? 'Low Stock' : 'Out of Stock'}
                 </span>
             </td>
             <td>
-                <button class="icon-btn" onclick="editProduct(${product.id})" title="Sửa">
+                <button class="icon-btn" onclick="editProduct(${product.id})" title="Edit">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="icon-btn" onclick="deleteProduct(${product.id})" title="Xóa">
+                <button class="icon-btn" onclick="deleteProduct(${product.id})" title="Delete">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
@@ -667,18 +647,22 @@ function populateProductsTable(filters = {}) {
 function editProduct(id) {
     const product = state.products.find(p => p.id == id);
     if (product) {
-        showToast(`Đang chỉnh sửa sản phẩm: ${product.name}`, 'info');
+        showNotification(`Editing product: ${product.name}`, 'info');
         // Here you would open a modal to edit the product
     }
 }
 
 function deleteProduct(id) {
     const product = state.products.find(p => p.id == id);
-    if (product && confirm(`Bạn có chắc muốn xóa sản phẩm "${product.name}"?`)) {
-        const index = state.products.findIndex(p => p.id == id);
-        state.products.splice(index, 1);
-        populateProductsTable();
-        showToast('Đã xóa sản phẩm thành công!');
+    if (product) {
+        // Create custom confirm using notification
+        const confirmed = window.confirm(`Are you sure you want to delete "${product.name}"?`);
+        if (confirmed) {
+            const index = state.products.findIndex(p => p.id == id);
+            state.products.splice(index, 1);
+            populateProductsTable();
+            showNotification('Product deleted successfully!', 'success');
+        }
     }
 }
 
@@ -811,7 +795,7 @@ function populateOrdersTableFull(filters = {}) {
     }
 
     if (filteredOrders.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có đơn hàng nào</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 2rem; color: #94a3b8;">No orders yet</td></tr>';
         return;
     }
 
@@ -824,17 +808,17 @@ function populateOrdersTableFull(filters = {}) {
             <td><strong>${formatCurrency(order.amount)}</strong></td>
             <td>
                 <select class="status-select" onchange="updateOrderStatus('${order.id}', '${order.userId}', this.value)">
-                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Đang xử lý</option>
-                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Hoàn thành</option>
-                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Đã hủy</option>
+                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Processing</option>
+                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+                    <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
                 </select>
             </td>
             <td>${order.date}</td>
             <td>
-                <button class="icon-btn" onclick="viewOrderDetail('${order.id}')" title="Xem chi tiết">
+                <button class="icon-btn" onclick="viewOrderDetail('${order.id}')" title="View Details">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button class="icon-btn" onclick="printOrder('${order.id}')" title="In hóa đơn">
+                <button class="icon-btn" onclick="printOrder('${order.id}')" title="Print Invoice">
                     <i class="fas fa-print"></i>
                 </button>
             </td>
@@ -847,7 +831,7 @@ function updateOrderStatus(orderId, userId, newStatus) {
         // Load demo.users
         const usersData = localStorage.getItem('demo.users');
         if (!usersData) {
-            showToast('Không tìm thấy demo.users', 'error');
+            showNotification('No demo.users found', 'error');
             return;
         }
 
@@ -857,7 +841,7 @@ function updateOrderStatus(orderId, userId, newStatus) {
         const userIndex = users.findIndex(u => u.username === userId);
         
         if (userIndex === -1) {
-            showToast('Không tìm thấy user', 'error');
+            showNotification('User not found', 'error');
             return;
         }
 
@@ -870,7 +854,7 @@ function updateOrderStatus(orderId, userId, newStatus) {
                 // Save back to demo.users
                 localStorage.setItem('demo.users', JSON.stringify(users));
                 
-                showToast(`Đã cập nhật trạng thái đơn hàng ${orderId}`);
+                showNotification(`Order ${orderId} status updated`, 'success');
                 
                 // Refresh orders table
                 populateOrdersTableFull();
@@ -878,7 +862,7 @@ function updateOrderStatus(orderId, userId, newStatus) {
         }
     } catch (error) {
         console.error('Error updating order status:', error);
-        showToast('Không thể cập nhật trạng thái', 'error');
+        showNotification('Failed to update order status', 'error');
     }
 }
 
@@ -886,13 +870,13 @@ function viewOrderDetail(orderId) {
     const orders = loadOrdersFromLocalStorage();
     const order = orders.find(o => o.id === orderId);
     if (order) {
-        showToast(`Xem chi tiết đơn hàng ${orderId}`, 'info');
+        showNotification(`Viewing order ${orderId} details`, 'info');
         // Here you would open a modal with order details
     }
 }
 
 function printOrder(orderId) {
-    showToast(`Đang in hóa đơn ${orderId}...`, 'info');
+    showNotification(`Printing invoice ${orderId}...`, 'info');
 }
 
 // ===== CUSTOMERS PAGE =====
@@ -1047,7 +1031,7 @@ function populateCustomersTable(filters = {}) {
     }
 
     if (filteredCustomers.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #94a3b8;">Chưa có khách hàng nào</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; padding: 2rem; color: #94a3b8;">No customers yet</td></tr>';
         return;
     }
 
@@ -1069,10 +1053,10 @@ function populateCustomersTable(filters = {}) {
             </td>
             <td>${customer.joinDate}</td>
             <td>
-                <button class="icon-btn" onclick="viewCustomerDetail('${customer.id}')" title="Xem chi tiết">
+                <button class="icon-btn" onclick="viewCustomerDetail('${customer.id}')" title="View Details">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button class="icon-btn" onclick="editCustomer('${customer.id}')" title="Sửa">
+                <button class="icon-btn" onclick="editCustomer('${customer.id}')" title="Edit">
                     <i class="fas fa-edit"></i>
                 </button>
             </td>
@@ -1088,7 +1072,7 @@ function viewCustomerDetail(id) {
         const user = users.find(u => u.username === id);
         
         if (user) {
-            showToast(`Xem chi tiết khách hàng: ${user.firstName} ${user.lastName}`, 'info');
+            showNotification(`Viewing customer: ${user.firstName} ${user.lastName}`, 'info');
         }
     }
 }
@@ -1104,7 +1088,7 @@ function populateScreeningsTable(filters = {}) {
 
     // Use state.movies loaded from movies.json
     if (!state.movies || state.movies.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Đang tải phim...</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Loading movies...</td></tr>';
         return;
     }
 
@@ -1121,7 +1105,7 @@ function populateScreeningsTable(filters = {}) {
     }
 
     if (filteredMovies.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">Không tìm thấy phim nào</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 2rem; color: #94a3b8;">No movies found</td></tr>';
         return;
     }
 
@@ -1143,17 +1127,17 @@ function populateScreeningsTable(filters = {}) {
             <td>${movie.rating}</td>
             <td>
                 <span class="status-badge pending">
-                    Đang phát sóng
+                    On Air
                 </span>
             </td>
             <td>
-                <button class="icon-btn" onclick="viewMovieDetail(${movie.id})" title="Xem chi tiết">
+                <button class="icon-btn" onclick="viewMovieDetail(${movie.id})" title="View Details">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button class="icon-btn" onclick="editMovie(${movie.id})" title="Sửa">
+                <button class="icon-btn" onclick="editMovie(${movie.id})" title="Edit">
                     <i class="fas fa-edit"></i>
                 </button>
-                <button class="icon-btn" onclick="deleteMovie(${movie.id})" title="Xóa">
+                <button class="icon-btn" onclick="deleteMovie(${movie.id})" title="Delete">
                     <i class="fas fa-trash"></i>
                 </button>
             </td>
@@ -1164,7 +1148,7 @@ function populateScreeningsTable(filters = {}) {
 function viewMovieDetail(id) {
     const movie = state.movies.find(m => m.id === id);
     if (movie) {
-        showToast(`Xem chi tiết phim: ${movie.title}`, 'info');
+        showNotification(`Viewing movie: ${movie.title}`, 'info');
     }
 }
 
@@ -1174,11 +1158,14 @@ function editMovie(id) {
 
 function deleteMovie(id) {
     const movie = state.movies.find(m => m.id === id);
-    if (movie && confirm(`Bạn có chắc muốn xóa phim "${movie.title}"?`)) {
-        const index = state.movies.findIndex(m => m.id === id);
-        state.movies.splice(index, 1);
-        populateScreeningsTable();
-        showToast('Đã xóa phim thành công!');
+    if (movie) {
+        const confirmed = window.confirm(`Are you sure you want to delete "${movie.title}"?`);
+        if (confirmed) {
+            const index = state.movies.findIndex(m => m.id === id);
+            state.movies.splice(index, 1);
+            populateScreeningsTable();
+            showNotification('Movie deleted successfully!', 'success');
+        }
     }
 }
 
@@ -1195,7 +1182,7 @@ function initAnalyticsCharts() {
                 labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
                 datasets: [
                     {
-                        label: 'Doanh thu',
+                        label: 'Revenue',
                         data: [28000000, 32000000, 30000000, 38000000, 35000000, 42000000, 39000000, 45000000, 43000000, 48000000, 46000000, 52000000],
                         borderColor: '#6c8fc7',
                         backgroundColor: 'rgba(108, 143, 199, 0.1)',
@@ -1203,7 +1190,7 @@ function initAnalyticsCharts() {
                         fill: true
                     },
                     {
-                        label: 'Đơn hàng',
+                        label: 'Orders',
                         data: [85, 92, 88, 105, 98, 112, 108, 125, 118, 132, 128, 145],
                         borderColor: '#e8b86d',
                         backgroundColor: 'rgba(232, 184, 109, 0.1)',
@@ -1234,7 +1221,7 @@ function initAnalyticsCharts() {
             data: {
                 labels: state.products.slice(0, 5).map(p => p.name.substring(0, 20) + '...'),
                 datasets: [{
-                    label: 'Số lượng bán',
+                    label: 'Quantity Sold',
                     data: state.products.slice(0, 5).map(p => p.sold),
                     backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
                 }]
@@ -1259,7 +1246,7 @@ function initAnalyticsCharts() {
         new Chart(regionCtx, {
             type: 'pie',
             data: {
-                labels: ['TP.HCM', 'Hà Nội', 'Đà Nẵng', 'Cần Thơ', 'Khác'],
+                labels: ['Ho Chi Minh City', 'Hanoi', 'Da Nang', 'Can Tho', 'Others'],
                 datasets: [{
                     data: [45, 25, 15, 10, 5],
                     backgroundColor: ['#6c8fc7', '#8b7fc9', '#5b9bd5', '#4ade80', '#ff9966']
@@ -1278,10 +1265,10 @@ function initAnalyticsCharts() {
 
 // ===== REPORTS FUNCTIONS =====
 window.generateReport = function(type) {
-    showToast(`Đang tạo báo cáo ${type}...`, 'info');
+    showNotification(`Generating ${type} report...`, 'info');
 
     setTimeout(() => {
-        showToast(`Báo cáo đã được tải xuống!`, 'success');
+        showNotification('Report downloaded successfully!', 'success');
     }, 2000);
 }
 
@@ -1334,7 +1321,7 @@ themeToggle?.addEventListener('click', () => {
 
     if (state.theme === 'light') {
         icon.classList.replace('fa-moon', 'fa-sun');
-        showToast('Chế độ sáng đang được phát triển!', 'info');
+        showNotification('Light mode is under development!', 'info');
     } else {
         icon.classList.replace('fa-sun', 'fa-moon');
     }
@@ -1350,8 +1337,9 @@ searchInput?.addEventListener('input', (e) => {
 
 // Logout
 logoutBtn?.addEventListener('click', () => {
-    if (confirm('Bạn có chắc muốn đăng xuất?')) {
-        showToast('Đang đăng xuất...', 'info');
+    const confirmed = window.confirm('Are you sure you want to logout?');
+    if (confirmed) {
+        showNotification('Logging out...', 'info');
         setTimeout(() => {
             window.location.href = 'login-admin.html';
         }, 1500);
@@ -1363,7 +1351,7 @@ document.querySelector('.mark-all-read')?.addEventListener('click', () => {
     document.querySelectorAll('.notification-item.unread').forEach(item => {
         item.classList.remove('unread');
     });
-    showToast('Đã đánh dấu tất cả thông báo là đã đọc');
+    showNotification('All notifications marked as read', 'success');
 });
 
 // View All Orders Button
@@ -1405,7 +1393,7 @@ document.getElementById('orderStatusFilter')?.addEventListener('change', (e) => 
 document.getElementById('exportOrdersBtn')?.addEventListener('click', () => {
     // Change to refresh button functionality
     refreshDashboardData();
-    showToast('✅ Đã làm mới dữ liệu!', 'success');
+    showNotification('Data refreshed successfully!', 'success');
 });
 
 // Customers Page Filters
@@ -1713,7 +1701,7 @@ function openProductModal(productId = null) {
         const product = state.products.find(p => p.id == productId);
 
         if (product) {
-            modalTitle.textContent = 'Chỉnh sửa sản phẩm';
+            modalTitle.textContent = 'Edit Product';
             document.getElementById('productId').value = product.id;
             document.getElementById('productName').value = product.name;
             document.getElementById('productCategory').value = product.category;
@@ -1732,7 +1720,7 @@ function openProductModal(productId = null) {
     } else {
         // Add mode
         currentEditingProductId = null;
-        modalTitle.textContent = 'Thêm sản phẩm mới';
+        modalTitle.textContent = 'Add New Product';
         form.reset();
 
         // Reset preview
@@ -1759,7 +1747,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Validate image
             if (!productImageBase64) {
-                showToast('Vui lòng chọn ảnh sản phẩm', 'error');
+                showNotification('Please select a product image', 'error');
                 return;
             }
 
@@ -1788,12 +1776,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const index = state.products.findIndex(p => p.id == currentEditingProductId);
                 if (index !== -1) {
                     state.products[index] = { ...state.products[index], ...productData };
-                    showToast('Đã cập nhật sản phẩm thành công!', 'success');
+                    showNotification('Product updated successfully!', 'success');
                 }
             } else {
                 // Add new product
                 state.products.unshift(productData);
-                showToast('Đã thêm sản phẩm mới thành công!', 'success');
+                showNotification('New product added successfully!', 'success');
             }
 
             populateProductsTable();
@@ -1859,7 +1847,7 @@ async function loadMovies() {
 function populateMovieDropdown() {
     const select = document.getElementById('screeningMovie');
     if (select && state.movies.length > 0) {
-        select.innerHTML = '<option value="">Chọn phim</option>' +
+        select.innerHTML = '<option value="">Select Movie</option>' +
             state.movies.map(movie => 
                 `<option value="${movie.title}">${movie.title} (${movie.year})</option>`
             ).join('');
@@ -1877,7 +1865,7 @@ function openScreeningModal(screeningId = null) {
         const screening = mockScreenings.find(s => s.id == screeningId);
 
         if (screening) {
-            modalTitle.textContent = 'Chỉnh sửa lịch chiếu';
+            modalTitle.textContent = 'Edit Screening';
             document.getElementById('screeningId').value = screening.id;
             document.getElementById('screeningMovie').value = screening.movie.split(' (')[0]; // Get movie name without year
             document.getElementById('screeningStreamUrl').value = screening.streamUrl || '';
@@ -1892,7 +1880,7 @@ function openScreeningModal(screeningId = null) {
     } else {
         // Add mode
         currentEditingScreeningId = null;
-        modalTitle.textContent = 'Thêm lịch chiếu mới';
+        modalTitle.textContent = 'Add New Screening';
         form.reset();
         // Set default date to today
         document.getElementById('screeningDate').value = new Date().toISOString().split('T')[0];
@@ -1934,12 +1922,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const index = mockScreenings.findIndex(s => s.id == currentEditingScreeningId);
                 if (index !== -1) {
                     mockScreenings[index] = { ...mockScreenings[index], ...screeningData };
-                    showToast('Đã cập nhật lịch chiếu thành công!', 'success');
+                    showNotification('Screening updated successfully!', 'success');
                 }
             } else {
                 // Add new screening
                 mockScreenings.push(screeningData);
-                showToast('Đã thêm lịch chiếu mới thành công!', 'success');
+                showNotification('New screening added successfully!', 'success');
             }
 
             populateScreeningsTable();
@@ -2022,12 +2010,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const index = mockCustomers.findIndex(c => c.id == currentEditingCustomerId);
                 if (index !== -1) {
                     mockCustomers[index] = { ...mockCustomers[index], ...customerData };
-                    showToast('Đã cập nhật khách hàng thành công!', 'success');
+                    showNotification('Customer updated successfully!', 'success');
                 }
             } else {
                 // Add new customer
                 mockCustomers.push(customerData);
-                showToast('Đã thêm khách hàng mới thành công!', 'success');
+                showNotification('New customer added successfully!', 'success');
             }
             
             populateCustomersTable();
@@ -2054,14 +2042,14 @@ function convertImageToBase64(file, callback) {
     // Validate file size (max 2MB)
     const maxSize = 2 * 1024 * 1024; // 2MB in bytes
     if (file.size > maxSize) {
-        showToast('Ảnh quá lớn! Vui lòng chọn ảnh nhỏ hơn 2MB', 'error');
+        showNotification('Image too large! Please select an image smaller than 2MB', 'error');
         return;
     }
 
     // Validate file type
     const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
     if (!validTypes.includes(file.type)) {
-        showToast('Chỉ hỗ trợ file ảnh (JPG, PNG, WEBP)', 'error');
+        showNotification('Only image files are supported (JPG, PNG, WEBP)', 'error');
         return;
     }
 
@@ -2070,7 +2058,7 @@ function convertImageToBase64(file, callback) {
         callback(e.target.result);
     };
     reader.onerror = function() {
-        showToast('Lỗi khi đọc file ảnh', 'error');
+        showNotification('Error reading image file', 'error');
     };
     reader.readAsDataURL(file);
 }
@@ -2144,7 +2132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Validate poster
             if (!moviePosterBase64) {
-                showToast('Vui lòng chọn poster phim', 'error');
+                showNotification('Please select a movie poster', 'error');
                 return;
             }
 
@@ -2166,12 +2154,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const index = state.movies.findIndex(m => m.id == currentEditingMovieId);
                 if (index !== -1) {
                     state.movies[index] = { ...state.movies[index], ...movieData };
-                    showToast('Đã cập nhật phim thành công!', 'success');
+                    showNotification('Movie updated successfully!', 'success');
                 }
             } else {
                 // Add new movie
                 state.movies.push(movieData);
-                showToast('Đã thêm phim mới thành công!', 'success');
+                showNotification('New movie added successfully!', 'success');
             }
 
             populateMovieDropdown();
@@ -2596,7 +2584,7 @@ if (document.readyState === 'loading') {
         startAutoRefresh();
         
         setTimeout(() => {
-            showToast('Chào mừng trở lại, Long! 🎉', 'success');
+            showNotification('Welcome back, Long! 🎉', 'success');
         }, 1000);
     });
 } else {
@@ -2608,7 +2596,7 @@ if (document.readyState === 'loading') {
         startAutoRefresh();
         
         setTimeout(() => {
-            showToast('Chào mừng trở lại, Long! 🎉', 'success');
+            showNotification('Welcome back, Long! 🎉', 'success');
         }, 1000);
     });
 }

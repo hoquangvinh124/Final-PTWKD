@@ -1017,20 +1017,21 @@ tbody tr:hover {
     color: var(--green);
 }
 
-.notification-content p {
+/* Admin notification dropdown items (different from toast notifications) */
+.notification-dropdown .notification-content p {
     font-size: 14px;
     color: var(--text-primary);
     margin-bottom: 4px;
 }
 
-.notification-content span {
+.notification-dropdown .notification-content span {
     display: block;
     font-size: 13px;
     color: var(--text-secondary);
     margin-bottom: 4px;
 }
 
-.notification-content time {
+.notification-dropdown .notification-content time {
     font-size: 11px;
     color: var(--text-tertiary);
 }

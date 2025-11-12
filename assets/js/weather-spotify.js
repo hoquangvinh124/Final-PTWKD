@@ -322,7 +322,6 @@ class WeatherSpotifyWidget {
 
                 <div class="mood-quote">
                     <p>
-                        <i class="fas fa-music quote-icon"></i>
                         ${quote}
                     </p>
                 </div>

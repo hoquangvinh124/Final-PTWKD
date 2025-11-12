@@ -130,6 +130,36 @@
       messageEl.style.fontFamily = 'Barlow, sans-serif';
     }
 
+    // Send welcome email
+    async function sendWelcomeEmail(recipient, customerName) {
+      try {
+        console.log('📧 Sending welcome email to:', recipient);
+        const response = await fetch('https://688ypaf41h.execute-api.ap-southeast-2.amazonaws.com/default/Signup-Welcome', {
+          method: 'POST',
+          headers: {
+            'x-api-key': 'oldiezone',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            customer_email: recipient,
+            customer_name: customerName
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Email API error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log('✅ Welcome email sent successfully:', data);
+        return { success: true, data };
+      } catch (error) {
+        console.error('❌ Error sending welcome email:', error);
+        // Don't block registration if email fails
+        return { success: false, error: error.message };
+      }
+    }
+
     if (form) {
       form.addEventListener('submit', (event) => {
         event.preventDefault();
@@ -161,7 +191,20 @@
           return;
         }
 
+        // Registration successful, send welcome email
+        const fullName = `${firstName} ${lastName}`;
         showMessage('Registration successful! Redirecting to profile page...', 'success');
+        
+        // Send welcome email (don't wait for it to complete)
+        sendWelcomeEmail(email, fullName).then(emailResult => {
+          if (emailResult.success) {
+            console.log('✅ Welcome email sent to:', email);
+          } else {
+            console.warn('⚠️ Welcome email failed, but registration was successful');
+          }
+        });
+
+        // Redirect to profile page
         setTimeout(() => {
           window.location.href = 'user-profile.html';
         }, 1500);

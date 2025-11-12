@@ -11,15 +11,28 @@ let movies = [];
 // Fetch movies from JSON file
 async function loadMovies() {
   try {
+    console.log('🎬 Loading movies from movies.json...');
     const response = await fetch('movies.json');
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
     const data = await response.json();
+    console.log('✅ Movies loaded successfully:', data.length, 'movies');
     movies = data;
+    
     // Initialize the page after movies are loaded
     initializePage();
   } catch (error) {
-    console.error('Error loading movies:', error);
+    console.error('❌ Error loading movies:', error);
+    console.log('⚠️ Make sure movies.json exists in the root directory');
+    
     // Fallback to empty array if loading fails
     movies = [];
+    
+    // Still try to initialize page even without movies
+    initializePage();
   }
 }
 
