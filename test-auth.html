@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Authentication</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #fff;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background: rgb(255, 179, 71);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: rgb(255, 140, 66);
+    }
+    pre {
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .status {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .logged-in {
+      background: rgba(34, 197, 94, 0.2);
+      border: 1px solid rgb(34, 197, 94);
+    }
+    .logged-out {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgb(239, 68, 68);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔐 Authentication Test Page</h1>
+    
+    <div id="status" class="status"></div>
+    
+    <h2>Actions</h2>
+    <button onclick="checkAuth()">Check Auth Status</button>
+    <button onclick="clearAuth()">Clear Auth (Logout)</button>
+    <button onclick="showAllStorage()">Show All LocalStorage</button>
+    <button onclick="clearAllStorage()">Clear All LocalStorage</button>
+    <button onclick="goToMarketplace()">Go to Marketplace</button>
+    
+    <h2>Output</h2>
+    <pre id="output">Click a button to see results...</pre>
+  </div>
+
+  <script type="module">
+    import { isAuthenticated, getCurrentUser, logout } from './assets/js/auth.js';
+
+    window.checkAuth = function() {
+      const authenticated = isAuthenticated();
+      const user = getCurrentUser();
+      
+      const output = document.getElementById('output');
+      const status = document.getElementById('status');
+      
+      output.textContent = JSON.stringify({
+        isAuthenticated: authenticated,
+        currentUser: user
+      }, null, 2);
+      
+      if (authenticated) {
+        status.className = 'status logged-in';
+        status.innerHTML = `✅ Logged in as: <strong>${user?.username || 'Unknown'}</strong>`;
+      } else {
+        status.className = 'status logged-out';
+        status.innerHTML = '❌ Not logged in';
+      }
+    };
+
+    window.clearAuth = function() {
+      logout();
+      checkAuth();
+      document.getElementById('output').textContent = 'Auth cleared! Now checking status...';
+      setTimeout(checkAuth, 100);
+    };
+
+    window.showAllStorage = function() {
+      const output = document.getElementById('output');
+      const storage = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        try {
+          storage[key] = JSON.parse(localStorage.getItem(key));
+        } catch {
+          storage[key] = localStorage.getItem(key);
+        }
+      }
+      output.textContent = JSON.stringify(storage, null, 2);
+    };
+
+    window.clearAllStorage = function() {
+      if (confirm('⚠️ This will clear ALL localStorage data. Continue?')) {
+        localStorage.clear();
+        document.getElementById('output').textContent = 'All localStorage cleared!';
+        checkAuth();
+      }
+    };
+
+    window.goToMarketplace = function() {
+      window.location.href = 'market-place.html';
+    };
+
+    // Auto-check on load
+    checkAuth();
+  </script>
+</body>
+</html>

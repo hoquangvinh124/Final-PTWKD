@@ -715,8 +715,12 @@ productCategorySelect?.addEventListener("change", (e) => {
 });
 
 addProductBtn?.addEventListener("click", () => {
+  console.log('Add Product button clicked');
+  console.log('isAuthenticated:', isAuthenticated());
+  
   // Check if user is authenticated before opening modal
   if (!isAuthenticated()) {
+    console.log('User not authenticated, showing notification and redirecting...');
     showNotification("Please login to add products!", 'warning');
     // Redirect to login page after a short delay
     setTimeout(() => {
@@ -724,6 +728,8 @@ addProductBtn?.addEventListener("click", () => {
     }, 1000);
     return;
   }
+  
+  console.log('User authenticated, opening modal');
   openAddProductModal();
 });
 
