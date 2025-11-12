@@ -8,9 +8,8 @@
 
 [![GitHub Stars](https://img.shields.io/github/stars/hoquangvinh124/Final-PTWKD?style=social)](https://github.com/hoquangvinh124/Final-PTWKD)
 [![GitHub Forks](https://img.shields.io/github/forks/hoquangvinh124/Final-PTWKD?style=social)](https://github.com/hoquangvinh124/Final-PTWKD)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-[🌐 Demo](#) | [📖 Tài liệu](#) | [🐛 Báo lỗi](https://github.com/hoquangvinh124/Final-PTWKD/issues) | [💡 Đề xuất tính năng](https://github.com/hoquangvinh124/Final-PTWKD/issues)
+[🐛 Báo lỗi](https://github.com/hoquangvinh124/Final-PTWKD/issues) | [💡 Đề xuất tính năng](https://github.com/hoquangvinh124/Final-PTWKD/issues)
 
 </div>
 
@@ -29,6 +28,7 @@
     - [🎨 Tính năng nổi bật](#-tính-năng-nổi-bật)
   - [🛠️ Công nghệ sử dụng](#️-công-nghệ-sử-dụng)
     - [Frontend](#frontend)
+    - [Backend \& Cloud Infrastructure](#backend--cloud-infrastructure)
     - [Storage](#storage)
     - [External APIs \& Libraries](#external-apis--libraries)
   - [📁 Cấu trúc dự án](#-cấu-trúc-dự-án)
@@ -60,25 +60,13 @@
     - [5. Retro Cine Room](#5-retro-cine-room)
     - [6. Market Place (Thread)](#6-market-place-thread)
     - [7. Chatbot](#7-chatbot)
+    - [8. Email Notifications](#8-email-notifications)
   - [📦 LocalStorage Data Structure](#-localstorage-data-structure)
   - [🎨 Theme \& Styling](#-theme--styling)
-  - [🔐 Tài khoản demo](#-tài-khoản-demo)
-  - [🐛 Xử lý lỗi và Debug](#-xử-lý-lỗi-và-debug)
-  - [🚀 Triển khai (Deployment)](#-triển-khai-deployment)
-    - [GitHub Pages](#github-pages)
-    - [Netlify](#netlify)
-    - [Vercel](#vercel)
-  - [📈 Roadmap](#-roadmap)
-    - [Version 1.0 (Current)](#version-10-current)
-    - [Version 2.0 (Planned)](#version-20-planned)
-    - [Version 3.0 (Future)](#version-30-future)
-  - [🤝 Đóng góp](#-đóng-góp)
-    - [Quy trình đóng góp](#quy-trình-đóng-góp)
-    - [Code Style Guidelines](#code-style-guidelines)
-  - [📝 License](#-license)
+  - [☁️ Deployment \& Infrastructure](#️-deployment--infrastructure)
+    - [AWS S3 \& CloudFront](#aws-s3--cloudfront)
+    - [AWS Lambda \& Email Service](#aws-lambda--email-service)
   - [👨‍💻 Tác giả](#-tác-giả)
-  - [🙏 Cảm ơn](#-cảm-ơn)
-  - [📞 Liên hệ \& Hỗ trợ](#-liên-hệ--hỗ-trợ)
 
 ---
 
@@ -167,6 +155,12 @@
 - **JavaScript (ES6+)** - Logic và tương tác
 - **Font Awesome 6.4.0** - Icon library
 - **Google Fonts** - Typography (Barlow, Roboto)
+
+### Backend & Cloud Infrastructure
+- ☁️ **AWS S3** - Static website hosting và lưu trữ assets
+- 🚀 **AWS CloudFront** - CDN để phân phối nội dung toàn cầu
+- ⚡ **AWS Lambda** - Serverless functions cho xử lý backend
+- 📧 **Resend** - Email service provider cho gửi email thông báo
 
 ### Storage
 - **LocalStorage** - Lưu trữ giỏ hàng, user session
@@ -705,6 +699,29 @@ products.filter(product =>
 - ❓ FAQs
 - 👤 User info lookup
 
+### 8. Email Notifications
+
+**Backend:** AWS Lambda + Resend API
+
+**Tính năng:**
+- 📧 Email xác nhận đăng ký tài khoản
+- 📧 Email khôi phục mật khẩu
+- 📧 Email xác nhận đơn hàng
+- 📧 Email thông báo trạng thái đơn hàng
+- 📧 Email marketing và promotional
+
+**Flow:**
+1. Client gửi request đến Lambda endpoint
+2. Lambda function xử lý và validate data
+3. Lambda gọi Resend API để gửi email
+4. Resend gửi email đến người nhận
+5. Lambda trả về response cho client
+
+**Lambda Endpoint:**
+- POST `/api/send-email` - Gửi email thông báo
+- Validation: Email format, required fields
+- Rate limiting để tránh spam
+
 ---
 
 ## 📦 LocalStorage Data Structure
@@ -796,209 +813,98 @@ font-weight: 300-400;
 
 ---
 
-## 🔐 Tài khoản demo
+## ☁️ Deployment & Infrastructure
 
-### User Account
-```
-Email: user@example.com
-Password: user123
-```
+Website được triển khai trên AWS với kiến trúc serverless hiện đại, đảm bảo hiệu suất cao và khả năng mở rộng tốt.
 
-### Admin Account
-```
-Email: admin@oldidezone.com
-Password: admin123
-```
+### AWS S3 & CloudFront
 
-**Lưu ý:** Đây là tài khoản demo, có thể không hoạt động nếu chưa setup data trong `users.json`
+**S3 Bucket Configuration:**
+- Static website hosting enabled
+- Public read access cho static assets
+- Bucket policy cho CloudFront distribution
+- Versioning enabled để rollback khi cần
 
----
+**CloudFront CDN:**
+- Global content delivery với edge locations
+- HTTPS enforced với SSL/TLS certificate
+- Cache optimization cho static assets
+- Compression enabled (Gzip, Brotli)
+- Custom error pages (404, 403)
 
-## 🐛 Xử lý lỗi và Debug
-
-### Common Issues
-
-#### 1. Products không load
-**Nguyên nhân:** CORS policy khi mở file HTML trực tiếp
-**Giải pháp:** Sử dụng web server (Live Server, Python HTTP Server)
-
-#### 2. Images không hiển thị
-**Nguyên nhân:** Đường dẫn tương đối không đúng
-**Giải pháp:** Kiểm tra path trong `product.json` và file structure
-
-#### 3. LocalStorage không hoạt động
-**Nguyên nhân:** Browser privacy settings
-**Giải pháp:** Enable cookies và local storage trong browser settings
-
-#### 4. Checkout không hoạt động
-**Nguyên nhân:** Chưa đăng nhập
-**Giải pháp:** Đảm bảo user đã đăng nhập trước khi checkout
-
-### Debug Mode
-
-Thêm vào console để debug:
-```javascript
-// Check current user
-console.log(localStorage.getItem('currentUser'));
-
-// Check cart
-console.log(JSON.parse(localStorage.getItem('cart')));
-
-// Check all localStorage
-console.log(localStorage);
-```
-
----
-
-## 🚀 Triển khai (Deployment)
-
-### GitHub Pages
-
-1. Push code lên GitHub repository
-2. Vào Settings → Pages
-3. Chọn branch `main` và folder `/` (root)
-4. Save và đợi deployment
-5. Truy cập: `https://username.github.io/Final-PTWKD/homepage.html`
-
-### Netlify
-
-1. Đăng ký tài khoản Netlify
-2. New site from Git
-3. Connect với GitHub repository
-4. Build settings:
-   - Build command: (để trống)
-   - Publish directory: `/`
-5. Deploy site
-
-### Vercel
-
+**Deployment Process:**
 ```bash
-# Install Vercel CLI
-npm i -g vercel
+# Build và sync lên S3
+aws s3 sync . s3://your-bucket-name --exclude ".git/*" --exclude "node_modules/*"
 
-# Deploy
-cd Final-PTWKD
-vercel
+# Invalidate CloudFront cache
+aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
 ```
 
----
+**Performance Optimization:**
+- Assets được cache với TTL phù hợp
+- Image optimization trước khi upload
+- Lazy loading cho hình ảnh
+- Minified CSS/JS files
 
-## 📈 Roadmap
+### AWS Lambda & Email Service
 
-### Version 1.0 (Current)
-- ✅ Basic e-commerce functionality
-- ✅ User authentication
-- ✅ Shopping cart & checkout
-- ✅ Product catalog
-- ✅ Retro Cine Room
-- ✅ Market Place
-- ✅ Admin dashboard
+**Lambda Function:**
+- Runtime: Node.js 18.x
+- Trigger: API Gateway (REST API)
+- Memory: 256 MB
+- Timeout: 30 seconds
+- Environment variables cho Resend API key
 
-### Version 2.0 (Planned)
-- 🔄 Backend integration (Node.js + Express)
-- 🔄 Database migration (MongoDB/PostgreSQL)
-- 🔄 Real payment gateway integration
-- 🔄 Email notifications
-- 🔄 Advanced search with filters
-- 🔄 Wishlist functionality
-- 🔄 Product comparison
-- 🔄 Multi-language support
+**Resend Email Integration:**
+```javascript
+// Lambda handler example
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-### Version 3.0 (Future)
-- 🌟 Mobile app (React Native)
-- 🌟 AI-powered recommendations
-- 🌟 Social media integration
-- 🌟 Live chat support
-- 🌟 Virtual try-on (AR)
-- 🌟 Subscription service
-- 🌟 Loyalty program
+exports.handler = async (event) => {
+  const { to, subject, html } = JSON.parse(event.body);
 
----
+  try {
+    const data = await resend.emails.send({
+      from: 'OLDIE ZONE <noreply@oldidezone.com>',
+      to: [to],
+      subject: subject,
+      html: html
+    });
 
-## 🤝 Đóng góp
-
-Chúng tôi rất hoan nghênh mọi đóng góp từ cộng đồng!
-
-### Quy trình đóng góp
-
-1. **Fork repository**
-   ```bash
-   # Click nút Fork trên GitHub
-   ```
-
-2. **Clone fork của bạn**
-   ```bash
-   git clone https://github.com/your-username/Final-PTWKD.git
-   cd Final-PTWKD
-   ```
-
-3. **Tạo branch mới**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-4. **Commit changes**
-   ```bash
-   git add .
-   git commit -m "Add: description of your changes"
-   ```
-
-5. **Push to your fork**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-6. **Tạo Pull Request**
-   - Vào GitHub repository
-   - Click "New Pull Request"
-   - Mô tả chi tiết changes của bạn
-
-### Code Style Guidelines
-
-- ✅ Sử dụng indentation 2 spaces
-- ✅ Comment code rõ ràng (tiếng Việt hoặc tiếng Anh)
-- ✅ Đặt tên biến/hàm có ý nghĩa
-- ✅ Follow existing code structure
-- ✅ Test trước khi commit
-
-### Các loại đóng góp
-
-- 🐛 **Bug fixes**: Sửa lỗi và cải thiện
-- ✨ **New features**: Thêm tính năng mới
-- 📝 **Documentation**: Cải thiện tài liệu
-- 🎨 **UI/UX**: Cải thiện giao diện
-- ⚡ **Performance**: Tối ưu hiệu năng
-- ♻️ **Refactoring**: Cải thiện code quality
-
----
-
-## 📝 License
-
-Dự án này được phân phối dưới **MIT License**.
-
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ success: true, data })
+    };
+  } catch (error) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ success: false, error: error.message })
+    };
+  }
+};
 ```
-MIT License
 
-Copyright (c) 2024 OLDIE ZONE
+**API Endpoint:**
+- URL: `https://api.oldidezone.com/send-email`
+- Method: POST
+- Headers: `Content-Type: application/json`
+- Body: `{ "to": "user@email.com", "subject": "...", "html": "..." }`
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+**Email Templates:**
+- Xác nhận đăng ký
+- Reset mật khẩu
+- Xác nhận đơn hàng
+- Cập nhật trạng thái đơn hàng
+- Newsletter và promotional emails
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+**Security:**
+- API Gateway with API Key
+- Rate limiting (100 requests/minute)
+- Input validation và sanitization
+- CORS configuration
+- Environment variables cho sensitive data
 
 ---
 
@@ -1011,51 +917,6 @@ SOFTWARE.
 
 - 👥 **Contributors**
   - Xem danh sách đầy đủ tại [Contributors](https://github.com/hoquangvinh124/Final-PTWKD/graphs/contributors)
-
----
-
-## 🙏 Cảm ơn
-
-Xin gửi lời cảm ơn đến:
-
-- 🎨 **Font Awesome** - Icon library
-- 🔤 **Google Fonts** - Typography
-- 🎵 **Spotify** - Music API
-- 🌤️ **OpenWeatherMap** - Weather API
-- 📚 **MDN Web Docs** - Documentation
-- 💡 **Stack Overflow** - Community support
-- 🎓 **Trường Đại học...** - Hỗ trợ dự án
-
----
-
-## 📞 Liên hệ & Hỗ trợ
-
-### Support
-
-- 📧 **Email**: support@oldidezone.com
-- 💬 **Discord**: [Join our server](#)
-- 🐦 **Twitter**: [@OldieZone](#)
-- 📘 **Facebook**: [OLDIE ZONE](#)
-
-### Báo lỗi
-
-Nếu bạn tìm thấy bug hoặc có đề xuất, vui lòng:
-1. Kiểm tra [Issues](https://github.com/hoquangvinh124/Final-PTWKD/issues) đã tồn tại
-2. Tạo [New Issue](https://github.com/hoquangvinh124/Final-PTWKD/issues/new) với mô tả chi tiết
-
-### FAQ
-
-**Q: Website có phiên bản mobile app không?**
-A: Hiện tại chưa có, nhưng website đã responsive và hoạt động tốt trên mobile browser.
-
-**Q: Có thể thanh toán thật không?**
-A: Version hiện tại chỉ là demo, chưa tích hợp payment gateway thật.
-
-**Q: Source code có thể sử dụng cho dự án thương mại?**
-A: Có, theo MIT License bạn có thể sử dụng tự do.
-
-**Q: Làm sao để thêm sản phẩm mới?**
-A: Chỉnh sửa file `product.json` và thêm hình ảnh vào thư mục tương ứng.
 
 ---
 
